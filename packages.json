@@ -1,0 +1,8 @@
+{
+  "packages":[],
+  "notify":"https://packagist.org/downloads/%package%",
+  "notify-batch":"https://packagist.org/downloads/",
+  "metadata-url":"/p2/%package%.json",
+  "search":"https://packagist.org/search.json?q=%query%&type=%type%",
+  "providers-lazy-url":"https://repo.packagist.org/p/%package%.json"
+}
