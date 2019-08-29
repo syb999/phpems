@@ -15,7 +15,9 @@ php -r "unlink('composer-setup.php');"
 配置composer下载点：
 composer config -g repo.packagist composer https://packagist.phpcomposer.com
 然后可以用composer config -gl 查看配置
+
 composer install -vvv
+
 复制packages.json文件至目录/root/.cache/composer/repo/https---packagist.laravel-china.org/
 内，不然会安装会失败，因为packagist.laravel-china.org站点已经关闭了。
 
