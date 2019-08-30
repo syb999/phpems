@@ -1,6 +1,8 @@
 # phpems
 源码取自 https://github.com/oiuv/phpems  感谢分享。
 
+# 由于安装phpems需要用到的composer依赖时，会自动安装到/root/.composer目录内，需要用掉151M的存储空间,如果使用硬路由openwrt安装phpems，请用软链接挂载的U盘/移动硬盘目录来解决空间不足的问题。如: ln -s /opt/.composer /root
+
 下面是s905机顶盒使用armbian/openwrt系统，安装onmp环境后，搭建phpems在线考试系统的方法：
 
 
@@ -26,7 +28,7 @@ cd phpems
 composer config -g repo.packagist composer https://packagist.phpcomposer.com
 composer install -vvv
 
-# 使用下面命令安装即可(请注意，因为wordpress的显示问题，prefer前面是2个-,不然会报错)：
+# 使用下面命令安装即可：
 
 composer create-project --prefer-dist phpems/phpems phpems
 
