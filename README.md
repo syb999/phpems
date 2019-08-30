@@ -28,6 +28,11 @@ cd phpems
 composer config -g repo.packagist composer https://packagist.phpcomposer.com
 composer install -vvv
 
+# 复制packages.json文件至目录/opt/.composer/cache/repo/https---packagist.laravel-china.org/
+  内，不然会安装会失败，因为packagist.laravel-china.org站点已经关闭了。
+  (或者/root/.cache/composer/repo/https---packagist.laravel-china.org/目录)
+
+
 # 使用下面命令安装即可：
 
 composer create-project --prefer-dist phpems/phpems phpems
