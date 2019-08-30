@@ -2,9 +2,9 @@
 源码取自 https://github.com/oiuv/phpems  感谢分享。
 
 
-# 在OPENWRT下安装phpems需要用到的composer依赖时，会自动安装到/root/.composer目录内，需要用掉151M的存储空间,如果使用硬路由openwrt安装phpems，请用软链接挂载的U盘/移动硬盘目录来解决空间不足的问题。如: ln -s /opt/.composer /root
+# 在OPENWRT下安装phpems需要用到的composer依赖时，会自动安装到/root/.composer目录内，需要用掉238M的存储空间,如果使用硬路由openwrt安装phpems，请用软链接挂载的U盘/移动硬盘目录来解决空间不足的问题。如: ln -s /opt/.composer /root
 
-下面是s905机顶盒使用armbian系统，安装onmp环境后，搭建phpems在线考试系统的方法：
+# 下面是s905机顶盒使用armbian系统，安装onmp环境后，搭建phpems在线考试系统的方法：
 
 由于搭建phpems需要用到composer,但是openwrt安装php后，初始情况下并没有php命令，导致composer运行失败。 解决方法：找到文件php7-cli，复制该文件至同目录中，并改名为php。
 
@@ -29,8 +29,8 @@ composer config -g repo.packagist composer https://packagist.phpcomposer.com
 composer install -vvv
 
 # 复制packages.json文件至目录/root/.cache/composer/repo/https---packagist.laravel-china.org/
-  内，不然会安装会失败，因为packagist.laravel-china.org站点已经关闭了。
-  (如果是openwrt系统，则目录为/opt/.composer/cache/repo/https---packagist.laravel-china.org/)
+# 内，不然会安装会失败，因为packagist.laravel-china.org站点已经关闭了。
+#  (如果是openwrt系统，则目录为/opt/.composer/cache/repo/https---packagist.laravel-china.org/)
   
 
 
