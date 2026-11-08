@@ -795,6 +795,37 @@ class exam_exam
     //根据参数获取试题总数量
     //参数：参数（数组或者字符串）
     //返回值：试题内容数组
+    //按知识点统计试题数量（一次查询，供章节练习列表使用）
+    public function getKnowsNumbers()
+    {
+        $numbers = [];
+        $data = ['quest2knows.qkknowsid AS kid, questions.questiontype AS qt, count(*) AS number', ['questions', 'quest2knows'], [['AND', 'questions.questionid = quest2knows.qkquestionid'], ['AND', 'questions.questionstatus = 1'], ['AND', 'questions.questionparent = 0'], ['AND', 'quest2knows.qktype = 0']], 'quest2knows.qkknowsid, questions.questiontype', false, false];
+        $sql = $this->pdosql->makeSelect($data);
+        $r = $this->db->fetchAll($sql);
+        foreach ($r as $p) {
+            $kid = intval($p['kid']);
+            if (!isset($numbers[$kid])) {
+                $numbers[$kid] = [];
+            }
+            $numbers[$kid][intval($p['qt'])] = intval($p['number']);
+        }
+        $data = ['quest2knows.qkknowsid AS kid, questionrows.qrtype AS qt, sum(questionrows.qrnumber) AS number', ['questionrows', 'quest2knows'], [['AND', 'questionrows.qrid = quest2knows.qkquestionid'], ['AND', 'questionrows.qrstatus = 1'], ['AND', 'quest2knows.qktype = 1']], 'quest2knows.qkknowsid, questionrows.qrtype', false, false];
+        $sql = $this->pdosql->makeSelect($data);
+        $r = $this->db->fetchAll($sql);
+        foreach ($r as $p) {
+            $kid = intval($p['kid']);
+            if (!isset($numbers[$kid])) {
+                $numbers[$kid] = [];
+            }
+            if (!isset($numbers[$kid][intval($p['qt'])])) {
+                $numbers[$kid][intval($p['qt'])] = 0;
+            }
+            $numbers[$kid][intval($p['qt'])] += intval($p['number']);
+        }
+
+        return $numbers;
+    }
+
     public function getQuestionNumberByQuestypeAndKnowsid($questype, $knowsid)
     {
         $ca = $this->G->make('ca');

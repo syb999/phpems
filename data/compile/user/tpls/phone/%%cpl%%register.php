@@ -46,7 +46,7 @@
  $fid++; ?>
 				<div class="form-group input-group">
 					<span class="input-group-addon" id="basic-addon1"><a class="glyphicon glyphicon-config"></a></span>
-					{x2;(isset(v:form['html'])?v:form['html']:'')}
+					<?php echo (isset($form['html'])?$form['html']:''); ?>
 				</div>
                 <?php } ?>
 				<?php } ?>

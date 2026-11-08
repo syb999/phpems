@@ -26,10 +26,18 @@ class action extends app
     private function config()
     {
         $appid = $this->ev->get('appid');
+        $app = $this->apps->getApp($appid);
         if ($this->ev->get('appconfig')) {
             $args = $this->ev->get('args');
-            $args['appsetting'] = $args['appsetting'];
-            $app = $this->apps->getApp($appid);
+            if (!is_array($args)) {
+                $args = [];
+            }
+            if (!isset($args['appsetting'])) {
+                $args['appsetting'] = (is_array($app) && isset($app['appsetting'])) ? $app['appsetting'] : [];
+            }
+            if (!isset($args['appusersetting'])) {
+                $args['appusersetting'] = (is_array($app) && isset($app['appusersetting'])) ? $app['appusersetting'] : [];
+            }
             if ($app) {
                 $this->apps->modifyApp($appid, $args);
             } else {
@@ -44,7 +52,6 @@ class action extends app
             exit(json_encode($message));
         }
 
-        $app = $this->apps->getApp($appid);
         $this->tpl->assign('appid', $appid);
         $this->tpl->assign('app', $app);
         $this->tpl->display('config');

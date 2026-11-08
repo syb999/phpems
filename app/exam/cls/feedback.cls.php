@@ -27,7 +27,7 @@ class feedback_exam
     //获取试题反馈列表
     //参数：
     //返回值：地区列表
-    public function getFeedBackList($args = 1, $page, $number = 20)
+    public function getFeedBackList($args = 1, $page = 1, $number = 20)
     {
         $data = [
             'select' => false,

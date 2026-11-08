@@ -25,6 +25,8 @@ class action extends app
 
     private function filebataddquestion()
     {
+        $u = '';
+
         setlocale(LC_ALL, 'zh_CN');
         if ($this->ev->get('insertquestion')) {
             $page = $this->ev->get('page');
@@ -45,6 +47,8 @@ class action extends app
 
     private function addquestion()
     {
+        $u = '';
+
         if ($this->ev->get('insertquestion')) {
             $type = $this->ev->get('type');
             $questionparent = $this->ev->get('questionparent');
@@ -110,6 +114,8 @@ class action extends app
 
     private function bataddquestion()
     {
+        $u = '';
+
         if ($this->ev->get('insertquestion')) {
             $page = $this->ev->get('page');
             $content = $this->ev->get('content');
@@ -128,6 +134,8 @@ class action extends app
 
     private function batdel()
     {
+        $u = '';
+
         $page = $this->ev->get('page');
         $delids = $this->ev->get('delids');
         foreach ($delids as $questionid => $p) {
@@ -144,6 +152,8 @@ class action extends app
 
     private function delquestion()
     {
+        $u = '';
+
         $page = $this->ev->get('page');
         $questionid = $this->ev->get('questionid');
         $questionparent = $this->ev->get('questionparent');
@@ -173,6 +183,8 @@ class action extends app
 
     private function modifyquestion()
     {
+        $u = '';
+
         if ($this->ev->get('modifyquestion')) {
             $page = $this->ev->get('page');
             $args = $this->ev->get('args');

@@ -10,7 +10,7 @@
             <div class="col-xs-10" id="datacontent">
                 <div class="box itembox" style="margin-bottom:0;border-bottom:1px solid #CCCCCC;">
                     <ul class="breadcrumb">
-                        <li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master">{x2;(isset($apps[$_app]['appname'])?$apps[$_app]['appname']:'')}</a> <span
+                        <li><a href="index.php?<?php echo (isset($this->tpl_var['_app'])?$this->tpl_var['_app']:''); ?>-master"><?php echo (isset($this->tpl_var['apps'][$this->tpl_var['_app']]['appname'])?$this->tpl_var['apps'][$this->tpl_var['_app']]['appname']:''); ?></a> <span
                                 class="divider">/</span></li>
                         <li><a href="index.php?bank-master-coupon">代金券管理</a> <span class="divider">/</span></li>
                         <li class="active">导出代金券</li>
@@ -45,7 +45,7 @@
                                     <?php $aid = 0;
  foreach((array)($this->tpl_var['search'] ?? []) as $key => $arg){ 
  $aid++; ?>
-                                    <input type="hidden" name="search[{x2;(isset(v:key)?v:key:'')}]" value="{x2;(isset(v:arg)?v:arg:'')}"/>
+                                    <input type="hidden" name="search[<?php echo (isset($key)?$key:''); ?>]" value="<?php echo (isset($arg)?$arg:''); ?>"/>
                                     <?php } ?>
                                     <?php } ?>
                                 </div>

@@ -122,11 +122,11 @@ class pdosql
             $tb_pre = $tablepre;
         }
         //if($args[0] === false)$args[0] = '*';
-        if (!$args[0]) {
+        if (!isset($args[0]) || !$args[0]) {
             $args[0] = '*';
         }
         $db_fields = is_array($args[0]) ? implode(',', $args[0]) : $args[0];
-        $tables = $args[1];
+        $tables = isset($args[1]) ? $args[1] : '';
         if (is_array($tables)) {
             $db_tables = [];
             foreach ($tables as $p) {
@@ -136,7 +136,7 @@ class pdosql
         } else {
             $db_tables = $tb_pre.$tables;
         }
-        $query = $args[2];
+        $query = isset($args[2]) ? $args[2] : [];
         if (!is_array($query) || empty($query)) {
             $db_query = 1;
         } else {
@@ -224,7 +224,7 @@ class pdosql
         }
         $parsql = implode(',', $parsql);
 
-        $query = $args[2];
+        $query = isset($args[2]) ? $args[2] : [];
         if (!is_array($query)) {
             $db_query = 1;
         } else {

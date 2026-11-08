@@ -413,6 +413,7 @@ class question_exam
     //筛选随机试题
     public function selectQuestions($examid, $basic)
     {
+        $questionrow = [];
         $exam = $this->exam->getExamSettingById($examid);
         if ($exam['examsetting']['scalemodel']) {
             return $this->selectScaleQuestions($examid, $basic);
@@ -463,6 +464,7 @@ class question_exam
                     }
                 }
                 $expqr = 0;
+                $qrid = 0;
                 if ($qrid) {
                     $expqr = $expqr.','.$qrid;
                 }

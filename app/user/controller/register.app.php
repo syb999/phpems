@@ -112,6 +112,15 @@ class action extends app
             }
             $fob = ['admin', '管理员', '站长'];
             $args = $this->ev->get('args');
+            if (!preg_match('/^[\x{0391}-\x{FFE5}\w]{2,40}$/u', (string) $args['username'])) {
+                exit(json_encode(['statusCode' => 300, 'errorinput' => 'args[username]', 'message' => '用户名需 2-40 位，只能包含中文、字母、数字、下划线']));
+            }
+            if (!preg_match('/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/', (string) $args['useremail'])) {
+                exit(json_encode(['statusCode' => 300, 'errorinput' => 'args[useremail]', 'message' => '请输入正确的邮箱地址']));
+            }
+            if (strlen((string) $args['userpassword']) < 6) {
+                exit(json_encode(['statusCode' => 300, 'errorinput' => 'args[userpassword]', 'message' => '密码至少 6 位']));
+            }
             $defaultgroup = $this->user->getDefaultGroup();
             if (!$defaultgroup['groupid'] || !trim($args['username'])) {
                 $message = [
@@ -152,7 +161,7 @@ class action extends app
             }
             $fargs = ['username' => $username, 'usergroupid' => $defaultgroup['groupid'], 'userpassword' => md5($args['userpassword']), 'useremail' => $email];
             foreach ($fields as $key => $p) {
-                $fargs[$p['field']] = $args[$p['field']];
+                $fargs[$p['field']] = isset($args[$p['field']]) ? $args[$p['field']] : '';
             }
             $id = $this->user->insertUser($fargs);
             $this->session->setSessionUser(['sessionuserid' => $id, 'sessionpassword' => md5($args['userpassword']), 'sessionip' => $this->ev->getClientIp(), 'sessiongroupid' => $defaultgroup['groupid'], 'sessionlogintime' => TIME, 'sessionusername' => $username]);
@@ -160,7 +169,7 @@ class action extends app
                 'statusCode' => 200,
                 'message' => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => 'index.php?'.$this->G->defaultApp,
+                'forwardUrl' => 'index.php?exam-app-exam',
             ];
             exit(json_encode($message));
         }

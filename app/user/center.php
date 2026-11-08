@@ -45,7 +45,15 @@ class app
         }
         $groups = $this->user->getUserGroups();
         $this->tpl->assign('groups', $groups);
-        $this->tpl->assign('_user', $this->user->getUserById($_user['sessionuserid']));
+        $user = $this->user->getUserById($_user['sessionuserid']);
+        if (is_array($user) && $user) {
+            $group = $this->user->getGroupById($user['usergroupid']);
+            $user['groupid'] = $user['usergroupid'];
+            $user['groupmoduleid'] = isset($group['groupmoduleid']) ? $group['groupmoduleid'] : 0;
+        } else {
+            $user = [];
+        }
+        $this->tpl->assign('_user', $user);
         $this->tpl->assign('userhash', $this->ev->get('userhash'));
         $orderstatus = [1 => '待付款', 2 => '已完成', 99 => '已撤单'];
         $this->tpl->assign('orderstatus', $orderstatus);

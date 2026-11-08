@@ -64,8 +64,16 @@ class action extends app
             }
             $cnumber = $number;
             $this->ev->setCookie('number', $number);
-            $questid = $this->ev->getCookie('questype');
-            $knowsid = $this->ev->getCookie('knowsid');
+            $questid = $this->ev->get('questid') ? $this->ev->get('questid') : $this->ev->getCookie('questype');
+            $knowsid = $this->ev->get('knowsid') ? $this->ev->get('knowsid') : $this->ev->getCookie('knowsid');
+            if (!$questid && $knowsid) {
+                foreach ($this->basic->getQuestypeList() as $qtype) {
+                    if ($this->exam->getQuestionNumberByQuestypeAndKnowsid($qtype['questid'], $knowsid)) {
+                        $questid = $qtype['questid'];
+                        break;
+                    }
+                }
+            }
             if (!$questid || !$knowsid) {
                 $message = [
                     'statusCode' => 200,
@@ -79,6 +87,7 @@ class action extends app
             $this->G->make('exercise', 'exam')->setExercise($args);
             $questions = $this->question->getRandQuestionListByKnowid($knowsid, $questid);
             $allnumber = $this->exam->getQuestionNumberByQuestypeAndKnowsid($questid, $knowsid);
+            $prenumber = 0;
             $qunumber = count($questions);
             if ($number > $qunumber) {
                 $qrs = $this->question->getRandQuestionRowsListByKnowid($knowsid, $questid);
@@ -163,8 +172,15 @@ class action extends app
 
     private function paper()
     {
-        $questid = $this->ev->getCookie('questype');
-        $knowsid = $this->ev->getCookie('knowsid');
+        $questid = $this->ev->get('questype');
+        if (!$questid) {
+            $questid = $this->ev->getCookie('questype');
+        }
+        $knowsid = $this->ev->get('knowsid');
+        if (!$knowsid) {
+            $knowsid = $this->ev->getCookie('knowsid');
+        }
+        $knowsid = intval($knowsid);
         $questype = $this->basic->getQuestypeById($questid);
         $knows = $this->section->getKnowsByArgs([['AND', 'knowsid = :knowsid', 'knowsid', $knowsid]]);
         $allnumber = $this->exam->getQuestionNumberByQuestypeAndKnowsid($questid, $knowsid);
@@ -193,6 +209,10 @@ class action extends app
         $questype = $this->basic->getQuestypeList();
         $basic = $this->data['currentbasic'];
         $knows = $this->section->getAllKnowsBySubject($basic['basicsubjectid']);
+        $knowsnumbers = $this->exam->getKnowsNumbers();
+        foreach ($knows as $knowsid => $knowsrow) {
+            $knows[$knowsid]['knowsnumber'] = isset($knowsnumbers[$knowsid]) ? $knowsnumbers[$knowsid] : [];
+        }
         $sections = $this->section->getSectionListByArgs([['AND', 'sectionsubjectid = :sectionsubjectid', 'sectionsubjectid', $basic['basicsubjectid']]]);
         $record = $this->G->make('exercise', 'exam')->getExerciseProcessByUser($this->_user['sessionuserid'], $basic['basicid']);
         $this->tpl->assign('record', $record);

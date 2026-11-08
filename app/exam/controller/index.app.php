@@ -32,7 +32,7 @@ class action extends app
                 'statusCode' => 200,
                 'message' => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => 'index.php?exam-app-basics',
+                'forwardUrl' => 'index.php?exam-app-exam',
             ];
         } else {
             $message = [

@@ -1,11 +1,11 @@
-<link rel="stylesheet" href="files/public/js/codemirror/lib/codemirror.css">
-<link rel="stylesheet" href="files/public/js/codemirror/theme/monokai.css">
-<script src="files/public/js/codemirror/lib/codemirror.js"></script>
-<script src="files/public/js/codemirror/addon/edit/closetag.js"></script>
-<script src="files/public/js/codemirror/mode/xml/xml.js"></script>
-<script src="files/public/js/codemirror/mode/javascript/javascript.js"></script>
-<script src="files/public/js/codemirror/mode/css/css.js"></script>
-<script src="files/public/js/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+<link rel="stylesheet" href="files/public/js/codemirror/lib/codemirror.css?v=20261108b">
+<link rel="stylesheet" href="files/public/js/codemirror/theme/monokai.css?v=20261108b">
+<script src="files/public/js/codemirror/lib/codemirror.js?v=20261108b"></script>
+<script src="files/public/js/codemirror/addon/edit/closetag.js?v=20261108b"></script>
+<script src="files/public/js/codemirror/mode/xml/xml.js?v=20261108b"></script>
+<script src="files/public/js/codemirror/mode/javascript/javascript.js?v=20261108b"></script>
+<script src="files/public/js/codemirror/mode/css/css.js?v=20261108b"></script>
+<script src="files/public/js/codemirror/mode/htmlmixed/htmlmixed.js?v=20261108b"></script>
 <script>
     $(function(){
         $('.Codemirror').each(function(){

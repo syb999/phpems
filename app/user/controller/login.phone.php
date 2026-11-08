@@ -48,7 +48,7 @@ class action extends app
                     if (1 == $app['appsetting']['loginmodel']) {
                         $this->session->offOnlineUser($user['userid']);
                     }
-                    if (!$user['useropenid'] && $_SESSION['openid'] && USEWX) {
+                    if (!$user['useropenid'] && !empty($_SESSION['openid']) && USEWX) {
                         $this->user->modifyUserInfo(['useropenid' => $_SESSION['openid']], $user['userid']);
                     }
                     $this->session->setSessionUser(['sessionuserid' => $user['userid'], 'sessionpassword' => $user['userpassword'], 'sessionip' => $this->ev->getClientIp(), 'sessiongroupid' => $user['usergroupid'], 'sessionlogintime' => TIME, 'sessionusername' => $user['username']]);
@@ -56,13 +56,14 @@ class action extends app
                         'statusCode' => 201,
                         'message' => '操作成功',
                         'callbackType' => 'forward',
-                        'forwardUrl' => 'index.php?content-phone',
+                        'forwardUrl' => 'index.php?exam-phone-exam',
                     ];
                     if ($this->ev->get('userhash')) {
                         exit(json_encode($message));
                     }
 
-                    exit(header("location:{$message['forwardUrl']}"));
+                    header("location:{$message['forwardUrl']}");
+                    exit;
                 }
 
                 $message = [

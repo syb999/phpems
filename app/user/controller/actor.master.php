@@ -115,6 +115,8 @@ class action extends app
     private function index()
     {
         $search = $this->ev->post('search');
+        $search = is_array($search) ? $search : [];
+        $search += ['groupmoduleid' => ''];
         $args = 1;
         $page = $this->ev->get('page');
         $page = $page > 1 ? $page : 1;

@@ -890,6 +890,10 @@ class action extends app
 
     private function delarea()
     {
+        $u = '';
+        $page = intval($this->ev->get('page'));
+        $page = $page > 0 ? $page : 1;
+
         $areaid = intval($this->ev->get('areaid'));
         $this->area->delArea($areaid);
         $message = [
@@ -903,6 +907,8 @@ class action extends app
 
     private function modifyarea()
     {
+        $u = '';
+
         if ($this->ev->get('modifyarea')) {
             $args = $this->ev->get('args');
             $areaid = $this->ev->get('areaid');
@@ -926,6 +932,10 @@ class action extends app
 
     private function addarea()
     {
+        $u = '';
+        $page = intval($this->ev->get('page'));
+        $page = $page > 0 ? $page : 1;
+
         if ($this->ev->get('insertarea')) {
             $args = $this->ev->get('args');
             $id = $this->area->addArea($args);
@@ -960,6 +970,8 @@ class action extends app
 
     private function delbasic()
     {
+        $u = '';
+
         $page = $this->ev->get('page');
         $basicid = $this->ev->get('basicid');
         $this->basic->delBasic($basicid);
@@ -974,6 +986,8 @@ class action extends app
 
     private function batdelbasic()
     {
+        $u = '';
+
         $page = $this->ev->get('page');
         $basicid = $this->ev->get('basicid');
         $this->basic->delBasic($basicid);
@@ -988,6 +1002,8 @@ class action extends app
 
     private function modifybasic()
     {
+        $u = '';
+
         $page = $this->ev->get('page');
         if ($this->ev->get('modifybasic')) {
             $basicid = $this->ev->get('basicid');
@@ -1134,6 +1150,8 @@ class action extends app
 
     private function setexamrange()
     {
+        $u = '';
+
         $page = $this->ev->get('page');
         $basicid = $this->ev->get('basicid');
         if ($this->ev->get('setexamrange')) {
@@ -1186,6 +1204,8 @@ class action extends app
 
     private function add()
     {
+        $u = '';
+
         if ($this->ev->get('insertbasic')) {
             $args = $this->ev->get('args');
             $page = $this->ev->get('page');
@@ -1210,9 +1230,13 @@ class action extends app
     {
         $page = $this->ev->get('page');
         $search = $this->ev->get('search');
+        $hassearch = is_array($search) && $search;
+        $search = is_array($search) ? $search : [];
+        $search += ['basicid' => '', 'keyword' => '', 'basicareaid' => '', 'basicsubjectid' => '', 'basicapi' => '', 'basicclosed' => ''];
+        $this->tpl->assign('search', $search);
         $page = $page > 1 ? $page : 1;
         $subjects = $this->basic->getSubjectList();
-        if (!$search) {
+        if (!$hassearch) {
             $args = 1;
         } else {
             $args = [];

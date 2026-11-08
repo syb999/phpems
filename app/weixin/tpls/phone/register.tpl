@@ -1,4 +1,4 @@
-{x2;if:!empty($userhash)}
+{x2;if:empty($userhash)}
 {x2;include:header}
 <body>
 <div class="pages">
@@ -70,10 +70,10 @@
                 {x2;tree:(array)($forms ?? []),form,fid}
                 <div class="form-group underline">
                     <div class="col-3 tip">
-                        {x2;(isset(v:form['title'])?v:form['title']:'')}
+                        {x2;(isset(v:form['title']) ? v:form['title'] : '')}
                     </div>
                     <div class="col-7">
-                        {x2;(isset(v:form['html'])?v:form['html']:'')}
+                        {x2;(isset(v:form['html']) ? v:form['html'] : '')}
                     </div>
                 </div>
                 {x2;endif}
@@ -130,7 +130,7 @@
         });
     </script>
     {x2;endif}
-    {x2;if:!empty($userhash)}
+    {x2;if:empty($userhash)}
 </div>
 </body>
 </html>

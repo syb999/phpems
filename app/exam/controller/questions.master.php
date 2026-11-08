@@ -35,6 +35,8 @@ class action extends app
     // todo $u 是什么？怎么没定义
     private function makequery()
     {
+        $u = '';
+
         $message = [
             'statusCode' => 200,
             'message' => '操作成功，正在转入查询结果',
@@ -46,6 +48,8 @@ class action extends app
 
     private function filebataddquestion()
     {
+        $u = '';
+
         setlocale(LC_ALL, 'zh_CN');
         if ($this->ev->get('insertquestion')) {
             $page = $this->ev->get('page');
@@ -66,6 +70,8 @@ class action extends app
 
     private function addquestion()
     {
+        $u = '';
+
         if ($this->ev->get('insertquestion')) {
             $type = $this->ev->get('type');
             $questionparent = $this->ev->get('questionparent');
@@ -131,6 +137,8 @@ class action extends app
 
     private function bataddquestion()
     {
+        $u = '';
+
         if ($this->ev->get('insertquestion')) {
             $page = $this->ev->get('page');
             $questionparent = $this->ev->get('questionparent');
@@ -150,6 +158,8 @@ class action extends app
 
     private function delquestion()
     {
+        $u = '';
+
         $page = $this->ev->get('page');
         $questionid = $this->ev->get('questionid');
         $questionparent = $this->ev->get('questionparent');
@@ -165,6 +175,8 @@ class action extends app
 
     private function batdel()
     {
+        $u = '';
+
         $page = $this->ev->get('page');
         $delids = $this->ev->get('delids');
         foreach ($delids as $questionid => $p) {
@@ -195,6 +207,8 @@ class action extends app
 
     private function modifyquestion()
     {
+        $u = '';
+
         if ($this->ev->get('modifyquestion')) {
             $page = $this->ev->get('page');
             $args = $this->ev->get('args');
@@ -318,6 +332,10 @@ class action extends app
     private function index()
     {
         $search = $this->ev->get('search');
+        $hassearch = is_array($search) && $search;
+        $search = is_array($search) ? $search : [];
+        $search += ['questionid' => '', 'keyword' => '', 'knowsids' => '', 'stime' => '', 'etime' => '', 'questiontype' => '', 'questionlevel' => '', 'questionknowsid' => '', 'questionsectionid' => '', 'questionsubjectid' => ''];
+        $this->tpl->assign('search', $search);
         $page = $this->ev->get('page');
         $page = $page > 0 ? $page : 1;
         $args = [['AND', 'quest2knows.qkquestionid = questions.questionid'], ['AND', "questions.questionstatus = '1'"], ['AND', 'questions.questionparent = 0'], ['AND', 'quest2knows.qktype = 0']];
@@ -365,7 +383,7 @@ class action extends app
             }
         }
         $questypes = $this->basic->getQuestypeList();
-        if ($search) {
+        if ($hassearch) {
             $questions = $this->exam->getQuestionsList($page, 10, $args);
         } else {
             $questions = $this->exam->getSimpleQuestionsList($page, 10, [['AND', "questionstatus = '1'"], ['AND', 'questionparent = 0']]);

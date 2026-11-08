@@ -1,4 +1,4 @@
-{x2;if:!empty($userhash)}
+{x2;if:empty($userhash)}
 {x2;include:header}
 <body>
 {x2;include:nav}
@@ -13,7 +13,7 @@
                 <div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
                         <div class="col-xs-12">
                             <ol class="breadcrumb">
-                                <li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master">{x2;(isset($apps[$_app]['appname'])?$apps[$_app]['appname']:'')}</a></li>
+                                <li><a href="index.php?{x2;(isset($_app) ? $_app : '')}-master">{x2;(isset($apps[$_app]['appname']) ? $apps[$_app]['appname'] : '')}</a></li>
                                 <li class="active">表单列表</li>
                             </ol>
                         </div>
@@ -36,14 +36,14 @@
                             <tbody>
                                 {x2;tree:(array)($modules['data'] ?? []),module,mid}
                                 <tr>
-                                    <td>{x2;(isset(v:module['moduleid'])?v:module['moduleid']:'')}</td>
-                                    <td>{x2;(isset(v:module['modulename'])?v:module['modulename']:'')}</td>
-                                    <td>{x2;(isset(v:module['modulecode'])?v:module['modulecode']:'')}</td>
-                                    <td>autoform_{x2;(isset(v:module['modulecode'])?v:module['modulecode']:'')}</td>
-                                    <td>{x2;(isset(v:module['moduledescribe'])?v:module['moduledescribe']:'')}</td>
+                                    <td>{x2;(isset(v:module['moduleid']) ? v:module['moduleid'] : '')}</td>
+                                    <td>{x2;(isset(v:module['modulename']) ? v:module['modulename'] : '')}</td>
+                                    <td>{x2;(isset(v:module['modulecode']) ? v:module['modulecode'] : '')}</td>
+                                    <td>autoform_{x2;(isset(v:module['modulecode']) ? v:module['modulecode'] : '')}</td>
+                                    <td>{x2;(isset(v:module['moduledescribe']) ? v:module['moduledescribe'] : '')}</td>
                                     <td>
                                         <div class="btn-group">
-                                            <a class="btn" href="index.php?{x2;(isset($_app)?$_app:'')}-master-datas-records&moduleid={x2;(isset(v:module['moduleid'])?v:module['moduleid']:'')}&page={x2;(isset($page)?$page:'')}{x2;(isset($u)?$u:'')}" title="数据"><em class="glyphicon glyphicon-list"></em></a>
+                                            <a class="btn" href="index.php?{x2;(isset($_app) ? $_app : '')}-master-datas-records&moduleid={x2;(isset(v:module['moduleid']) ? v:module['moduleid'] : '')}&page={x2;(isset($page) ? $page : '')}{x2;(isset($u) ? $u : '')}" title="数据"><em class="glyphicon glyphicon-list"></em></a>
                                         </div>
                                     </td>
                                 </tr>
@@ -51,12 +51,12 @@
                             </tbody>
                         </table>
                         <ul class="pagination pull-right">
-                            {x2;(isset($modules['pages'])?$modules['pages']:'')}
+                            {x2;(isset($modules['pages']) ? $modules['pages'] : '')}
                         </ul>
                     </div>
                 </div>
             </div>
-{x2;if:!empty($userhash)}
+{x2;if:empty($userhash)}
         </div>
     </div>
 </div>

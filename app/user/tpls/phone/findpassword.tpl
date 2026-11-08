@@ -1,4 +1,4 @@
-{x2;if:!empty($userhash)}
+{x2;if:empty($userhash)}
 {x2;include:header}
 <body>
 <div class="pages">
@@ -111,7 +111,7 @@
         });
     </script>
     {x2;endif}
-    {x2;if:!empty($userhash)}
+    {x2;if:empty($userhash)}
 </div>
 </body>
 </html>

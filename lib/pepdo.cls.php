@@ -28,6 +28,9 @@ class pepdo
     {
         if ($this->log) {
             $fp = fopen(__DIR__.'/../data/log/'.date('Ymd').'.log', 'a');
+            if (!$fp) {
+                return;
+            }
             fputs($fp, print_r($sql, true).print_r($query->errorInfo(), true));
             fclose($fp);
         }
@@ -218,7 +221,7 @@ class pepdo
         $pg = $this->G->make('pg');
         $page = $page > 0 ? $page : 1;
         $r = [];
-        $data = [$args['select'], $args['table'], $args['query'], isset($args['groupby']) ? $args['groupby'] : null, isset($args['orderby']) ? $args['orderby'] : null, [intval($page - 1) * $number, $number]];
+        $data = [isset($args['select']) ? $args['select'] : false, $args['table'], $args['query'], isset($args['groupby']) ? $args['groupby'] : null, isset($args['orderby']) ? $args['orderby'] : null, [intval($page - 1) * $number, $number]];
         $sql = $this->sql->makeSelect($data, $tablepre);
         $r['data'] = $this->fetchAll($sql, isset($args['index']) ? $args['index'] : false, isset($args['serial']) ? $args['serial'] : false);
         $data = ['count(*) AS number', $args['table'], $args['query']];

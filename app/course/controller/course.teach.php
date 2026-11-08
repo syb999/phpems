@@ -119,6 +119,8 @@ class action extends app
 
     private function edit()
     {
+        $u = '';
+
         $page = intval($this->ev->get('page'));
         $courseid = intval($this->ev->get('courseid'));
         $course = $this->course->getCourseById($courseid);
@@ -259,6 +261,8 @@ class action extends app
 
     private function lite()
     {
+        $u = '';
+
         $catid = $this->ev->get('catid');
         $page = $this->ev->get('page');
         $this->tpl->assign('catid', $catid);

@@ -1,4 +1,4 @@
-{x2;if:!empty($userhash)}
+{x2;if:empty($userhash)}
 {x2;include:header}
 <body>
 {x2;include:nav}
@@ -16,10 +16,10 @@
                 <div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
                     <div class="col-xs-12">
                         <ol class="breadcrumb">
-                            <li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master">{x2;(isset($apps[$_app]['appname'])?$apps[$_app]['appname']:'')}</a></li>
+                            <li><a href="index.php?{x2;(isset($_app) ? $_app : '')}-master">{x2;(isset($apps[$_app]['appname']) ? $apps[$_app]['appname'] : '')}</a></li>
                             {x2;if:!empty($catid)}
-                            <li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master-seminars">专题管理</a></li>
-                            <li class="active">{x2;(isset($categories[$catid]['catname'])?$categories[$catid]['catname']:'')}</li>
+                            <li><a href="index.php?{x2;(isset($_app) ? $_app : '')}-master-seminars">专题管理</a></li>
+                            <li class="active">{x2;(isset($categories[$catid]['catname']) ? $categories[$catid]['catname'] : '')}</li>
                             {x2;else}
                             <li class="active">专题管理</li>
                             {x2;endif}
@@ -28,7 +28,7 @@
                 </div>
                 <div class="box itembox" style="padding-top:10px;margin-bottom:0px;overflow:visible">
                     <h4 class="title" style="padding:10px;">
-                        {x2;if:!empty($catid)}{x2;(isset($categories[$catid]['catname'])?$categories[$catid]['catname']:'')}{x2;else}所有专题{x2;endif}
+                        {x2;if:!empty($catid)}{x2;(isset($categories[$catid]['catname']) ? $categories[$catid]['catname'] : '')}{x2;else}所有专题{x2;endif}
                         <span class="pull-right">
                             <a class="btn btn-primary" href="index.php?seminar-master-seminar-add">添加专题</a>
                         </span>
@@ -40,19 +40,19 @@
                                     专题ID：
                                 </td>
                                 <td style="border-top: 0px;">
-                                    <input name="search[seminarid]" class="form-control" size="15" type="text" class="number" value="{x2;(isset($search['seminarid'])?$search['seminarid']:'')}"/>
+                                    <input name="search[seminarid]" class="form-control" size="15" type="text" class="number" value="{x2;(isset($search['seminarid']) ? $search['seminarid'] : '')}"/>
                                 </td>
                                 <td style="border-top: 0px;">
                                     录入时间：
                                 </td>
                                 <td style="border-top: 0px;">
-                                    <input class="form-control datetimepicker" data-date="{x2;date:TIME,'Y-m-d'}" data-date-format="yyyy-mm-dd" type="text" name="search[stime]" size="10" id="stime" value="{x2;(isset($search['stime'])?$search['stime']:'')}"/> - <input class="form-control datetimepicker" data-date="{x2;date:TIME,'Y-m-d'}" data-date-format="yyyy-mm-dd" size="10" type="text" name="search[etime]" id="etime" value="{x2;(isset($search['etime'])?$search['etime']:'')}"/>
+                                    <input class="form-control datetimepicker" data-date="{x2;date:TIME,'Y-m-d'}" data-date-format="yyyy-mm-dd" type="text" name="search[stime]" size="10" id="stime" value="{x2;(isset($search['stime']) ? $search['stime'] : '')}"/> - <input class="form-control datetimepicker" data-date="{x2;date:TIME,'Y-m-d'}" data-date-format="yyyy-mm-dd" size="10" type="text" name="search[etime]" id="etime" value="{x2;(isset($search['etime']) ? $search['etime'] : '')}"/>
                                 </td>
                                 <td style="border-top: 0px;">
                                     标题关键字：
                                 </td>
                                 <td style="border-top: 0px;">
-                                    <input class="form-control" name="search[keyword]" size="15" type="text" value="{x2;(isset($search['keyword'])?$search['keyword']:'')}"/>
+                                    <input class="form-control" name="search[keyword]" size="15" type="text" value="{x2;(isset($search['keyword']) ? $search['keyword'] : '')}"/>
                                 </td>
                             </tr>
                             <tr>
@@ -60,13 +60,13 @@
                                     录入人：
                                 </td>
                                 <td>
-                                    <input class="form-control" name="search[username]" size="15" type="text" value="{x2;(isset($search['username'])?$search['username']:'')}"/>
+                                    <input class="form-control" name="search[username]" size="15" type="text" value="{x2;(isset($search['username']) ? $search['username'] : '')}"/>
                                 </td>
                                 <td>
                                     最后修改人：
                                 </td>
                                 <td>
-                                    <input class="form-control" name="search[modifier]" size="15" type="text" value="{x2;(isset($search['modifier'])?$search['modifier']:'')}"/>
+                                    <input class="form-control" name="search[modifier]" size="15" type="text" value="{x2;(isset($search['modifier']) ? $search['modifier'] : '')}"/>
                                 </td>
                                 <td>
                                     <button class="btn btn-primary" type="submit">提交</button>
@@ -75,7 +75,7 @@
                             </tr>
                         </table>
                         <div class="input">
-                            <input type="hidden" value="{x2;(isset($catid)?$catid:'')}" name="catid" />
+                            <input type="hidden" value="{x2;(isset($catid) ? $catid : '')}" name="catid" />
                             <input type="hidden" value="1" name="search[argsmodel]" />
                         </div>
                     </form>
@@ -100,34 +100,34 @@
                                 <tbody>
                                     {x2;tree:(array)($seminars['data'] ?? []),seminar,cid}
                                     <tr>
-                                        <td><input type="checkbox" name="delids[{x2;(isset(v:seminar['seminarid'])?v:seminar['seminarid']:'')}]" value="1"></td>
-                                        <td><input class="form-control" type="text" name="ids[{x2;(isset(v:seminar['seminarid'])?v:seminar['seminarid']:'')}]" value="{x2;(isset(v:seminar['seminarorder'])?v:seminar['seminarorder']:'')}" style="width:32px;padding:2px 5px;"/></td>
-                                        <td>{x2;(isset(v:seminar['seminarid'])?v:seminar['seminarid']:'')}</td>
-                                        <td class="picture"><img src="{x2;if:!empty(v:seminar['seminarthumb'])}{x2;(isset(v:seminar['seminarthumb'])?v:seminar['seminarthumb']:'')}{x2;else}app/core/styles/images/noupload.gif{x2;endif}" alt="" style="width:48px;"/></td>
+                                        <td><input type="checkbox" name="delids[{x2;(isset(v:seminar['seminarid']) ? v:seminar['seminarid'] : '')}]" value="1"></td>
+                                        <td><input class="form-control" type="text" name="ids[{x2;(isset(v:seminar['seminarid']) ? v:seminar['seminarid'] : '')}]" value="{x2;(isset(v:seminar['seminarorder']) ? v:seminar['seminarorder'] : '')}" style="width:32px;padding:2px 5px;"/></td>
+                                        <td>{x2;(isset(v:seminar['seminarid']) ? v:seminar['seminarid'] : '')}</td>
+                                        <td class="picture"><img src="{x2;if:!empty(v:seminar['seminarthumb'])}{x2;(isset(v:seminar['seminarthumb']) ? v:seminar['seminarthumb'] : '')}{x2;else}app/core/styles/images/noupload.gif{x2;endif}" alt="" style="width:48px;"/></td>
                                         <td>
-                                            {x2;(isset(v:seminar['seminartitle'])?v:seminar['seminartitle']:'')}
+                                            {x2;(isset(v:seminar['seminartitle']) ? v:seminar['seminartitle'] : '')}
                                         </td>
                                         <td>
-                                            <a href="index.php?seminar-master-seminars&catid={x2;(isset(v:seminar['seminarcatid'])?v:seminar['seminarcatid']:'')}" target="">{x2;(isset($categories[v:seminar['seminarcatid']]['catname'])?$categories[v:seminar['seminarcatid']]['catname']:'')}</a>
+                                            <a href="index.php?seminar-master-seminars&catid={x2;(isset(v:seminar['seminarcatid']) ? v:seminar['seminarcatid'] : '')}" target="">{x2;(isset($categories[v:seminar['seminarcatid']]['catname']) ? $categories[v:seminar['seminarcatid']]['catname'] : '')}</a>
                                         </td>
                                         <td>
-                                            {x2;date:v:seminar['seminartime'],'y-m-d'}
+                                            {x2;date:v:seminar['seminartime'] ?? 0,'y-m-d'}
                                         </td>
                                         <td>
-                                            {x2;(isset(v:seminar['seminarusername'])?v:seminar['seminarusername']:'')}
+                                            {x2;(isset(v:seminar['seminarusername']) ? v:seminar['seminarusername'] : '')}
                                         </td>
                                         <td>
-                                            {x2;date:v:seminar['seminarmodifytime'],'y-m-d'}
+                                            {x2;date:v:seminar['seminarmodifytime'] ?? 0,'y-m-d'}
                                         </td>
                                         <td>
-                                            {x2;(isset(v:seminar['seminarmodifier'])?v:seminar['seminarmodifier']:'')}
+                                            {x2;(isset(v:seminar['seminarmodifier']) ? v:seminar['seminarmodifier'] : '')}
                                         </td>
                                         <td class="actions">
                                             <div class="btn-group">
-                                                <a class="btn" target="_blank" href="index.php?seminar-master-seminar-showcode&seminarid={x2;(isset(v:seminar['seminarid'])?v:seminar['seminarid']:'')}&page={x2;(isset($page)?$page:'')}{x2;(isset($u)?$u:'')}" title="预览"><em class="glyphicon glyphicon-search"></em></a>
-                                                <a class="btn" href="index.php?seminar-master-seminar-layout&seminarid={x2;(isset(v:seminar['seminarid'])?v:seminar['seminarid']:'')}&page={x2;(isset($page)?$page:'')}{x2;(isset($u)?$u:'')}" title="通栏"><em class="glyphicon glyphicon-cog"></em></a>
-                                                <a class="btn" href="index.php?seminar-master-seminar-modify&seminarid={x2;(isset(v:seminar['seminarid'])?v:seminar['seminarid']:'')}&page={x2;(isset($page)?$page:'')}{x2;(isset($u)?$u:'')}" title="修改"><em class="glyphicon glyphicon-edit"></em></a>
-                                                <a class="btn confirm" href="index.php?seminar-master-seminar-del&seminarid={x2;(isset(v:seminar['seminarid'])?v:seminar['seminarid']:'')}&page={x2;(isset($page)?$page:'')}{x2;(isset($u)?$u:'')}" title="删除"><em class="glyphicon glyphicon-remove"></em></a>
+                                                <a class="btn" target="_blank" href="index.php?seminar-master-seminar-showcode&seminarid={x2;(isset(v:seminar['seminarid']) ? v:seminar['seminarid'] : '')}&page={x2;(isset($page) ? $page : '')}{x2;(isset($u) ? $u : '')}" title="预览"><em class="glyphicon glyphicon-search"></em></a>
+                                                <a class="btn" href="index.php?seminar-master-seminar-layout&seminarid={x2;(isset(v:seminar['seminarid']) ? v:seminar['seminarid'] : '')}&page={x2;(isset($page) ? $page : '')}{x2;(isset($u) ? $u : '')}" title="通栏"><em class="glyphicon glyphicon-cog"></em></a>
+                                                <a class="btn" href="index.php?seminar-master-seminar-modify&seminarid={x2;(isset(v:seminar['seminarid']) ? v:seminar['seminarid'] : '')}&page={x2;(isset($page) ? $page : '')}{x2;(isset($u) ? $u : '')}" title="修改"><em class="glyphicon glyphicon-edit"></em></a>
+                                                <a class="btn confirm" href="index.php?seminar-master-seminar-del&seminarid={x2;(isset(v:seminar['seminarid']) ? v:seminar['seminarid'] : '')}&page={x2;(isset($page) ? $page : '')}{x2;(isset($u) ? $u : '')}" title="删除"><em class="glyphicon glyphicon-remove"></em></a>
                                             </div>
                                         </td>
                                     </tr>
@@ -149,31 +149,31 @@
                                         <input type="radio" name="action" value="delete" />删除
                                     </label>
                                     {x2;if:isset($search) && is_array($search)}{x2;tree:(array)($search ?? []),arg,sid}
-                                    <input type="hidden" name="search[{x2;(isset(v:key)?v:key:'')}]" value="{x2;(isset(v:arg)?v:arg:'')}"/>
+                                    <input type="hidden" name="search[{x2;(isset(v:key) ? v:key : '')}]" value="{x2;(isset(v:arg) ? v:arg : '')}"/>
                                     {x2;endtree}{x2;endif}
                                     <label class="radio-inline">
                                         <button class="btn btn-primary" type="submit">提交</button>
                                     </label>
                                     <input type="hidden" name="submit" value="1"/>
-                                    <input type="hidden" name="catid" value="{x2;(isset($catid)?$catid:'')}"/>
-                                    <input type="hidden" name="page" value="{x2;(isset($page)?$page:'')}"/>
+                                    <input type="hidden" name="catid" value="{x2;(isset($catid) ? $catid : '')}"/>
+                                    <input type="hidden" name="page" value="{x2;(isset($page) ? $page : '')}"/>
                                 </div>
                             </div>
                             <ul class="pagination pull-right">
-                                {x2;(isset($seminars['pages'])?$seminars['pages']:'')}
+                                {x2;(isset($seminars['pages']) ? $seminars['pages'] : '')}
                             </ul>
                         </fieldset>
                     </form>
                 </div>
             </div>
-{x2;if:!empty($userhash)}
+{x2;if:empty($userhash)}
         </div>
     </div>
 </div>
-<script src="index.php?{x2;(isset($_app)?$_app:'')}-master-seminar-catsmenu&catid={x2;(isset($catid)?$catid:'')}"></script>
+<script src="index.php?{x2;(isset($_app) ? $_app : '')}-master-seminar-catsmenu&catid={x2;(isset($catid) ? $catid : '')}"></script>
 <script>
     $('#catsmenu').treeview({
-        levels: {x2;(isset($catlevel)?$catlevel:'')},
+        levels: {x2;(isset($catlevel) ? $catlevel : '')},
         expandIcon: 'glyphicon glyphicon-chevron-right',
         collapseIcon: 'glyphicon glyphicon-chevron-down',
         selectedColor: "#000000",

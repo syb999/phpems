@@ -11,8 +11,8 @@
  foreach((array)($this->tpl_var['topimgs']['data'] ?? []) as $key => $content){ 
  $cid++; ?>
                     <div class="swiper-slide">
-                        <a class="ajax" href="index.php?content-phone-content&contentid={x2;(isset(v:content['pccontentid'])?v:content['pccontentid']:'')}">
-                            <img src="{x2;(isset(v:content['pcthumb'])?v:content['pcthumb']:'')}" style="max-width: 100%;"/>
+                        <a class="ajax" href="index.php?content-phone-content&contentid=<?php echo (isset($content['pccontentid'])?$content['pccontentid']:''); ?>">
+                            <img src="<?php echo (isset($content['pcthumb'])?$content['pcthumb']:''); ?>" style="max-width: 100%;"/>
                         </a>
                     </div>
                     <?php } ?>
@@ -29,9 +29,9 @@
  $lid++; ?>
                     <li class="unstyled">
                         <div class="rows">
-                            <a class="ajax" href="index.php?content-phone-content&contentid={x2;(isset(v:content['contentid'])?v:content['contentid']:'')}">
+                            <a class="ajax" href="index.php?content-phone-content&contentid=<?php echo (isset($content['contentid'])?$content['contentid']:''); ?>">
                                 <div class="intro">
-                                    {x2;(isset(v:content['contenttitle'])?v:content['contenttitle']:'')}
+                                    <?php echo (isset($content['contenttitle'])?$content['contenttitle']:''); ?>
                                 </div>
                             </a>
                         </div>
@@ -49,9 +49,9 @@
  $cid++; ?>
                     <li class="unstyled">
                         <div class="rows">
-                            <a class="ajax" href="index.php?content-phone-content&contentid={x2;(isset(v:content['contentid'])?v:content['contentid']:'')}">
+                            <a class="ajax" href="index.php?content-phone-content&contentid=<?php echo (isset($content['contentid'])?$content['contentid']:''); ?>">
                                 <div class="intro">
-                                    {x2;(isset(v:content['contenttitle'])?v:content['contenttitle']:'')}
+                                    <?php echo (isset($content['contenttitle'])?$content['contenttitle']:''); ?>
                                 </div>
                             </a>
                         </div>
@@ -101,15 +101,15 @@
                     <li class="unstyled">
                         <div class="col-4x">
                             <div class="rows illus">
-                                <a href="index.php?course-phone-course&csid={x2;(isset(v:content['csid'])?v:content['csid']:'')}" class="ajax">
-                                    <img src="<?php if(!empty($content['csthumb'])){ ?>{x2;(isset(v:content['csthumb'])?v:content['csthumb']:'')}<?php } else { ?>files/public/img/paper.jpg<?php } ?>">
+                                <a href="index.php?course-phone-course&csid=<?php echo (isset($content['csid'])?$content['csid']:''); ?>" class="ajax">
+                                    <img src="<?php if(!empty($content['csthumb'])){ ?><?php echo (isset($content['csthumb'])?$content['csthumb']:''); ?><?php } else { ?>files/public/img/paper.jpg<?php } ?>">
                                 </a>
                             </div>
                         </div>
                         <div class="col-4l">
-                            <a href="index.php?course-phone-course&csid={x2;(isset(v:content['csid'])?v:content['csid']:'')}" class="ajax">
+                            <a href="index.php?course-phone-course&csid=<?php echo (isset($content['csid'])?$content['csid']:''); ?>" class="ajax">
                                 <div class="rows info">
-                                    <h5 class="title">{x2;(isset(v:content['cstitle'])?v:content['cstitle']:'')}</h5>
+                                    <h5 class="title"><?php echo (isset($content['cstitle'])?$content['cstitle']:''); ?></h5>
                                     <p class="intro"><?php echo $this->G->make('strings')->subString($content['csdescribe'],42); ?></p>
                                 </div>
                             </a>
@@ -161,13 +161,13 @@
                         <div class="col-4x">
                             <div class="rows illus">
                                 <?php if(!empty($this->tpl_var['data']['openbasics'][$basic['basicid']])){ ?><span class="badge">已开通</span> <?php } ?>
-                                <img src="<?php if(!empty($basic['basicthumb'])){ ?>{x2;(isset(v:basic['basicthumb'])?v:basic['basicthumb']:'')}<?php } else { ?>files/public/img/paper.jpg<?php } ?>">
+                                <img src="<?php if(!empty($basic['basicthumb'])){ ?><?php echo (isset($basic['basicthumb'])?$basic['basicthumb']:''); ?><?php } else { ?>files/public/img/paper.jpg<?php } ?>">
                             </div>
                         </div>
                         <div class="col-4l">
-                            <a href="index.php?exam-phone-basics-detail&basicid={x2;(isset(v:basic['basicid'])?v:basic['basicid']:'')}" class="ajax">
+                            <a href="index.php?exam-phone-basics-detail&basicid=<?php echo (isset($basic['basicid'])?$basic['basicid']:''); ?>" class="ajax">
                                 <div class="rows info">
-                                    <h5 class="title">{x2;(isset(v:basic['basic'])?v:basic['basic']:'')}</h5>
+                                    <h5 class="title"><?php echo (isset($basic['basic'])?$basic['basic']:''); ?></h5>
                                     <p class="intro"><?php echo $this->G->make('strings')->subString($basic['basicdescribe'],72); ?></p>
                                 </div>
                             </a>
@@ -216,14 +216,14 @@
                     <li class="unstyled">
                         <div class="col-4">
                             <div class="rows illus">
-                                <img src="<?php if(!empty($this->tpl_var['_user']['userphoto'])){ ?>{x2;(isset($_user['userphoto'])?$_user['userphoto']:'')}<?php } else { ?>files/public/img/paper.jpg<?php } ?>"/>
+                                <img src="<?php if(!empty($this->tpl_var['_user']['userphoto'])){ ?><?php echo (isset($this->tpl_var['_user']['userphoto'])?$this->tpl_var['_user']['userphoto']:''); ?><?php } else { ?>files/public/img/paper.jpg<?php } ?>"/>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="rows info">
-                                <h5 class="title">{x2;(isset($_user['username'])?$_user['username']:'')}</h5>
-                                <p class="intro">手机号：{x2;(isset($_user['userphone'])?$_user['userphone']:'')}</p>
-                                <p class="intro">积分：{x2;(isset($_user['usercoin'])?$_user['usercoin']:'')}</p>
+                                <h5 class="title"><?php echo (isset($this->tpl_var['_user']['username'])?$this->tpl_var['_user']['username']:''); ?></h5>
+                                <p class="intro">手机号：<?php echo (isset($this->tpl_var['_user']['userphone'])?$this->tpl_var['_user']['userphone']:''); ?></p>
+                                <p class="intro">积分：<?php echo (isset($this->tpl_var['_user']['usercoin'])?$this->tpl_var['_user']['usercoin']:''); ?></p>
                             </div>
                         </div>
                     </li>

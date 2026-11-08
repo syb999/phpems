@@ -92,6 +92,8 @@ class action extends app
 
     private function edit()
     {
+        $u = '';
+
         $page = intval($this->ev->get('page'));
         if ($this->ev->get('submit')) {
             $contentid = intval($this->ev->get('contentid'));
@@ -161,6 +163,8 @@ class action extends app
 
     private function lite()
     {
+        $u = '';
+
         $catid = $this->ev->get('catid');
         $page = $this->ev->get('page');
         $this->tpl->assign('catid', $catid);
@@ -318,6 +322,12 @@ class action extends app
     private function index()
     {
         $search = $this->ev->get('search');
+        $search = is_array($search) ? $search : [];
+        foreach (['argsmodel','attid','atttype','basicid','blockid','catid','certificateid','contentcatid','contentid','contentmoduleid','contentsubjectid','couponid','courseid','cscatid','doccatid','docid','docistop','docneedmore','docsyslock','etime','filecatid','filesubjectid','groupid','keyword','orderid','positionid','qrid','qrlevel','questionid','questionknowsid','questionlevel','questionsectionid','questionsubjectid','questiontype','seminarcatid','seminarid','status','stime','subjectid','tplid','type','useremail','userid','username'] as $searchkey) {
+            if (!isset($search[$searchkey])) {
+                $search[$searchkey] = '';
+            }
+        }
         $catid = intval($this->ev->get('catid'));
         $page = intval($this->ev->get('page'));
         $page = $page ? $page : 1;

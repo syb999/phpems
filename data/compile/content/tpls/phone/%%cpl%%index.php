@@ -21,9 +21,9 @@
  foreach((array)($this->tpl_var['contents'][2]['data'] ?? []) as $key => $content){ 
  $cid++; ?>
                         <div class="swiper-slide">
-                            <a href="index.php?content-phone-content&contentid={x2;(isset(v:content['contentid'])?v:content['contentid']:'')}" class="ajax"
+                            <a href="index.php?content-phone-content&contentid=<?php echo (isset($content['contentid'])?$content['contentid']:''); ?>" class="ajax"
                                data-page="rollpage" data-target="rollpage">
-                                <img src="{x2;(isset(v:content['contentthumb'])?v:content['contentthumb']:'')}">
+                                <img src="<?php echo (isset($content['contentthumb'])?$content['contentthumb']:''); ?>">
                             </a>
                         </div>
                         <?php } ?>
@@ -112,14 +112,14 @@
  $ehid++; ?>
                         <div class="item">
                             <?php if($eh['ehscore']>=80){ ?>
-                            <div class="alert alert-success">{x2;(isset(v:eh['ehusername'])?v:eh['ehusername']:'')}
-                                于 <?php echo date('H:i',$eh['ehstarttime']); ?> 参加《{x2;(isset($basic[v:eh['ehbasicid']])?$basic[v:eh['ehbasicid']]:'')}》测试，得分 {x2;(isset(v:eh['ehscore'])?v:eh['ehscore']:'')}</div>
+                            <div class="alert alert-success"><?php echo (isset($eh['ehusername'])?$eh['ehusername']:''); ?>
+                                于 <?php echo date('H:i',$eh['ehstarttime']); ?> 参加《<?php echo (isset($this->tpl_var['basic'][$eh['ehbasicid']])?$this->tpl_var['basic'][$eh['ehbasicid']]:''); ?>》测试，得分 <?php echo (isset($eh['ehscore'])?$eh['ehscore']:''); ?></div>
                             <?php } elseif($eh['ehscore']>60 && $eh['ehscore']<80){ ?>
-                            <div class="alert alert-warning">{x2;(isset(v:eh['ehusername'])?v:eh['ehusername']:'')}
-                                于 <?php echo date('H:i',$eh['ehstarttime']); ?> 参加《{x2;(isset($basic[v:eh['ehbasicid']])?$basic[v:eh['ehbasicid']]:'')}》测试，得分 {x2;(isset(v:eh['ehscore'])?v:eh['ehscore']:'')}</div>
+                            <div class="alert alert-warning"><?php echo (isset($eh['ehusername'])?$eh['ehusername']:''); ?>
+                                于 <?php echo date('H:i',$eh['ehstarttime']); ?> 参加《<?php echo (isset($this->tpl_var['basic'][$eh['ehbasicid']])?$this->tpl_var['basic'][$eh['ehbasicid']]:''); ?>》测试，得分 <?php echo (isset($eh['ehscore'])?$eh['ehscore']:''); ?></div>
                             <?php } else { ?>
-                            <div class="alert alert-danger">{x2;(isset(v:eh['ehusername'])?v:eh['ehusername']:'')}
-                                于 <?php echo date('H:i',$eh['ehstarttime']); ?> 参加《{x2;(isset($basic[v:eh['ehbasicid']])?$basic[v:eh['ehbasicid']]:'')}》测试，得分 {x2;(isset(v:eh['ehscore'])?v:eh['ehscore']:'')}</div>
+                            <div class="alert alert-danger"><?php echo (isset($eh['ehusername'])?$eh['ehusername']:''); ?>
+                                于 <?php echo date('H:i',$eh['ehstarttime']); ?> 参加《<?php echo (isset($this->tpl_var['basic'][$eh['ehbasicid']])?$this->tpl_var['basic'][$eh['ehbasicid']]:''); ?>》测试，得分 <?php echo (isset($eh['ehscore'])?$eh['ehscore']:''); ?></div>
                             <?php } ?>
                         </div>
                         <?php } ?>
@@ -139,13 +139,13 @@
  $bid++; ?>
                     <div class="col-xs-6" style="padding:3px;">
                         <div style="background-color:#FFFFFF;padding:7px">
-                            <a href="index.php?exam-phone-index-setCurrentBasic&basicid={x2;(isset(v:basic['basicid'])?v:basic['basicid']:'')}"
+                            <a href="index.php?exam-phone-index-setCurrentBasic&basicid=<?php echo (isset($basic['basicid'])?$basic['basicid']:''); ?>"
                                class="ajax" data-target="basic" data-page="basic">
-                                <img src="{x2;(isset(v:basic['basicthumb'])?v:basic['basicthumb']:'')}" style="width:100%;"/>
+                                <img src="<?php echo (isset($basic['basicthumb'])?$basic['basicthumb']:''); ?>" style="width:100%;"/>
                             </a>
                             <h5 class="text-center">
-                                <a href="index.php?exam-phone-index-setCurrentBasic&basicid={x2;(isset(v:basic['basicid'])?v:basic['basicid']:'')}"
-                                   class="ajax" data-target="basic" data-page="basic">{x2;(isset(v:basic['basic'])?v:basic['basic']:'')}</a>
+                                <a href="index.php?exam-phone-index-setCurrentBasic&basicid=<?php echo (isset($basic['basicid'])?$basic['basicid']:''); ?>"
+                                   class="ajax" data-target="basic" data-page="basic"><?php echo (isset($basic['basic'])?$basic['basic']:''); ?></a>
                             </h5>
                         </div>
                     </div>
@@ -165,14 +165,14 @@
  $cid++; ?>
                     <div class="col-xs-6" style="padding:3px;">
                         <div style="background-color:#FFFFFF;padding:7px">
-                            <a class="ajax" href="index.php?course-phone-course&csid={x2;(isset(v:course['csid'])?v:course['csid']:'')}"
+                            <a class="ajax" href="index.php?course-phone-course&csid=<?php echo (isset($course['csid'])?$course['csid']:''); ?>"
                                data-target="courseplatform" data-page="courseplatform" style="width:8rem;">
-                                <img src="{x2;(isset(v:course['csthumb'])?v:course['csthumb']:'')}" style="width:100%;" alt="{x2;(isset(v:course['cstitle'])?v:course['cstitle']:'')}">
+                                <img src="<?php echo (isset($course['csthumb'])?$course['csthumb']:''); ?>" style="width:100%;" alt="<?php echo (isset($course['cstitle'])?$course['cstitle']:''); ?>">
                             </a>
                             <h5 class="text-center"><a class="ajax"
-                                                       href="index.php?course-phone-course&csid={x2;(isset(v:course['csid'])?v:course['csid']:'')}"
+                                                       href="index.php?course-phone-course&csid=<?php echo (isset($course['csid'])?$course['csid']:''); ?>"
                                                        data-target="courseplatform"
-                                                       data-page="courseplatform">{x2;(isset(v:course['cstitle'])?v:course['cstitle']:'')}</a></h5>
+                                                       data-page="courseplatform"><?php echo (isset($course['cstitle'])?$course['cstitle']:''); ?></a></h5>
                         </div>
                     </div>
                     <?php } ?>
@@ -196,9 +196,9 @@
                     <div class="media">
                         <div class="media-body">
                             <h5 class="media-heading"><a class="ajax"
-                                                         href="index.php?content-phone-content&contentid={x2;(isset(v:content['contentid'])?v:content['contentid']:'')}"
+                                                         href="index.php?content-phone-content&contentid=<?php echo (isset($content['contentid'])?$content['contentid']:''); ?>"
                                                          data-target="contentpage"
-                                                         data-page="contentpage">{x2;(isset(v:content['contenttitle'])?v:content['contenttitle']:'')}</a></h5>
+                                                         data-page="contentpage"><?php echo (isset($content['contenttitle'])?$content['contenttitle']:''); ?></a></h5>
                             <p style="font-size:0.8rem;"><?php echo $this->G->make('strings')->subString($content['contentdescribe'],81); ?> </p>
                         </div>
                     </div>
@@ -227,10 +227,10 @@
 <script>
     wx.config({
         debug: false,
-        appId: '{x2;(isset(v:signPackage['appId'])?v:signPackage['appId']:'')}',
-        timestamp: {x2;(isset(v:signPackage['timestamp'])?v:signPackage['timestamp']:'')},
-        nonceStr: '{x2;(isset(v:signPackage['nonceStr'])?v:signPackage['nonceStr']:'')}',
-        signature: '{x2;(isset(v:signPackage['signature'])?v:signPackage['signature']:'')}',
+        appId: '<?php echo (isset($signPackage['appId'])?$signPackage['appId']:''); ?>',
+        timestamp: <?php echo (isset($signPackage['timestamp'])?$signPackage['timestamp']:''); ?>,
+        nonceStr: '<?php echo (isset($signPackage['nonceStr'])?$signPackage['nonceStr']:''); ?>',
+        signature: '<?php echo (isset($signPackage['signature'])?$signPackage['signature']:''); ?>',
         jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage']
     });
 </script>

@@ -25,7 +25,7 @@ class ginkgo
     public $L = [];
     public $I = ['app' => [], 'core' => []];
     public $app;
-    public $defaultApp = 'content';
+    public $defaultApp = 'exam';
 
     //对象工厂
     public function make($G, $app = null)

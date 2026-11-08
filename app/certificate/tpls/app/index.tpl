@@ -1,58 +1,61 @@
 {x2;include:header}
 <body>
-{x2;include:nav}
 <div class="container-fluid">
-	<div class="row-fluid">
-		<div class="main">
-			<div class="col-xs-2" style="margin-top:10px;">
-				<ul class="list-group">
-					<li class="list-group-item active">
-						我的证书
-					</li>
-					<li class="list-group-item">
-						<a href="index.php?certificate-app-certificate">申请证书</a>
-					</li>
-				</ul>
-			</div>
-			<div class="col-xs-10">
-				<div class="box itembox" style="margin-bottom:0px;">
-					<div class="col-xs-12">
-						<ol class="breadcrumb">
-							<li><a href="index.php">首页</a></li>
-							<li><a href="index.php?certificate">办理证书</a></li>
-							<li class="active">我的证书</li>
-						</ol>
-					</div>
-				</div>
-				{x2;tree:(array)($certificates['data'] ?? []),certificate,cid}
-				<div class="box itembox" style="padding-top:20px;">
-					<div class="col-xs-3">
-						<a href="javascript:;" class="thumbnail pull-left">
-							<img src="{x2;(isset(v:certificate['cethumb'])?v:certificate['cethumb']:'')}" alt="" width="100%">
-						</a>
-					</div>
-					<div class="col-xs-9">
-						<h4 class="title">{x2;(isset(v:certificate['cetitle'])?v:certificate['cetitle']:'')}</h4>
-						<p>{x2;realsubstring:v:certificate['cedescribe'],240}</p>
-						<hr/>
-						<p>
-							<span>
-								<button class="btn{x2;if:v:certificate['ceqstatus'] == 3} btn-danger{x2;elseif:v:certificate['ceqstatus'] == 2} btn-success{x2;else} btn-primary{x2;endif}">{x2;(isset($status[v:certificate['ceqstatus']])?$status[v:certificate['ceqstatus']]:'')}</button>
-							</span>
-							<span class="pull-right">
-								<span class="glyphicon glyphicon-time"></span> <span>申请时间：{x2;date:v:certificate['ceqtime'],'Y-m-d H:i:s'}</span>
-							</span>
-						</p>
-					</div>
-				</div>
-				{x2;endtree}
-				<ul class="pagination pull-right">
-					{x2;(isset($certificates['pages'])?$certificates['pages']:'')}
-				</ul>
-			</div>
-		</div>
-	</div>
+    <div class="row-fluid">
+        <div class="pages">
+            {x2;include:nav}
+            <div class="content">
+                <div class="col-xs-9">
+                    <div class="content-box padding">
+                        <h2 class="title">我的证书<a href="index.php?certificate-app-certificate" class="badge pull-right">申请证书 <em class="glyphicon glyphicon-plus"></em> </a> </h2>
+                        <ul class="list-unstyled list-img">
+                            {x2;tree:(array)($certificates['data'] ?? []),certificate,cid}
+                            <li class="border morepadding">
+                                <h4 class="shorttitle">{x2;(isset(v:certificate['cetitle']) ? v:certificate['cetitle'] : '')}</h4>
+                                <div class="intro">
+                                    <div class="col-xs-3 img">
+                                        <img src="{x2;(isset(v:certificate['cethumb']) ? v:certificate['cethumb'] : '')}" />
+                                    </div>
+                                    <div class="desc">
+                                        <p>{x2;(isset(v:certificate['cedescribe']) ? v:certificate['cedescribe'] : '')}</p>
+                                        <p class="toolbar">
+                                            申请时间：{x2;date:v:certificate['ceqtime'] ?? 0,'Y-m-d H:i:s'}
+                                            <a class="btn btn-info pull-right more">{x2;(isset($status[v:certificate['ceqstatus']]) ? $status[v:certificate['ceqstatus']] : '')}</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </li>
+                            {x2;endtree}
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-xs-3 nopadding">
+                    <div class="content-box padding">
+                        <h2 class="title">最新证书</h2>
+                        <ul class="list-unstyled list-img">
+                            {x2;if:isset($news) && is_array($news)}
+                            {x2;tree:(array)($news ?? []),certificate,cid}
+                            <li class="border padding">
+                                <a href="index.php?certificate-app-certificate-apply&ceid={x2;(isset(v:certificate['ceid']) ? v:certificate['ceid'] : '')}">
+                                    <div class="intro">
+                                        <div class="col-xs-5 img noleftpadding">
+                                            <img src="{x2;if:!empty(v:certificate['cethumb'])}{x2;(isset(v:certificate['cethumb']) ? v:certificate['cethumb'] : '')}{x2;else}app/core/styles/img/item.jpg{x2;endif}" />
+                                        </div>
+                                        <div class="desc">
+                                            <p>{x2;(isset(v:certificate['cetitle']) ? v:certificate['cetitle'] : '')}</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            {x2;endtree}
+                            {x2;endif}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            {x2;include:footer}
+        </div>
+    </div>
 </div>
-{x2;include:footer}
 </body>
 </html>

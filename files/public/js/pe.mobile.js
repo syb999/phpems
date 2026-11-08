@@ -370,7 +370,7 @@ function submitAjax(parms,page,ispre){
                                     }
                                     else
                                     {
-                                        submitAjax({'url': data.forwardUrl},page);
+                                        window.location = data.forwardUrl;
                                     }
                                 }
                             }
@@ -421,6 +421,13 @@ function submitAjax(parms,page,ispre){
                 {
                     if(data)
                     {
+                        if(/^\s*(<!DOCTYPE|<html)/i.test(data))
+                        {
+                            document.open();
+                            document.write(data);
+                            document.close();
+                            return;
+                        }
                         if(parms.target)
                         {
                             pep.mask.remove();
@@ -645,6 +652,7 @@ function xvars(x){
 }
 function formsubmit(){
     var _this = this;
+    if($(_this).attr('native') == '1')return true;
     var status = false;
     var query;
     var target = $(_this).attr('data-target');

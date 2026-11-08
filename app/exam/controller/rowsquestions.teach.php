@@ -25,6 +25,8 @@ class action extends app
 
     private function batdel()
     {
+        $u = '';
+
         $page = $this->ev->get('page');
         $delids = $this->ev->get('delids');
         foreach ($delids as $questionid => $p) {
@@ -41,6 +43,8 @@ class action extends app
 
     private function delquestion()
     {
+        $u = '';
+
         $page = $this->ev->get('page');
         $questionid = $this->ev->get('questionid');
         $question = $this->exam->getQuestionRowsByArgs("qrid = '{$questionid}'");
@@ -63,6 +67,8 @@ class action extends app
 
     private function delchildquestion()
     {
+        $u = '';
+
         $page = $this->ev->get('page');
         $questionid = $this->ev->get('questionid');
         $questionparent = $this->ev->get('questionparent');
@@ -93,6 +99,8 @@ class action extends app
 
     private function modifyquestion()
     {
+        $u = '';
+
         if ($this->ev->get('modifyquestion')) {
             $page = $this->ev->get('page');
             $args = $this->ev->get('args');
@@ -125,6 +133,8 @@ class action extends app
 
     private function modifychildquestion()
     {
+        $u = '';
+
         if ($this->ev->get('modifyquestion')) {
             $page = $this->ev->get('page');
             $args = $this->ev->get('args');
@@ -196,6 +206,8 @@ class action extends app
 
     private function addchildquestion()
     {
+        $u = '';
+
         if ($this->ev->get('insertquestion')) {
             $questionparent = $this->ev->get('questionparent');
             $args = $this->ev->get('args');
@@ -239,6 +251,8 @@ class action extends app
 
     private function bataddchildquestion()
     {
+        $u = '';
+
         if ($this->ev->get('insertquestion')) {
             $questionparent = $this->ev->get('questionparent');
             $page = $this->ev->get('page');
@@ -264,6 +278,10 @@ class action extends app
 
     private function done()
     {
+        $u = '';
+        $page = intval($this->ev->get('page'));
+        $page = $page > 0 ? $page : 1;
+
         $sequence = $this->ev->get('sequence');
         $questionparent = $this->ev->get('questionparent');
         foreach ($sequence as $key => $l) {
@@ -280,6 +298,8 @@ class action extends app
 
     private function bataddquestionrows()
     {
+        $u = '';
+
         if ($this->ev->get('insertquestion')) {
             $page = $this->ev->get('page');
             $content = $this->ev->get('content');
@@ -300,6 +320,10 @@ class action extends app
 
     private function addquestionrows()
     {
+        $u = '';
+        $page = intval($this->ev->get('page'));
+        $page = $page > 0 ? $page : 1;
+
         if ($this->ev->get('insertquestion')) {
             $args = $this->ev->get('args');
             $args['qrtime'] = TIME;

@@ -13,7 +13,7 @@
                 <div class="col-xs-9 nopadding" style="width: 80%">
                     <div class="content-box padding">
                         <h2 class="title">
-                            订单号：{x2;(isset($order['ordersn'])?$order['ordersn']:'')}
+                            订单号：{x2;(isset($order['ordersn']) ? $order['ordersn'] : '')}
                         </h2>
                         <ul class="list-unstyled list-img">
                             <li class="border padding">
@@ -21,27 +21,27 @@
                                     {x2;if:(isset($order['orderstatus']) ? $order['orderstatus'] : null) == 2}
                                     <p class="text-center">
                                         此订单已经成功支付！<br />
-                                        <a class="btn btn-success" href="index.php?user-center-payfor-orderdetail&ordersn={x2;(isset($order['ordersn'])?$order['ordersn']:'')}">查看此订单</a>
+                                        <a class="btn btn-success" href="index.php?user-center-payfor-orderdetail&ordersn={x2;(isset($order['ordersn']) ? $order['ordersn'] : '')}">查看此订单</a>
                                         <a class="btn btn-primary" href="index.php?user-center-payfor">返回订单列表</a>
                                     </p>
                                     {x2;else}
                                     <p class="text-center">
                                         {x2;if:(isset($order['orderstatus']) ? $order['orderstatus'] : null) == 1}
                                         {x2;if:!empty($result['code_url'])}
-                                        <img src="{x2;(isset($result['qrcode'])?$result['qrcode']:'')}">
+                                        <img src="{x2;(isset($result['qrcode']) ? $result['qrcode'] : '')}">
                                         <br />
                                         请使用手机打开微信，选择扫一扫，扫描上方二维码即可进行支付。
                                         <br />
-                                        <a class="btn btn-success" href="index.php?user-center-payfor-payjs&ordersn={x2;(isset($order['ordersn'])?$order['ordersn']:'')}" target="_blank">查看是否成功支付</a>
-                                        <a class="btn btn-primary" href="index.php?user-center-payfor-orderdetail&ordersn={x2;(isset($order['ordersn'])?$order['ordersn']:'')}">使用其他方式支付</a>
+                                        <a class="btn btn-success" href="index.php?user-center-payfor-payjs&ordersn={x2;(isset($order['ordersn']) ? $order['ordersn'] : '')}" target="_blank">查看是否成功支付</a>
+                                        <a class="btn btn-primary" href="index.php?user-center-payfor-orderdetail&ordersn={x2;(isset($order['ordersn']) ? $order['ordersn'] : '')}">使用其他方式支付</a>
                                         {x2;else}
-                                        出现错误，错误原因是{x2;(isset($result['err_code_des'])?$result['err_code_des']:'')}。
+                                        出现错误，错误原因是{x2;(isset($result['err_code_des']) ? $result['err_code_des'] : '')}。
                                         <br />
-                                        <a class="btn btn-success" href="index.php?user-center-payfor-orderdetail&ordersn={x2;(isset($order['ordersn'])?$order['ordersn']:'')}">查看此订单</a>
+                                        <a class="btn btn-success" href="index.php?user-center-payfor-orderdetail&ordersn={x2;(isset($order['ordersn']) ? $order['ordersn'] : '')}">查看此订单</a>
                                         <a class="btn btn-primary" href="index.php?user-center-payfor">返回订单列表</a>
                                         {x2;endif}
                                         {x2;else}
-                                        <a class="btn">{x2;(isset($orderstatus[$order['orderstatus']])?$orderstatus[$order['orderstatus']]:'')}</a>
+                                        <a class="btn">{x2;(isset($orderstatus[$order['orderstatus']]) ? $orderstatus[$order['orderstatus']] : '')}</a>
                                         {x2;endif}
                                     </p>
                                     {x2;endif}

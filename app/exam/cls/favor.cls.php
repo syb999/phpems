@@ -230,8 +230,11 @@ class favor_exam
         $data = [false, 'examhistory', [['AND', 'ehid = :ehid', 'ehid', $id]]];
         $sql = $this->pdosql->makeSelect($data);
         $r = $this->db->fetch($sql, ['ehscorelist', 'ehuseranswer', 'ehtimelist']);
-        $r['ehquestion'] = unserialize(gzuncompress(base64_decode($r['ehquestion'])));
-        $r['ehsetting'] = unserialize(gzuncompress(base64_decode($r['ehsetting'])));
+        if (!is_array($r) || !$r) {
+            return [];
+        }
+        $r['ehquestion'] = empty($r['ehquestion']) ? [] : (unserialize(gzuncompress(base64_decode($r['ehquestion']))) ?: []);
+        $r['ehsetting'] = empty($r['ehsetting']) ? [] : (unserialize(gzuncompress(base64_decode($r['ehsetting']))) ?: []);
 
         return $r;
     }
@@ -241,8 +244,11 @@ class favor_exam
         $data = [false, 'examhistory', $args];
         $sql = $this->pdosql->makeSelect($data);
         $r = $this->db->fetch($sql, ['ehscorelist', 'ehuseranswer', 'ehtimelist']);
-        $r['ehquestion'] = unserialize(gzuncompress(base64_decode($r['ehquestion'])));
-        $r['ehsetting'] = unserialize(gzuncompress(base64_decode($r['ehsetting'])));
+        if (!is_array($r) || !$r) {
+            return [];
+        }
+        $r['ehquestion'] = empty($r['ehquestion']) ? [] : (unserialize(gzuncompress(base64_decode($r['ehquestion']))) ?: []);
+        $r['ehsetting'] = empty($r['ehsetting']) ? [] : (unserialize(gzuncompress(base64_decode($r['ehsetting']))) ?: []);
 
         return $r;
     }

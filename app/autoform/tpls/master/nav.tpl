@@ -11,24 +11,24 @@
                     </li>
                     {x2;if:!empty($apps['user']['appsetting']['managemodel'])}
                     {x2;tree:(array)($apps ?? []),app,aid}
-                    {x2;if:v:app['appstatus'] && v:app['appid'] != 'core' && in_array(v:app['appid'],$_user['manager_apps'])}
-                    <li class="menu{x2;if:$_app == v:app['appid']} active{x2;endif}">
-                        <a href="index.php?{x2;(isset(v:app['appid'])?v:app['appid']:'')}-master">{x2;(isset(v:app['appname'])?v:app['appname']:'')}</a>
+                    {x2;if:!empty(v:app['appstatus']) && v:app['appid'] != 'core' && in_array(v:app['appid'],$_user['manager_apps'])}
+                    <li class="menu{x2;if:(isset($_app) ? $_app : null) == (isset(v:app['appid']) ? v:app['appid'] : null)} active{x2;endif}">
+                        <a href="index.php?{x2;(isset(v:app['appid']) ? v:app['appid'] : '')}-master">{x2;(isset(v:app['appname']) ? v:app['appname'] : '')}</a>
                     </li>
                     {x2;endif}
                     {x2;endtree}
                     {x2;else}
                     {x2;tree:(array)($apps ?? []),app,aid}
-                    {x2;if:v:app['appstatus'] && v:app['appid'] != 'core'}
-                    <li class="menu{x2;if:$_app == v:app['appid']} active{x2;endif}">
-                        <a href="index.php?{x2;(isset(v:app['appid'])?v:app['appid']:'')}-master">{x2;(isset(v:app['appname'])?v:app['appname']:'')}</a>
+                    {x2;if:!empty(v:app['appstatus']) && v:app['appid'] != 'core'}
+                    <li class="menu{x2;if:(isset($_app) ? $_app : null) == (isset(v:app['appid']) ? v:app['appid'] : null)} active{x2;endif}">
+                        <a href="index.php?{x2;(isset(v:app['appid']) ? v:app['appid'] : '')}-master">{x2;(isset(v:app['appname']) ? v:app['appname'] : '')}</a>
                     </li>
                     {x2;endif}
                     {x2;endtree}
                     {x2;endif}
                     <li class="pull-right">
                         <div class="btn-group" style="margin-top: 15px;">
-                            <button type="button" class="btn btn-info"><em class="glyphicon glyphicon-user"></em> {x2;(isset($_user['username'])?$_user['username']:'')}</button>
+                            <button type="button" class="btn btn-info"><em class="glyphicon glyphicon-user"></em> {x2;(isset($_user['username']) ? $_user['username'] : '')}</button>
                             <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="caret"></span>
                                 <span class="sr-only">Toggle Dropdown</span>

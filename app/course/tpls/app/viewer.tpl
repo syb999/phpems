@@ -6,12 +6,12 @@
     <meta name="google" content="notranslate">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>PDF阅读</title>
-    <link rel="stylesheet" href="files/public/js/pdf/viewer.css">
+    <link rel="stylesheet" href="files/public/js/pdf/viewer.css?v=20261108b">
     <!-- This snippet is used in production (included from viewer.html) -->
-    <link rel="resource" type="application/l10n" href="files/public/js/pdf/locale/locale.properties">
-    <script src="files/public/js/pdf/pdf.js"></script>
-    <script src="files/public/js/pdf/pdf.worker.js"></script>
-    <script src="files/public/js/pdf/viewer.js"></script>
+    <link rel="resource" type="application/l10n" href="files/public/js/pdf/locale/locale.properties?v=20261108b">
+    <script src="files/public/js/pdf/pdf.js?v=20261108b"></script>
+    <script src="files/public/js/pdf/pdf.worker.js?v=20261108b"></script>
+    <script src="files/public/js/pdf/viewer.js?v=20261108b"></script>
 </head>
 <body tabindex="1" class="loadingInProgress">
 <div id="outerContainer">

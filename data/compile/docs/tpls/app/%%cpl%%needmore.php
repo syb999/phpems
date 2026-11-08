@@ -11,15 +11,15 @@
  $cid++; ?>
 					<li class="list-group-item<?php if((isset($this->tpl_var['cat']['catid']) ? $this->tpl_var['cat']['catid'] : null) == $cat['catid']){ ?> active<?php } ?>">
 						<?php if((isset($this->tpl_var['cat']['catid']) ? $this->tpl_var['cat']['catid'] : null) == $cat['catid']){ ?>
-						{x2;(isset(v:cat['catname'])?v:cat['catname']:'')}
+						<?php echo (isset($cat['catname'])?$cat['catname']:''); ?>
 						<?php } else { ?>
-						<a href="index.php?docs-app-category-needmore&catid={x2;(isset(v:cat['catid'])?v:cat['catid']:'')}">{x2;(isset(v:cat['catname'])?v:cat['catname']:'')}</a>
+						<a href="index.php?docs-app-category-needmore&catid=<?php echo (isset($cat['catid'])?$cat['catid']:''); ?>"><?php echo (isset($cat['catname'])?$cat['catname']:''); ?></a>
 						<?php } ?>
 					</li>
 					<?php } ?>
 					<?php if(!empty($this->tpl_var['cat']['catparent'])){ ?>
 					<li class="list-group-item">
-						<a href="index.php?docs-app-category-needmore&catid={x2;(isset($cat['catparent'])?$cat['catparent']:'')}">返回</a>
+						<a href="index.php?docs-app-category-needmore&catid=<?php echo (isset($this->tpl_var['cat']['catparent'])?$this->tpl_var['cat']['catparent']:''); ?>">返回</a>
 					</li>
 					<?php } ?>
 				</ul>
@@ -34,11 +34,11 @@
 						  	<?php $cbid = 0;
  foreach((array)($this->tpl_var['catbread'] ?? []) as $key => $cb){ 
  $cbid++; ?>
-							<li><a href="index.php?docs-app-category-needmore&catid={x2;(isset(v:cb['catid'])?v:cb['catid']:'')}">{x2;(isset(v:cb['catname'])?v:cb['catname']:'')}</a></li>
+							<li><a href="index.php?docs-app-category-needmore&catid=<?php echo (isset($cb['catid'])?$cb['catid']:''); ?>"><?php echo (isset($cb['catname'])?$cb['catname']:''); ?></a></li>
 							<?php } ?>
                             <?php } ?>
 							<?php if(!empty($this->tpl_var['cat'])){ ?>
-							<li href="index.php?docs-app-category-needmore&catid={x2;(isset($cat['catid'])?$cat['catid']:'')}">{x2;(isset($cat['catname'])?$cat['catname']:'')}</li>
+							<li href="index.php?docs-app-category-needmore&catid=<?php echo (isset($this->tpl_var['cat']['catid'])?$this->tpl_var['cat']['catid']:''); ?>"><?php echo (isset($this->tpl_var['cat']['catname'])?$this->tpl_var['cat']['catname']:''); ?></li>
 							<?php } ?>
 							<li class="active">待完善词条</li>
 						</ol>
@@ -49,13 +49,13 @@
  $did++; ?>
 				<div class="box itembox" style="padding-top:20px;">
 					<div class="col-xs-3">
-						<a href="index.php?docs-app-docs&docid={x2;(isset(v:doc['docid'])?v:doc['docid']:'')}" class="thumbnail pull-left">
-							<img src="{x2;(isset(v:doc['docthumb'])?v:doc['docthumb']:'')}" alt="" width="100%">
+						<a href="index.php?docs-app-docs&docid=<?php echo (isset($doc['docid'])?$doc['docid']:''); ?>" class="thumbnail pull-left">
+							<img src="<?php echo (isset($doc['docthumb'])?$doc['docthumb']:''); ?>" alt="" width="100%">
 						</a>
 					</div>
 					<div class="col-xs-9">
-						<a href="index.php?docs-app-docs&docid={x2;(isset(v:doc['docid'])?v:doc['docid']:'')}"><h4 class="title">{x2;(isset(v:doc['doctitle'])?v:doc['doctitle']:'')}</h4></a>
-						<p>{x2;(isset(v:doc['docdescribe'])?v:doc['docdescribe']:'')}</p>
+						<a href="index.php?docs-app-docs&docid=<?php echo (isset($doc['docid'])?$doc['docid']:''); ?>"><h4 class="title"><?php echo (isset($doc['doctitle'])?$doc['doctitle']:''); ?></h4></a>
+						<p><?php echo (isset($doc['docdescribe'])?$doc['docdescribe']:''); ?></p>
 						<hr/>
 						<p>
 							<span class="pull-right">
@@ -66,7 +66,7 @@
 				</div>
 				<?php } ?>
 				<ul class="pagination pull-right">
-					{x2;(isset($docs['pages'])?$docs['pages']:'')}
+					<?php echo (isset($this->tpl_var['docs']['pages'])?$this->tpl_var['docs']['pages']:''); ?>
 				</ul>
 			</div>
 		</div>

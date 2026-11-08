@@ -101,6 +101,9 @@ class action extends app
                     $sessionvars['examsessionscorelist'][$key] = $p;
                 }
             }
+            if (!isset($sessionvars['examsessionscorelist']) || !is_array($sessionvars['examsessionscorelist'])) {
+                $sessionvars['examsessionscorelist'] = [];
+            }
             foreach ($sessionvars['examsessionscorelist'] as $p) {
                 $sumscore = $sumscore + floatval($p);
             }
@@ -128,8 +131,11 @@ class action extends app
         } else {
             $ehid = $this->ev->get('ehid');
             $eh = $this->favor->getExamHistoryById($ehid);
-            $sessionvars = ['examsession' => $eh['ehexam'], 'examsessiontype' => 2 == $eh['ehtype'] ? 1 : $eh['ehtype'], 'examsessionsetting' => $eh['ehsetting'], 'examsessionbasic' => $eh['ehbasicid'], 'examsessionquestion' => $eh['ehquestion'], 'examsessionuseranswer' => $eh['ehanswer'], 'examsessiontime' => $eh['ehtime'], 'examsessionscorelist' => $eh['ehscorelist'], 'examsessionscore' => $eh['ehscore'], 'examsessionstarttime' => $eh['ehstarttime']];
-            $number = [];
+            if (!is_array($eh) || !$eh) {
+                $this->G->R(['statusCode' => 404, 'message' => '考试记录不存在', 'callbackType' => 'forward', 'forwardUrl' => 'index.php?exam-phone']);
+            }
+            $sessionvars = ['examsession' => $eh['ehexam'], 'examsessiontype' => 2 == $eh['ehtype'] ? 1 : $eh['ehtype'], 'examsessionsetting' => $eh['ehsetting'], 'examsessionbasic' => $eh['ehbasicid'], 'examsessionquestion' => $eh['ehquestion'], 'examsessionuseranswer' => isset($eh['ehuseranswer']) ? $eh['ehuseranswer'] : [], 'examsessiontime' => $eh['ehtime'], 'examsessionscorelist' => $eh['ehscorelist'], 'examsessionscore' => $eh['ehscore'], 'examsessionstarttime' => $eh['ehstarttime']];
+            $number = ['all' => 0, 'child' => []];
             $right = [];
             $score = [];
             $allnumber = 0;
@@ -138,27 +144,32 @@ class action extends app
                 $number[$key] = 0;
                 $right[$key] = 0;
                 $score[$key] = 0;
-                if ($sessionvars['examsessionquestion']['questions'][$key]) {
-                    foreach ($sessionvars['examsessionquestion']['questions'][$key] as $p) {
+                $ql = isset($sessionvars['examsessionquestion']['questions'][$key]) && is_array($sessionvars['examsessionquestion']['questions'][$key]) ? $sessionvars['examsessionquestion']['questions'][$key] : [];
+                $rl = isset($sessionvars['examsessionquestion']['questionrows'][$key]) && is_array($sessionvars['examsessionquestion']['questionrows'][$key]) ? $sessionvars['examsessionquestion']['questionrows'][$key] : [];
+                $fullscore = isset($sessionvars['examsessionsetting']['examsetting']['questype'][$key]['score']) ? $sessionvars['examsessionsetting']['examsetting']['questype'][$key]['score'] : 0;
+                if ($ql) {
+                    foreach ($ql as $p) {
                         ++$number[$key];
                         ++$allnumber;
-                        if ($sessionvars['examsessionscorelist'][$p['questionid']] == $sessionvars['examsessionsetting']['examsetting']['questype'][$key]['score']) {
+                        $pscore = isset($sessionvars['examsessionscorelist'][$p['questionid']]) ? $sessionvars['examsessionscorelist'][$p['questionid']] : 0;
+                        if ($pscore == $fullscore) {
                             ++$right[$key];
                             ++$allright;
                         }
-                        $score[$key] = $score[$key] + $sessionvars['examsessionscorelist'][$p['questionid']];
+                        $score[$key] = $score[$key] + $pscore;
                     }
                 }
-                if ($sessionvars['examsessionquestion']['questionrows'][$key]) {
-                    foreach ($sessionvars['examsessionquestion']['questionrows'][$key] as $v) {
+                if ($rl) {
+                    foreach ($rl as $v) {
                         foreach ($v['data'] as $p) {
                             ++$number[$key];
                             ++$allnumber;
-                            if ($sessionvars['examsessionscorelist'][$p['questionid']] == $sessionvars['examsessionsetting']['examsetting']['questype'][$key]['score']) {
+                            $pscore = isset($sessionvars['examsessionscorelist'][$p['questionid']]) ? $sessionvars['examsessionscorelist'][$p['questionid']] : 0;
+                            if ($pscore == $fullscore) {
                                 ++$right[$key];
                                 ++$allright;
                             }
-                            $score[$key] = $score[$key] + $sessionvars['examsessionscorelist'][$p['questionid']];
+                            $score[$key] = $score[$key] + $pscore;
                         }
                     }
                 }
@@ -186,7 +197,7 @@ class action extends app
             if (!$ids) {
                 $ids = '0';
             }
-            $number = [];
+            $number = ['all' => 0, 'child' => []];
             if ($ids) {
                 $ids = explode(',', $ids);
                 foreach ($ids as $t) {
@@ -212,15 +223,28 @@ class action extends app
         if ($this->ev->get('insertscore')) {
             $question = $this->ev->get('question');
             $time = $this->ev->get('time');
+            if (!is_array($question)) {
+                $question = [];
+            }
+            if (!is_array($time)) {
+                $time = [];
+            }
+            if (!is_array($sessionvars['examsessionuseranswer'])) {
+                $sessionvars['examsessionuseranswer'] = [];
+            }
             foreach ($question as $key => $a) {
                 $sessionvars['examsessionuseranswer'][$key] = $a;
             }
-            foreach ($sessionvars['examsessionquestion']['questions'] as $key => $tmp) {
+            $questionlist = is_array($sessionvars['examsessionquestion']['questions'] ?? null) ? $sessionvars['examsessionquestion']['questions'] : [];
+            $questionrows = is_array($sessionvars['examsessionquestion']['questionrows'] ?? null) ? $sessionvars['examsessionquestion']['questionrows'] : [];
+            $scorelist = [];
+            foreach ($questionlist as $key => $tmp) {
                 if (!$questype[$key]['questsort']) {
                     foreach ($tmp as $p) {
-                        if (is_array($sessionvars['examsessionuseranswer'][$p['questionid']])) {
+                        $uans = isset($sessionvars['examsessionuseranswer'][$p['questionid']]) ? $sessionvars['examsessionuseranswer'][$p['questionid']] : '';
+                        if (is_array($uans)) {
                             $nanswer = '';
-                            $answer = $sessionvars['examsessionuseranswer'][$p['questionid']];
+                            $answer = $uans;
                             asort($answer);
                             $nanswer = implode('', $answer);
                             if ($nanswer == $p['questionanswer']) {
@@ -242,7 +266,7 @@ class action extends app
                                 }
                             }
                         } else {
-                            $answer = $sessionvars['examsessionuseranswer'][$p['questionid']];
+                            $answer = $uans;
                             if ($answer == $p['questionanswer']) {
                                 $score = $sessionvars['examsessionsetting']['examsetting']['questype'][$key]['score'];
                             } else {
@@ -257,12 +281,13 @@ class action extends app
                     }
                 }
             }
-            foreach ($sessionvars['examsessionquestion']['questionrows'] as $key => $tmp) {
+            foreach ($questionrows as $key => $tmp) {
                 if (!$questype[$key]['questsort']) {
                     foreach ($tmp as $tmp2) {
                         foreach ($tmp2['data'] as $p) {
-                            if (is_array($sessionvars['examsessionuseranswer'][$p['questionid']])) {
-                                $answer = $sessionvars['examsessionuseranswer'][$p['questionid']];
+                            $uans = isset($sessionvars['examsessionuseranswer'][$p['questionid']]) ? $sessionvars['examsessionuseranswer'][$p['questionid']] : '';
+                            if (is_array($uans)) {
+                                $answer = $uans;
                                 asort($answer);
                                 $nanswer = implode('', $answer);
                                 if ($nanswer == $p['questionanswer']) {
@@ -284,7 +309,7 @@ class action extends app
                                     }
                                 }
                             } else {
-                                $answer = $sessionvars['examsessionuseranswer'][$p['questionid']];
+                                $answer = $uans;
                                 if ($answer == $p['questionanswer']) {
                                     $score = $sessionvars['examsessionsetting']['examsetting']['questype'][$key]['score'];
                                 } else {
@@ -342,6 +367,9 @@ class action extends app
     private function paper()
     {
         $sessionvars = $this->exam->getExamSessionBySessionid();
+        if (!is_array($sessionvars)) {
+            $sessionvars = [];
+        }
         $lefttime = 0;
         $questype = $this->basic->getQuestypeList();
         if (2 == $sessionvars['examsessionstatus']) {
@@ -362,13 +390,16 @@ class action extends app
     private function selectquestions()
     {
         $sessionvars = $this->exam->getExamSessionBySessionid();
+        if (!is_array($sessionvars)) {
+            $sessionvars = [];
+        }
         if ($this->data['currentbasic']['basicexam']['examnumber']) {
             $overflow = false;
             $ids = trim($this->data['currentbasic']['basicexam']['self'], ', ');
             if (!$ids) {
                 $ids = '0';
             }
-            $number = [];
+            $number = ['all' => 0, 'child' => []];
             if ($ids) {
                 $ids = explode(',', $ids);
                 foreach ($ids as $t) {
@@ -448,7 +479,7 @@ class action extends app
                 $sargs['examsessionissave'] = 0;
                 $sargs['examsessionsign'] = '';
                 $sargs['examsessionuserid'] = $this->_user['sessionuserid'];
-                if ($sessionvars['examsessionid']) {
+                if (isset($sessionvars['examsessionid']) && $sessionvars['examsessionid']) {
                     $this->exam->modifyExamSession($sargs);
                 } else {
                     $this->exam->insertExamSession($sargs);
@@ -496,7 +527,7 @@ class action extends app
                 $args['examsessionissave'] = 0;
                 $args['examsessionbasic'] = $this->data['currentbasic']['basicid'];
                 $args['examsessionuserid'] = $this->_user['sessionuserid'];
-                if ($sessionvars['examsessionid']) {
+                if (isset($sessionvars['examsessionid']) && $sessionvars['examsessionid']) {
                     $this->exam->modifyExamSession($args);
                 } else {
                     $this->exam->insertExamSession($args);
@@ -520,7 +551,7 @@ class action extends app
                 $args['examsessionissave'] = 0;
                 $args['examsessionbasic'] = $this->data['currentbasic']['basicid'];
                 $args['examsessionuserid'] = $this->_user['sessionuserid'];
-                if ($sessionvars['examsessionid']) {
+                if (isset($sessionvars['examsessionid']) && $sessionvars['examsessionid']) {
                     $this->exam->modifyExamSession($args);
                 } else {
                     $this->exam->insertExamSession($args);
@@ -541,7 +572,7 @@ class action extends app
             $ids = '0';
         }
         $exams = $this->exam->getExamSettingList($page, 20, [['AND', 'find_in_set(examid,:examid)', 'examid', $ids]]);
-        $number = [];
+        $number = ['all' => 0, 'child' => []];
         if ($ids) {
             $ids = explode(',', $ids);
             foreach ($ids as $t) {

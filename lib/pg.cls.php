@@ -18,6 +18,7 @@ class pg
     public $pre = '<li>';
     public $end = '</li>';
     public $number;
+    public $target = '_self';
 
     public function __construct(&$G)
     {

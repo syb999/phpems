@@ -13,8 +13,8 @@
  foreach((array)($this->tpl_var['topimgs']['data'] ?? []) as $key => $content){ 
  $cid++; ?>
                                 <div class="swiper-slide">
-                                    <a href="index.php?content-app-content&contentid={x2;(isset(v:content['pccontentid'])?v:content['pccontentid']:'')}">
-                                        <img src="{x2;(isset(v:content['pcthumb'])?v:content['pcthumb']:'')}" style="max-width:100%;"/>
+                                    <a href="index.php?content-app-content&contentid=<?php echo (isset($content['pccontentid'])?$content['pccontentid']:''); ?>">
+                                        <img src="<?php echo (isset($content['pcthumb'])?$content['pcthumb']:''); ?>" style="max-width:100%;"/>
                                     </a>
                                 </div>
                                 <?php } ?>
@@ -32,11 +32,11 @@
  foreach((array)($this->tpl_var['basics']['data'] ?? []) as $key => $basic){ 
  $bid++; ?>
                             <li class="col-xs-4 box">
-                                <a href="index.php?exam-app-basics-detail&basicid={x2;(isset(v:basic['basicid'])?v:basic['basicid']:'')}">
+                                <a href="index.php?exam-app-basics-detail&basicid=<?php echo (isset($basic['basicid'])?$basic['basicid']:''); ?>">
                                     <div class="img">
-                                        <img src="<?php if(!empty($basic['basicthumb'])){ ?>{x2;(isset(v:basic['basicthumb'])?v:basic['basicthumb']:'')}<?php } else { ?>app/core/styles/img/item.jpg<?php } ?>" />
+                                        <img src="<?php if(!empty($basic['basicthumb'])){ ?><?php echo (isset($basic['basicthumb'])?$basic['basicthumb']:''); ?><?php } else { ?>app/core/styles/img/item.jpg<?php } ?>" />
                                     </div>
-                                    <h5 class="box-title">{x2;(isset(v:basic['basic'])?v:basic['basic']:'')}</h5>
+                                    <h5 class="box-title"><?php echo (isset($basic['basic'])?$basic['basic']:''); ?></h5>
                                     <div class="intro">
                                         <p><?php echo $this->G->make('strings')->subString($basic['basicdescribe'],78); ?></p>
                                     </div>
@@ -59,11 +59,11 @@
  foreach((array)($this->tpl_var['courses']['data'] ?? []) as $key => $content){ 
  $cid++; ?>
                             <li class="col-xs-4 box">
-                                <a href="index.php?course-app-course&csid={x2;(isset(v:content['csid'])?v:content['csid']:'')}">
+                                <a href="index.php?course-app-course&csid=<?php echo (isset($content['csid'])?$content['csid']:''); ?>">
                                     <div class="img">
-                                        <img src="<?php if(!empty($content['csthumb'])){ ?>{x2;(isset(v:content['csthumb'])?v:content['csthumb']:'')}<?php } else { ?>app/core/styles/img/item.jpg<?php } ?>" />
+                                        <img src="<?php if(!empty($content['csthumb'])){ ?><?php echo (isset($content['csthumb'])?$content['csthumb']:''); ?><?php } else { ?>app/core/styles/img/item.jpg<?php } ?>" />
                                     </div>
-                                    <h5 class="box-title">{x2;(isset(v:content['cstitle'])?v:content['cstitle']:'')}</h5>
+                                    <h5 class="box-title"><?php echo (isset($content['cstitle'])?$content['cstitle']:''); ?></h5>
                                     <div class="intro">
                                         <p><?php echo $this->G->make('strings')->subString($content['csdescribe'],78); ?></p>
                                     </div>
@@ -87,17 +87,17 @@
  $cid++; ?>
                             <li class="border morepadding">
                                 <h4 class="shorttitle">
-                                    <a href="index.php?content-app-content&contentid={x2;(isset(v:content['pccontentid'])?v:content['pccontentid']:'')}">{x2;(isset(v:content['pctitle'])?v:content['pctitle']:'')}</a>
+                                    <a href="index.php?content-app-content&contentid=<?php echo (isset($content['pccontentid'])?$content['pccontentid']:''); ?>"><?php echo (isset($content['pctitle'])?$content['pctitle']:''); ?></a>
                                 </h4>
                                 <div class="intro">
                                     <div class="col-xs-3 img">
-                                        <img src="{x2;(isset(v:content['pcthumb'])?v:content['pcthumb']:'')}" />
+                                        <img src="<?php echo (isset($content['pcthumb'])?$content['pcthumb']:''); ?>" />
                                     </div>
                                     <div class="desc">
-                                        <p>{x2;(isset(v:content['pcdescribe'])?v:content['pcdescribe']:'')}</p>
+                                        <p><?php echo (isset($content['pcdescribe'])?$content['pcdescribe']:''); ?></p>
                                         <p class="toolbar">
                                             <?php echo date('Y-m-d',$content['pctime']); ?>
-                                            <a href="index.php?content-app-content&contentid={x2;(isset(v:content['pccontentid'])?v:content['pccontentid']:'')}" class="hide btn btn-info pull-right more">查看详情</a>
+                                            <a href="index.php?content-app-content&contentid=<?php echo (isset($content['pccontentid'])?$content['pccontentid']:''); ?>" class="hide btn btn-info pull-right more">查看详情</a>
                                         </p>
                                     </div>
                                 </div>
@@ -114,7 +114,7 @@
  foreach((array)($this->tpl_var['notices']['data'] ?? []) as $key => $content){ 
  $lid++; ?>
                             <li class="border">
-                                <a target="_blank" href="index.php?content-app-content&contentid={x2;(isset(v:content['contentid'])?v:content['contentid']:'')}">
+                                <a target="_blank" href="index.php?content-app-content&contentid=<?php echo (isset($content['contentid'])?$content['contentid']:''); ?>">
                                     <?php echo $this->G->make('strings')->subString($content['contenttitle'],45); ?>
                                 </a>
                             </li>
@@ -128,13 +128,13 @@
  foreach((array)($this->tpl_var['topseminars']['data'] ?? []) as $key => $seminar){ 
  $sid++; ?>
                             <li class="border padding">
-                                <a href="index.php?seminar-app-seminar&seminarid={x2;(isset(v:seminar['pccontentid'])?v:seminar['pccontentid']:'')}">
+                                <a href="index.php?seminar-app-seminar&seminarid=<?php echo (isset($seminar['pccontentid'])?$seminar['pccontentid']:''); ?>">
                                     <div class="intro">
                                         <div class="col-xs-5 img noleftpadding">
-                                            <img src="{x2;(isset(v:seminar['pcthumb'])?v:seminar['pcthumb']:'')}" />
+                                            <img src="<?php echo (isset($seminar['pcthumb'])?$seminar['pcthumb']:''); ?>" />
                                         </div>
                                         <div class="desc">
-                                            <p>{x2;(isset(v:seminar['pctitle'])?v:seminar['pctitle']:'')}</p>
+                                            <p><?php echo (isset($seminar['pctitle'])?$seminar['pctitle']:''); ?></p>
                                         </div>
                                     </div>
                                 </a>
@@ -178,7 +178,7 @@
  foreach((array)($this->tpl_var['links']['data'] ?? []) as $key => $content){ 
  $lid++; ?>
                             <li class="border">
-                                <a target="_blank" href="index.php?content-app-content&contentid={x2;(isset(v:content['contentid'])?v:content['contentid']:'')}">
+                                <a target="_blank" href="index.php?content-app-content&contentid=<?php echo (isset($content['contentid'])?$content['contentid']:''); ?>">
                                     <?php echo $this->G->make('strings')->subString($content['contenttitle'],45); ?>
                                 </a>
                             </li>

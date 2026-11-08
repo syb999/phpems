@@ -1,4 +1,4 @@
-{x2;if:!empty($userhash)}
+{x2;if:empty($userhash)}
 {x2;include:header}
 <body>
 {x2;include:nav}
@@ -13,16 +13,16 @@
                 <div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
                     <div class="col-xs-12">
                         <ol class="breadcrumb">
-                            <li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master">{x2;(isset($apps[$_app]['appname'])?$apps[$_app]['appname']:'')}</a></li>
-                            <li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master-seminar&page={x2;(isset($page)?$page:'')}">专题管理</a></li>
+                            <li><a href="index.php?{x2;(isset($_app) ? $_app : '')}-master">{x2;(isset($apps[$_app]['appname']) ? $apps[$_app]['appname'] : '')}</a></li>
+                            <li><a href="index.php?{x2;(isset($_app) ? $_app : '')}-master-seminar&page={x2;(isset($page) ? $page : '')}">专题管理</a></li>
                             <li class="active">添加通栏</li>
                         </ol>
                     </div>
                 </div>
                 <div class="box itembox" style="padding-top:10px;margin-bottom:0px;overflow:visible">
                     <h4 class="title" style="padding:10px;">
-                        {x2;(isset($seminar['seminartitle'])?$seminar['seminartitle']:'')}
-                        <a class="btn btn-primary pull-right" href="index.php?{x2;(isset($_app)?$_app:'')}-master-seminar-layout&seminarid={x2;(isset($seminar['seminarid'])?$seminar['seminarid']:'')}">专题管理</a>
+                        {x2;(isset($seminar['seminartitle']) ? $seminar['seminartitle'] : '')}
+                        <a class="btn btn-primary pull-right" href="index.php?{x2;(isset($_app) ? $_app : '')}-master-seminar-layout&seminarid={x2;(isset($seminar['seminarid']) ? $seminar['seminarid'] : '')}">专题管理</a>
                     </h4>
                     <form action="index.php?seminar-master-seminar-addlayout" method="post" class="form-horizontal">
                         <div class="form-group">
@@ -65,7 +65,7 @@
                                 <select class="form-control stpl">
                                     <option value="">不使用范例</option>
                                     {x2;tree:(array)($tpls ?? []),tpl,tid}
-                                    <option value="{x2;(isset(v:tpl['stplid'])?v:tpl['stplid']:'')}">{x2;(isset(v:tpl['stplname'])?v:tpl['stplname']:'')}</option>
+                                    <option value="{x2;(isset(v:tpl['stplid']) ? v:tpl['stplid'] : '')}">{x2;(isset(v:tpl['stplname']) ? v:tpl['stplname'] : '')}</option>
                                     {x2;endtree}
                                 </select>
                             </div>
@@ -75,13 +75,13 @@
                             <div class="col-sm-9">
                                 <button class="btn btn-primary tplbutton" type="button">提交</button>
                                 <input type="hidden" name="submit" value="1">
-                                <input type="hidden" name="seminarid" value="{x2;(isset($seminar['seminarid'])?$seminar['seminarid']:'')}">
+                                <input type="hidden" name="seminarid" value="{x2;(isset($seminar['seminarid']) ? $seminar['seminarid'] : '')}">
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
-{x2;if:!empty($userhash)}
+{x2;if:empty($userhash)}
         </div>
     </div>
 </div>

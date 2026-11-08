@@ -72,6 +72,8 @@ class action extends app
     // todo $u = ?
     private function delexam()
     {
+        $u = '';
+
         $examid = $this->ev->get('examid');
         $page = $this->ev->get('page');
         $this->exam->delExamSetting($examid);
@@ -338,6 +340,8 @@ class action extends app
 
     private function del()
     {
+        $u = '';
+
         $page = $this->ev->get('page');
         $examid = $this->ev->get('examid');
         $this->exam->delExamSetting($examid);
@@ -377,7 +381,7 @@ class action extends app
             $message = [
                 'statusCode' => 200,
                 'message' => '操作成功',
-                'forwardUrl' => "index.php?exam-master-exams&page={$page}{$u}",
+                'forwardUrl' => 'index.php?exam-master-exams',
             ];
             $this->G->R($message);
         } else {
@@ -391,6 +395,10 @@ class action extends app
 
     private function selfpage()
     {
+        $u = '';
+        $page = intval($this->ev->get('page'));
+        $page = $page > 0 ? $page : 1;
+
         if ($this->ev->get('submitsetting')) {
             $args = $this->ev->get('args');
             $args['examsetting'] = $args['examsetting'];
@@ -424,6 +432,10 @@ class action extends app
 
     private function temppage()
     {
+        $u = '';
+        $page = intval($this->ev->get('page'));
+        $page = $page > 0 ? $page : 1;
+
         if ($this->ev->get('submitsetting')) {
             $args = $this->ev->get('args');
             $uploadfile = $this->ev->get('uploadfile');
@@ -754,7 +766,7 @@ class action extends app
                 'statusCode' => 200,
                 'message' => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => "index.php?exam-master-exams&page={$page}{$u}",
+                'forwardUrl' => 'index.php?exam-master-exams',
             ];
             $this->G->R($message);
         } else {

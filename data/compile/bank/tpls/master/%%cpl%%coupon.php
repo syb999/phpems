@@ -13,7 +13,7 @@
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
 						<ol class="breadcrumb">
-							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master">{x2;(isset($apps[$_app]['appname'])?$apps[$_app]['appname']:'')}</a></li>
+							<li><a href="index.php?<?php echo (isset($this->tpl_var['_app'])?$this->tpl_var['_app']:''); ?>-master"><?php echo (isset($this->tpl_var['apps'][$this->tpl_var['_app']]['appname'])?$this->tpl_var['apps'][$this->tpl_var['_app']]['appname']:''); ?></a></li>
 							<li class="active">优惠券管理</li>
 						</ol>
 					</div>
@@ -46,8 +46,8 @@
  foreach((array)($this->tpl_var['coupons']['data'] ?? []) as $key => $coupon){ 
  $cid++; ?>
 									<tr>
-										<td>{x2;(isset(v:coupon['couponsn'])?v:coupon['couponsn']:'')}</td>
-										<td>{x2;(isset(v:coupon['couponvalue'])?v:coupon['couponvalue']:'')}</td>
+										<td><?php echo (isset($coupon['couponsn'])?$coupon['couponsn']:''); ?></td>
+										<td><?php echo (isset($coupon['couponvalue'])?$coupon['couponvalue']:''); ?></td>
 										<td><?php echo date('Y-m-d',$coupon['couponaddtime']); ?></td>
 										<td><?php echo date('Y-m-d',$coupon['couponendtime']); ?></td>
 										<td>
@@ -65,7 +65,7 @@
 						        </div>
 					        </div>
 							<ul class="pagination pull-right">
-								{x2;(isset($coupons['pages'])?$coupons['pages']:'')}
+								<?php echo (isset($this->tpl_var['coupons']['pages'])?$this->tpl_var['coupons']['pages']:''); ?>
 							</ul>
 						</fieldset>
 					</form>

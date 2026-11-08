@@ -8,13 +8,13 @@
                 <?php $cid = 0;
  foreach((array)($this->tpl_var['coursecats'] ?? []) as $key => $cat){ 
  $cid++; ?>
-                <h4 class="title">{x2;(isset(v:cat['catname'])?v:cat['catname']:'')}</h4>
+                <h4 class="title"><?php echo (isset($cat['catname'])?$cat['catname']:''); ?></h4>
                 <?php if(!empty($this->tpl_var['topcourse'][$cat['catid']])){ ?>
                 <ul class="list-unstyled list-inline">
                     <?php $crid = 0;
  foreach((array)($this->tpl_var['topcourse'][$cat['catid']]['data'] ?? []) as $key => $course){ 
  $crid++; ?>
-                    <li><a href="index.php?course-app-course&csid={x2;(isset(v:course['csid'])?v:course['csid']:'')}">{x2;(isset(v:course['cstitle'])?v:course['cstitle']:'')}</a></li>
+                    <li><a href="index.php?course-app-course&csid=<?php echo (isset($course['csid'])?$course['csid']:''); ?>"><?php echo (isset($course['cstitle'])?$course['cstitle']:''); ?></a></li>
                     <?php } ?>
                 </ul>
                 <?php } ?>
@@ -30,7 +30,7 @@
                         <?php $cid = 0;
  foreach((array)($this->tpl_var['contents'][2]['data'] ?? []) as $key => $content){ 
  $cid++; ?>
-                        <li data-target="#carousel-example-generic" data-slide-to="{x2;(isset(v:key)?v:key:'')}"<?php if($cid == 1){ ?> class="active"<?php } ?>></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="<?php echo (isset($key)?$key:''); ?>"<?php if($cid == 1){ ?> class="active"<?php } ?>></li>
                         <?php } ?>
                     </ol>
                     <!-- Wrapper for slides -->
@@ -39,11 +39,11 @@
  foreach((array)($this->tpl_var['contents'][2]['data'] ?? []) as $key => $content){ 
  $cid++; ?>
                         <div class="item<?php if($cid == 1){ ?> active<?php } ?>">
-                            <a href="index.php?content-app-content&contentid={x2;(isset(v:content['contentid'])?v:content['contentid']:'')}">
-                                <img src="{x2;(isset(v:content['contentthumb'])?v:content['contentthumb']:'')}" alt="" style="width:100%;">
+                            <a href="index.php?content-app-content&contentid=<?php echo (isset($content['contentid'])?$content['contentid']:''); ?>">
+                                <img src="<?php echo (isset($content['contentthumb'])?$content['contentthumb']:''); ?>" alt="" style="width:100%;">
                             </a>
                             <div class="carousel-caption">
-                                <!--{x2;(isset(v:content['contenttitle'])?v:content['contenttitle']:'')}-->
+                                <!--<?php echo (isset($content['contenttitle'])?$content['contenttitle']:''); ?>-->
                             </div>
                         </div>
                         <?php } ?>
@@ -77,10 +77,10 @@
  foreach((array)($this->tpl_var['courses']['data'] ?? []) as $key => $course){ 
  $cid++; ?>
                 <div class="col-xs-3">
-                    <a href="index.php?course-app-course&csid={x2;(isset(v:course['csid'])?v:course['csid']:'')}" class="thumbnail">
-                        <img src="{x2;(isset(v:course['csthumb'])?v:course['csthumb']:'')}" alt="" width="180">
+                    <a href="index.php?course-app-course&csid=<?php echo (isset($course['csid'])?$course['csid']:''); ?>" class="thumbnail">
+                        <img src="<?php echo (isset($course['csthumb'])?$course['csthumb']:''); ?>" alt="" width="180">
                     </a>
-                    <h5 class="text-center">{x2;(isset(v:course['cstitle'])?v:course['cstitle']:'')}</h5>
+                    <h5 class="text-center"><?php echo (isset($course['cstitle'])?$course['cstitle']:''); ?></h5>
                 </div>
                 <?php if($hid == 4){ ?>
                 <div class="col-xs-12"><hr /></div>
@@ -109,10 +109,10 @@
  foreach((array)($this->tpl_var['basics']['basic'] ?? []) as $key => $basic){ 
  $bid++; ?>
                 <div class="col-xs-3">
-                    <a href="index.php?exam-app-index-setCurrentBasic&basicid={x2;(isset(v:basic['basicid'])?v:basic['basicid']:'')}" class="thumbnail ajax">
-                        <img src="{x2;(isset(v:basic['basicthumb'])?v:basic['basicthumb']:'')}" alt="" width="180">
+                    <a href="index.php?exam-app-index-setCurrentBasic&basicid=<?php echo (isset($basic['basicid'])?$basic['basicid']:''); ?>" class="thumbnail ajax">
+                        <img src="<?php echo (isset($basic['basicthumb'])?$basic['basicthumb']:''); ?>" alt="" width="180">
                     </a>
-                    <h5 class="text-center">{x2;(isset(v:basic['basic'])?v:basic['basic']:'')}</h5>
+                    <h5 class="text-center"><?php echo (isset($basic['basic'])?$basic['basic']:''); ?></h5>
                 </div>
                 <?php if($hid == 4){ ?>
                 <div class="col-xs-12"><hr /></div>
@@ -131,32 +131,32 @@
     <div class="row-fluid">
         <div class="main">
             <div class="col-xs-4 box itembox" style="min-height:320px;">
-                <h4 class="title"><a href="index.php?content-app-category&catid=1">{x2;(isset($rcats[1]['catname'])?$rcats[1]['catname']:'')}</a></h4>
+                <h4 class="title"><a href="index.php?content-app-category&catid=1"><?php echo (isset($this->tpl_var['rcats'][1]['catname'])?$this->tpl_var['rcats'][1]['catname']:''); ?></a></h4>
                 <ul class="list-unstyled">
                     <?php $cid = 0;
  foreach((array)($this->tpl_var['contents'][1]['data'] ?? []) as $key => $content){ 
  $cid++; ?>
-                    <li><a href="index.php?content-app-content&contentid={x2;(isset(v:content['contentid'])?v:content['contentid']:'')}" title="{x2;(isset(v:content['contenttitle'])?v:content['contenttitle']:'')}">{x2;(isset(v:content['contenttitle'])?v:content['contenttitle']:'')}</a></li>
+                    <li><a href="index.php?content-app-content&contentid=<?php echo (isset($content['contentid'])?$content['contentid']:''); ?>" title="<?php echo (isset($content['contenttitle'])?$content['contenttitle']:''); ?>"><?php echo (isset($content['contenttitle'])?$content['contenttitle']:''); ?></a></li>
                     <?php } ?>
                 </ul>
             </div>
             <div class="col-xs-4 box itembox split" style="min-height:320px;">
-                <h4 class="title"><a href="index.php?content-app-category&catid=3">{x2;(isset($rcats[3]['catname'])?$rcats[3]['catname']:'')}</a></h4>
+                <h4 class="title"><a href="index.php?content-app-category&catid=3"><?php echo (isset($this->tpl_var['rcats'][3]['catname'])?$this->tpl_var['rcats'][3]['catname']:''); ?></a></h4>
                 <ul class="list-unstyled">
                     <?php $cid = 0;
  foreach((array)($this->tpl_var['contents'][3]['data'] ?? []) as $key => $content){ 
  $cid++; ?>
-                    <li><a href="index.php?content-app-content&contentid={x2;(isset(v:content['contentid'])?v:content['contentid']:'')}" title="{x2;(isset(v:content['contenttitle'])?v:content['contenttitle']:'')}">{x2;(isset(v:content['contenttitle'])?v:content['contenttitle']:'')}</a></li>
+                    <li><a href="index.php?content-app-content&contentid=<?php echo (isset($content['contentid'])?$content['contentid']:''); ?>" title="<?php echo (isset($content['contenttitle'])?$content['contenttitle']:''); ?>"><?php echo (isset($content['contenttitle'])?$content['contenttitle']:''); ?></a></li>
                     <?php } ?>
                 </ul>
             </div>
             <div class="col-xs-4 box itembox" style="min-height:320px;">
-                <h4 class="title"><a href="index.php?content-app-category&catid=4">{x2;(isset($rcats[4]['catname'])?$rcats[4]['catname']:'')}</a></h4>
+                <h4 class="title"><a href="index.php?content-app-category&catid=4"><?php echo (isset($this->tpl_var['rcats'][4]['catname'])?$this->tpl_var['rcats'][4]['catname']:''); ?></a></h4>
                 <ul class="list-unstyled">
                     <?php $cid = 0;
  foreach((array)($this->tpl_var['contents'][4]['data'] ?? []) as $key => $content){ 
  $cid++; ?>
-                    <li><a href="index.php?content-app-content&contentid={x2;(isset(v:content['contentid'])?v:content['contentid']:'')}" title="{x2;(isset(v:content['contenttitle'])?v:content['contenttitle']:'')}">{x2;(isset(v:content['contenttitle'])?v:content['contenttitle']:'')}</a></li>
+                    <li><a href="index.php?content-app-content&contentid=<?php echo (isset($content['contentid'])?$content['contentid']:''); ?>" title="<?php echo (isset($content['contenttitle'])?$content['contenttitle']:''); ?>"><?php echo (isset($content['contenttitle'])?$content['contenttitle']:''); ?></a></li>
                     <?php } ?>
                 </ul>
             </div>

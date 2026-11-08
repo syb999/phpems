@@ -50,7 +50,7 @@
                                                 <div class="col-sm-10">
                                                     <button class="btn btn-primary" type="submit">提交</button>
                                                     <input type="hidden" name="modifyuserpassword" value="1"/>
-                                                    <input type="hidden" name="page" value="{x2;(isset($page)?$page:'')}"/>
+                                                    <input type="hidden" name="page" value="{x2;(isset($page) ? $page : '')}"/>
                                                 </div>
                                             </div>
                                         </fieldset>

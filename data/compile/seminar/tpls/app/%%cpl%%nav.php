@@ -13,7 +13,7 @@
             <ul class="list-unstyled list-inline text-right">
                 <?php if(!empty($this->tpl_var['_user']['userid'])){ ?>
                 <li>
-                    <span class="menu">欢迎您，{x2;(isset($_user['username'])?$_user['username']:'')}</span>
+                    <span class="menu">欢迎您，<?php echo (isset($this->tpl_var['_user']['username'])?$this->tpl_var['_user']['username']:''); ?></span>
                 </li>
                 <li>|</li>
                 <li>

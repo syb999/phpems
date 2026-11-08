@@ -15,10 +15,6 @@ php composer.phar
 cp /opt/bin/composer.phar /opt/bin/composer
 
 
-# 现在可以下载phpems的源码:
-
-git clone https://github.com/syb999/phpems.git
-
 # 进入phpems目录:
 
 cd phpems

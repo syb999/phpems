@@ -73,6 +73,12 @@ class action extends app
         $page = $this->ev->get('page');
         $type = $this->ev->get('type');
         $search = $this->ev->get('search');
+        $search = is_array($search) ? $search : [];
+        foreach (['sectionid', 'knowsid', 'questype'] as $searchkey) {
+            if (!isset($search[$searchkey])) {
+                $search[$searchkey] = '';
+            }
+        }
         $this->pg->isPhone = 1;
         $this->pg->target = 'class="ajax" data-target="favor" data-page="favor" ';
         $tmp = $this->section->getKnowsListByArgs([['AND', 'knowssectionid = :knowssectionid', 'knowssectionid', $search['sectionid']], ['AND', 'knowsstatus = 1']]);
@@ -88,7 +94,7 @@ class action extends app
         $page = $page > 0 ? $page : 1;
         $args = [['AND', 'favorsubjectid = :favorsubjectid', 'favorsubjectid', $this->data['currentbasic']['basicsubjectid']], ['AND', 'favoruserid = :favoruserid', 'favoruserid', $this->_user['sessionuserid']]];
         if ($search['knowsid']) {
-            $args[] = ['AND', 'quest2knows.qkknowsid IN (:qkknowsid)', 'qkknowsid', $search['knowsid']];
+            $args[] = ['AND', 'find_in_set(quest2knows.qkknowsid,:qkknowsid)', 'qkknowsid', $search['knowsid']];
         }
         if ($type) {
             if ($search['questype']) {
@@ -101,7 +107,7 @@ class action extends app
             }
             $favors = $this->favor->getFavorListByUserid($page, 20, $args);
         }
-        $sections = $this->section->getSectionListByArgs(['AND', 'sectionsubjectid = :sectionsubjectid', 'sectionsubjectid', $this->_user['sessioncurrent']]);
+        $sections = $this->section->getSectionListByArgs([['AND', 'sectionsubjectid = :sectionsubjectid', 'sectionsubjectid', $this->data['currentbasic']['basicsubjectid']]]);
         $questype = $this->basic->getQuestypeList();
         $this->tpl->assign('sections', $sections);
         $this->tpl->assign('questype', $questype);

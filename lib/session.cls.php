@@ -125,7 +125,7 @@ class session
             return false;
         }
 
-        if (!$args['sessiontimelimit']) {
+        if (empty($args['sessiontimelimit'])) {
             $args['sessiontimelimit'] = TIME;
         }
         if (!$this->sessionid) {

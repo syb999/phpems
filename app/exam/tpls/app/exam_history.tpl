@@ -23,17 +23,17 @@
                                         </tr>
                                         {x2;tree:(array)($exams['data'] ?? []),exam,eid}
                                         <tr>
-                                            <td>{x2;(isset(v:exam['ehexam'])?v:exam['ehexam']:'')}</td>
-                                            <td>{x2;date:v:exam['ehstarttime'],'Y-m-d H:i:s'}</td>
-                                            <td>{x2;if:v:exam['ehtime'] >= 60}{x2;if:v:exam['ehtime']%60}{x2;eval: echo intval(v:exam['ehtime']/60)+1}{x2;else}{x2;eval: echo intval(v:exam['ehtime']/60)}{x2;endif}分钟{x2;else}{x2;(isset(v:exam['ehtime'])?v:exam['ehtime']:'')}秒{x2;endif}</td>
+                                            <td>{x2;(isset(v:exam['ehexam']) ? v:exam['ehexam'] : '')}</td>
+                                            <td>{x2;date:v:exam['ehstarttime'] ?? 0,'Y-m-d H:i:s'}</td>
+                                            <td>{x2;if:(isset(v:exam['ehtime']) ? v:exam['ehtime'] : null) >= 60}{x2;if:v:exam['ehtime']%60}{x2;eval: echo intval(v:exam['ehtime']/60)+1}{x2;else}{x2;eval: echo intval(v:exam['ehtime']/60)}{x2;endif}分钟{x2;else}{x2;(isset(v:exam['ehtime']) ? v:exam['ehtime'] : '')}秒{x2;endif}</td>
                                             <td>
                                                 <b>
                                                     {x2;if:!v:exam['ehstatus'] && v:exam['ehdecide']}
                                                     评分中
-                                                    {x2;(isset(elseif:$data['currentbasic']['basicexam']['notviewscore'])?elseif:$data['currentbasic']['basicexam']['notviewscore']:'')}
+                                                    {x2;elseif:!empty($data['currentbasic']['basicexam']['notviewscore'])}
                                                     待公布
                                                     {x2;else}
-                                                    {x2;(isset(v:exam['ehscore'])?v:exam['ehscore']:'')}
+                                                    {x2;(isset(v:exam['ehscore']) ? v:exam['ehscore'] : '')}
                                                     {x2;endif}
                                                 </b>
                                             </td>
@@ -44,7 +44,7 @@
                             </li>
                         </ul>
                         {x2;if:!empty($exams['pages'])}
-                        <ul class="pagination pull-right">{x2;(isset($exams['pages'])?$exams['pages']:'')}</ul>
+                        <ul class="pagination pull-right">{x2;(isset($exams['pages']) ? $exams['pages'] : '')}</ul>
                         {x2;endif}
                     </div>
                 </div>

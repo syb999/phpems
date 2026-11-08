@@ -21,6 +21,7 @@ class action extends app
         }
         $search = $this->ev->get('search');
         $page = $this->ev->get('page');
+        $u = '';
         if ($search) {
             $this->tpl->assign('search', $search);
             foreach ($search as $key => $arg) {
@@ -75,6 +76,8 @@ class action extends app
 
     private function openbasics()
     {
+        $u = '';
+
         $basicid = $this->ev->get('basicid');
         $userid = $this->ev->get('userid');
         if ($this->basic->getOpenBasicByUseridAndBasicid($userid, $basicid)) {
@@ -173,8 +176,12 @@ class action extends app
     {
         $page = $this->ev->get('page') ? $this->ev->get('page') : 1;
         $search = $this->ev->get('search');
+        $hassearch = is_array($search) && $search;
+        $search = is_array($search) ? $search : [];
+        $search += ['userid' => '', 'groupid' => '', 'username' => ''];
+        $this->tpl->assign('search', $search);
         $u = '';
-        if ($search) {
+        if ($hassearch) {
             foreach ($search as $key => $arg) {
                 $u .= "&search[{$key}]={$arg}";
             }

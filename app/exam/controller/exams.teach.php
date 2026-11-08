@@ -50,6 +50,8 @@ class action extends app
 
     private function delexam()
     {
+        $u = '';
+
         $examid = $this->ev->get('examid');
         $page = $this->ev->get('page');
         $this->exam->delExamSetting($examid);
@@ -82,6 +84,8 @@ class action extends app
 
     private function del()
     {
+        $u = '';
+
         $page = $this->ev->get('page');
         $examid = $this->ev->get('examid');
         $this->exam->delExamSetting($examid);
@@ -96,6 +100,10 @@ class action extends app
 
     private function autopage()
     {
+        $u = '';
+        $page = intval($this->ev->get('page'));
+        $page = $page > 0 ? $page : 1;
+
         if ($this->ev->get('submitsetting')) {
             $args = $this->ev->get('args');
             $args['examsetting'] = $args['examsetting'];
@@ -120,6 +128,10 @@ class action extends app
 
     private function selfpage()
     {
+        $u = '';
+        $page = intval($this->ev->get('page'));
+        $page = $page > 0 ? $page : 1;
+
         if ($this->ev->get('submitsetting')) {
             $args = $this->ev->get('args');
             $args['examsetting'] = $args['examsetting'];
@@ -146,6 +158,10 @@ class action extends app
 
     private function temppage()
     {
+        $u = '';
+        $page = intval($this->ev->get('page'));
+        $page = $page > 0 ? $page : 1;
+
         if ($this->ev->get('submitsetting')) {
             $args = $this->ev->get('args');
             $uploadfile = $this->ev->get('uploadfile');
@@ -434,6 +450,10 @@ class action extends app
 
     private function modify()
     {
+        $u = '';
+        $page = intval($this->ev->get('page'));
+        $page = $page > 0 ? $page : 1;
+
         $search = $this->ev->get('search');
         if ($this->ev->get('submitsetting')) {
             $examid = $this->ev->get('examid');

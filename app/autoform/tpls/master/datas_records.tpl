@@ -1,4 +1,4 @@
-{x2;if:!empty($userhash)}
+{x2;if:empty($userhash)}
 {x2;include:header}
 <body>
 {x2;include:nav}
@@ -13,21 +13,21 @@
                 <div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
                         <div class="col-xs-12">
                             <ol class="breadcrumb">
-                                <li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master">{x2;(isset($apps[$_app]['appname'])?$apps[$_app]['appname']:'')}</a></li>
+                                <li><a href="index.php?{x2;(isset($_app) ? $_app : '')}-master">{x2;(isset($apps[$_app]['appname']) ? $apps[$_app]['appname'] : '')}</a></li>
                                 <li class="active">表单记录</li>
                             </ol>
                         </div>
                     </div>
                     <div class="box itembox" style="padding-top:10px;margin-bottom:0px;">
                         <h4 class="title" style="padding:10px;">
-                            {x2;(isset($module['modulename'])?$module['modulename']:'')}
+                            {x2;(isset($module['modulename']) ? $module['modulename'] : '')}
                         </h4>
                         <table class="table table-hover table-bordered">
                             <thead>
                                 <tr class="info">
                                     <th>ID</th>
                                     {x2;tree:(array)($fields ?? []),field,fid}
-                                    <th>{x2;(isset(v:field['fieldtitle'])?v:field['fieldtitle']:'')}</th>
+                                    <th>{x2;(isset(v:field['fieldtitle']) ? v:field['fieldtitle'] : '')}</th>
                                     {x2;endtree}
                                     <th width="80">操作</th>
                                 </tr>
@@ -35,13 +35,13 @@
                             <tbody>
                                 {x2;tree:(array)($rs['data'] ?? []),aform,mid}
                                 <tr>
-                                    <td>{x2;v:aform[$module['modulecode'].'id']}</td>
+                                    <td>{x2;(isset(v:aform[$module['modulecode'].'id']) ? v:aform[$module['modulecode'].'id'] : '')}</td>
                                     {x2;tree:(array)($fields ?? []),field,fid}
-                                    <td class="{x2;(isset(v:field['field'])?v:field['field']:'')}">{x2;if:v:field['fielddatatype'] == 'timestamp'}{x2;date:v:aform[v:field['field']],'Y-m-d H:i:s'}{x2;else}{x2;(isset(v:aform[v:field['field']])?v:aform[v:field['field']]:'')}{x2;endif}</td>
+                                    <td class="{x2;(isset(v:field['field']) ? v:field['field'] : '')}">{x2;if:(isset(v:field['fielddatatype']) ? v:field['fielddatatype'] : null) == 'timestamp'}{x2;date:v:aform[v:field['field']] ?? 0,'Y-m-d H:i:s'}{x2;else}{x2;(isset(v:aform[v:field['field']]) ? v:aform[v:field['field']] : '')}{x2;endif}</td>
                                     {x2;endtree}
                                     <td>
                                         <div class="btn-group">
-                                            <a class="btn" href="index.php?{x2;(isset($_app)?$_app:'')}-master-datas-records&moduleid={x2;(isset(v:module['moduleid'])?v:module['moduleid']:'')}&page={x2;(isset($page)?$page:'')}{x2;(isset($u)?$u:'')}" title="数据"><em class="glyphicon glyphicon-remove"></em></a>
+                                            <a class="btn" href="index.php?{x2;(isset($_app) ? $_app : '')}-master-datas-records&moduleid={x2;(isset(v:module['moduleid']) ? v:module['moduleid'] : '')}&page={x2;(isset($page) ? $page : '')}{x2;(isset($u) ? $u : '')}" title="数据"><em class="glyphicon glyphicon-remove"></em></a>
                                         </div>
                                     </td>
                                 </tr>
@@ -49,12 +49,12 @@
                             </tbody>
                         </table>
                         <ul class="pagination pull-right">
-                            {x2;(isset($rs['pages'])?$rs['pages']:'')}
+                            {x2;(isset($rs['pages']) ? $rs['pages'] : '')}
                         </ul>
                     </div>
                 </div>
             </div>
-{x2;if:!empty($userhash)}
+{x2;if:empty($userhash)}
         </div>
     </div>
 </div>

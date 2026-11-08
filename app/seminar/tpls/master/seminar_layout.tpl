@@ -1,4 +1,4 @@
-{x2;if:!empty($userhash)}
+{x2;if:empty($userhash)}
 {x2;include:header}
 <body>
 {x2;include:nav}
@@ -13,16 +13,16 @@
                 <div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
                     <div class="col-xs-12">
                         <ol class="breadcrumb">
-                            <li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master">{x2;(isset($apps[$_app]['appname'])?$apps[$_app]['appname']:'')}</a></li>
-                            <li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master-seminar&page={x2;(isset($page)?$page:'')}">专题管理</a></li>
+                            <li><a href="index.php?{x2;(isset($_app) ? $_app : '')}-master">{x2;(isset($apps[$_app]['appname']) ? $apps[$_app]['appname'] : '')}</a></li>
+                            <li><a href="index.php?{x2;(isset($_app) ? $_app : '')}-master-seminar&page={x2;(isset($page) ? $page : '')}">专题管理</a></li>
                             <li class="active">通栏设置</li>
                         </ol>
                     </div>
                 </div>
                 <div class="box itembox" style="padding-top:10px;margin-bottom:0px;overflow:visible">
                     <h4 class="title" style="padding:10px;">
-                        {x2;(isset($seminar['seminartitle'])?$seminar['seminartitle']:'')}
-                        <a class="btn btn-primary pull-right" href="index.php?{x2;(isset($_app)?$_app:'')}-master-seminar-addlayout&seminarid={x2;(isset($seminar['seminarid'])?$seminar['seminarid']:'')}">添加通栏</a>
+                        {x2;(isset($seminar['seminartitle']) ? $seminar['seminartitle'] : '')}
+                        <a class="btn btn-primary pull-right" href="index.php?{x2;(isset($_app) ? $_app : '')}-master-seminar-addlayout&seminarid={x2;(isset($seminar['seminarid']) ? $seminar['seminarid'] : '')}">添加通栏</a>
                     </h4>
                     <form action="index.php?seminar-master-seminar-litelayout" method="post">
                         <table class="table table-hover table-bordered">
@@ -39,16 +39,16 @@
                             <tbody>
                                 {x2;tree:(array)($layouts['data'] ?? []),layout,lid}
                                 <tr>
-                                    <td>{x2;(isset(v:layout['slayoutid'])?v:layout['slayoutid']:'')}</td>
-                                    <td><input class="form-control" type="text" name="ids[{x2;(isset(v:layout['slayoutid'])?v:layout['slayoutid']:'')}]" value="{x2;(isset(v:layout['slayoutorder'])?v:layout['slayoutorder']:'')}" style="width:32px;padding:2px 5px;"/></td>
-                                    <td>{x2;(isset(v:layout['slayouttitle'])?v:layout['slayouttitle']:'')}</td>
-                                    <td>{x2;(isset(v:layout['slayoutgrid'])?v:layout['slayoutgrid']:'')}</td>
-                                    <td>{x2;(isset(v:layout['slayoutdescribe'])?v:layout['slayoutdescribe']:'')}</td>
+                                    <td>{x2;(isset(v:layout['slayoutid']) ? v:layout['slayoutid'] : '')}</td>
+                                    <td><input class="form-control" type="text" name="ids[{x2;(isset(v:layout['slayoutid']) ? v:layout['slayoutid'] : '')}]" value="{x2;(isset(v:layout['slayoutorder']) ? v:layout['slayoutorder'] : '')}" style="width:32px;padding:2px 5px;"/></td>
+                                    <td>{x2;(isset(v:layout['slayouttitle']) ? v:layout['slayouttitle'] : '')}</td>
+                                    <td>{x2;(isset(v:layout['slayoutgrid']) ? v:layout['slayoutgrid'] : '')}</td>
+                                    <td>{x2;(isset(v:layout['slayoutdescribe']) ? v:layout['slayoutdescribe'] : '')}</td>
                                     <td>
                                         <div class="btn-group">
-                                            <a class="btn" title="组件配置" href="index.php?seminar-master-seminar-elem&slayoutid={x2;(isset(v:layout['slayoutid'])?v:layout['slayoutid']:'')}"><em class="glyphicon glyphicon-cog"></em></a>
-                                            <a class="btn" title="修改" href="index.php?seminar-master-seminar-modifylayout&slayoutid={x2;(isset(v:layout['slayoutid'])?v:layout['slayoutid']:'')}"><em class="glyphicon glyphicon-edit"></em></a>
-                                            <a class="btn confirm" title="删除" href="index.php?seminar-master-seminar-dellayout&slayoutid={x2;(isset(v:layout['slayoutid'])?v:layout['slayoutid']:'')}"><em class="glyphicon glyphicon-remove"></em></a>
+                                            <a class="btn" title="组件配置" href="index.php?seminar-master-seminar-elem&slayoutid={x2;(isset(v:layout['slayoutid']) ? v:layout['slayoutid'] : '')}"><em class="glyphicon glyphicon-cog"></em></a>
+                                            <a class="btn" title="修改" href="index.php?seminar-master-seminar-modifylayout&slayoutid={x2;(isset(v:layout['slayoutid']) ? v:layout['slayoutid'] : '')}"><em class="glyphicon glyphicon-edit"></em></a>
+                                            <a class="btn confirm" title="删除" href="index.php?seminar-master-seminar-dellayout&slayoutid={x2;(isset(v:layout['slayoutid']) ? v:layout['slayoutid'] : '')}"><em class="glyphicon glyphicon-remove"></em></a>
                                         </div>
                                     </td>
                                 </tr>
@@ -62,7 +62,7 @@
                     </form>
                 </div>
             </div>
-{x2;if:!empty($userhash)}
+{x2;if:empty($userhash)}
         </div>
     </div>
 </div>

@@ -1,4 +1,4 @@
-{x2;if:!empty($userhash)}
+{x2;if:empty($userhash)}
 {x2;include:header}
 <body>
 {x2;include:nav}
@@ -13,16 +13,16 @@
                 <div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
                     <div class="col-xs-12">
                         <ol class="breadcrumb">
-                            <li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master">{x2;(isset($apps[$_app]['appname'])?$apps[$_app]['appname']:'')}</a></li>
-                            <li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master-module">用户模型</a></li>
-                            <li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master-module-fields&moduleid={x2;(isset($module['moduleid'])?$module['moduleid']:'')}">字段管理</a></li>
+                            <li><a href="index.php?{x2;(isset($_app) ? $_app : '')}-master">{x2;(isset($apps[$_app]['appname']) ? $apps[$_app]['appname'] : '')}</a></li>
+                            <li><a href="index.php?{x2;(isset($_app) ? $_app : '')}-master-module">用户模型</a></li>
+                            <li><a href="index.php?{x2;(isset($_app) ? $_app : '')}-master-module-fields&moduleid={x2;(isset($module['moduleid']) ? $module['moduleid'] : '')}">字段管理</a></li>
                             <li class="active">编辑{x2;if:!empty($fieldpublic)}公共{x2;else}模型{x2;endif}字段</li>
                         </ol>
                     </div>
                 </div>
                 <div class="box itembox">
                     <h4 class="title" style="padding:10px;">
-                        {x2;(isset($field['fieldtitle'])?$field['fieldtitle']:'')}[{x2;(isset($field['field'])?$field['field']:'')}]
+                        {x2;(isset($field['fieldtitle']) ? $field['fieldtitle'] : '')}[{x2;(isset($field['field']) ? $field['field'] : '')}]
                     </h4>
                     <div id="tabs-694325" class="tabbable">
                         <ul class="nav nav-tabs">
@@ -32,18 +32,18 @@
                             <li>
                                 <a href="#panel-788842" data-toggle="tab">数据编辑</a>
                             </li>
-                            <a class="pull-right btn btn-primary" href="index.php?{x2;(isset($_app)?$_app:'')}-master-module-fields&moduleid={x2;(isset($module['moduleid'])?$module['moduleid']:'')}">字段列表</a>
+                            <a class="pull-right btn btn-primary" href="index.php?{x2;(isset($_app) ? $_app : '')}-master-module-fields&moduleid={x2;(isset($module['moduleid']) ? $module['moduleid'] : '')}">字段列表</a>
                         </ul>
                         <div class="tab-content">
                             <div id="panel-344373" class="tab-pane active">
-                                <form action="index.php?{x2;(isset($_app)?$_app:'')}-master-module-modifyfield" method="post" class="form-horizontal">
+                                <form action="index.php?{x2;(isset($_app) ? $_app : '')}-master-module-modifyfield" method="post" class="form-horizontal">
                                     <div class="form-group">
                                         <label class="control-label col-sm-2"></label>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-sm-2">字段别名：</label>
                                         <div class="col-sm-4">
-                                            <input class="form-control" type="text" size="40" name="args[fieldtitle]" needle="needle" datatype="userName" id="fieldtitle" msg="您必须填写字段别名，字段别名必须为中英文字符或数字" value="{x2;(isset($field['fieldtitle'])?$field['fieldtitle']:'')}"/>
+                                            <input class="form-control" type="text" size="40" name="args[fieldtitle]" needle="needle" datatype="userName" id="fieldtitle" msg="您必须填写字段别名，字段别名必须为中英文字符或数字" value="{x2;(isset($field['fieldtitle']) ? $field['fieldtitle'] : '')}"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -70,21 +70,21 @@
                                     <div class="form-group">
                                         <label class="control-label col-sm-2">HTML属性：</label>
                                           <div class="col-sm-9">
-                                              <textarea class="form-control" rows="7" cols="4" name="args[fieldhtmlproperty]" id="fieldhtmlproperty">{x2;(isset($field['fieldhtmlproperty'])?$field['fieldhtmlproperty']:'')}</textarea>
+                                              <textarea class="form-control" rows="7" cols="4" name="args[fieldhtmlproperty]" id="fieldhtmlproperty">{x2;(isset($field['fieldhtmlproperty']) ? $field['fieldhtmlproperty'] : '')}</textarea>
                                             <span class="help-block">每行一个，等号隔开，如：style=width:100px;</span>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-sm-2">可选值列表：</label>
                                         <div class="col-sm-9">
-                                            <textarea class="form-control" rows="7" cols="4" name="args[fieldvalues]" id="fieldvalues">{x2;(isset($field['fieldvalues'])?$field['fieldvalues']:'')}</textarea>
+                                            <textarea class="form-control" rows="7" cols="4" name="args[fieldvalues]" id="fieldvalues">{x2;(isset($field['fieldvalues']) ? $field['fieldvalues'] : '')}</textarea>
                                             <span class="help-block">每行一个，等号隔开，如：属性=值;</span>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-sm-2">默认值：</label>
                                         <div class="col-sm-3">
-                                            <input class="form-control" type="text" size="40" name="args[fielddefault]" class="form-control" id="fielddefault" value="{x2;(isset($field['fielddefault'])?$field['fielddefault']:'')}"/>
+                                            <input class="form-control" type="text" size="40" name="args[fielddefault]" class="form-control" id="fielddefault" value="{x2;(isset($field['fielddefault']) ? $field['fielddefault'] : '')}"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -94,9 +94,9 @@
                                                   <input type="checkbox" name="args[fieldforbidactors][]" value="-1" {x2;if:strpos($field['fieldforbidactors'],',-1,') !== false}checked="true"{x2;endif}/> 本用户
                                               </label>
                                               {x2;tree:(array)($groups ?? []),group,gid}
-                                              {x2;if:v:group['groupmoduleid'] == 1}
+                                              {x2;if:(isset(v:group['groupmoduleid']) ? v:group['groupmoduleid'] : null) == 1}
                                               <label class="checkbox-inline">
-                                                  <input type="checkbox" name="args[fieldforbidactors][]" value="{x2;(isset(v:group['groupid'])?v:group['groupid']:'')}" {x2;if:strpos($field['fieldforbidactors'],','.v:group['groupid'].',') !== false}checked="true"{x2;endif}/> {x2;(isset(v:group['groupname'])?v:group['groupname']:'')}
+                                                  <input type="checkbox" name="args[fieldforbidactors][]" value="{x2;(isset(v:group['groupid']) ? v:group['groupid'] : '')}" {x2;if:strpos($field['fieldforbidactors'],','.v:group['groupid'].',') !== false}checked="true"{x2;endif}/> {x2;(isset(v:group['groupname']) ? v:group['groupname'] : '')}
                                               </label>
                                               {x2;endif}
                                               {x2;endtree}
@@ -105,7 +105,7 @@
                                     <div class="form-group">
                                         <label class="control-label col-sm-2">字段描述：</label>
                                         <div class="col-sm-9">
-                                            <textarea class="form-control" rows="7" cols="4" name="args[fielddescribe]" id="fielddescribe">{x2;(isset($field['fielddescribe'])?$field['fielddescribe']:'')}</textarea>
+                                            <textarea class="form-control" rows="7" cols="4" name="args[fielddescribe]" id="fielddescribe">{x2;(isset($field['fielddescribe']) ? $field['fielddescribe'] : '')}</textarea>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -115,7 +115,7 @@
                                                   <input type="radio" class="input-text" name="args[fieldsystem]" value="1"{x2;if:!empty($field['fieldsystem'])} checked{x2;endif}/> 作为系统字段
                                               </label>
                                               <label class="radio-inline">
-                                                  <input type="radio" class="input-text" name="args[fieldsystem]" value="0"{x2;if:!empty($field['fieldsystem'])} checked{x2;endif}/> 作为普通字段
+                                                  <input type="radio" class="input-text" name="args[fieldsystem]" value="0"{x2;if:empty($field['fieldsystem'])} checked{x2;endif}/> 作为普通字段
                                               </label>
                                               <span class="help-block">系统字段不能被删除</span>
                                        </div>
@@ -124,15 +124,15 @@
                                         <label class="control-label col-sm-2"></label>
                                         <div class="col-sm-9">
                                             <button class="btn btn-primary" type="submit">提交</button>
-                                            <input type="hidden" name="moduleid" value="{x2;(isset($field['fieldmoduleid'])?$field['fieldmoduleid']:'')}"/>
-                                            <input type="hidden" name="fieldid" value="{x2;(isset($fieldid)?$fieldid:'')}"/>
+                                            <input type="hidden" name="moduleid" value="{x2;(isset($field['fieldmoduleid']) ? $field['fieldmoduleid'] : '')}"/>
+                                            <input type="hidden" name="fieldid" value="{x2;(isset($fieldid) ? $fieldid : '')}"/>
                                             <input type="hidden" name="modifyfieldhtml" value="1"/>
                                         </div>
                                     </div>
                                 </form>
                             </div>
                             <div id="panel-788842" class="tab-pane">
-                                <form action="index.php?{x2;(isset($_app)?$_app:'')}-master-module-modifyfield" method="post" class="form-horizontal">
+                                <form action="index.php?{x2;(isset($_app) ? $_app : '')}-master-module-modifyfield" method="post" class="form-horizontal">
                                     <div class="form-group">
                                         <label class="control-label col-sm-2"></label>
                                     </div>
@@ -150,7 +150,7 @@
                                     <div class="form-group">
                                         <label class="control-label col-sm-2">字段长度：</label>
                                         <div class="col-sm-3">
-                                            <input type="text" size="16" name="args[fieldlength]" class="form-control" id="fieldlength" value="{x2;(isset($field['fieldlength'])?$field['fieldlength']:'')}"/>
+                                            <input type="text" size="16" name="args[fieldlength]" class="form-control" id="fieldlength" value="{x2;(isset($field['fieldlength']) ? $field['fieldlength'] : '')}"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -168,8 +168,8 @@
                                         <label class="control-label col-sm-2"></label>
                                         <div class="col-sm-9">
                                             <button class="btn btn-primary" type="submit">提交</button>
-                                            <input type="hidden" name="moduleid" value="{x2;(isset($field['fieldmoduleid'])?$field['fieldmoduleid']:'')}"/>
-                                            <input type="hidden" name="fieldid" value="{x2;(isset($fieldid)?$fieldid:'')}"/>
+                                            <input type="hidden" name="moduleid" value="{x2;(isset($field['fieldmoduleid']) ? $field['fieldmoduleid'] : '')}"/>
+                                            <input type="hidden" name="fieldid" value="{x2;(isset($fieldid) ? $fieldid : '')}"/>
                                             <input type="hidden" name="modifyfielddata" value="1"/>
                                         </div>
                                     </div>
@@ -180,7 +180,7 @@
                 </div>
             </div>
         </div>
-{x2;if:!empty($userhash)}
+{x2;if:empty($userhash)}
         </div>
     </div>
 </div>

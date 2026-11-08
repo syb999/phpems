@@ -26,6 +26,8 @@ class action extends app
     // todo $u = ?
     private function del()
     {
+        $u = '';
+
         $page = $this->ev->get('page');
         $atid = $this->ev->get('atid');
         $this->attach->delAttachtypeById($atid);
@@ -40,6 +42,8 @@ class action extends app
 
     private function batdel()
     {
+        $u = '';
+
         $page = $this->ev->get('page');
         $delids = $this->ev->get('delids');
         foreach ($delids as $atid) {
@@ -56,6 +60,8 @@ class action extends app
 
     private function modify()
     {
+        $u = '';
+
         $page = $this->ev->get('page');
         $atid = $this->ev->get('atid');
         if ($this->ev->get('modifyattachtype')) {
@@ -77,6 +83,8 @@ class action extends app
 
     private function add()
     {
+        $u = '';
+
         if ($this->ev->get('inserttype')) {
             $args = $this->ev->get('args');
             $id = $this->attach->addAttachtype($args);

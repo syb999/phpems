@@ -176,17 +176,24 @@ class action extends app
         $needhand = 0;
         if ($this->ev->get('insertscore')) {
             $question = $this->ev->get('question');
+            if (!is_array($question)) {
+                $question = [];
+            }
             if (is_array($question)) {
                 foreach ($question as $key => $a) {
                     $sessionvars['examsessionuseranswer'][$key] = $a;
                 }
             }
-            foreach ($sessionvars['examsessionquestion']['questions'] as $key => $tmp) {
+            $questionlist = is_array($sessionvars['examsessionquestion']['questions'] ?? null) ? $sessionvars['examsessionquestion']['questions'] : [];
+            $questionrows = is_array($sessionvars['examsessionquestion']['questionrows'] ?? null) ? $sessionvars['examsessionquestion']['questionrows'] : [];
+            $scorelist = [];
+            foreach ($questionlist as $key => $tmp) {
                 if (!$questype[$key]['questsort']) {
                     foreach ($tmp as $p) {
-                        if (is_array($sessionvars['examsessionuseranswer'][$p['questionid']])) {
+                        $uans = isset($sessionvars['examsessionuseranswer'][$p['questionid']]) ? $sessionvars['examsessionuseranswer'][$p['questionid']] : '';
+                        if (is_array($uans)) {
                             $nanswer = '';
-                            $answer = $sessionvars['examsessionuseranswer'][$p['questionid']];
+                            $answer = $uans;
                             asort($answer);
                             $nanswer = implode('', $answer);
                             if ($nanswer == $p['questionanswer']) {
@@ -208,7 +215,7 @@ class action extends app
                                 }
                             }
                         } else {
-                            $answer = $sessionvars['examsessionuseranswer'][$p['questionid']];
+                            $answer = $uans;
                             if ($answer == $p['questionanswer']) {
                                 $score = $sessionvars['examsessionsetting']['examsetting']['questype'][$key]['score'];
                             } else {
@@ -223,12 +230,13 @@ class action extends app
                     }
                 }
             }
-            foreach ($sessionvars['examsessionquestion']['questionrows'] as $key => $tmp) {
+            foreach ($questionrows as $key => $tmp) {
                 if (!$questype[$key]['questsort']) {
                     foreach ($tmp as $tmp2) {
                         foreach ($tmp2['data'] as $p) {
-                            if (is_array($sessionvars['examsessionuseranswer'][$p['questionid']])) {
-                                $answer = $sessionvars['examsessionuseranswer'][$p['questionid']];
+                            $uans = isset($sessionvars['examsessionuseranswer'][$p['questionid']]) ? $sessionvars['examsessionuseranswer'][$p['questionid']] : '';
+                            if (is_array($uans)) {
+                                $answer = $uans;
                                 asort($answer);
                                 $nanswer = implode('', $answer);
                                 if ($nanswer == $p['questionanswer']) {
@@ -250,7 +258,7 @@ class action extends app
                                     }
                                 }
                             } else {
-                                $answer = $sessionvars['examsessionuseranswer'][$p['questionid']];
+                                $answer = $uans;
                                 if ($answer == $p['questionanswer']) {
                                     $score = $sessionvars['examsessionsetting']['examsetting']['questype'][$key]['score'];
                                 } else {

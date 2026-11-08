@@ -253,6 +253,9 @@ class action extends app
 
     private function del()
     {
+        $page = intval($this->ev->get('page'));
+        $page = $page > 0 ? $page : 1;
+
         $moduleid = $this->ev->get('moduleid');
         $fileds = $this->module->getPrivateMoudleFields($moduleid);
         $groups = $this->user->getGroupsByModuleid($moduleid);

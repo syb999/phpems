@@ -1,4 +1,4 @@
-{x2;if:!empty($userhash)}
+{x2;if:empty($userhash)}
 {x2;include:header}
 <body>
 {x2;include:nav}
@@ -13,10 +13,10 @@
                 <div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
                     <div class="col-xs-12">
                         <ol class="breadcrumb">
-                            <li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master">{x2;(isset($apps[$_app]['appname'])?$apps[$_app]['appname']:'')}</a></li>
+                            <li><a href="index.php?{x2;(isset($_app) ? $_app : '')}-master">{x2;(isset($apps[$_app]['appname']) ? $apps[$_app]['appname'] : '')}</a></li>
                             {x2;if:!empty($catid)}
-                            <li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master-seminars">专题管理</a></li>
-                            <li class="active">{x2;(isset($categories[$catid]['catname'])?$categories[$catid]['catname']:'')}</li>
+                            <li><a href="index.php?{x2;(isset($_app) ? $_app : '')}-master-seminars">专题管理</a></li>
+                            <li class="active">{x2;(isset($categories[$catid]['catname']) ? $categories[$catid]['catname'] : '')}</li>
                             {x2;else}
                             <li class="active">专题管理</li>
                             {x2;endif}
@@ -25,8 +25,8 @@
                 </div>
                 <div class="box itembox" style="padding-top:10px;margin-bottom:0px;overflow:visible">
                     <h4 class="title" style="padding:10px;">
-                        添加{x2;(isset($types[$type])?$types[$type]:'')}
-                        <a class="btn btn-primary pull-right" href="index.php?{x2;(isset($_app)?$_app:'')}-master-seminar-{x2;(isset($type)?$type:'')}">模板管理</a>
+                        添加{x2;(isset($types[$type]) ? $types[$type] : '')}
+                        <a class="btn btn-primary pull-right" href="index.php?{x2;(isset($_app) ? $_app : '')}-master-seminar-{x2;(isset($type) ? $type : '')}">模板管理</a>
                     </h4>
                     <form action="index.php?seminar-master-tpls-add" method="post" class="form-horizontal">
                         <div class="form-group">
@@ -63,7 +63,7 @@
                                 <div class="fineuploader" attr-type="thumb" attr-template="pe-template-contentthumb"></div>
                             </div>
                         </div>
-                        {x2;if:$type == 'layout'}
+                        {x2;if:(isset($type) ? $type : null) == 'layout'}
                         <div class="form-group">
                             <label class="control-label col-sm-2">栅格：</label>
                             <div class="col-sm-9">
@@ -98,13 +98,13 @@
                             <div class="col-sm-9">
                                 <button class="btn btn-primary tplbutton" type="button">提交</button>
                                 <input type="hidden" name="submit" value="1">
-                                <input type="hidden" name="args[stpltype]" value="{x2;(isset($type)?$type:'')}">
+                                <input type="hidden" name="args[stpltype]" value="{x2;(isset($type) ? $type : '')}">
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
-{x2;if:!empty($userhash)}
+{x2;if:empty($userhash)}
         </div>
     </div>
 </div>

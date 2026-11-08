@@ -1,90 +1,88 @@
-{x2;if:!empty($userhash)}
+{x2;if:empty($userhash)}
 {x2;include:header}
 <body>
 {x2;include:nav}
 <div class="container-fluid">
-	<div class="row-fluid">
-		<div class="main">
-			<div class="col-xs-2" style="padding-top:10px;margin-bottom:0px;">
-				{x2;include:menu}
-			</div>
-			<div class="col-xs-10" id="datacontent">
+    <div class="row-fluid">
+        <div class="main">
+            <div class="col-xs-2 leftmenu">
+                {x2;include:menu}
+            </div>
+            <div id="datacontent">
 {x2;endif}
-				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
-					<div class="col-xs-12">
-						<ol class="breadcrumb">
-							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master">{x2;(isset($apps[$_app]['appname'])?$apps[$_app]['appname']:'')}</a></li>
-							<li class="active">分类管理</li>
-						</ol>
-					</div>
-				</div>
-				<div class="box itembox" style="padding-top:10px;margin-bottom:0px;">
-					<h4 class="title" style="padding:10px;">
-						分类管理
-						<span class="dropdown pull-right">
-							<a class="btn btn-primary" href="#" data-toggle="dropdown">添加分类 <strong class="caret"></strong></a>
-							<ul class="dropdown-menu">
-								<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master-category-add&parent={x2;(isset($parent)?$parent:'')}">添加分类</a></li>
-								<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master-category&parent={x2;(isset($categories[$parent]['catparent'])?$categories[$parent]['catparent']:'')}">上级分类</a></li>
-		                    </ul>
-						</span>
-					</h4>
-					<h4>{x2;if:!empty($parent)}{x2;(isset($categories[$parent]['catname'])?$categories[$parent]['catname']:'')}{x2;else}一级分类{x2;endif}</h4>
-					<form action="index.php?{x2;(isset($_app)?$_app:'')}-master-category-lite" method="post">
-						<fieldset>
-							<table class="table table-hover table-bordered">
-								<thead>
-									<tr class="info">
-										<th width="80">排序</th>
-										<th width="80">ID</th>
-										<th width="80">缩略图</th>
-										<th>分类名称</th>
-										<th width="180">操作</th>
-									</tr>
-								</thead>
-								<tbody>
-									{x2;tree:(array)($categorys['data'] ?? []),category,cid}
-									<tr>
-										<td><input type="text" class="form-control" name="ids[{x2;(isset(v:category['catid'])?v:category['catid']:'')}]" value="{x2;(isset(v:category['catlite'])?v:category['catlite']:'')}" style="width:48px;padding:2px 5px;"/></td>
-										<td>{x2;(isset(v:category['catid'])?v:category['catid']:'')}</td>
-										<td><img src="{x2;if:!empty(v:category['catimg'])}{x2;(isset(v:category['catimg'])?v:category['catimg']:'')}{x2;else}app/core/styles/images/noupload.gif{x2;endif}" alt="" style="width:48px;"/></td>
-										<td><span>{x2;(isset(v:category['catname'])?v:category['catname']:'')}</span></td>
-										<td>
-											<div class="btn-group">
-												<a class="btn" href="index.php?{x2;(isset($_app)?$_app:'')}-master-category-add&parent={x2;(isset(v:category['catid'])?v:category['catid']:'')}{x2;(isset($u)?$u:'')}"><em class="glyphicon glyphicon-plus"></em></a>
-												<a class="btn" href="index.php?{x2;(isset($_app)?$_app:'')}-master-category&parent={x2;(isset(v:category['catid'])?v:category['catid']:'')}{x2;(isset($u)?$u:'')}"><em class="glyphicon glyphicon-list"></em></a>
-												<a class="btn" href="index.php?{x2;(isset($_app)?$_app:'')}-master-category-edit&page={x2;(isset($page)?$page:'')}&catid={x2;(isset(v:category['catid'])?v:category['catid']:'')}{x2;(isset($u)?$u:'')}"><em class="glyphicon glyphicon-edit"></em></a>
-												<a class="btn confirm" href="index.php?{x2;(isset($_app)?$_app:'')}-master-category-del&catid={x2;(isset(v:category['catid'])?v:category['catid']:'')}&page={x2;(isset($page)?$page:'')}{x2;(isset($u)?$u:'')}"><em class="glyphicon glyphicon-remove"></em></a>
-											</div>
-										</td>
-									</tr>
-									{x2;endtree}
-								</tbody>
-							</table>
-							<div class="control-group">
-					            <div class="controls">
-                                    {x2;if:isset($search) && is_array($search)}
-						            {x2;tree:(array)($search ?? []),arg,sid}
-						            <input type="hidden" name="search[{x2;(isset(v:key)?v:key:'')}]" value="{x2;(isset(v:arg)?v:arg:'')}"/>
-						            {x2;endtree}
-                                    {x2;endif}
-						            <label class="radio inline">
-						            	<button class="btn btn-primary" type="submit">更改排序</button>
-						            </label>
-						            <input type="hidden" name="modifycategorysequence" value="1"/>
-						            <input type="hidden" name="page" value="{x2;(isset($page)?$page:'')}"/>
-						        </div>
-					        </div>
-							<ul class="pagination pull-right">
-								{x2;(isset($categorys['pages'])?$categorys['pages']:'')}
-							</ul>
-						</fieldset>
-					</form>
-				</div>
-			</div>
-{x2;if:!empty($userhash)}
-		</div>
-	</div>
+                <div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
+                    <div class="col-xs-12">
+                        <ol class="breadcrumb">
+                            <li><a href="index.php?{x2;(isset($_app) ? $_app : '')}-master">{x2;(isset($apps[$_app]['appname']) ? $apps[$_app]['appname'] : '')}</a></li>
+                            <li class="active">分类管理</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="box itembox" style="padding-top:10px;margin-bottom:0px;">
+                    <h4 class="title" style="padding:10px;">
+                        分类管理
+                        <span class="dropdown pull-right">
+                            <a class="btn btn-primary" href="#" data-toggle="dropdown">添加分类 <strong class="caret"></strong></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="index.php?{x2;(isset($_app) ? $_app : '')}-master-category-add&parent={x2;(isset($parent) ? $parent : '')}">添加分类</a></li>
+                                <li><a href="index.php?{x2;(isset($_app) ? $_app : '')}-master-category&parent={x2;(isset($categories[$parent]['catparent']) ? $categories[$parent]['catparent'] : '')}">上级分类</a></li>
+                            </ul>
+                        </span>
+                    </h4>
+                    <h4>{x2;if:!empty($parent)}{x2;(isset($categories[$parent]['catname']) ? $categories[$parent]['catname'] : '')}{x2;else}一级分类{x2;endif}</h4>
+                    <form action="index.php?{x2;(isset($_app) ? $_app : '')}-master-category-lite" method="post">
+                        <fieldset>
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                    <tr class="info">
+                                        <th width="80">排序</th>
+                                        <th width="80">ID</th>
+                                        <th width="80">缩略图</th>
+                                        <th>分类名称</th>
+                                        <th width="180">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {x2;tree:(array)($categorys['data'] ?? []),category,cid}
+                                    <tr>
+                                        <td><input type="text" class="form-control" name="ids[{x2;(isset(v:category['catid']) ? v:category['catid'] : '')}]" value="{x2;(isset(v:category['catlite']) ? v:category['catlite'] : '')}" style="width:48px;padding:2px 5px;"/></td>
+                                        <td>{x2;(isset(v:category['catid']) ? v:category['catid'] : '')}</td>
+                                        <td><img src="{x2;if:!empty(v:category['catimg'])}{x2;(isset(v:category['catimg']) ? v:category['catimg'] : '')}{x2;else}app/core/styles/images/noupload.gif{x2;endif}" alt="" style="width:48px;"/></td>
+                                        <td><span>{x2;(isset(v:category['catname']) ? v:category['catname'] : '')}</span></td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <a class="btn" href="index.php?{x2;(isset($_app) ? $_app : '')}-master-category-add&parent={x2;(isset(v:category['catid']) ? v:category['catid'] : '')}{x2;(isset($u) ? $u : '')}"><em class="glyphicon glyphicon-plus"></em></a>
+                                                <a class="btn" href="index.php?{x2;(isset($_app) ? $_app : '')}-master-category&parent={x2;(isset(v:category['catid']) ? v:category['catid'] : '')}{x2;(isset($u) ? $u : '')}"><em class="glyphicon glyphicon-list"></em></a>
+                                                <a class="btn" href="index.php?{x2;(isset($_app) ? $_app : '')}-master-category-edit&page={x2;(isset($page) ? $page : '')}&catid={x2;(isset(v:category['catid']) ? v:category['catid'] : '')}{x2;(isset($u) ? $u : '')}"><em class="glyphicon glyphicon-edit"></em></a>
+                                                <a class="btn confirm" href="index.php?{x2;(isset($_app) ? $_app : '')}-master-category-del&catid={x2;(isset(v:category['catid']) ? v:category['catid'] : '')}&page={x2;(isset($page) ? $page : '')}{x2;(isset($u) ? $u : '')}"><em class="glyphicon glyphicon-remove"></em></a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {x2;endtree}
+                                </tbody>
+                            </table>
+                            <div class="control-group">
+                                <div class="controls">
+                                    {x2;if:isset($search) && is_array($search)}{x2;tree:(array)($search ?? []),arg,sid}
+                                    <input type="hidden" name="search[{x2;(isset(v:key) ? v:key : '')}]" value="{x2;(isset(v:arg) ? v:arg : '')}"/>
+                                    {x2;endtree}{x2;endif}
+                                    <label class="radio inline">
+                                        <button class="btn btn-primary" type="submit">更改排序</button>
+                                    </label>
+                                    <input type="hidden" name="modifycategorysequence" value="1"/>
+                                    <input type="hidden" name="page" value="{x2;(isset($page) ? $page : '')}"/>
+                                </div>
+                            </div>
+                            <ul class="pagination pull-right">
+                                {x2;(isset($categorys['pages']) ? $categorys['pages'] : '')}
+                            </ul>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+{x2;if:empty($userhash)}
+        </div>
+    </div>
 </div>
 {x2;include:footer}
 </body>

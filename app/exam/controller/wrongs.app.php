@@ -135,7 +135,7 @@ class action extends app
                 'examsessionscore'      => $eh['ehscore'],
                 'examsessionstarttime'  => $eh['ehstarttime'],
             ];
-            $number = [];
+            $number = ['all' => 0, 'child' => []];
             $right = [];
             $score = [];
             $allnumber = 0;
@@ -221,7 +221,7 @@ class action extends app
             if (!$ids) {
                 $ids = '0';
             }
-            $number = [];
+            $number = ['all' => 0, 'child' => []];
             if ($ids) {
                 $ids = explode(',', $ids);
                 foreach ($ids as $t) {
@@ -432,7 +432,7 @@ class action extends app
             if (!$ids) {
                 $ids = '0';
             }
-            $number = [];
+            $number = ['all' => 0, 'child' => []];
             if ($ids) {
                 $ids = explode(',', $ids);
                 foreach ($ids as $t) {
@@ -622,7 +622,7 @@ class action extends app
             $ids = '0';
         }
         $exams = $this->exam->getExamSettingList($page, 20, [['AND', 'find_in_set(examid,:examid)', 'examid', $ids]]);
-        $number = [];
+        $number = ['all' => 0, 'child' => []];
         if ($ids) {
             $ids = explode(',', $ids);
             foreach ($ids as $t) {

@@ -55,6 +55,8 @@ class action extends app
 
     private function modifyquestion()
     {
+        $u = '';
+
         if ($this->ev->get('modifyquestion')) {
             $page = $this->ev->get('page');
             $args = $this->ev->get('args');
@@ -139,6 +141,12 @@ class action extends app
     private function index()
     {
         $search = $this->ev->get('search');
+        $search = is_array($search) ? $search : [];
+        foreach (['argsmodel','attid','atttype','basicid','blockid','catid','certificateid','contentcatid','contentid','contentmoduleid','contentsubjectid','couponid','courseid','cscatid','doccatid','docid','docistop','docneedmore','docsyslock','etime','filecatid','filesubjectid','groupid','keyword','orderid','positionid','qrid','qrlevel','questionid','questionknowsid','questionlevel','questionsectionid','questionsubjectid','questiontype','seminarcatid','seminarid','status','stime','subjectid','tplid','type','useremail','userid','username'] as $searchkey) {
+            if (!isset($search[$searchkey])) {
+                $search[$searchkey] = '';
+            }
+        }
         $u = '';
         if ($search) {
             $this->tpl->assign('search', $search);

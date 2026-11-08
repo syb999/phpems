@@ -8,17 +8,17 @@
                 <div class="col-xs-12">
                     <div class="content-box padding">
                         <h2 class="title">
-                            {x2;(isset($cat['catname'])?$cat['catname']:'')}
+                            {x2;(isset($cat['catname']) ? $cat['catname'] : '')}
                             <a href="index.php?content-app" class="badge pull-right"> 返回 </a>
                         </h2>
                         <ul class="list-unstyled list-img">
                             <li class="border padding">
-                                <h4 class="shorttitle text-center">{x2;(isset($cat['catname'])?$cat['catname']:'')}</h4>
+                                <h4 class="shorttitle text-center">{x2;(isset($cat['catname']) ? $cat['catname'] : '')}</h4>
                             </li>
                             <li class="border morepadding">
                                 <div class="intro">
                                     <div class="desc" id="content">
-                                        {x2;(isset(realhtml:$cat['catdesc'])?realhtml:$cat['catdesc']:'')}
+                                        {x2;realhtml:(isset($cat['catdesc']) ? $cat['catdesc'] : '')}
                                     </div>
                                 </div>
                             </li>

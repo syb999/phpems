@@ -34,7 +34,9 @@ class action extends app
             ];
             $this->G->R($message);
         }
-        if ((!$basic['basicexam']['allowgroup']) || (false !== strpos(','.$basic['basicexam']['allowgroup'].',', ",{$this->_user['sessiongroupid']},"))) {
+        $allowgroup = isset($basic['basicexam']['allowgroup']) ? $basic['basicexam']['allowgroup'] : '';
+        $groupid = isset($this->_user['sessiongroupid']) ? $this->_user['sessiongroupid'] : 0;
+        if ((!$allowgroup) || (false !== strpos(','.$allowgroup.',', ','.$groupid.','))) {
             $allowopen = 1;
         }
         if (!$allowopen) {
@@ -88,11 +90,12 @@ class action extends app
         }
         $args = ['obuserid' => $userid, 'obbasicid' => $basicid, 'obendtime' => TIME + $time];
         $this->basic->openBasic($args);
+        $this->session->setSessionValue(['sessioncurrent' => $basicid]);
         $message = [
             'statusCode' => 200,
             'message' => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl' => 'index.php?exam-app',
+            'forwardUrl' => 'index.php?exam-app-exam',
         ];
         $this->G->R($message);
     }
@@ -153,7 +156,9 @@ class action extends app
             }
             $this->tpl->assign('price', $price);
         }
-        if ((!$basic['basicexam']['allowgroup']) || (false !== strpos(','.$basic['basicexam']['allowgroup'].',', ",{$this->_user['sessiongroupid']},"))) {
+        $allowgroup = isset($basic['basicexam']['allowgroup']) ? $basic['basicexam']['allowgroup'] : '';
+        $groupid = isset($this->_user['sessiongroupid']) ? $this->_user['sessiongroupid'] : 0;
+        if ((!$allowgroup) || (false !== strpos(','.$allowgroup.',', ','.$groupid.','))) {
             $allowopen = 1;
         }
         $isopen = $this->basic->getOpenBasicByUseridAndBasicid($this->_user['sessionuserid'], $basicid);
@@ -168,10 +173,11 @@ class action extends app
     {
         $this->area = $this->G->make('area', 'exam');
         $search = $this->ev->get('search');
+        $query = is_array($search) ? $search : [];
         $page = $this->ev->get('page');
         $page = $page > 1 ? $page : 1;
         $subjects = $this->basic->getSubjectList();
-        if (!$search) {
+        if (!$query) {
             $args = 1;
         } else {
             $args = [];
@@ -193,6 +199,7 @@ class action extends app
         }
         $basics = $this->basic->getBasicList($page, 20, $args);
         $areas = $this->area->getAreaList();
+        $search = array_merge(['basicdemo' => '', 'keyword' => '', 'basicareaid' => 0, 'basicsubjectid' => 0, 'basicapi' => ''], $query);
         $this->tpl->assign('search', $search);
         $this->tpl->assign('areas', $areas);
         $this->tpl->assign('subjects', $subjects);
@@ -202,9 +209,30 @@ class action extends app
 
     private function index()
     {
-        if (!$this->data['openbasics']) {
-            exit(header('location:index.php?exam-app'));
+        $page = $this->ev->get('page');
+        $page = $page > 1 ? $page : 1;
+        $search = $this->ev->get('search');
+        $query = is_array($search) ? $search : [];
+        $args = [['AND', 'basicclosed = 0']];
+        if (!empty($query['basicdemo'])) {
+            $args[] = ['AND', 'basicdemo = :basicdemo', 'basicdemo', $query['basicdemo']];
         }
+        if (!empty($query['keyword'])) {
+            $args[] = ['AND', 'basic LIKE :basic', 'basic', '%'.$query['keyword'].'%'];
+        }
+        if (!empty($query['basicareaid'])) {
+            $args[] = ['AND', 'basicareaid = :basicareaid', 'basicareaid', $query['basicareaid']];
+        }
+        if (!empty($query['basicsubjectid'])) {
+            $args[] = ['AND', 'basicsubjectid = :basicsubjectid', 'basicsubjectid', $query['basicsubjectid']];
+        }
+        $basics = $this->basic->getBasicList($page, 15, $args);
+        $areas = $this->G->make('area', 'exam')->getAreaList();
+        $search = array_merge(['basicdemo' => '', 'keyword' => '', 'basicareaid' => 0, 'basicsubjectid' => 0], $query);
+        $this->tpl->assign('search', $search);
+        $this->tpl->assign('areas', $areas);
+        $this->tpl->assign('subjects', $this->basic->getSubjectList());
+        $this->tpl->assign('basics', $basics);
         $this->tpl->display('basics');
     }
 }

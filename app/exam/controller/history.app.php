@@ -64,6 +64,7 @@ class action extends app
         $eh = $this->favor->getExamHistoryById($ehid);
         $questype = $this->basic->getQuestypeList();
         $sessionvars = ['examsession' => $eh['ehexam'], 'examsessiontimelist' => $eh['ehtimelist'], 'examsessionscore' => $eh['ehscore'], 'examsessionscorelist' => $eh['ehscorelist'], 'examsessionsetting' => $eh['ehsetting'], 'examsessionquestion' => $eh['ehquestion'], 'examsessionuseranswer' => $eh['ehuseranswer']];
+        $this->tpl->assign('eh', $eh);
         $this->tpl->assign('sessionvars', $sessionvars);
         $this->tpl->assign('questype', $questype);
         $this->tpl->assign('ehtype', $eh['ehtype']);
@@ -80,6 +81,7 @@ class action extends app
         $eh = $this->favor->getExamHistoryById($ehid);
         $questype = $this->basic->getQuestypeList();
         $sessionvars = ['examsession' => $eh['ehexam'], 'examsessionscorelist' => $eh['ehscorelist'], 'examsessionsetting' => $eh['ehsetting'], 'examsessionquestion' => $eh['ehquestion'], 'examsessionuseranswer' => $eh['ehuseranswer']];
+        $this->tpl->assign('eh', $eh);
         $this->tpl->assign('sessionvars', $sessionvars);
         $this->tpl->assign('questype', $questype);
         if (2 == $eh['ehtype']) {
@@ -145,9 +147,14 @@ class action extends app
     private function index()
     {
         $page = $this->ev->get('page');
-        $ehtype = intval($this->ev->get('ehtype'));
+        $ehtype = $this->ev->get('ehtype');
+        if (false === $ehtype || null === $ehtype || '' === $ehtype) {
+            $ehtype = 2;
+        } else {
+            $ehtype = intval($ehtype);
+        }
         $page = $page > 0 ? $page : 1;
-        $basicid = $this->data['currentbasic']['basicid'];
+        $basicid = isset($this->data['currentbasic']['basicid']) ? $this->data['currentbasic']['basicid'] : 0;
         $exams = $this->favor->getExamHistoryListByArgs($page, 10, [['AND', 'ehuserid = :ehuserid', 'ehuserid', $this->_user['sessionuserid']], ['AND', 'ehbasicid = :ehbasicid', 'ehbasicid', $basicid], ['AND', 'ehtype = :ehtype', 'ehtype', $ehtype]]);
         foreach ($exams['data'] as $key => $p) {
             $exams['data'][$key]['errornumber'] = 0;

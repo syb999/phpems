@@ -1,4 +1,4 @@
-{x2;if:!empty($userhash)}
+{x2;if:empty($userhash)}
 {x2;include:header}
 <body>
 <div class="pages">
@@ -19,7 +19,7 @@
                             <p class="text-center text-danger more">您已经成功交卷，请等待教师统计并公布分数。</p>
                         </div>
                     </li>
-                    {x2;elseif:!$eh['ehstatus']}
+                    {x2;elseif:empty($eh['ehstatus'])}
                     <li class="unstyled">
                         <div class="rows">
                             <h3 class="title text-center">等待教师评卷</h3>
@@ -41,7 +41,7 @@
                             <div class="more text-center text-danger">很遗憾您未通过本次考试</div>
                             {x2;endif}
                             <div class="more">
-                                <p class="text-center">{x2;if:!empty($eh['ehtype'])}总分：<b class="text-warning">{x2;(isset($sessionvars['examsessionsetting']['examsetting']['score'])?$sessionvars['examsessionsetting']['examsetting']['score']:'')}</b>分 合格分数线：<b class="text-warning">{x2;(isset($sessionvars['examsessionsetting']['examsetting']['passscore'])?$sessionvars['examsessionsetting']['examsetting']['passscore']:'')}</b>分{x2;else}正确率：<b>{x2;eval: echo intval(100 * $eh['ehscore']/$allnumber)}%</b>{x2;endif} 答卷耗时：<b class="text-warning">{x2;if:$sessionvars['examsessiontime'] >= 60}{x2;if:!empty($sessionvars['examsessiontime']%60)}{x2;eval: echo intval($sessionvars['examsessiontime']/60)+1}{x2;else}{x2;eval: echo intval($sessionvars['examsessiontime']/60)}{x2;endif}分钟{x2;else}{x2;(isset($sessionvars['examsessiontime'])?$sessionvars['examsessiontime']:'')}秒{x2;endif}</b></p>
+                                <p class="text-center">{x2;if:!empty($eh['ehtype'])}总分：<b class="text-warning">{x2;(isset($sessionvars['examsessionsetting']['examsetting']['score']) ? $sessionvars['examsessionsetting']['examsetting']['score'] : '')}</b>分 合格分数线：<b class="text-warning">{x2;(isset($sessionvars['examsessionsetting']['examsetting']['passscore']) ? $sessionvars['examsessionsetting']['examsetting']['passscore'] : '')}</b>分{x2;else}正确率：<b>{x2;eval: echo intval(100 * $eh['ehscore']/$allnumber)}%</b>{x2;endif} 答卷耗时：<b class="text-warning">{x2;if:(isset($sessionvars['examsessiontime']) ? $sessionvars['examsessiontime'] : null) >= 60}{x2;if:$sessionvars['examsessiontime']%60}{x2;eval: echo intval($sessionvars['examsessiontime']/60)+1}{x2;else}{x2;eval: echo intval($sessionvars['examsessiontime']/60)}{x2;endif}分钟{x2;else}{x2;(isset($sessionvars['examsessiontime']) ? $sessionvars['examsessiontime'] : '')}秒{x2;endif}</b></p>
                             </div>
                         </div>
                     </li>
@@ -61,9 +61,9 @@
                                 {x2;tree:(array)($number ?? []),num,nid}
                                 {x2;if:!empty(v:num)}
                                 <tr>
-                                    <td>{x2;(isset($questype[v:key]['questype'])?$questype[v:key]['questype']:'')}</td>
-                                    <td>{x2;(isset(v:num)?v:num:'')}</td>
-                                    <td>{x2;(isset($right[v:key])?$right[v:key]:'')}</td>
+                                    <td>{x2;(isset($questype[v:key]['questype']) ? $questype[v:key]['questype'] : '')}</td>
+                                    <td>{x2;(isset(v:num) ? v:num : '')}</td>
+                                    <td>{x2;(isset($right[v:key]) ? $right[v:key] : '')}</td>
                                     <td>{x2;eval: echo number_format(v:num*$sessionvars['examsessionsetting']['examsetting']['questype'][v:key]['score'],1)}</td>
                                     <td>{x2;eval: echo number_format($score[v:key],1)}</td>
                                 </tr>
@@ -71,7 +71,7 @@
                                 {x2;endtree}
                                 <tr>
                                     <td colspan="5" align="center">
-                                        共<b class="text-warning">{x2;(isset($allnumber)?$allnumber:'')}</b>题 ，做对<b class="text-warning">{x2;(isset($allright)?$allright:'')}</b>题，得<b class="text-warning">{x2;eval: echo intval($sessionvars['examsessionscore'])}分</b>
+                                        共<b class="text-warning">{x2;(isset($allnumber) ? $allnumber : '')}</b>题 ，做对<b class="text-warning">{x2;(isset($allright) ? $allright : '')}</b>题，得<b class="text-warning">{x2;eval: echo intval($sessionvars['examsessionscore'])}分</b>
                                     </td>
                                 </tr>
                             </table>
@@ -92,7 +92,7 @@
                                 {x2;tree:(array)($stats ?? []),stat,sid}
                                 {x2;if:!empty(v:stat)}
                                 <tr>
-                                    <td>{x2;(isset(v:stat['knows'])?v:stat['knows']:'')}</td>
+                                    <td>{x2;(isset(v:stat['knows']) ? v:stat['knows'] : '')}</td>
                                     <td>{x2;eval: echo intval(v:stat['number'])}</td>
                                     <td>{x2;eval: echo intval(v:stat['right'])}</td>
                                     <td>{x2;eval: echo number_format(100 * v:stat['right']/v:stat['number'],2)}%</td>
@@ -106,13 +106,13 @@
                     <li class="unstyled">
                         <div class="rows">
                             <div class="col-3x text-center">
-                                <a class="btn danger ajax" href="index.php?exam-phone-history-wrongs&ehid={x2;(isset($eh['ehid'])?$eh['ehid']:'')}">错题重做</a>
+                                <a class="btn danger ajax" href="index.php?exam-phone-history-wrongs&ehid={x2;(isset($eh['ehid']) ? $eh['ehid'] : '')}">错题重做</a>
                             </div>
                             <div class="col-3x text-center">
-                                <a class="btn primary ajax" href="index.php?exam-phone-history-view&ehid={x2;(isset($eh['ehid'])?$eh['ehid']:'')}">查看详细</a>
+                                <a class="btn primary ajax" href="index.php?exam-phone-history-view&ehid={x2;(isset($eh['ehid']) ? $eh['ehid'] : '')}">查看详细</a>
                             </div>
                             <div class="col-3x text-center">
-                                <a class="btn ajax" href="index.php?exam-phone-history&ehtype={x2;(isset($eh['ehtype'])?$eh['ehtype']:'')}">考试记录</a>
+                                <a class="btn ajax" href="index.php?exam-phone-history&ehtype={x2;(isset($eh['ehtype']) ? $eh['ehtype'] : '')}">考试记录</a>
                             </div>
                         </div>
                     </li>
@@ -122,7 +122,7 @@
             </div>
         </div>
     </div>
-    {x2;if:!empty($userhash)}
+    {x2;if:empty($userhash)}
 </div>
 </body>
 </html>

@@ -34,12 +34,12 @@
                 <div class="col-sm-10">
                     <button class="btn btn-primary btn-block" type="submit">提交</button>
                     <input type="hidden" name="modifyuserpassword" value="1"/>
-                    <input type="hidden" name="page" value="{x2;(isset($page)?$page:'')}"/>
+                    <input type="hidden" name="page" value="<?php echo (isset($this->tpl_var['page'])?$this->tpl_var['page']:''); ?>"/>
                     <?php if(isset($this->tpl_var['search']) && is_array($this->tpl_var['search'])){ ?>
                     <?php $aid = 0;
  foreach((array)($this->tpl_var['search'] ?? []) as $key => $arg){ 
  $aid++; ?>
-                    <input type="hidden" name="search[{x2;(isset(v:key)?v:key:'')}]" value="{x2;(isset(v:arg)?v:arg:'')}"/>
+                    <input type="hidden" name="search[<?php echo (isset($key)?$key:''); ?>]" value="<?php echo (isset($arg)?$arg:''); ?>"/>
                     <?php } ?>
                     <?php } ?>
                 </div>

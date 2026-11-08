@@ -40,6 +40,8 @@ class action extends app
 
     private function delbasic()
     {
+        $u = '';
+
         $page = $this->ev->get('page');
         $basicid = $this->ev->get('basicid');
         $this->basic->delBasic($basicid);
@@ -54,6 +56,8 @@ class action extends app
 
     private function batdelbasic()
     {
+        $u = '';
+
         $page = $this->ev->get('page');
         $basicid = $this->ev->get('basicid');
         $this->basic->delBasic($basicid);
@@ -68,6 +72,8 @@ class action extends app
 
     private function modifybasic()
     {
+        $u = '';
+
         $page = $this->ev->get('page');
         if ($this->ev->get('modifybasic')) {
             $basicid = $this->ev->get('basicid');
@@ -94,6 +100,8 @@ class action extends app
 
     private function setexamrange()
     {
+        $u = '';
+
         $page = $this->ev->get('page');
         $basicid = $this->ev->get('basicid');
         if ($this->ev->get('setexamrange')) {
@@ -290,6 +298,8 @@ class action extends app
 
     private function add()
     {
+        $u = '';
+
         if ($this->ev->get('insertbasic')) {
             $args = $this->ev->get('args');
             $page = $this->ev->get('page');

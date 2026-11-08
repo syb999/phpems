@@ -9,7 +9,7 @@
 					<?php if(!empty($this->tpl_var['_user']['userid'])){ ?>
 					<li>
 						<div class="btn-group">
-							<button type="button" class="btn btn-info"><em class="glyphicon glyphicon-user"></em> {x2;(isset($_user['username'])?$_user['username']:'')}</button>
+							<button type="button" class="btn btn-info"><em class="glyphicon glyphicon-user"></em> <?php echo (isset($this->tpl_var['_user']['username'])?$this->tpl_var['_user']['username']:''); ?></button>
 							<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								<span class="caret"></span>
 								<span class="sr-only">Toggle Dropdown</span>
@@ -45,7 +45,7 @@
  $aid++; ?>
 					<?php if($app['appstatus'] && $app['appid'] != 'core' && in_array($app['appid'],$this->tpl_var['_user']['manager_apps'])){ ?>
 					<li class="menu col-xs-1<?php if($this->tpl_var['_app'] == $app['appid']){ ?> active<?php } ?>">
-						<a href="index.php?{x2;(isset(v:app['appid'])?v:app['appid']:'')}-master">{x2;(isset(v:app['appname'])?v:app['appname']:'')}</a>
+						<a href="index.php?<?php echo (isset($app['appid'])?$app['appid']:''); ?>-master"><?php echo (isset($app['appname'])?$app['appname']:''); ?></a>
 					</li>
 					<?php } ?>
 					<?php } ?>
@@ -55,7 +55,7 @@
  $aid++; ?>
 					<?php if($app['appstatus'] && $app['appid'] != 'core'){ ?>
 					<li class="menu col-xs-1<?php if($this->tpl_var['_app'] == $app['appid']){ ?> active<?php } ?>">
-						<a href="index.php?{x2;(isset(v:app['appid'])?v:app['appid']:'')}-master">{x2;(isset(v:app['appname'])?v:app['appname']:'')}</a>
+						<a href="index.php?<?php echo (isset($app['appid'])?$app['appid']:''); ?>-master"><?php echo (isset($app['appname'])?$app['appname']:''); ?></a>
 					</li>
 					<?php } ?>
 					<?php } ?>

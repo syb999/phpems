@@ -29,7 +29,7 @@
                     {x2;if:!empty($_user['userid'])}
                     <li>
                         <div class="btn-group">
-                            <button type="button" class="btn btn-info"><em class="glyphicon glyphicon-user"></em> {x2;(isset($_user['username'])?$_user['username']:'')}</button>
+                            <button type="button" class="btn btn-info"><em class="glyphicon glyphicon-user"></em> {x2;(isset($_user['username']) ? $_user['username'] : '')}</button>
                             <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="caret"></span>
                                 <span class="sr-only">Toggle Dropdown</span>

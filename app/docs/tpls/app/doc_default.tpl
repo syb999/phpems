@@ -1,68 +1,60 @@
 {x2;include:header}
 <body>
-{x2;include:nav}
 <div class="container-fluid">
-	<div class="row-fluid">
-		<div class="main">
-			<div class="col-xs-2" style="padding:0px 0px;">
-				<div class="box itembox list-group" style="width: 200px;padding:0px;top:0px;" data-spy="affix" data-offset-top="150" id="lemma"></div>
-			</div>
-			<div class="col-xs-10" style="padding:0px 0px 20px 10px;">
-				<div class="box itembox" style="margin-bottom:0px;">
-					<div class="col-xs-12">
-						<ol class="breadcrumb">
-							<li><a href="index.php">首页</a></li>
-							<li class="active"><a href="index.php?docs-app-category&catid={x2;(isset($cat['catid'])?$cat['catid']:'')}">{x2;(isset($cat['catname'])?$cat['catname']:'')}</a></li>
-
-						</ol>
-					</div>
-				</div>
-				<div class="box itembox">
-					<div class="col-xs-12">
-						<h2 class="text-left">{x2;(isset($doc['doctitle'])?$doc['doctitle']:'')}
-							<span class="pull-right">
-								<a class="btn btn-primary" href="index.php?docs-app-docs-history&docid={x2;(isset($doc['docid'])?$doc['docid']:'')}">历史版本</a>
-								{x2;if:!empty($_user['userid'])}
-								<a class="btn btn-danger" href="index.php?docs-app-mydoc-edit&docid={x2;(isset($doc['docid'])?$doc['docid']:'')}">编辑词条</a>
-								{x2;else}
-								<a class="btn btn-danger" href="javascript:;" onclick="javascript:$.loginbox.show();">编辑词条</a>
-								{x2;endif}
-							</span>
-						</h2>
-					</div>
-					<div class="col-xs-12" id="content">
-						{x2;(isset(realhtml:$doc['content']['dhcontent'])?realhtml:$doc['content']['dhcontent']:'')}
-					</div>
-					<div class="col-xs-12">
-						<hr/>
-						<p>
-							<span class="pull-right">
-								<em>创建时间：{x2;date:$doc['docinputtime'] ?? 0,'Y-m-d H:i:s'}</em>&nbsp;&nbsp;
-								<em>本版最后修改时间：{x2;date:$doc['content']['dhtime'] ?? 0,'Y-m-d H:i:s'}</em>
-							</span>
-						</p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="row-fluid">
+        <div class="pages">
+            {x2;include:nav}
+            <div class="content">
+                <div class="col-xs-9">
+                    <div class="content-box padding">
+                        <h2 class="title">
+                            {x2;(isset($doc['doctitle']) ? $doc['doctitle'] : '')}
+                            <a href="index.php?docs-app-category&catid={x2;(isset($cat['catid']) ? $cat['catid'] : '')}" class="badge pull-right"> 返回 </a>
+                            <a class="badge pull-right" href="index.php?docs-app-docs-history&docid={x2;(isset($doc['docid']) ? $doc['docid'] : '')}">历史版本</a>
+                            {x2;if:!empty($_user['userid'])}
+                            <a class="badge pull-right" href="index.php?docs-app-mydoc-edit&docid={x2;(isset($doc['docid']) ? $doc['docid'] : '')}">编辑词条</a>
+                            {x2;else}
+                            <a class="badge pull-right" href="javascript:;" onclick="javascript:$.loginbox.show();">编辑词条</a>
+                            {x2;endif}
+                        </h2>
+                        <ul class="list-unstyled list-img">
+                            <li class="border morepadding">
+                                <h2 class="shorttitle text-center">{x2;(isset($doc['doctitle']) ? $doc['doctitle'] : '')}</h2>
+                                <div class="intro">
+                                    <div class="desc" id="content">
+                                        {x2;realhtml:(isset($doc['content']['dhcontent']) ? $doc['content']['dhcontent'] : '')}
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-xs-3 nopadding">
+                    <div class="content-box padding" id="questionindex" data-spy="affix" data-offset-top="150" style="top:-15px;">
+                        <h2 class="title">导航</h2>
+                        <ul class="list-unstyled list-txt" id="lemma"></ul>
+                    </div>
+                </div>
+            </div>
+            {x2;include:footer}
+        </div>
+    </div>
 </div>
 <script>
-	$(function(){
-		$('#content .wikititle').each(function(){
-			var _this = $(this);
-			_this.attr('id',Math.random().toString().substr(2))
-			if(_this[0].tagName.toUpperCase() == 'H1')
-			{
-			    $('#lemma').append($('<a href="#'+_this.attr('id')+'" class="list-group-item active">'+_this.html()+'</a>'));
-			}
-			else
-			{
-				$('#lemma').append($('<a href="#'+_this.attr('id')+'" class="list-group-item">'+_this.html()+'</a>'));
-			}
-		});
-	});
+    $(function(){
+        $('#content .wikititle').each(function(){
+            var _this = $(this);
+            _this.attr('id',Math.random().toString().substr(2))
+            if(_this[0].tagName.toUpperCase() == 'H1')
+            {
+                $('#lemma').append($('<li class="border active"><a href="#'+_this.attr('id')+'">'+_this.html()+'</a></li>'));
+            }
+            else
+            {
+                $('#lemma').append($('<li class="border"><a href="#'+_this.attr('id')+'">&nbsp;&nbsp;'+_this.html()+'</a></li>'));
+            }
+        });
+    });
 </script>
-{x2;include:footer}
 </body>
 </html>

@@ -186,6 +186,9 @@ class action extends app
 
     private function add()
     {
+        $page = intval($this->ev->get('page'));
+        $page = $page > 0 ? $page : 1;
+
         if ($this->ev->post('insertUser')) {
             $args = $this->ev->post('args');
             if ($args['userpassword'] == $args['userpassword2']) {
@@ -233,6 +236,9 @@ class action extends app
     {
         $page = $this->ev->get('page') ? $this->ev->get('page') : 1;
         $search = $this->ev->get('search');
+        $search = is_array($search) ? $search : [];
+        $search += ['userid' => '', 'username' => '', 'useremail' => '', 'groupid' => '', 'stime' => '', 'etime' => ''];
+        $this->tpl->assign('search', $search);
         $u = '';
         if ($search) {
             foreach ($search as $key => $arg) {

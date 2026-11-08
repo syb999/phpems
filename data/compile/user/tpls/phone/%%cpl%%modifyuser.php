@@ -16,10 +16,10 @@
  $fid++; ?>
                 <div class="form-group underline">
                     <div class="col-3 tip">
-                        {x2;(isset(v:form['title'])?v:form['title']:'')}
+                        <?php echo (isset($form['title'])?$form['title']:''); ?>
                     </div>
                     <div class="col-7">
-                        {x2;(isset(v:form['html'])?v:form['html']:'')}
+                        <?php echo (isset($form['html'])?$form['html']:''); ?>
                     </div>
                 </div>
                 <?php } ?>

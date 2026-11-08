@@ -1,4 +1,4 @@
-{x2;if:!empty($userhash)}
+{x2;if:empty($userhash)}
 {x2;include:header}
 <body>
 <div class="pages">
@@ -6,7 +6,7 @@
     <div class="page-tabs">
         <div class="page-header">
             <div class="col-1" onclick="javascript:history.back();"><span class="iconfont icon-left"></span></div>
-            <div class="col-8">{x2;(isset($data['currentbasic']['basic'])?$data['currentbasic']['basic']:'')}</div>
+            <div class="col-8">{x2;(isset($data['currentbasic']['basic']) ? $data['currentbasic']['basic'] : '')}</div>
             <div class="col-1"><span class="iconfont icon-menu hide"></span></div>
         </div>
         <div class="page-content header">
@@ -106,7 +106,7 @@
             </div>
         </div>
     </div>
-    {x2;if:!empty($userhash)}
+    {x2;if:empty($userhash)}
 </div>
 </body>
 </html>

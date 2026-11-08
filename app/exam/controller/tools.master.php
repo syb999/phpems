@@ -236,6 +236,9 @@ class action extends app
     private function index()
     {
         $search = $this->ev->get('search');
+        $search = is_array($search) ? $search : [];
+        $search += ['questionsubjectid' => '', 'questionsectionid' => ''];
+        $this->tpl->assign('search', $search);
         $questypes = $this->basic->getQuestypeList();
         $subjects = $this->basic->getSubjectList();
         $sections = $this->section->getSectionListByArgs([['AND', 'sectionsubjectid = :sectionsubjectid', 'sectionsubjectid', $search['questionsubjectid']]]);

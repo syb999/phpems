@@ -8,25 +8,25 @@
         <ol>
             <li class="unstyled">
                 <h4 class="title">
-                    第 {x2;(isset($number)?$number:'')} 题
+                    第 {x2;(isset($number) ? $number : '')} 题
                 </h4>
             </li>
             {x2;if:!empty($parent)}
             <li class="unstyled">
                 <div class="rows">
-                    <p>{x2;(isset(realhtml:$parent['qrquestion'])?realhtml:$parent['qrquestion']:'')}</p>
+                    <p>{x2;realhtml:(isset($parent['qrquestion']) ? $parent['qrquestion'] : '')}</p>
                 </div>
             </li>
             {x2;endif}
             <li class="unstyled">
                 <div class="rows">
-                    <p>{x2;(isset(realhtml:$question['question'])?realhtml:$question['question']:'')}</p>
+                    <p>{x2;realhtml:(isset($question['question']) ? $question['question'] : '')}</p>
                 </div>
             </li>
             {x2;if:!$questype['questsort'] && $questype['questchoice'] != 5}
             <li class="unstyled">
                 <div class="rows">
-                    <p>{x2;(isset(realhtml:$question['questionselect'])?realhtml:$question['questionselect']:'')}</p>
+                    <p>{x2;realhtml:(isset($question['questionselect']) ? $question['questionselect'] : '')}</p>
                 </div>
             </li>
             {x2;endif}
@@ -37,14 +37,14 @@
                         <span class="badge">正确答案</span>
                     </div>
                     <div class="intro">
-                        {x2;(isset(realhtml:$question['questionanswer'])?realhtml:$question['questionanswer']:'')}
+                        {x2;realhtml:(isset($question['questionanswer']) ? $question['questionanswer'] : '')}
                     </div>
                     {x2;else}
                     <div class="col-4x intro">
                         <span class="badge">正确答案</span>
                     </div>
                     <div class="col-4l intro">
-                        <b id="rightanswer_{x2;(isset($question['questionid'])?$question['questionid']:'')}">{x2;(isset($question['questionanswer'])?$question['questionanswer']:'')}</b>
+                        <b id="rightanswer_{x2;(isset($question['questionid']) ? $question['questionid'] : '')}">{x2;(isset($question['questionanswer']) ? $question['questionanswer'] : '')}</b>
                     </div>
                     {x2;endif}
                 </div>
@@ -56,14 +56,14 @@
                         <span class="badge">试题解析</span>
                     </div>
                     <div class="intro">
-                        {x2;(isset(realhtml:$question['questiondescribe'])?realhtml:$question['questiondescribe']:'')}
+                        {x2;realhtml:(isset($question['questiondescribe']) ? $question['questiondescribe'] : '')}
                     </div>
                     {x2;else}
                     <div class="col-4x">
                         <span class="badge">试题解析</span>
                     </div>
                     <div class="col-4l intro">
-                        {x2;(isset(realhtml:$question['questiondescribe'])?realhtml:$question['questiondescribe']:'')}
+                        {x2;realhtml:(isset($question['questiondescribe']) ? $question['questiondescribe'] : '')}
                     </div>
                     {x2;endif}
                 </div>
@@ -74,23 +74,23 @@
 </div>
 <div class="page-footer">
     <ol class="pagination">
-        <li class="col-8x{x2;if:$number > 1} jump" data-number="{x2;eval: echo $number - 1}{x2;endif}">
+        <li class="col-8x{x2;if:(isset($number) ? $number : null) > 1} jump" data-number="{x2;eval: echo $number - 1}{x2;endif}">
             <span class="iconfont icon-left-circle"></span>
         </li>
-        <li class="col-8x favor" data-questionid="{x2;(isset($favor['favorid'])?$favor['favorid']:'')}">
+        <li class="col-8x favor" data-questionid="{x2;(isset($favor['favorid']) ? $favor['favorid'] : '')}">
             <span class="iconfont icon-star"></span>
         </li>
         <li class="col-5">
             <form method="post" data-target="favorquestionpanel" action="index.php?exam-phone-favor-ajax-questions">
-                共{x2;(isset($allnumber)?$allnumber:'')}题，转到 <input class="text-center" name="page" placeholder="{x2;(isset($number)?$number:'')}" type="search" size="3"> 题
+                共{x2;(isset($allnumber) ? $allnumber : '')}题，转到 <input class="text-center" name="page" placeholder="{x2;(isset($number) ? $number : '')}" type="search" size="3"> 题
             </form>
         </li>
         <li class="col-8x">
-            <a href="index.php?exam-phone-lesson-reporterror&questionid={x2;(isset($question['questionid'])?$question['questionid']:'')}" class="ajax">
+            <a href="index.php?exam-phone-lesson-reporterror&questionid={x2;(isset($question['questionid']) ? $question['questionid'] : '')}" class="ajax">
                 <span class="iconfont icon-wrench"></span>
             </a>
         </li>
-        <li class="col-8x{x2;if:$number < $allnumber} jump" data-number="{x2;eval: echo $number + 1}{x2;endif}">
+        <li class="col-8x{x2;if:(isset($number) ? $number : null) < (isset($allnumber) ? $allnumber : null)} jump" data-number="{x2;eval: echo $number + 1}{x2;endif}">
             <span class="iconfont icon-right-circle"></span>
         </li>
     </ol>
@@ -98,7 +98,7 @@
 <script type="text/javascript">
     function reloadpage()
     {
-        submitAjax({url:"index.php?exam-phone-favor-ajax-questions&page={x2;(isset($number)?$number:'')}","target":"favorquestionpanel"});
+        submitAjax({url:"index.php?exam-phone-favor-ajax-questions&page={x2;(isset($number) ? $number : '')}","target":"favorquestionpanel"});
     }
     $(function(){
         var sumquestion = function(value,qid){

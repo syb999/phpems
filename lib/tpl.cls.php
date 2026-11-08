@@ -46,6 +46,9 @@ if (intval(PHP_VERSION) >= 7) {
         public function assign($target, $vars)
         {
             if (is_array($vars)) {
+                if (!isset($this->tpl_var[$target]) || !is_array($this->tpl_var[$target])) {
+                    $this->tpl_var[$target] = [];
+                }
                 foreach ($vars as $key => $cnt) {
                     $this->tpl_var[$target][$key] = $vars[$key];
                 }
@@ -242,8 +245,13 @@ if (intval(PHP_VERSION) >= 7) {
 
         public function compileArray(&$content)
         {
-            $limit = '/{x2;([\$|v][\$|:|\[|\w|\]|\s|\']+)}/';
-            $content = preg_replace_callback($limit, function ($matches) {
+            $limit = '/{x2;([^}]+)}/';
+            $skip = '/^(?:if:|elseif:|else}|endif}|loop:|endloop}|tree:|endtree}|include:|date:|eval:|sql:|block:|realhtml:|substring:|realsubstring:|c:)/';
+            $content = preg_replace_callback($limit, function ($matches) use ($skip) {
+                if (preg_match($skip, $matches[1])) {
+                    return $matches[0];
+                }
+
                 return '<?php echo '.$this->_compileArray($matches[1]).'; ?>';
             }, $content);
         }
@@ -460,6 +468,9 @@ if (intval(PHP_VERSION) >= 7) {
         public function assign($target, $vars)
         {
             if (is_array($vars)) {
+                if (!isset($this->tpl_var[$target]) || !is_array($this->tpl_var[$target])) {
+                    $this->tpl_var[$target] = [];
+                }
                 foreach ($vars as $key => $cnt) {
                     $this->tpl_var[$target][$key] = $vars[$key];
                 }

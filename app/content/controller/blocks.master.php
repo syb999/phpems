@@ -91,6 +91,9 @@ class action extends app
 
     private function del()
     {
+        $page = intval($this->ev->get('page'));
+        $page = $page > 0 ? $page : 1;
+
         $blockid = $this->ev->get('blockid');
         $this->block->delBlock($blockid);
         $message = [
@@ -106,6 +109,9 @@ class action extends app
 
     private function change()
     {
+        $page = intval($this->ev->get('page'));
+        $page = $page > 0 ? $page : 1;
+
         $blockid = $this->ev->get('blockid');
         $blocktype = $this->ev->get('blocktype');
         $this->block->modifyBlock($blockid, ['blocktype' => $blocktype]);

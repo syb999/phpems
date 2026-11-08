@@ -1,0 +1,763 @@
+* {
+  padding: 0px;
+  margin: 0px;
+}
+html {
+  width: 100%;
+  height: 100%;
+  font-size: 100px;
+  overflow: hidden;
+}
+html body {
+  position: relative;
+  -webkit-overflow-scrolling: touch;
+  background-color: #F8F8F8;
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  overflow: hidden;
+}
+html body a {
+  color: #333333;
+  text-decoration: none;
+}
+html body p {
+  line-height: 0.24rem;
+  padding-top: 0.025rem;
+  padding-bottom: 0.025rem;
+}
+html body .iconfont {
+  font-size: 0.21rem;
+}
+html body .col-1,
+html body .col-2,
+html body .col-2s,
+html body .col-3,
+html body .col-4,
+html body .col-5,
+html body .col-6,
+html body .col-7,
+html body .col-8,
+html body .col-9,
+html body .col-10,
+html body .col-3x,
+html body .col-4x,
+html body .col-4l,
+html body .col-8x,
+html body .col-8l {
+  box-sizing: border-box;
+  float: left;
+  width: 10%;
+}
+html body .col-2 {
+  width: 20%;
+}
+html body .col-2s {
+  width: 16.66666667%;
+}
+html body .col-3 {
+  width: 30%;
+}
+html body .col-4 {
+  width: 40%;
+}
+html body .col-5 {
+  width: 50%;
+}
+html body .col-6 {
+  width: 60%;
+}
+html body .col-7 {
+  width: 70%;
+}
+html body .col-8 {
+  width: 80%;
+}
+html body .col-9 {
+  width: 90%;
+}
+html body .col-10 {
+  width: 100%;
+}
+html body .col-3x {
+  width: 33.33333%;
+}
+html body .col-4x {
+  width: 25%;
+}
+html body .col-4l {
+  width: 75%;
+}
+html body .col-8x {
+  width: 12.5%;
+}
+html body .col-8l {
+  width: 87.5%;
+}
+html body .clear {
+  clear: both;
+}
+html body .hide {
+  display: none;
+}
+html body .pull-right {
+  float: right;
+}
+html body .text-left {
+  text-align: left!important;
+}
+html body .text-center {
+  text-align: center!important;
+}
+html body .text-right {
+  text-align: right!important;
+}
+html body .text-danger {
+  color: #a94442;
+}
+html body .text-success {
+  color: #3c763d;
+}
+html body .noborder {
+  border-width: 0px!important;
+}
+html body .nopadding {
+  padding: 0px!important;
+}
+html body .qq-upload-list-selector .thumbnail img {
+  max-width: 100%;
+}
+html body input {
+  -webkit-appearance: none;
+}
+html body input[type="text"] {
+  margin: 0px;
+  padding: 0px;
+}
+html body .mask {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  font-size: 0.14rem;
+}
+html body .mask .mask-bg {
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
+  background-color: #CCCCCC;
+  clear: both;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+html body .mask .mask-tips {
+  width: 100%;
+  height: 100%;
+}
+html body .mask .mask-tips .loading {
+  margin: auto;
+  margin-top: 1rem;
+  height: 0.5rem;
+  width: 0.5rem;
+  border-radius: 0.1rem;
+  background-color: #00aeff;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #00aeff;
+  border-top: none;
+}
+html body .mask .mask-tips .loading .loader {
+  width: 2rem;
+  height: 2rem;
+  background: #F8F8F8;
+  position: absolute;
+  left: -0.8rem;
+  top: -1.8rem;
+  border-radius: 0.8rem;
+  animation: xuanzhuan 5s linear infinite;
+  z-index: 2;
+}
+@keyframes xuanzhuan {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+html body .mask .mask-tips .alert {
+  background-color: #F8F8F8;
+  position: absolute;
+  top: 40%;
+  left: 20%;
+  line-height: 0.28rem;
+  width: 60%;
+  text-align: center;
+  border-radius: 0.05rem;
+}
+html body .mask .mask-tips .alert .info {
+  border-bottom: 1px solid #E3E3E4;
+  padding: 0.15rem;
+}
+html body .mask .mask-tips .alert .ok {
+  padding: 0.075rem;
+}
+html body .mask .mask-tips .alert .ok:hover {
+  background-color: #E3E3E4;
+  border-bottom-left-radius: 0.05rem;
+  border-bottom-right-radius: 0.05rem;
+}
+html body .mask .mask-tips .menu {
+  background-color: #F8F8F8;
+  position: absolute;
+  top: 40%;
+  left: 20%;
+  line-height: 0.28rem;
+  width: 60%;
+  text-align: center;
+  border-radius: 0.05rem;
+  cursor: pointer;
+}
+html body .mask .mask-tips .menu .info {
+  border-bottom: 1px solid #E3E3E4;
+  padding: 0.1rem;
+}
+html body .mask .mask-tips .menu .info:hover {
+  background-color: #E3E3E4;
+}
+html body .mask .mask-tips .menu .info:first-child:hover {
+  border-top-left-radius: 0.05rem;
+  border-top-right-radius: 0.05rem;
+}
+html body .mask .mask-tips .menu .info a {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+html body .mask .mask-tips .menu .cancel {
+  padding: 0.1rem;
+}
+html body .mask .mask-tips .menu .cancel:hover {
+  background-color: #E3E3E4;
+  border-bottom-left-radius: 0.05rem;
+  border-bottom-right-radius: 0.05rem;
+}
+html body .mask .mask-tips .confirm {
+  background-color: #F8F8F8;
+  position: absolute;
+  top: 40%;
+  left: 20%;
+  line-height: 0.28rem;
+  width: 60%;
+  text-align: center;
+  border-radius: 0.05rem;
+}
+html body .mask .mask-tips .confirm .info {
+  border-bottom: 1px solid #E3E3E4;
+  padding: 0.15rem;
+}
+html body .mask .mask-tips .confirm .ok {
+  padding: 0.075rem;
+  border-right: 1px solid #E3E3E4;
+}
+html body .mask .mask-tips .confirm .ok:hover {
+  background-color: #E3E3E4;
+  border-bottom-left-radius: 0.05rem;
+}
+html body .mask .mask-tips .confirm .cancel {
+  padding: 0.075rem;
+}
+html body .mask .mask-tips .confirm .cancel:hover {
+  background-color: #E3E3E4;
+  border-bottom-right-radius: 0.05rem;
+}
+html body .mask .mask-tips .tips {
+  color: #FFFFFF;
+  background-color: #333333;
+  width: auto;
+  width: fit-content;
+  line-height: 0.28rem;
+  height: auto;
+  left: 50%;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  text-align: center;
+  top: 80%;
+  padding: 0.05rem 0.25rem;
+  position: absolute;
+  border-radius: 0.05rem;
+}
+html body .pages {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  font-size: 0.16rem;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+  background-color: #F8F8F8;
+}
+html body .pages .page-tabs {
+  display: none;
+  height: 100%;
+  box-sizing: border-box;
+}
+html body .pages .page-tabs:first-child {
+  display: block;
+}
+html body .pages .page-tabs .swiper-container {
+  height: 100%;
+  overflow: hidden;
+}
+html body .pages .page-tabs .page-header {
+  height: 0.36rem;
+  border-bottom: 1px solid #E3E3E4;
+  padding: 0.06rem 0rem;
+  line-height: 0.36rem;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  text-align: center;
+  background-color: #F8F8F8;
+  z-index: 1;
+}
+html body .pages .page-tabs .page-header div {
+  overflow: hidden;
+}
+html body .pages .page-tabs .page-content {
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+html body .pages .page-tabs .page-content.header {
+  padding-top: 0.49rem;
+}
+html body .pages .page-tabs .page-content.footer {
+  padding-bottom: 0.57rem;
+}
+html body .pages .page-tabs .page-content .btn {
+  border-radius: 0.04rem;
+  padding: 0.09rem 0.15rem;
+  display: inline-block;
+  border: 1px solid #E3E3E4;
+  vertical-align: middle;
+  background-color: #FFFFFF;
+  color: #333333;
+  text-align: center;
+  font-size: 0.14rem;
+  line-height: normal;
+  box-sizing: border-box;
+}
+html body .pages .page-tabs .page-content .btn .iconfont {
+  font-size: 0.16rem;
+}
+html body .pages .page-tabs .page-content .btn.order {
+  border-radius: 0.18rem;
+  width: 0.36rem;
+  height: 0.36rem;
+  line-height: 0.36rem;
+  padding: 0px;
+  margin: 0.075rem auto;
+  text-align: center;
+}
+html body .pages .page-tabs .page-content .btn.primary {
+  background-color: #3498db;
+  color: #FFFFFF;
+  border-color: #2e6da4;
+}
+html body .pages .page-tabs .page-content .btn.primary:focus {
+  background-color: #2e6da4;
+}
+html body .pages .page-tabs .page-content .btn.success {
+  background-color: #3c763d;
+  color: #FFFFFF;
+  border-color: #2e6da4;
+}
+html body .pages .page-tabs .page-content .btn.danger {
+  background-color: #d9534f;
+  color: #FFFFFF;
+  border-color: #d43f3a;
+}
+html body .pages .page-tabs .page-content .btn.danger:focus {
+  background-color: #d43f3a;
+}
+html body .pages .page-tabs .page-content .btn.bigpadding {
+  padding: 0.075rem 0.25rem;
+  border-radius: 0.025rem;
+}
+html body .pages .page-tabs .page-content .btn.block {
+  display: block;
+  width: 100%;
+}
+html body .pages .page-tabs .page-content .table {
+  width: 100%;
+  max-width: 100%;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+html body .pages .page-tabs .page-content .table.table-bordered {
+  border: 1px solid #ddd;
+}
+html body .pages .page-tabs .page-content .table tr th,
+html body .pages .page-tabs .page-content .table tr td {
+  padding: 0.08rem;
+  line-height: 0.24rem;
+  vertical-align: top;
+  border: 1px solid #ddd;
+}
+html body .pages .page-tabs .page-content .table tr th {
+  border-top: 0px;
+}
+html body .pages .page-tabs .page-content .table tr.info th,
+html body .pages .page-tabs .page-content .table tr.info td {
+  background-color: #d9edf7;
+}
+html body .pages .page-tabs .page-content .bigtitle {
+  font-weight: bold;
+  font-size: 0.16rem;
+  line-height: 0.3rem;
+  margin: 0px;
+}
+html body .pages .page-tabs .page-content .bigtitle:before {
+  border: 0.025rem solid #3498db;
+  content: '';
+  border-radius: 0.025rem;
+  margin-right: 0.075rem;
+  font-size: 0.2rem;
+}
+html body .pages .page-tabs .page-content .bigtitle .iconfont {
+  color: #737373;
+  margin-top: 0.025rem;
+}
+html body .pages .page-tabs .page-content .badge {
+  display: inline-block;
+  min-width: 0.1rem;
+  padding: 0.05rem 0.07rem;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  background-color: #777;
+  border-radius: 0.02rem;
+}
+html body .pages .page-tabs .page-content .badge.primary {
+  background-color: #3498db;
+}
+html body .pages .page-tabs .page-content .badge.success {
+  background-color: #3c763d;
+}
+html body .pages .page-tabs .page-content .badge.danger {
+  color: #a94442;
+}
+html body .pages .page-tabs .page-content table {
+  width: 100%;
+  font-size: 0.14rem;
+}
+html body .pages .page-tabs .page-content .list-line,
+html body .pages .page-tabs .page-content .list-box {
+  padding: 0px 0.15rem;
+}
+html body .pages .page-tabs .page-content .list-line.bg,
+html body .pages .page-tabs .page-content .list-box.bg {
+  background-color: #FFFFFF;
+}
+html body .pages .page-tabs .page-content .list-line.top,
+html body .pages .page-tabs .page-content .list-box.top {
+  margin-top: 0.05rem;
+}
+html body .pages .page-tabs .page-content .list-line.bottom,
+html body .pages .page-tabs .page-content .list-box.bottom {
+  margin-bottom: 0.05rem;
+}
+html body .pages .page-tabs .page-content .list-line ul,
+html body .pages .page-tabs .page-content .list-box ul,
+html body .pages .page-tabs .page-content .list-line ol,
+html body .pages .page-tabs .page-content .list-box ol {
+  padding: 0px;
+}
+html body .pages .page-tabs .page-content .list-line ul li,
+html body .pages .page-tabs .page-content .list-box ul li,
+html body .pages .page-tabs .page-content .list-line ol li,
+html body .pages .page-tabs .page-content .list-box ol li {
+  line-height: 0.24rem;
+  padding: 0.12rem;
+  border-bottom: 1px solid #EEEEEE;
+  list-style-position: inside;
+}
+html body .pages .page-tabs .page-content .list-line ul li.unstyled,
+html body .pages .page-tabs .page-content .list-box ul li.unstyled,
+html body .pages .page-tabs .page-content .list-line ol li.unstyled,
+html body .pages .page-tabs .page-content .list-box ol li.unstyled {
+  list-style-type: none;
+}
+html body .pages .page-tabs .page-content .list-line ul li.smallpadding,
+html body .pages .page-tabs .page-content .list-box ul li.smallpadding,
+html body .pages .page-tabs .page-content .list-line ol li.smallpadding,
+html body .pages .page-tabs .page-content .list-box ol li.smallpadding {
+  padding: 0.06rem 0.12rem;
+}
+html body .pages .page-tabs .page-content .list-line ul li.inline,
+html body .pages .page-tabs .page-content .list-box ul li.inline,
+html body .pages .page-tabs .page-content .list-line ol li.inline,
+html body .pages .page-tabs .page-content .list-box ol li.inline {
+  display: inline-block;
+  vertical-align: middle;
+}
+html body .pages .page-tabs .page-content .list-line ul li:last-child,
+html body .pages .page-tabs .page-content .list-box ul li:last-child,
+html body .pages .page-tabs .page-content .list-line ol li:last-child,
+html body .pages .page-tabs .page-content .list-box ol li:last-child {
+  border-bottom: 0px;
+}
+html body .pages .page-tabs .page-content .list-box .rows.info {
+  padding-left: 0.1rem;
+}
+html body .pages .page-tabs .page-content .list-box .rows.illus {
+  width: 90%;
+  margin-left: 0px;
+  position: relative;
+}
+html body .pages .page-tabs .page-content .list-box .rows.illus .badge {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+html body .pages .page-tabs .page-content .list-box .rows img {
+  max-width: 100%;
+  max-height: 100%;
+}
+html body .pages .page-tabs .page-content .list-box .rows img.circle {
+  border-radius: 50%;
+}
+html body .pages .page-tabs .page-content .list-box .rows img.round {
+  border-radius: 0.05rem;
+}
+html body .pages .page-tabs .page-content .list-box .rows .score {
+  font-size: 0.48rem;
+  line-height: 0.48rem;
+}
+html body .pages .page-tabs .page-content .list-box .rows .title {
+  font-size: 0.15rem;
+  margin-bottom: 0.05rem;
+}
+html body .pages .page-tabs .page-content .list-box .rows .intro {
+  font-size: 0.14rem;
+  margin-bottom: 0.05rem;
+}
+html body .pages .page-tabs .page-content .list-box .rows .more {
+  font-size: 0.12rem;
+}
+html body .pages .page-tabs .page-content .list-box .rows .iconmenu {
+  color: #737373;
+  margin-top: 0.025rem;
+  font-size: 0.16rem;
+}
+html body .pages .page-tabs .page-content .list-box ul li,
+html body .pages .page-tabs .page-content .list-box ol li {
+  overflow: hidden;
+}
+html body .pages .page-tabs .page-content form {
+  padding: 0rem 0.15rem;
+}
+html body .pages .page-tabs .page-content form input,
+html body .pages .page-tabs .page-content form select {
+  background-color: #F8F8F8;
+  outline: 0;
+}
+html body .pages .page-tabs .page-content form.bg {
+  background-color: #FFFFFF;
+}
+html body .pages .page-tabs .page-content form.bg input,
+html body .pages .page-tabs .page-content form.bg select {
+  background-color: #FFFFFF;
+}
+html body .pages .page-tabs .page-content form.top {
+  margin-top: 0.05rem;
+}
+html body .pages .page-tabs .page-content form.bottom {
+  margin-bottom: 0.05rem;
+}
+html body .pages .page-tabs .page-content form .form-group {
+  line-height: 0.37rem;
+  padding: 0.05rem;
+  clear: both;
+  overflow: hidden;
+  font-size: 0.14rem;
+}
+html body .pages .page-tabs .page-content form .form-group.underline {
+  border-bottom: solid 1px #E3E3E4;
+}
+html body .pages .page-tabs .page-content form .form-group.underline:hover {
+  border-color: #3498db;
+}
+html body .pages .page-tabs .page-content form .form-group .tip {
+  padding-left: 0.2rem;
+}
+html body .pages .page-tabs .page-content form label.inline {
+  display: inline-block;
+  vertical-align: middle;
+  padding: 0.05rem;
+  padding-right: 0.24rem;
+}
+html body .pages .page-tabs .page-content form label.inline:last-child {
+  padding-right: 0px;
+}
+html body .pages .page-tabs .page-content form label.inline .selector:before {
+  font-family: "iconfont";
+  content: "\e846";
+  display: inline-block;
+  vertical-align: middle;
+  color: #DDDDDD;
+  font-size: 0.21rem;
+  margin: auto 0.05rem;
+}
+html body .pages .page-tabs .page-content form label.inline input[type="checkbox"],
+html body .pages .page-tabs .page-content form label.inline input[type="radio"] {
+  display: none;
+}
+html body .pages .page-tabs .page-content form label.inline input[type="checkbox"]:checked + .selector:before,
+html body .pages .page-tabs .page-content form label.inline input[type="radio"]:checked + .selector:before {
+  color: #3498db;
+}
+html body .pages .page-tabs .page-content form input[type="text"],
+html body .pages .page-tabs .page-content form input[type="password"] {
+  border-radius: 0.04rem;
+  padding: 0.1rem;
+  border: 1px solid #E3E3E4;
+  display: inline-block;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+html body .pages .page-tabs .page-content form input[type="text"].block,
+html body .pages .page-tabs .page-content form input[type="password"].block {
+  display: block;
+  width: 100%;
+}
+html body .pages .page-tabs .page-content form textarea {
+  border-radius: 0.04rem;
+  border: 1px solid #E3E3E4;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.1rem;
+  display: block;
+}
+html body .pages .page-tabs .page-content form select {
+  border-radius: 0.04rem;
+  line-height: 0.28rem;
+  padding: 0.09rem;
+  display: inline-block;
+  border-color: #E3E3E4;
+  vertical-align: middle;
+}
+html body .pages .page-tabs .page-content form select.block {
+  display: block;
+  width: 100%;
+}
+html body .pages .page-tabs .page-content form button {
+  border-radius: 0.04rem;
+  padding: 0.09rem 0.15rem;
+  display: inline-block;
+  border: 1px solid #E3E3E4;
+  vertical-align: middle;
+  background-color: #FFFFFF;
+  color: #333333;
+  text-align: center;
+}
+html body .pages .page-tabs .page-content form button:focus {
+  border-width: 1px;
+  outline: 0;
+  background-color: #E3E3E4;
+}
+html body .pages .page-tabs .page-content form button.primary {
+  background-color: #3498db;
+  color: #FFFFFF;
+  border-color: #2e6da4;
+}
+html body .pages .page-tabs .page-content form button.primary:focus {
+  background-color: #2e6da4;
+}
+html body .pages .page-tabs .page-content form button.success {
+  background-color: #3c763d;
+  color: #FFFFFF;
+  border-color: #2e6da4;
+}
+html body .pages .page-tabs .page-content form button.block {
+  display: block;
+  width: 100%;
+}
+html body .pages .page-tabs .page-content form button.danger {
+  background-color: #d9534f;
+  color: #FFFFFF;
+  border-color: #d43f3a;
+}
+html body .pages .page-tabs .page-content form button.danger:focus {
+  background-color: #d43f3a;
+}
+html body .pages .page-tabs .page-footer {
+  height: 0.44rem;
+  border-top: 1px solid #E3E3E4;
+  padding: 0.06rem 0rem;
+  line-height: 0.21rem;
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  text-align: center;
+  background-color: #F8F8F8;
+  font-size: 0.14rem;
+}
+html body .pages .page-tabs .page-footer .iconfont {
+  font-size: 0.24rem;
+}
+html body .pages .page-tabs .page-footer .menu,
+html body .pages .page-tabs .page-footer .iconmenu {
+  cursor: pointer;
+}
+html body .pages .page-tabs .page-footer .menu.active,
+html body .pages .page-tabs .page-footer .iconmenu.active,
+html body .pages .page-tabs .page-footer .menu.active a,
+html body .pages .page-tabs .page-footer .iconmenu.active a {
+  color: #3498db;
+}
+html body .pages .page-tabs .page-footer .pagination li {
+  list-style: none;
+  border: 0px;
+  line-height: 0.44rem;
+}
+html body .pages .page-tabs .page-footer .pagination input {
+  border: 0px;
+  outline: 0px;
+}
+html body .pages .page-tabs .page-footer .pagination .jump,
+html body .pages .page-tabs .page-footer .pagination .favor {
+  cursor: pointer;
+}
+html body .pages .page-tabs .page-footer .timer {
+  color: #555555;
+  letter-spacing: 0.015rem;
+}
+html body .pages .page-tabs .page-footer .subpaperbtn {
+  border-radius: 0.44rem;
+  padding: 0.09rem 0.15rem;
+  display: inline-block;
+  border: 1px solid #E3E3E4;
+  vertical-align: middle;
+  color: #333333;
+  text-align: center;
+  background-color: #3498db;
+  color: #FFFFFF;
+  border-color: #2e6da4;
+}
+html body .pages .page-tabs .page-footer .subpaperbtn:focus {
+  background-color: #2e6da4;
+}
+html body .pages .page-tabs .page-footer .subpaperbtn.block {
+  width: 90%;
+  margin: auto;
+}

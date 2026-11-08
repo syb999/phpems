@@ -7,14 +7,13 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
 <meta name=”apple-itunes-app” content=”app-id=myAppStoreID, affiliate-data=myAffiliateData, app-argument=myURL”>
-<link rel="stylesheet" type="text/css" href="files/public/css/iconfont.css">
-<link rel="stylesheet/less" type="text/css" href="files/public/css/pe.mobile.less" />
-<link rel="stylesheet" type="text/css" href="files/public/css/animations.css">
-<link rel="stylesheet" href="files/public/css/swiper.min.css">
-<script src="files/public/js/all.fine-uploader.min.js"></script>
-<script src="files/public/js/jquery.min.js"></script>
-<script src="files/public/js/swiper.min.js"></script>
-<script src="files/public/js/less.min.js"></script>
-<script src="files/public/js/pe.mobile.js"></script>
-<script src="files/public/js/exam.mobile.js"></script>
+<link rel="stylesheet" type="text/css" href="files/public/css/iconfont.css?v=20261108b">
+<link rel="stylesheet" type="text/css" href="files/public/css/pe.mobile.css?v=20261108b" />
+<link rel="stylesheet" type="text/css" href="files/public/css/animations.css?v=20261108b">
+<link rel="stylesheet" href="files/public/css/swiper.min.css?v=20261108b">
+<script src="files/public/js/all.fine-uploader.min.js?v=20261108b"></script>
+<script src="files/public/js/jquery.min.js?v=20261108b"></script>
+<script src="files/public/js/swiper.min.js?v=20261108b"></script>
+<script src="files/public/js/pe.mobile.js?v=20261108b"></script>
+<script src="files/public/js/exam.mobile.js?v=20261108b"></script>
 </head>

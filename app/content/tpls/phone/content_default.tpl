@@ -1,18 +1,41 @@
-<div class="pagecontent">
-	<header class="container-fluid" style="background-color:#337AB7;">
-		<h5 class="text-center">
-			<em style="font-size:2rem;" class="pull-left glyphicon glyphicon-chevron-left" onclick="javascript:$.goPrePage();"></em>
-			{x2;(isset($cat['catname'])?$cat['catname']:'')}
-			<a style="font-size:2rem;color:#FFFFFF;" href="index.php?user-phone" class="pull-right glyphicon glyphicon-user ajax" data-target="user" data-page="user"></a>
-		</h5>
-	</header>
-	<div style="clear:both" class="col-xs-12" id="contenttext">
-		<h4 class="text-center" style="overflow:hidden;clear:both;padding-top:0.2rem;border:">
-			{x2;(isset($content['contenttitle'])?$content['contenttitle']:'')}
-		</h4>
-		<hr />
-		<div style="clear:both">
-		{x2;(isset(realhtml:$content['contenttext'])?realhtml:$content['contenttext']:'')}
-		</div>
-	</div>
+{x2;if:empty($userhash)}
+{x2;include:header}
+<body>
+<div class="pages">
+    {x2;endif}
+    <div class="page-tabs">
+        <div class="page-header">
+            <div class="col-1" onclick="javascript:history.back();"><span class="iconfont icon-left"></span></div>
+            <div class="col-8">{x2;(isset($cat['catname']) ? $cat['catname'] : '')}</div>
+            <div class="col-1"><span class="iconfont icon-menu"></span></div>
+        </div>
+        <div class="page-content header">
+            <div class="list-box bg">
+                <ol>
+                    <li class="unstyled">
+                        <h4 class="title text-center">{x2;(isset($content['contenttitle']) ? $content['contenttitle'] : '')}</h4>
+                    </li>
+                    <li class="unstyled">
+                        <div class="rows">
+                            发布人：{x2;(isset($content['contentusername']) ? $content['contentusername'] : '')} &nbsp; 阅读量：{x2;(isset($content['contentview']) ? $content['contentview'] : '')}
+                        </div>
+                    </li>
+                    <li class="unstyled">
+                        <div class="rows">
+                            {x2;realhtml:(isset($content['contenttext']) ? $content['contenttext'] : '')}
+                        </div>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function(){
+            $.get("index.php?content-phone-content-setview&contentid={x2;(isset($content['contentid']) ? $content['contentid'] : '')}&"+Math.random());
+        });
+    </script>
+    {x2;if:empty($userhash)}
 </div>
+</body>
+</html>
+{x2;endif}

@@ -1,4 +1,4 @@
-{x2;if:!empty($userhash)}
+{x2;if:empty($userhash)}
 {x2;include:header}
 <body>
 {x2;include:nav}
@@ -13,7 +13,7 @@
                 <div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
                     <div class="col-xs-12">
                         <ol class="breadcrumb">
-                            <li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master">{x2;(isset($apps[$_app]['appname'])?$apps[$_app]['appname']:'')}</a></li>
+                            <li><a href="index.php?{x2;(isset($_app) ? $_app : '')}-master">{x2;(isset($apps[$_app]['appname']) ? $apps[$_app]['appname'] : '')}</a></li>
                             <li class="active">推荐</li>
                         </ol>
                     </div>
@@ -21,13 +21,13 @@
                 <div class="box itembox" style="padding-top:10px;margin-bottom:0px;">
                     <h4 class="title" style="padding:10px;">
                         专题推荐
-                        <a class="btn btn-primary pull-right" href="index.php?{x2;(isset($_app)?$_app:'')}-master-seminar&catid={x2;(isset($catid)?$catid:'')}&page={x2;(isset($page)?$page:'')}">专题管理</a>
+                        <a class="btn btn-primary pull-right" href="index.php?{x2;(isset($_app) ? $_app : '')}-master-seminar&catid={x2;(isset($catid) ? $catid : '')}&page={x2;(isset($page) ? $page : '')}">专题管理</a>
                     </h4>
                     <form action="index.php?seminar-master-seminar-lite" method="post" class="form-horizontal">
                         <div class="form-group">
                             <label class="control-label col-sm-2">标题ID：</label>
                             <div class="col-sm-6">
-                                <input type="text" class="form-control" name="contentids" value="{x2;(isset($contentids)?$contentids:'')}" needle="needle" msg="您必须输入标题" readonly>
+                                <input type="text" class="form-control" name="contentids" value="{x2;(isset($contentids) ? $contentids : '')}" needle="needle" msg="您必须输入标题" readonly>
                             </div>
                         </div>
                         <div class="form-group">
@@ -36,7 +36,7 @@
                                 <select msg="您必须选择一个推荐位" needle="needle" name="position" class="form-control">
                                     <option value="">选择推荐位</option>
                                     {x2;tree:(array)($poses ?? []),pos,pid}
-                                    <option value="{x2;(isset(v:pos['posid'])?v:pos['posid']:'')}">{x2;(isset(v:pos['posname'])?v:pos['posname']:'')}</option>
+                                    <option value="{x2;(isset(v:pos['posid']) ? v:pos['posid'] : '')}">{x2;(isset(v:pos['posname']) ? v:pos['posname'] : '')}</option>
                                     {x2;endtree}
                                 </select>
                             </div>
@@ -45,9 +45,9 @@
                             <label class="control-label col-sm-2"></label>
                             <div class="col-sm-9">
                                 <input class="btn btn-primary" type="submit" value="移动">
-                                <a class="btn btn-primary" href="index.php?seminar-master-seminar&page={x2;(isset($page)?$page:'')}{x2;(isset($u)?$u:'')}">取消</a>
+                                <a class="btn btn-primary" href="index.php?seminar-master-seminar&page={x2;(isset($page) ? $page : '')}{x2;(isset($u) ? $u : '')}">取消</a>
                                 {x2;if:isset($search) && is_array($search)}{x2;tree:(array)($search ?? []),arg,sid}
-                                <input type="hidden" name="search[{x2;(isset(v:key)?v:key:'')}]" value="{x2;(isset(v:arg)?v:arg:'')}"/>
+                                <input type="hidden" name="search[{x2;(isset(v:key) ? v:key : '')}]" value="{x2;(isset(v:arg) ? v:arg : '')}"/>
                                 {x2;endtree}{x2;endif}
                                 <input type="hidden" name="movecposition" value="1">
                             </div>
@@ -55,7 +55,7 @@
                     </form>
                 </div>
             </div>
-{x2;if:!empty($userhash)}
+{x2;if:empty($userhash)}
         </div>
     </div>
 </div>

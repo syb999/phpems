@@ -1,4 +1,4 @@
-{x2;if:!empty($userhash)}
+{x2;if:empty($userhash)}
 {x2;include:header}
 <body>
 <div class="pages">
@@ -17,7 +17,7 @@
                         <div class="col-8x">
                             {x2;if:!v:exam['ehstatus'] && v:exam['ehdecide']}
                             <h4>待评</h4>
-                            {x2;(isset(elseif:$data['currentbasic']['basicexam']['notviewscore'])?elseif:$data['currentbasic']['basicexam']['notviewscore']:'')}
+                            {x2;elseif:!empty($data['currentbasic']['basicexam']['notviewscore'])}
                             <h4>待评</h4>
                             {x2;else}
                             <h2 class="text-center">{x2;eval: echo intval(v:exam['ehscore'])}</h2>
@@ -28,13 +28,13 @@
                         </div>
                         <div class="col-8l">
                             <div class="rows info">
-                                <h5 class="title">{x2;(isset(v:exam['ehexam'])?v:exam['ehexam']:'')}</h5>
+                                <h5 class="title">{x2;(isset(v:exam['ehexam']) ? v:exam['ehexam'] : '')}</h5>
                                 <div class="intro">
-                                    <div class="col-4"> {x2;date:v:exam['ehstarttime'],'Y-m-d'}</div>
-                                    <div class="col-4"> 用时：{x2;if:v:exam['ehtime'] >= 60}{x2;if:v:exam['ehtime']%60}{x2;eval: echo intval(v:exam['ehtime']/60)+1}{x2;else}{x2;eval: echo intval(v:exam['ehtime']/60)}{x2;endif}分{x2;else}{x2;(isset(v:exam['ehtime'])?v:exam['ehtime']:'')}秒{x2;endif}</div>
+                                    <div class="col-4"> {x2;date:v:exam['ehstarttime'] ?? 0,'Y-m-d'}</div>
+                                    <div class="col-4"> 用时：{x2;if:(isset(v:exam['ehtime']) ? v:exam['ehtime'] : null) >= 60}{x2;if:v:exam['ehtime']%60}{x2;eval: echo intval(v:exam['ehtime']/60)+1}{x2;else}{x2;eval: echo intval(v:exam['ehtime']/60)}{x2;endif}分{x2;else}{x2;(isset(v:exam['ehtime']) ? v:exam['ehtime'] : '')}秒{x2;endif}</div>
                                     {x2;if:!v:exam['ehstatus'] && v:exam['ehdecide']}
                                     <div class="col-2">待评分</div>
-                                    {x2;(isset(elseif:$data['currentbasic']['basicexam']['notviewscore'])?elseif:$data['currentbasic']['basicexam']['notviewscore']:'')}
+                                    {x2;elseif:!empty($data['currentbasic']['basicexam']['notviewscore'])}
                                     <div class="col-2">未公布</div>
                                     {x2;else}
                                     {x2;if:!empty(v:exam['ehispass'])}
@@ -53,11 +53,11 @@
         </div>
         {x2;if:!empty($exams['pages'])}
         <div class="page-footer">
-            <ul class="pagination">{x2;(isset($exams['pages'])?$exams['pages']:'')}</ul>
+            <ul class="pagination">{x2;(isset($exams['pages']) ? $exams['pages'] : '')}</ul>
         </div>
         {x2;endif}
     </div>
-    {x2;if:!empty($userhash)}
+    {x2;if:empty($userhash)}
 </div>
 </body>
 </html>

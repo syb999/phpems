@@ -1,4 +1,4 @@
-{x2;if:!empty($userhash)}
+{x2;if:empty($userhash)}
 {x2;include:header}
 <body>
 {x2;include:nav}
@@ -13,28 +13,28 @@
                 <div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
                     <div class="col-xs-12">
                         <ol class="breadcrumb">
-                            <li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master">{x2;(isset($apps[$_app]['appname'])?$apps[$_app]['appname']:'')}</a></li>
-                            <li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master-module">用户模型</a></li>
+                            <li><a href="index.php?{x2;(isset($_app) ? $_app : '')}-master">{x2;(isset($apps[$_app]['appname']) ? $apps[$_app]['appname'] : '')}</a></li>
+                            <li><a href="index.php?{x2;(isset($_app) ? $_app : '')}-master-module">用户模型</a></li>
                             <li class="active">字段管理</li>
                         </ol>
                     </div>
                 </div>
                 <div class="box itembox" style="padding-top:10px;margin-bottom:0px;">
                     <h4 class="title" style="padding:10px;">
-                        {x2;(isset($module['modulename'])?$module['modulename']:'')}
+                        {x2;(isset($module['modulename']) ? $module['modulename'] : '')}
                         <span class="pull-right">
                             <a data-toggle="dropdown" class="btn btn-primary dropdown-toggle" href="#">添加字段&nbsp;<strong class="caret"></strong></a>
                             <ul class="dropdown-menu">
-                                <li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master-module-preview&moduleid={x2;(isset($moduleid)?$moduleid:'')}">模型预览</a></li>
+                                <li><a href="index.php?{x2;(isset($_app) ? $_app : '')}-master-module-preview&moduleid={x2;(isset($moduleid) ? $moduleid : '')}">模型预览</a></li>
                                 <li class="divider"></li>
-                                <li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master-module-addfield&moduleid={x2;(isset($moduleid)?$moduleid:'')}">添加模型字段</a></li>
-                                <li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master-module-addfield&moduleid={x2;(isset($moduleid)?$moduleid:'')}&fieldpublic=1">添加公共字段</a></li>
+                                <li><a href="index.php?{x2;(isset($_app) ? $_app : '')}-master-module-addfield&moduleid={x2;(isset($moduleid) ? $moduleid : '')}">添加模型字段</a></li>
+                                <li><a href="index.php?{x2;(isset($_app) ? $_app : '')}-master-module-addfield&moduleid={x2;(isset($moduleid) ? $moduleid : '')}&fieldpublic=1">添加公共字段</a></li>
                             </ul>
                         </span>
                     </h4>
-                    <form action="index.php?{x2;(isset($_app)?$_app:'')}-master-module-fields" method="post">
+                    <form action="index.php?{x2;(isset($_app) ? $_app : '')}-master-module-fields" method="post">
                         <fieldset>
-                            <form action="index.php?{x2;(isset($_app)?$_app:'')}-master-user-batdel" method="post">
+                            <form action="index.php?{x2;(isset($_app) ? $_app : '')}-master-user-batdel" method="post">
                                 <table class="table table-hover table-bordered">
                                     <thead>
                                     <tr class="info">
@@ -53,25 +53,25 @@
                                     <tbody>
                                     {x2;tree:(array)($fields ?? []),field,fid}
                                     <tr>
-                                        <td>{x2;(isset(v:field['fieldid'])?v:field['fieldid']:'')}</td>
-                                        <td class="form-inline"><input type="text" size="1" name="ids[{x2;(isset(v:field['fieldid'])?v:field['fieldid']:'')}]" value="{x2;(isset(v:field['fieldsequence'])?v:field['fieldsequence']:'')}" class="form-control"/></td>
-                                        <td>{x2;(isset(v:field['field'])?v:field['field']:'')}</td>
+                                        <td>{x2;(isset(v:field['fieldid']) ? v:field['fieldid'] : '')}</td>
+                                        <td class="form-inline"><input type="text" size="1" name="ids[{x2;(isset(v:field['fieldid']) ? v:field['fieldid'] : '')}]" value="{x2;(isset(v:field['fieldsequence']) ? v:field['fieldsequence'] : '')}" class="form-control"/></td>
+                                        <td>{x2;(isset(v:field['field']) ? v:field['field'] : '')}</td>
                                         <td>{x2;if:!empty(v:field['fieldpublic'])}公共{x2;else}模型{x2;endif}字段</td>
-                                        <td>{x2;(isset(v:field['fieldtitle'])?v:field['fieldtitle']:'')}</td>
-                                        <td>{x2;if:!empty(v:field['fieldlength'])}{x2;(isset(v:field['fieldlength'])?v:field['fieldlength']:'')}{x2;else}默认{x2;endif}</td>
-                                        <td>{x2;(isset(v:field['fieldtype'])?v:field['fieldtype']:'')}</td>
-                                        <td>{x2;(isset(v:field['fieldhtmltype'])?v:field['fieldhtmltype']:'')}</td>
-                                        <td>{x2;if:!empty(v:field['fieldindextype'])}{x2;(isset(v:field['fieldindextype'])?v:field['fieldindextype']:'')}{x2;else}NULL{x2;endif}</td>
+                                        <td>{x2;(isset(v:field['fieldtitle']) ? v:field['fieldtitle'] : '')}</td>
+                                        <td>{x2;if:!empty(v:field['fieldlength'])}{x2;(isset(v:field['fieldlength']) ? v:field['fieldlength'] : '')}{x2;else}默认{x2;endif}</td>
+                                        <td>{x2;(isset(v:field['fieldtype']) ? v:field['fieldtype'] : '')}</td>
+                                        <td>{x2;(isset(v:field['fieldhtmltype']) ? v:field['fieldhtmltype'] : '')}</td>
+                                        <td>{x2;if:!empty(v:field['fieldindextype'])}{x2;(isset(v:field['fieldindextype']) ? v:field['fieldindextype'] : '')}{x2;else}NULL{x2;endif}</td>
                                         <td nowrap>
                                             <div class="btn-group">
                                                 {x2;if:!empty($module['modulelockfields'][v:field['field']])}
-                                                <a class="btn ajax" href="index.php?{x2;(isset($_app)?$_app:'')}-master-module-forbiddenfield&fieldid={x2;(isset(v:field['fieldid'])?v:field['fieldid']:'')}&moduleid={x2;(isset($moduleid)?$moduleid:'')}&page={x2;(isset($page)?$page:'')}{x2;(isset($u)?$u:'')}" title="启用"><em class="glyphicon glyphicon-ban-circle"></em></a>
+                                                <a class="btn ajax" href="index.php?{x2;(isset($_app) ? $_app : '')}-master-module-forbiddenfield&fieldid={x2;(isset(v:field['fieldid']) ? v:field['fieldid'] : '')}&moduleid={x2;(isset($moduleid) ? $moduleid : '')}&page={x2;(isset($page) ? $page : '')}{x2;(isset($u) ? $u : '')}" title="启用"><em class="glyphicon glyphicon-ban-circle"></em></a>
                                                 {x2;else}
-                                                <a class="btn ajax" href="index.php?{x2;(isset($_app)?$_app:'')}-master-module-forbiddenfield&fieldid={x2;(isset(v:field['fieldid'])?v:field['fieldid']:'')}&moduleid={x2;(isset($moduleid)?$moduleid:'')}&page={x2;(isset($page)?$page:'')}{x2;(isset($u)?$u:'')}" title="禁用"><em class="glyphicon glyphicon-ok-circle"></em></a>
+                                                <a class="btn ajax" href="index.php?{x2;(isset($_app) ? $_app : '')}-master-module-forbiddenfield&fieldid={x2;(isset(v:field['fieldid']) ? v:field['fieldid'] : '')}&moduleid={x2;(isset($moduleid) ? $moduleid : '')}&page={x2;(isset($page) ? $page : '')}{x2;(isset($u) ? $u : '')}" title="禁用"><em class="glyphicon glyphicon-ok-circle"></em></a>
                                                 {x2;endif}
-                                                <a class="btn" href="index.php?{x2;(isset($_app)?$_app:'')}-master-module-modifyfield&fieldid={x2;(isset(v:field['fieldid'])?v:field['fieldid']:'')}&page={x2;(isset($page)?$page:'')}{x2;(isset($u)?$u:'')}" title="修改字段"><em class="glyphicon glyphicon-edit"></em></a>
-                                                {x2;if:!v:field['fieldsystem']}
-                                                <a class="btn confirm" href="index.php?{x2;(isset($_app)?$_app:'')}-master-module-delfield&fieldid={x2;(isset(v:field['fieldid'])?v:field['fieldid']:'')}&moduleid={x2;(isset($moduleid)?$moduleid:'')}&page={x2;(isset($page)?$page:'')}{x2;(isset($u)?$u:'')}" title="删除字段"><em class="glyphicon glyphicon-remove"></em></a>
+                                                <a class="btn" href="index.php?{x2;(isset($_app) ? $_app : '')}-master-module-modifyfield&fieldid={x2;(isset(v:field['fieldid']) ? v:field['fieldid'] : '')}&page={x2;(isset($page) ? $page : '')}{x2;(isset($u) ? $u : '')}" title="修改字段"><em class="glyphicon glyphicon-edit"></em></a>
+                                                {x2;if:empty(v:field['fieldsystem'])}
+                                                <a class="btn confirm" href="index.php?{x2;(isset($_app) ? $_app : '')}-master-module-delfield&fieldid={x2;(isset(v:field['fieldid']) ? v:field['fieldid'] : '')}&moduleid={x2;(isset($moduleid) ? $moduleid : '')}&page={x2;(isset($page) ? $page : '')}{x2;(isset($u) ? $u : '')}" title="删除字段"><em class="glyphicon glyphicon-remove"></em></a>
                                                 {x2;endif}
                                             </div>
                                         </td>
@@ -82,11 +82,11 @@
                                 <div class="control-group">
                                     <div class="controls">
                                         <button class="btn btn-primary" type="submit">更改排序</button>
-                                        <input type="hidden" name="page" value="{x2;(isset($page)?$page:'')}">
+                                        <input type="hidden" name="page" value="{x2;(isset($page) ? $page : '')}">
                                         <input type="hidden" name="modifyfieldsequence" value="1"/>
-                                        <input type="hidden" name="moduleid" value="{x2;(isset($moduleid)?$moduleid:'')}"/>
+                                        <input type="hidden" name="moduleid" value="{x2;(isset($moduleid) ? $moduleid : '')}"/>
                                         {x2;if:isset($search) && is_array($search)}{x2;tree:(array)($search ?? []),arg,aid}
-                                        <input type="hidden" name="search[{x2;(isset(v:key)?v:key:'')}]" value="{x2;(isset(v:arg)?v:arg:'')}"/>
+                                        <input type="hidden" name="search[{x2;(isset(v:key) ? v:key : '')}]" value="{x2;(isset(v:arg) ? v:arg : '')}"/>
                                         {x2;endtree}{x2;endif}
                                     </div>
                                 </div>
@@ -94,7 +94,7 @@
                     </form>
                 </div>
             </div>
-            {x2;if:!empty($userhash)}
+            {x2;if:empty($userhash)}
         </div>
     </div>
 </div>

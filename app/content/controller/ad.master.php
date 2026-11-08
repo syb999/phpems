@@ -25,6 +25,9 @@ class action extends app
 
     private function modify()
     {
+        $page = intval($this->ev->get('page'));
+        $page = $page > 0 ? $page : 1;
+
         if ($this->ev->get('modifyad')) {
             $args = $this->ev->get('args');
             $args['adstyle'] = $args['adstyle'];

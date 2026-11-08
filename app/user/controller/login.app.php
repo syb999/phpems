@@ -45,11 +45,15 @@ class action extends app
                         $this->session->offOnlineUser($user['userid']);
                     }
                     $this->session->setSessionUser(['sessionuserid' => $user['userid'], 'sessionpassword' => $user['userpassword'], 'sessionip' => $this->ev->getClientIp(), 'sessiongroupid' => $user['usergroupid'], 'sessionlogintime' => TIME, 'sessionusername' => $user['username']]);
+                    $forwardUrl = 'index.php?exam-app-exam';
+                    if (1 == (isset($user['groupmoduleid']) ? $user['groupmoduleid'] : 0)) {
+                        $forwardUrl = 'index.php?core-master';
+                    }
                     $message = [
                         'statusCode' => 201,
                         'message' => '操作成功',
                         'callbackType' => 'forward',
-                        'forwardUrl' => 'reload',
+                        'forwardUrl' => $forwardUrl,
                     ];
                     $this->G->R($message);
                 } else {

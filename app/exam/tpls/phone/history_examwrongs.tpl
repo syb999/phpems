@@ -1,4 +1,4 @@
-{x2;if:!empty($userhash)}
+{x2;if:empty($userhash)}
 {x2;include:header}
 <body>
 <div class="pages">
@@ -6,7 +6,7 @@
     <div class="page-tabs">
         <div class="page-header">
             <div class="col-1" onclick="javascript:history.back();"><span class="iconfont icon-left"></span></div>
-            <div class="col-8">{x2;(isset($sessionvars['examsession'])?$sessionvars['examsession']:'')}</div>
+            <div class="col-8">{x2;(isset($sessionvars['examsession']) ? $sessionvars['examsession'] : '')}</div>
             <div class="col-1"><span class="iconfont icon-menu hide"></span></div>
         </div>
         <div class="page-content header footer" style="height: 100%;overflow: hidden">
@@ -18,34 +18,34 @@
                         {x2;tree:(array)($questype ?? []),quest,qid}
                         {x2;if:!empty(v:quest)}
                         {x2;eval: v:quest = v:quest['questid']}
-                        {x2;if:$sessionvars['examsessionquestion']['questions'][v:quest] || $sessionvars['examsessionquestion']['questionrows'][v:quest]}
+                        {x2;if:!empty($sessionvars['examsessionquestion']['questions'][v:quest]) || !empty($sessionvars['examsessionquestion']['questionrows'][v:quest])}
                         {x2;eval: v:oid++}
                         {x2;eval: v:tid = 0}
                         {x2;tree:(array)($sessionvars['examsessionquestion']['questions'][v:quest] ?? []),question,qnid}
                         {x2;eval: v:tid++}
                         {x2;eval: v:qcid++}
-                        {x2;if:$sessionvars['examsessionscorelist'][v:question['questionid']] && $sessionvars['examsessionscorelist'][v:question['questionid']] == $sessionvars['examsessionsetting']['examsetting']['questype'][v:quest]['score']}
+                        {x2;if:!empty($sessionvars['examsessionscorelist'][v:question['questionid']]) && $sessionvars['examsessionscorelist'][v:question['questionid']] == $sessionvars['examsessionsetting']['examsetting']['questype'][v:quest]['score']}
                         {x2;else}
                         <div class="swiper-slide" style="overflow-y: scroll">
                             <ol>
                                 <li class="unstyled">
                                     <h4 class="title">
-                                        第 {x2;(isset(v:qcid)?v:qcid:'')} 题 【 {x2;(isset($questype[v:quest]['questype'])?$questype[v:quest]['questype']:'')} 】
+                                        第 {x2;(isset(v:qcid) ? v:qcid : '')} 题 【 {x2;(isset($questype[v:quest]['questype']) ? $questype[v:quest]['questype'] : '')} 】
                                     </h4>
                                 </li>
                                 <li class="unstyled">
                                     <div class="rows">
-                                        <p>{x2;(isset(realhtml:v:question['question'])?realhtml:v:question['question']:'')}</p>
+                                        <p>{x2;realhtml:(isset(v:question['question']) ? v:question['question'] : '')}</p>
                                     </div>
                                 </li>
                                 <li class="unstyled">
                                     <div class="rows">
-                                        <p>{x2;(isset(realhtml:v:question['questionselect'])?realhtml:v:question['questionselect']:'')}</p>
+                                        <p>{x2;realhtml:(isset(v:question['questionselect']) ? v:question['questionselect'] : '')}</p>
                                     </div>
                                 </li>
                                 {x2;if:!empty($questype[v:quest]['questsort'])}
                                 <li class="unstyled">
-                                    <textarea rows="4" id="editor{x2;(isset(v:question['questionid'])?v:question['questionid']:'')}" name="question[{x2;(isset(v:question['questionid'])?v:question['questionid']:'')}]" rel="{x2;(isset(v:question['questionid'])?v:question['questionid']:'')}">{x2;(isset(realhtml:$sessionvars['examsessionuseranswer'][v:question['questionid']])?realhtml:$sessionvars['examsessionuseranswer'][v:question['questionid']]:'')}</textarea>
+                                    <textarea rows="4" id="editor{x2;(isset(v:question['questionid']) ? v:question['questionid'] : '')}" name="question[{x2;(isset(v:question['questionid']) ? v:question['questionid'] : '')}]" rel="{x2;(isset(v:question['questionid']) ? v:question['questionid'] : '')}">{x2;realhtml:(isset($sessionvars['examsessionuseranswer'][v:question['questionid']]) ? $sessionvars['examsessionuseranswer'][v:question['questionid']] : '')}</textarea>
                                 </li>
                                 <li class="unstyled text-center">
                                     <button class="primary badge" onclick="javascript:$(this).parents('li').hide().parents('.list-box').find('.rightanswer').removeClass('hide');">查看答案</button>
@@ -55,27 +55,27 @@
                                     <div class="rows">
                                         {x2;if:(isset($questype[v:quest]['questchoice']) ? $questype[v:quest]['questchoice'] : null) == 1 || $questype[v:quest]['questchoice'] == 4}
                                         {x2;tree:(array)($selectorder ?? []),so,sid}
-                                        {x2;if:v:key == v:question['questionselectnumber']}
+                                        {x2;if:(isset(v:key) ? v:key : null) == (isset(v:question['questionselectnumber']) ? v:question['questionselectnumber'] : null)}
                                         {x2;eval: break;}
                                         {x2;endif}
-                                        <label class="inline"><input type="radio" name="question[{x2;(isset(v:question['questionid'])?v:question['questionid']:'')}]" rel="{x2;(isset(v:question['questionid'])?v:question['questionid']:'')}" value="{x2;(isset(v:so)?v:so:'')}" {x2;if:v:so == $sessionvars['examsessionuseranswer'][v:question['questionid']]}checked{x2;endif}/><span class="selector">{x2;(isset(v:so)?v:so:'')}</span> </label>
+                                        <label class="inline"><input type="radio" name="question[{x2;(isset(v:question['questionid']) ? v:question['questionid'] : '')}]" rel="{x2;(isset(v:question['questionid']) ? v:question['questionid'] : '')}" value="{x2;(isset(v:so) ? v:so : '')}" {x2;if:(isset(v:so) ? v:so : null) == (isset($sessionvars['examsessionuseranswer'][v:question['questionid']]) ? $sessionvars['examsessionuseranswer'][v:question['questionid']] : null)}checked{x2;endif}/><span class="selector">{x2;(isset(v:so) ? v:so : '')}</span> </label>
                                         {x2;endtree}
-                                        {x2;elseif:$questype[v:quest]['questchoice'] == 5}
-                                        <input type="text" name="question[{x2;(isset(v:question['questionid'])?v:question['questionid']:'')}]" placeholder="点击此处填写答案" value="{x2;(isset($sessionvars['examsessionuseranswer'][v:question['questionid']])?$sessionvars['examsessionuseranswer'][v:question['questionid']]:'')}" rel="{x2;(isset(v:question['questionid'])?v:question['questionid']:'')}"/>
-                                        <label class="inline pull-right"><button class="btn btn-primary badge finish fill" rel="{x2;(isset(v:question['questionid'])?v:question['questionid']:'')}">答题完毕</button></label>
+                                        {x2;elseif:(isset($questype[v:quest]['questchoice']) ? $questype[v:quest]['questchoice'] : null) == 5}
+                                        <input type="text" name="question[{x2;(isset(v:question['questionid']) ? v:question['questionid'] : '')}]" placeholder="点击此处填写答案" value="{x2;(isset($sessionvars['examsessionuseranswer'][v:question['questionid']]) ? $sessionvars['examsessionuseranswer'][v:question['questionid']] : '')}" rel="{x2;(isset(v:question['questionid']) ? v:question['questionid'] : '')}"/>
+                                        <label class="inline pull-right"><button class="btn btn-primary badge finish fill" rel="{x2;(isset(v:question['questionid']) ? v:question['questionid'] : '')}">答题完毕</button></label>
                                         {x2;else}
                                         {x2;tree:(array)($selectorder ?? []),so,sid}
-                                        {x2;if:v:key >= v:question['questionselectnumber']}
+                                        {x2;if:(isset(v:key) ? v:key : null) >= (isset(v:question['questionselectnumber']) ? v:question['questionselectnumber'] : null)}
                                         {x2;eval: break;}
                                         {x2;endif}
-                                        <label class="inline"><input type="checkbox" name="question[{x2;(isset(v:question['questionid'])?v:question['questionid']:'')}][{x2;(isset(v:key)?v:key:'')}]" rel="{x2;(isset(v:question['questionid'])?v:question['questionid']:'')}" value="{x2;(isset(v:so)?v:so:'')}" {x2;if:in_array(v:so,$sessionvars['examsessionuseranswer'][v:question['questionid']])}checked{x2;endif}/><span class="selector">{x2;(isset(v:so)?v:so:'')}</span> </label>
+                                        <label class="inline"><input type="checkbox" name="question[{x2;(isset(v:question['questionid']) ? v:question['questionid'] : '')}][{x2;(isset(v:key) ? v:key : '')}]" rel="{x2;(isset(v:question['questionid']) ? v:question['questionid'] : '')}" value="{x2;(isset(v:so) ? v:so : '')}" {x2;if:in_array(v:so,$sessionvars['examsessionuseranswer'][v:question['questionid']])}checked{x2;endif}/><span class="selector">{x2;(isset(v:so) ? v:so : '')}</span> </label>
                                         {x2;endtree}
                                         {x2;endif}
                                     </div>
                                 </li>
                                 {x2;if:(isset($questype[v:quest]['questchoice']) ? $questype[v:quest]['questchoice'] : null) == 2 || $questype[v:quest]['questchoice'] == 3}
                                 <li class="unstyled text-center">
-                                    <button class="primary badge finish" rel="{x2;(isset(v:question['questionid'])?v:question['questionid']:'')}">答题完毕</button>
+                                    <button class="primary badge finish" rel="{x2;(isset(v:question['questionid']) ? v:question['questionid'] : '')}">答题完毕</button>
                                 </li>
                                 {x2;endif}
                                 {x2;endif}
@@ -86,14 +86,14 @@
                                             <span class="badge">正确答案</span>
                                         </div>
                                         <div class="intro">
-                                            {x2;(isset(realhtml:v:question['questionanswer'])?realhtml:v:question['questionanswer']:'')}
+                                            {x2;realhtml:(isset(v:question['questionanswer']) ? v:question['questionanswer'] : '')}
                                         </div>
                                         {x2;else}
                                         <div class="col-4x intro">
                                             <span class="badge">正确答案</span>
                                         </div>
                                         <div class="col-4l intro">
-                                            <b id="rightanswer_{x2;(isset(v:question['questionid'])?v:question['questionid']:'')}">{x2;(isset(v:question['questionanswer'])?v:question['questionanswer']:'')}</b>
+                                            <b id="rightanswer_{x2;(isset(v:question['questionid']) ? v:question['questionid'] : '')}">{x2;(isset(v:question['questionanswer']) ? v:question['questionanswer'] : '')}</b>
                                         </div>
                                         {x2;endif}
                                     </div>
@@ -105,14 +105,14 @@
                                             <span class="badge">试题解析</span>
                                         </div>
                                         <div class="intro">
-                                            {x2;(isset(realhtml:v:question['questiondescribe'])?realhtml:v:question['questiondescribe']:'')}
+                                            {x2;realhtml:(isset(v:question['questiondescribe']) ? v:question['questiondescribe'] : '')}
                                         </div>
                                         {x2;else}
                                         <div class="col-4x">
                                             <span class="badge">试题解析</span>
                                         </div>
                                         <div class="col-4l intro">
-                                            {x2;(isset(realhtml:v:question['questiondescribe'])?realhtml:v:question['questiondescribe']:'')}
+                                            {x2;realhtml:(isset(v:question['questiondescribe']) ? v:question['questiondescribe'] : '')}
                                         </div>
                                         {x2;endif}
                                     </div>
@@ -125,33 +125,33 @@
                         {x2;eval: v:tid++}
                         {x2;tree:(array)(v:questionrow['data'] ?? []),question,qid}
                         {x2;eval: v:qcid++}
-                        {x2;if:$sessionvars['examsessionscorelist'][v:question['questionid']] && $sessionvars['examsessionscorelist'][v:question['questionid']] == $sessionvars['examsessionsetting']['examsetting']['questype'][v:quest]['score']}
+                        {x2;if:!empty($sessionvars['examsessionscorelist'][v:question['questionid']]) && $sessionvars['examsessionscorelist'][v:question['questionid']] == $sessionvars['examsessionsetting']['examsetting']['questype'][v:quest]['score']}
                         {x2;else}
                         <div class="swiper-slide" style="overflow-y: scroll">
                             <ol>
                                 <li class="unstyled">
                                     <h4 class="title">
-                                        第 {x2;(isset(v:qcid)?v:qcid:'')} 题
+                                        第 {x2;(isset(v:qcid) ? v:qcid : '')} 题
                                     </h4>
                                 </li>
                                 <li class="unstyled">
                                     <div class="rows">
-                                        <p>{x2;(isset(realhtml:v:questionrow['qrquestion'])?realhtml:v:questionrow['qrquestion']:'')}</p>
+                                        <p>{x2;realhtml:(isset(v:questionrow['qrquestion']) ? v:questionrow['qrquestion'] : '')}</p>
                                     </div>
                                 </li>
                                 <li class="unstyled">
                                     <div class="rows">
-                                        <p>{x2;(isset(realhtml:v:question['question'])?realhtml:v:question['question']:'')}</p>
+                                        <p>{x2;realhtml:(isset(v:question['question']) ? v:question['question'] : '')}</p>
                                     </div>
                                 </li>
                                 <li class="unstyled">
                                     <div class="rows">
-                                        <p>{x2;(isset(realhtml:v:question['questionselect'])?realhtml:v:question['questionselect']:'')}</p>
+                                        <p>{x2;realhtml:(isset(v:question['questionselect']) ? v:question['questionselect'] : '')}</p>
                                     </div>
                                 </li>
                                 {x2;if:!empty($questype[v:question['questiontype']]['questsort'])}
                                 <li class="unstyled">
-                                    <textarea rows="4" id="editor{x2;(isset(v:question['questionid'])?v:question['questionid']:'')}" name="question[{x2;(isset(v:question['questionid'])?v:question['questionid']:'')}]" rel="{x2;(isset(v:question['questionid'])?v:question['questionid']:'')}">{x2;(isset(realhtml:$sessionvars['examsessionuseranswer'][v:question['questionid']])?realhtml:$sessionvars['examsessionuseranswer'][v:question['questionid']]:'')}</textarea>
+                                    <textarea rows="4" id="editor{x2;(isset(v:question['questionid']) ? v:question['questionid'] : '')}" name="question[{x2;(isset(v:question['questionid']) ? v:question['questionid'] : '')}]" rel="{x2;(isset(v:question['questionid']) ? v:question['questionid'] : '')}">{x2;realhtml:(isset($sessionvars['examsessionuseranswer'][v:question['questionid']]) ? $sessionvars['examsessionuseranswer'][v:question['questionid']] : '')}</textarea>
                                 </li>
                                 <li class="unstyled text-center">
                                     <button class="primary badge" onclick="javascript:$(this).parents('li').hide().parents('.list-box').find('.rightanswer').removeClass('hide');">查看答案</button>
@@ -159,29 +159,29 @@
                                 {x2;else}
                                 <li class="unstyled">
                                     <div class="rows">
-                                        {x2;if:$questype[v:question['questiontype']]['questchoice'] == 1 || $questype[v:question['questiontype']]['questchoice'] == 4}
+                                        {x2;if:(isset($questype[v:question['questiontype']]['questchoice']) ? $questype[v:question['questiontype']]['questchoice'] : null) == 1 || $questype[v:question['questiontype']]['questchoice'] == 4}
                                         {x2;tree:(array)($selectorder ?? []),so,sid}
-                                        {x2;if:v:key == v:question['questionselectnumber']}
+                                        {x2;if:(isset(v:key) ? v:key : null) == (isset(v:question['questionselectnumber']) ? v:question['questionselectnumber'] : null)}
                                         {x2;eval: break;}
                                         {x2;endif}
-                                        <label class="inline"><input type="radio" name="question[{x2;(isset(v:question['questionid'])?v:question['questionid']:'')}]" rel="{x2;(isset(v:question['questionid'])?v:question['questionid']:'')}" value="{x2;(isset(v:so)?v:so:'')}" {x2;if:v:so == $sessionvars['examsessionuseranswer'][v:question['questionid']]}checked{x2;endif}/><span class="selector">{x2;(isset(v:so)?v:so:'')}</span> </label>
+                                        <label class="inline"><input type="radio" name="question[{x2;(isset(v:question['questionid']) ? v:question['questionid'] : '')}]" rel="{x2;(isset(v:question['questionid']) ? v:question['questionid'] : '')}" value="{x2;(isset(v:so) ? v:so : '')}" {x2;if:(isset(v:so) ? v:so : null) == (isset($sessionvars['examsessionuseranswer'][v:question['questionid']]) ? $sessionvars['examsessionuseranswer'][v:question['questionid']] : null)}checked{x2;endif}/><span class="selector">{x2;(isset(v:so) ? v:so : '')}</span> </label>
                                         {x2;endtree}
-                                        {x2;elseif:$questype[v:question['questiontype']]['questchoice'] == 5}
-                                        <input type="text" name="question[{x2;(isset(v:question['questionid'])?v:question['questionid']:'')}]" placeholder="点击此处填写答案" value="{x2;(isset($sessionvars['examsessionuseranswer'][v:question['questionid']])?$sessionvars['examsessionuseranswer'][v:question['questionid']]:'')}" rel="{x2;(isset(v:question['questionid'])?v:question['questionid']:'')}"/>
-                                        <label class="inline pull-right"><button class="btn btn-primary badge finish fill" rel="{x2;(isset(v:question['questionid'])?v:question['questionid']:'')}">答题完毕</button></label>
+                                        {x2;elseif:(isset($questype[v:question['questiontype']]['questchoice']) ? $questype[v:question['questiontype']]['questchoice'] : null) == 5}
+                                        <input type="text" name="question[{x2;(isset(v:question['questionid']) ? v:question['questionid'] : '')}]" placeholder="点击此处填写答案" value="{x2;(isset($sessionvars['examsessionuseranswer'][v:question['questionid']]) ? $sessionvars['examsessionuseranswer'][v:question['questionid']] : '')}" rel="{x2;(isset(v:question['questionid']) ? v:question['questionid'] : '')}"/>
+                                        <label class="inline pull-right"><button class="btn btn-primary badge finish fill" rel="{x2;(isset(v:question['questionid']) ? v:question['questionid'] : '')}">答题完毕</button></label>
                                         {x2;else}
                                         {x2;tree:(array)($selectorder ?? []),so,sid}
-                                        {x2;if:v:key >= v:question['questionselectnumber']}
+                                        {x2;if:(isset(v:key) ? v:key : null) >= (isset(v:question['questionselectnumber']) ? v:question['questionselectnumber'] : null)}
                                         {x2;eval: break;}
                                         {x2;endif}
-                                        <label class="inline"><input type="checkbox" name="question[{x2;(isset(v:question['questionid'])?v:question['questionid']:'')}][{x2;(isset(v:key)?v:key:'')}]" rel="{x2;(isset(v:question['questionid'])?v:question['questionid']:'')}" value="{x2;(isset(v:so)?v:so:'')}" {x2;if:in_array(v:so,$sessionvars['examsessionuseranswer'][v:question['questionid']])}checked{x2;endif}/><span class="selector">{x2;(isset(v:so)?v:so:'')}</span> </label>
+                                        <label class="inline"><input type="checkbox" name="question[{x2;(isset(v:question['questionid']) ? v:question['questionid'] : '')}][{x2;(isset(v:key) ? v:key : '')}]" rel="{x2;(isset(v:question['questionid']) ? v:question['questionid'] : '')}" value="{x2;(isset(v:so) ? v:so : '')}" {x2;if:in_array(v:so,$sessionvars['examsessionuseranswer'][v:question['questionid']])}checked{x2;endif}/><span class="selector">{x2;(isset(v:so) ? v:so : '')}</span> </label>
                                         {x2;endtree}
                                         {x2;endif}
                                     </div>
                                 </li>
-                                {x2;if:$questype[v:question['questiontype']]['questchoice'] == 2 || $questype[v:question['questiontype']]['questchoice'] == 3}
+                                {x2;if:(isset($questype[v:question['questiontype']]['questchoice']) ? $questype[v:question['questiontype']]['questchoice'] : null) == 2 || $questype[v:question['questiontype']]['questchoice'] == 3}
                                 <li class="unstyled text-center">
-                                    <button class="primary badge finish" rel="{x2;(isset(v:question['questionid'])?v:question['questionid']:'')}">答题完毕</button>
+                                    <button class="primary badge finish" rel="{x2;(isset(v:question['questionid']) ? v:question['questionid'] : '')}">答题完毕</button>
                                 </li>
                                 {x2;endif}
                                 {x2;endif}
@@ -192,14 +192,14 @@
                                             <span class="badge">正确答案</span>
                                         </div>
                                         <div class="intro">
-                                            {x2;(isset(realhtml:v:question['questionanswer'])?realhtml:v:question['questionanswer']:'')}
+                                            {x2;realhtml:(isset(v:question['questionanswer']) ? v:question['questionanswer'] : '')}
                                         </div>
                                         {x2;else}
                                         <div class="col-4x intro">
                                             <span class="badge">正确答案</span>
                                         </div>
                                         <div class="col-4l intro">
-                                            <b id="rightanswer_{x2;(isset(v:question['questionid'])?v:question['questionid']:'')}">{x2;(isset(v:question['questionanswer'])?v:question['questionanswer']:'')}</b>
+                                            <b id="rightanswer_{x2;(isset(v:question['questionid']) ? v:question['questionid'] : '')}">{x2;(isset(v:question['questionanswer']) ? v:question['questionanswer'] : '')}</b>
                                         </div>
                                         {x2;endif}
                                     </div>
@@ -211,14 +211,14 @@
                                             <span class="badge">试题解析</span>
                                         </div>
                                         <div class="intro">
-                                            {x2;(isset(realhtml:v:question['questiondescribe'])?realhtml:v:question['questiondescribe']:'')}
+                                            {x2;realhtml:(isset(v:question['questiondescribe']) ? v:question['questiondescribe'] : '')}
                                         </div>
                                         {x2;else}
                                         <div class="col-4x">
                                             <span class="badge">试题解析</span>
                                         </div>
                                         <div class="col-4l intro">
-                                            {x2;(isset(realhtml:v:question['questiondescribe'])?realhtml:v:question['questiondescribe']:'')}
+                                            {x2;realhtml:(isset(v:question['questiondescribe']) ? v:question['questiondescribe'] : '')}
                                         </div>
                                         {x2;endif}
                                     </div>
@@ -243,19 +243,19 @@
                     {x2;tree:(array)($sessionvars['examsessionsetting']['examsetting']['questypelite'] ?? []),lite,qid}
                     {x2;if:!empty(v:lite)}
                     {x2;eval: v:quest = v:key}
-                    {x2;if:$sessionvars['examsessionquestion']['questions'][v:quest] || $sessionvars['examsessionquestion']['questionrows'][v:quest]}
+                    {x2;if:!empty($sessionvars['examsessionquestion']['questions'][v:quest]) || !empty($sessionvars['examsessionquestion']['questionrows'][v:quest])}
                     {x2;eval: v:oid++}
                     <li class="unstyled">
                         <div class="rows">
-                            <h4 class="title text-center">{x2;(isset($questype[v:quest]['questype'])?$questype[v:quest]['questype']:'')}</h4>
+                            <h4 class="title text-center">{x2;(isset($questype[v:quest]['questype']) ? $questype[v:quest]['questype'] : '')}</h4>
                             {x2;eval: v:tid = 0}
                             {x2;tree:(array)($sessionvars['examsessionquestion']['questions'][v:quest] ?? []),question,qnid}
                             {x2;eval: v:tid++}
                             {x2;eval: v:qmid++}
-                            {x2;if:$sessionvars['examsessionscorelist'][v:question['questionid']] && $sessionvars['examsessionscorelist'][v:question['questionid']] == $sessionvars['examsessionsetting']['examsetting']['questype'][v:quest]['score']}
+                            {x2;if:!empty($sessionvars['examsessionscorelist'][v:question['questionid']]) && $sessionvars['examsessionscorelist'][v:question['questionid']] == $sessionvars['examsessionsetting']['examsetting']['questype'][v:quest]['score']}
                             {x2;else}
                             <div class="col-2">
-                                <a data-index="{x2;(isset(v:qmid)?v:qmid:'')}" data-questionid="{x2;(isset(v:question['questionid'])?v:question['questionid']:'')}" id="sign_{x2;(isset(v:question['questionid'])?v:question['questionid']:'')}" class="btn order{x2;if:!$eh['ehscorelist'][v:question['questionid']]} danger{x2;endif}">{x2;(isset(v:tid)?v:tid:'')}</a>
+                                <a data-index="{x2;(isset(v:qmid) ? v:qmid : '')}" data-questionid="{x2;(isset(v:question['questionid']) ? v:question['questionid'] : '')}" id="sign_{x2;(isset(v:question['questionid']) ? v:question['questionid'] : '')}" class="btn order{x2;if:empty($eh['ehscorelist'][v:question['questionid']])} danger{x2;endif}">{x2;(isset(v:tid) ? v:tid : '')}</a>
                             </div>
                             {x2;endif}
                             {x2;endtree}
@@ -263,10 +263,10 @@
                             {x2;eval: v:tid++}
                             {x2;tree:(array)(v:questionrow['data'] ?? []),question,did}
                             {x2;eval: v:qmid++}
-                            {x2;if:$sessionvars['examsessionscorelist'][v:question['questionid']] && $sessionvars['examsessionscorelist'][v:question['questionid']] == $sessionvars['examsessionsetting']['examsetting']['questype'][v:quest]['score']}
+                            {x2;if:!empty($sessionvars['examsessionscorelist'][v:question['questionid']]) && $sessionvars['examsessionscorelist'][v:question['questionid']] == $sessionvars['examsessionsetting']['examsetting']['questype'][v:quest]['score']}
                             {x2;else}
                             <div class="col-2">
-                                <a data-index="{x2;(isset(v:qmid)?v:qmid:'')}" data-questionid="{x2;(isset(v:question['questionid'])?v:question['questionid']:'')}" id="sign_{x2;(isset(v:question['questionid'])?v:question['questionid']:'')}" class="btn order{x2;if:!$eh['ehscorelist'][v:question['questionid']]} danger{x2;endif}">{x2;(isset(v:tid)?v:tid:'')}-{x2;(isset(v:did)?v:did:'')}</a>
+                                <a data-index="{x2;(isset(v:qmid) ? v:qmid : '')}" data-questionid="{x2;(isset(v:question['questionid']) ? v:question['questionid'] : '')}" id="sign_{x2;(isset(v:question['questionid']) ? v:question['questionid'] : '')}" class="btn order{x2;if:empty($eh['ehscorelist'][v:question['questionid']])} danger{x2;endif}">{x2;(isset(v:tid) ? v:tid : '')}-{x2;(isset(v:did) ? v:did : '')}</a>
                             </div>
                             {x2;endif}
                             {x2;endtree}
@@ -350,7 +350,7 @@
             });
         </script>
     </div>
-    {x2;if:!empty($userhash)}
+    {x2;if:empty($userhash)}
 </div>
 </body>
 </html>

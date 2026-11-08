@@ -49,16 +49,16 @@
  foreach((array)($this->tpl_var['orders']['data'] ?? []) as $key => $order){ 
  $oid++; ?>
 					<tr>
-						<td>{x2;(isset(v:order['ordersn'])?v:order['ordersn']:'')}</td>
-						<td>{x2;(isset(v:order['orderprice'])?v:order['orderprice']:'')}</td>
+						<td><?php echo (isset($order['ordersn'])?$order['ordersn']:''); ?></td>
+						<td><?php echo (isset($order['orderprice'])?$order['orderprice']:''); ?></td>
 						<td><?php echo date('Y-m-d',$order['ordercreatetime']); ?></td>
-						<td>{x2;(isset($orderstatus[v:order['orderstatus']])?$orderstatus[v:order['orderstatus']]:'')}</td>
+						<td><?php echo (isset($this->tpl_var['orderstatus'][$order['orderstatus']])?$this->tpl_var['orderstatus'][$order['orderstatus']]:''); ?></td>
 						<td>
 							<div class="btn-group">
-								<a class="btn" href="index.php?user-center-payfor-orderdetail&ordersn={x2;(isset(v:order['ordersn'])?v:order['ordersn']:'')}" title="详细"><em class="glyphicon glyphicon-th-list"></em></a>
+								<a class="btn" href="index.php?user-center-payfor-orderdetail&ordersn=<?php echo (isset($order['ordersn'])?$order['ordersn']:''); ?>" title="详细"><em class="glyphicon glyphicon-th-list"></em></a>
 								<?php if($order['orderstatus'] == 1){ ?>
-								<a class="btn" href="index.php?user-center-payfor-orderdetail&ordersn={x2;(isset(v:order['ordersn'])?v:order['ordersn']:'')}" title="支付"><em class="glyphicon glyphicon-shopping-cart"></em></a>
-								<a class="btn confirm" href="index.php?user-center-payfor-remove&ordersn={x2;(isset(v:order['ordersn'])?v:order['ordersn']:'')}" title="撤单"><em class="glyphicon glyphicon-remove"></em></a>
+								<a class="btn" href="index.php?user-center-payfor-orderdetail&ordersn=<?php echo (isset($order['ordersn'])?$order['ordersn']:''); ?>" title="支付"><em class="glyphicon glyphicon-shopping-cart"></em></a>
+								<a class="btn confirm" href="index.php?user-center-payfor-remove&ordersn=<?php echo (isset($order['ordersn'])?$order['ordersn']:''); ?>" title="撤单"><em class="glyphicon glyphicon-remove"></em></a>
 								<?php } ?>
 							</div>
 						</td>
@@ -66,7 +66,7 @@
 					<?php } ?>
 				</tbody>
 			</table>
-			<ul class="pagination pagination-right">{x2;(isset($orders['pages'])?$orders['pages']:'')}</ul>
+			<ul class="pagination pagination-right"><?php echo (isset($this->tpl_var['orders']['pages'])?$this->tpl_var['orders']['pages']:''); ?></ul>
 		</div>
 	</div>
 	<form aria-hidden="true" id="myModal" method="post" class="modal fade" role="dialog" aria-labelledby="#myModalLabel" action="index.php?exam-phone-basics-coupon">

@@ -11,8 +11,8 @@
                             <div class="swiper-wrapper">
                                 {x2;tree:(array)($topimgs['data'] ?? []),content,cid}
                                 <div class="swiper-slide">
-                                    <a href="index.php?content-app-content&contentid={x2;(isset(v:content['pccontentid'])?v:content['pccontentid']:'')}">
-                                        <img src="{x2;(isset(v:content['pcthumb'])?v:content['pcthumb']:'')}" style="max-width:100%;"/>
+                                    <a href="index.php?content-app-content&contentid={x2;(isset(v:content['pccontentid']) ? v:content['pccontentid'] : '')}">
+                                        <img src="{x2;(isset(v:content['pcthumb']) ? v:content['pcthumb'] : '')}" style="max-width:100%;"/>
                                     </a>
                                 </div>
                                 {x2;endif}
@@ -28,17 +28,17 @@
                         <ul class="list-box list-unstyled">
                             {x2;tree:(array)($basics['data'] ?? []),basic,bid}
                             <li class="col-xs-4 box">
-                                <a href="index.php?exam-app-basics-detail&basicid={x2;(isset(v:basic['basicid'])?v:basic['basicid']:'')}">
+                                <a href="index.php?exam-app-basics-detail&basicid={x2;(isset(v:basic['basicid']) ? v:basic['basicid'] : '')}">
                                     <div class="img">
-                                        <img src="{x2;if:!empty(v:basic['basicthumb'])}{x2;(isset(v:basic['basicthumb'])?v:basic['basicthumb']:'')}{x2;else}app/core/styles/img/item.jpg{x2;endif}" />
+                                        <img src="{x2;if:!empty(v:basic['basicthumb'])}{x2;(isset(v:basic['basicthumb']) ? v:basic['basicthumb'] : '')}{x2;else}app/core/styles/img/item.jpg{x2;endif}" />
                                     </div>
-                                    <h5 class="box-title">{x2;(isset(v:basic['basic'])?v:basic['basic']:'')}</h5>
+                                    <h5 class="box-title">{x2;(isset(v:basic['basic']) ? v:basic['basic'] : '')}</h5>
                                     <div class="intro">
                                         <p>{x2;substring:v:basic['basicdescribe'],78}</p>
                                     </div>
                                 </a>
                             </li>
-                            {x2;if:v:bid == 3}
+                            {x2;if:(isset(v:bid) ? v:bid : null) == 3}
                         </ul>
                         <ul class="list-box list-unstyled">
                             {x2;endif}
@@ -53,17 +53,17 @@
                         <ul class="list-unstyled list-box">
                             {x2;tree:(array)($courses['data'] ?? []),content,cid}
                             <li class="col-xs-4 box">
-                                <a href="index.php?course-app-course&csid={x2;(isset(v:content['csid'])?v:content['csid']:'')}">
+                                <a href="index.php?course-app-course&csid={x2;(isset(v:content['csid']) ? v:content['csid'] : '')}">
                                     <div class="img">
-                                        <img src="{x2;if:!empty(v:content['csthumb'])}{x2;(isset(v:content['csthumb'])?v:content['csthumb']:'')}{x2;else}app/core/styles/img/item.jpg{x2;endif}" />
+                                        <img src="{x2;if:!empty(v:content['csthumb'])}{x2;(isset(v:content['csthumb']) ? v:content['csthumb'] : '')}{x2;else}app/core/styles/img/item.jpg{x2;endif}" />
                                     </div>
-                                    <h5 class="box-title">{x2;(isset(v:content['cstitle'])?v:content['cstitle']:'')}</h5>
+                                    <h5 class="box-title">{x2;(isset(v:content['cstitle']) ? v:content['cstitle'] : '')}</h5>
                                     <div class="intro">
                                         <p>{x2;substring:v:content['csdescribe'],78}</p>
                                     </div>
                                 </a>
                             </li>
-                            {x2;if:v:cid == 3}
+                            {x2;if:(isset(v:cid) ? v:cid : null) == 3}
                         </ul>
                         <ul class="list-box list-unstyled">
                             {x2;endif}
@@ -79,17 +79,17 @@
                             {x2;tree:(array)($topnews['data'] ?? []),content,cid}
                             <li class="border morepadding">
                                 <h4 class="shorttitle">
-                                    <a href="index.php?content-app-content&contentid={x2;(isset(v:content['pccontentid'])?v:content['pccontentid']:'')}">{x2;(isset(v:content['pctitle'])?v:content['pctitle']:'')}</a>
+                                    <a href="index.php?content-app-content&contentid={x2;(isset(v:content['pccontentid']) ? v:content['pccontentid'] : '')}">{x2;(isset(v:content['pctitle']) ? v:content['pctitle'] : '')}</a>
                                 </h4>
                                 <div class="intro">
                                     <div class="col-xs-3 img">
-                                        <img src="{x2;(isset(v:content['pcthumb'])?v:content['pcthumb']:'')}" />
+                                        <img src="{x2;(isset(v:content['pcthumb']) ? v:content['pcthumb'] : '')}" />
                                     </div>
                                     <div class="desc">
-                                        <p>{x2;(isset(v:content['pcdescribe'])?v:content['pcdescribe']:'')}</p>
+                                        <p>{x2;(isset(v:content['pcdescribe']) ? v:content['pcdescribe'] : '')}</p>
                                         <p class="toolbar">
-                                            {x2;date:v:content['pctime'],'Y-m-d'}
-                                            <a href="index.php?content-app-content&contentid={x2;(isset(v:content['pccontentid'])?v:content['pccontentid']:'')}" class="hide btn btn-info pull-right more">查看详情</a>
+                                            {x2;date:v:content['pctime'] ?? 0,'Y-m-d'}
+                                            <a href="index.php?content-app-content&contentid={x2;(isset(v:content['pccontentid']) ? v:content['pccontentid'] : '')}" class="hide btn btn-info pull-right more">查看详情</a>
                                         </p>
                                     </div>
                                 </div>
@@ -104,7 +104,7 @@
                         <ul class="list-unstyled list-txt">
                             {x2;tree:(array)($notices['data'] ?? []),content,lid}
                             <li class="border">
-                                <a target="_blank" href="index.php?content-app-content&contentid={x2;(isset(v:content['contentid'])?v:content['contentid']:'')}">
+                                <a target="_blank" href="index.php?content-app-content&contentid={x2;(isset(v:content['contentid']) ? v:content['contentid'] : '')}">
                                     {x2;substring:v:content['contenttitle'],45}
                                 </a>
                             </li>
@@ -116,13 +116,13 @@
                         <ul class="list-unstyled list-img">
                             {x2;tree:(array)($topseminars['data'] ?? []),seminar,sid}
                             <li class="border padding">
-                                <a href="index.php?seminar-app-seminar&seminarid={x2;(isset(v:seminar['pccontentid'])?v:seminar['pccontentid']:'')}">
+                                <a href="index.php?seminar-app-seminar&seminarid={x2;(isset(v:seminar['pccontentid']) ? v:seminar['pccontentid'] : '')}">
                                     <div class="intro">
                                         <div class="col-xs-5 img noleftpadding">
-                                            <img src="{x2;(isset(v:seminar['pcthumb'])?v:seminar['pcthumb']:'')}" />
+                                            <img src="{x2;(isset(v:seminar['pcthumb']) ? v:seminar['pcthumb'] : '')}" />
                                         </div>
                                         <div class="desc">
-                                            <p>{x2;(isset(v:seminar['pctitle'])?v:seminar['pctitle']:'')}</p>
+                                            <p>{x2;(isset(v:seminar['pctitle']) ? v:seminar['pctitle'] : '')}</p>
                                         </div>
                                     </div>
                                 </a>
@@ -164,7 +164,7 @@
                         <ul class="list-unstyled list-txt">
                             {x2;tree:(array)($links['data'] ?? []),content,lid}
                             <li class="border">
-                                <a target="_blank" href="index.php?content-app-content&contentid={x2;(isset(v:content['contentid'])?v:content['contentid']:'')}">
+                                <a target="_blank" href="index.php?content-app-content&contentid={x2;(isset(v:content['contentid']) ? v:content['contentid'] : '')}">
                                     {x2;substring:v:content['contenttitle'],45}
                                 </a>
                             </li>

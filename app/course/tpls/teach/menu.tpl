@@ -12,7 +12,7 @@ text-decoration:none;}
         </div>
         <div id="panel-element-707348" class="panel-collapse in collapse" role="tabpanel">
              <ul class="list-group">
-                <li class="list-group-item"><a href="?{x2;(isset($_app)?$_app:'')}-teach-basic">课程管理</a></li>
+                <li class="list-group-item"><a href="?{x2;(isset($_app) ? $_app : '')}-teach-basic">课程管理</a></li>
             </ul>
         </div>
     </div>

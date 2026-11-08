@@ -13,7 +13,7 @@
             <ul class="list-unstyled list-inline text-right">
                 {x2;if:!empty($_user['userid'])}
                 <li>
-                    <span class="menu">欢迎您，{x2;(isset($_user['username'])?$_user['username']:'')}</span>
+                    <span class="menu">欢迎您，{x2;(isset($_user['username']) ? $_user['username'] : '')}</span>
                 </li>
                 <li>|</li>
                 <li>
@@ -64,7 +64,7 @@
         <div class="col-xs-7">
             <ul class="list-unstyled list-inline">
                 <li>
-                    <h3 class="logo">{x2;(isset($course['cstitle'])?$course['cstitle']:'')}</h3>
+                    <h3 class="logo">{x2;(isset($course['cstitle']) ? $course['cstitle'] : '')}</h3>
                 </li>
                 <li class="badge">
                     到期时间 {x2;date:$oc['ocendtime'] ?? 0,'Y-m-d'}

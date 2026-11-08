@@ -170,10 +170,11 @@ class action extends app
         $this->pg->target = 'class="ajax" data-target="page2" data-page="page2" ';
         $this->area = $this->G->make('area', 'exam');
         $search = $this->ev->get('search');
+        $query = is_array($search) ? $search : [];
         $page = $this->ev->get('page');
         $page = $page > 1 ? $page : 1;
         $subjects = $this->basic->getSubjectList();
-        if (!$search) {
+        if (!$query) {
             $args = 1;
         } else {
             $args = [];
@@ -195,6 +196,7 @@ class action extends app
         }
         $basics = $this->basic->getBasicList($page, 20, $args);
         $areas = $this->area->getAreaList();
+        $search = array_merge(['basicdemo' => '', 'keyword' => '', 'basicareaid' => 0, 'basicsubjectid' => 0, 'basicapi' => ''], $query);
         $this->tpl->assign('search', $search);
         $this->tpl->assign('areas', $areas);
         $this->tpl->assign('subjects', $subjects);
