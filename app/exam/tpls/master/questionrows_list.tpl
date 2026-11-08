@@ -1,4 +1,4 @@
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 {x2;include:header}
 <body>
 {x2;include:nav}
@@ -13,8 +13,8 @@
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
 						<ol class="breadcrumb">
-							<li><a href="index.php?{x2;$_app}-master">{x2;$apps[$_app]['appname']}</a></li>
-							<li><a href="index.php?{x2;$_app}-master-rowsquestions&page={x2;$page}{x2;$u}">题冒题管理</a></li>
+							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master">{x2;(isset($apps[$_app]['appname'])?$apps[$_app]['appname']:'')}</a></li>
+							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master-rowsquestions&page={x2;(isset($page)?$page:'')}{x2;(isset($u)?$u:'')}">题冒题管理</a></li>
 							<li class="active">子试题列表</li>
 						</ol>
 					</div>
@@ -25,8 +25,8 @@
 						<span class="pull-right">
 							<a data-toggle="dropdown" class="btn btn-primary" href="#">添加子试题 <strong class="caret"></strong></a>
 							<ul class="dropdown-menu">
-								<li><a href="index.php?{x2;$_app}-master-rowsquestions-addchildquestion&questionid={x2;$questionparent}&page={x2;$page}{x2;$u}">单题添加</a></li>
-								<li><a href="index.php?{x2;$_app}-master-rowsquestions-bataddchildquestion&questionid={x2;$questionparent}&page={x2;$page}{x2;$u}">批量添加</a></li>
+								<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master-rowsquestions-addchildquestion&questionid={x2;(isset($questionparent)?$questionparent:'')}&page={x2;(isset($page)?$page:'')}{x2;(isset($u)?$u:'')}">单题添加</a></li>
+								<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master-rowsquestions-bataddchildquestion&questionid={x2;(isset($questionparent)?$questionparent:'')}&page={x2;(isset($page)?$page:'')}{x2;(isset($u)?$u:'')}">批量添加</a></li>
 							</ul>
 						</span>
 					</h4>
@@ -41,7 +41,7 @@
 							<tbody>
 						        <tr>
 						          <td width="100">所属知识点：</td>
-						          <td>{x2;tree:$question['qrknowsid'],know,kid}&nbsp;{x2;v:know['knows']}{x2;endtree}&nbsp;</td>
+						          <td>{x2;tree:(array)($question['qrknowsid'] ?? []),know,kid}&nbsp;{x2;(isset(v:know['knows'])?v:know['knows']:'')}{x2;endtree}&nbsp;</td>
 						        </tr>
 						        <tr>
 						          <td>题帽：</td>
@@ -60,18 +60,18 @@
 								</tr>
 							</thead>
 							<tbody>
-								{x2;tree:$question['data'],question,qid}
+								{x2;tree:(array)($question['data'] ?? []),question,qid}
 								<tr>
-									<td>{x2;v:question['questionid']}</td>
-									<td><input class="form-control" style="width:36px;padding:2px 5px;" type="text" name="sequence[{x2;v:question['questionid']}]" value="{x2;v:question['questionsequence']}" /></td>
-									<td>{x2;$questypes[v:question['questiontype']]['questype']}</td>
+									<td>{x2;(isset(v:question['questionid'])?v:question['questionid']:'')}</td>
+									<td><input class="form-control" style="width:36px;padding:2px 5px;" type="text" name="sequence[{x2;(isset(v:question['questionid'])?v:question['questionid']:'')}]" value="{x2;(isset(v:question['questionsequence'])?v:question['questionsequence']:'')}" /></td>
+									<td>{x2;(isset($questypes[v:question['questiontype']]['questype'])?$questypes[v:question['questiontype']]['questype']:'')}</td>
 									<td>
-										<a title="查看试题" class="selfmodal" href="javascript:;" url="index.php?exam-master-questions-detail&questionid={x2;v:question['questionid']}" title="查看试题" data-target="#modal">{x2;eval: echo strip_tags(html_entity_decode(v:question['question']))}</a>
+										<a title="查看试题" class="selfmodal" href="javascript:;" url="index.php?exam-master-questions-detail&questionid={x2;(isset(v:question['questionid'])?v:question['questionid']:'')}" title="查看试题" data-target="#modal">{x2;eval: echo strip_tags(html_entity_decode(v:question['question']))}</a>
 									</td>
 									<td>
 										<div class="btn-group">
-				                    		<a class="btn" href="index.php?exam-master-rowsquestions-modifychildquestion&page={x2;$page}&questionparent={x2;$question['qrid']}&questionid={x2;v:question['questionid']}{x2;$u}" title="修改"><em class="glyphicon glyphicon-edit"></em></a>
-											<a class="btn confirm" href="index.php?exam-master-rowsquestions-delchildquestion&questionparent={x2;$question['qrid']}&page={x2;$page}&questionid={x2;v:question['questionid']}{x2;$u}" title="删除"><em class="glyphicon glyphicon-remove"></em></a>
+				                    		<a class="btn" href="index.php?exam-master-rowsquestions-modifychildquestion&page={x2;(isset($page)?$page:'')}&questionparent={x2;(isset($question['qrid'])?$question['qrid']:'')}&questionid={x2;(isset(v:question['questionid'])?v:question['questionid']:'')}{x2;(isset($u)?$u:'')}" title="修改"><em class="glyphicon glyphicon-edit"></em></a>
+											<a class="btn confirm" href="index.php?exam-master-rowsquestions-delchildquestion&questionparent={x2;(isset($question['qrid'])?$question['qrid']:'')}&page={x2;(isset($page)?$page:'')}&questionid={x2;(isset(v:question['questionid'])?v:question['questionid']:'')}{x2;(isset($u)?$u:'')}" title="删除"><em class="glyphicon glyphicon-remove"></em></a>
 				                    	</div>
 									</td>
 								</tr>
@@ -86,23 +86,23 @@
 					            <label class="radio-inline">
 					                <input type="radio" name="action" value="delete" />删除
 					            </label>
-                                {x2;if:is_array($search)}
-					            {x2;tree:$search,arg,sid}
-					            <input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>
+                                {x2;if:isset($search) && is_array($search)}
+					            {x2;tree:(array)($search ?? []),arg,sid}
+					            <input type="hidden" name="search[{x2;(isset(v:key)?v:key:'')}]" value="{x2;(isset(v:arg)?v:arg:'')}"/>
 					            {x2;endtree}
                                 {x2;endif}
 					            <label class="radio-inline">
 					            	<button class="btn btn-primary" type="submit">提交</button>
 					            </label>
 					            <input type="hidden" name="modifyfieldsequence" value="1"/>
-		  						<input type="hidden" name="questionparent" value="{x2;$questionparent}"/>
-					            <input type="hidden" name="page" value="{x2;$page}"/>
+		  						<input type="hidden" name="questionparent" value="{x2;(isset($questionparent)?$questionparent:'')}"/>
+					            <input type="hidden" name="page" value="{x2;(isset($page)?$page:'')}"/>
 					        </div>
 				        </div>
 					</form>
 				</div>
 			</div>
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 		</div>
 	</div>
 </div>

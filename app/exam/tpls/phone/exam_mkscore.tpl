@@ -1,4 +1,4 @@
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 {x2;include:header}
 <body>
 <div id="content">
@@ -16,32 +16,32 @@
 				<div class="row-fluid">
 					<form id="form1" name="form1" class="col-xs-12" action="index.php?exam-phone-exam-makescore">
 						{x2;eval: v:oid = 0}
-						{x2;tree:$questype,quest,qid}
-						{x2;if:v:quest['questsort']}
+						{x2;tree:(array)($questype ?? []),quest,qid}
+						{x2;if:!empty(v:quest['questsort'])}
 						{x2;if:$sessionvars['examsessionquestion']['questions'][v:quest['questid']] || $sessionvars['examsessionquestion']['questionrows'][v:quest['questid']]}
 						{x2;eval: v:oid++}
 						<h4 class="title">
-							{x2;$ols[v:oid]}、{x2;v:quest['questype']}{x2;$sessionvars['examsessionsetting']['examsetting']['questype'][v:quest]['describe']}
+							{x2;(isset($ols[v:oid])?$ols[v:oid]:'')}、{x2;(isset(v:quest['questype'])?v:quest['questype']:'')}{x2;(isset($sessionvars['examsessionsetting']['examsetting']['questype'][v:quest]['describe'])?$sessionvars['examsessionsetting']['examsetting']['questype'][v:quest]['describe']:'')}
 						</h4>
 						{x2;eval: v:tid = 0}
-						{x2;tree:$sessionvars['examsessionquestion']['questions'][v:quest['questid']],question,qnid}
+						{x2;tree:(array)($sessionvars['examsessionquestion']['questions'][v:quest['questid']] ?? []),question,qnid}
 						{x2;eval: v:tid++}
 						<div style="clear:both;overflow:hidden;background:#FFFFFF;margin-top:0.5rem;padding:1rem;">
 							<h4 class="title">
-								第{x2;v:tid}题
+								第{x2;(isset(v:tid)?v:tid:'')}题
 								<span class="pull-right">
 									<a class="btn text-primary qicon"><i class="glyphicon glyphicon-heart-empty"></i></a>
-									<a name="question_{x2;v:question['questionid']}"></a>
-									<input id="time_{x2;v:question['questionid']}" type="hidden" name="time[{x2;v:question['questionid']}]"/>
+									<a name="question_{x2;(isset(v:question['questionid'])?v:question['questionid']:'')}"></a>
+									<input id="time_{x2;(isset(v:question['questionid'])?v:question['questionid']:'')}" type="hidden" name="time[{x2;(isset(v:question['questionid'])?v:question['questionid']:'')}]"/>
 								</span>
 							</h4>
 							<div class="choice">
-								{x2;realhtml:v:question['question']}
+								{x2;(isset(realhtml:v:question['question'])?realhtml:v:question['question']:'')}
 							</div>
 							{x2;if:!$questype[v:quest]['questsort']}
 							{x2;if:v:question['questionselect'] && $questype[v:quest]['questchoice'] != 5}
 							<div class="choice">
-								{x2;realhtml:v:question['questionselect']}
+								{x2;(isset(realhtml:v:question['questionselect'])?realhtml:v:question['questionselect']:'')}
 							</div>
 							{x2;endif}
 							{x2;endif}
@@ -49,55 +49,55 @@
 								<table class="table table-hover table-bordered">
 									<tr class="info">
 										<td width="30%">正确答案：</td>
-										<td>{x2;realhtml:v:question['questionanswer']}</td>
+										<td>{x2;(isset(realhtml:v:question['questionanswer'])?realhtml:v:question['questionanswer']:'')}</td>
 									</tr>
 									<tr>
 										<td>您的答案：</td>
-										<td>{x2;if:is_array($sessionvars['examsessionuseranswer'][v:question['questionid']])}{x2;eval: echo implode('',$sessionvars['examsessionuseranswer'][v:question['questionid']])}{x2;else}{x2;realhtml:$sessionvars['examsessionuseranswer'][v:question['questionid']]}{x2;endif}</td>
+										<td>{x2;if:isset($sessionvars['examsessionuseranswer'][v:question['questionid']]) && is_array($sessionvars['examsessionuseranswer'][v:question['questionid']])}{x2;eval: echo implode('',$sessionvars['examsessionuseranswer'][v:question['questionid']])}{x2;else}{x2;(isset(realhtml:$sessionvars['examsessionuseranswer'][v:question['questionid']])?realhtml:$sessionvars['examsessionuseranswer'][v:question['questionid']]:'')}{x2;endif}</td>
 									</tr>
 								</table>
 							</div>
 							<div class="choice" style="line-height:2.5rem;">
-								<input type="text" class="col-xs-12" name="score[{x2;v:question['questionid']}]" value="" maxvalue="{x2;$sessionvars['examsessionsetting']['examsetting']['questype'][v:quest['questid']]['score']}">
-								<span class="text-error">【请根据参考答案给出分值】提示：本题共{x2;$sessionvars['examsessionsetting']['examsetting']['questype'][v:quest['questid']]['score']}分，可输入0.5的倍数。</span>
+								<input type="text" class="col-xs-12" name="score[{x2;(isset(v:question['questionid'])?v:question['questionid']:'')}]" value="" maxvalue="{x2;(isset($sessionvars['examsessionsetting']['examsetting']['questype'][v:quest['questid']]['score'])?$sessionvars['examsessionsetting']['examsetting']['questype'][v:quest['questid']]['score']:'')}">
+								<span class="text-error">【请根据参考答案给出分值】提示：本题共{x2;(isset($sessionvars['examsessionsetting']['examsetting']['questype'][v:quest['questid']]['score'])?$sessionvars['examsessionsetting']['examsetting']['questype'][v:quest['questid']]['score']:'')}分，可输入0.5的倍数。</span>
 							</div>
 						</div>
 						{x2;endtree}
-						{x2;tree:$sessionvars['examsessionquestion']['questionrows'][v:quest['questid']],questionrow,qrid}
+						{x2;tree:(array)($sessionvars['examsessionquestion']['questionrows'][v:quest['questid']] ?? []),questionrow,qrid}
 						{x2;eval: v:tid++}
 						<div style="clear:both;overflow:hidden;background:#FFFFFF;margin-top:0.5rem;padding:1rem;">
-							<h4 class="title">第{x2;v:tid}题{x2;v:did}小题
+							<h4 class="title">第{x2;(isset(v:tid)?v:tid:'')}题{x2;(isset(v:did)?v:did:'')}小题
 								<span class="pull-right">
 									<a class="btn text-primary qicon"><i class="glyphicon glyphicon-heart-empty"></i></a>
-									<a name="question_{x2;v:data['questionid']}"></a>
-									<input id="time_{x2;v:data['questionid']}" type="hidden" name="time[{x2;v:data['questionid']}]"/>
+									<a name="question_{x2;(isset(v:data['questionid'])?v:data['questionid']:'')}"></a>
+									<input id="time_{x2;(isset(v:data['questionid'])?v:data['questionid']:'')}" type="hidden" name="time[{x2;(isset(v:data['questionid'])?v:data['questionid']:'')}]"/>
 								</span>
 							</h4>
 							<div class="choice">
-								{x2;realhtml:v:questionrow['qrquestion']}
+								{x2;(isset(realhtml:v:questionrow['qrquestion'])?realhtml:v:questionrow['qrquestion']:'')}
 							</div>
-							{x2;tree:v:questionrow['data'],data,did}
+							{x2;tree:(array)(v:questionrow['data'] ?? []),data,did}
 							{x2;eval: v:qcid++}
 							<hr />
 							<div style="padding:0rem 1.5rem;margin-top:1rem;">
 								<div class="choice">
-									{x2;realhtml:v:data['question']}
+									{x2;(isset(realhtml:v:data['question'])?realhtml:v:data['question']:'')}
 								</div>
 								<div class="selector decidediv">
 									<table class="table table-hover table-bordered">
 										<tr class="info">
 											<td width="30%">正确答案：</td>
-											<td>{x2;realhtml:v:data['questionanswer']}</td>
+											<td>{x2;(isset(realhtml:v:data['questionanswer'])?realhtml:v:data['questionanswer']:'')}</td>
 										</tr>
 										<tr>
 											<td>您的答案：</td>
-											<td>{x2;if:is_array($sessionvars['examsessionuseranswer'][v:data['questionid']])}{x2;eval: echo implode('',$sessionvars['examsessionuseranswer'][v:data['questionid']])}{x2;else}{x2;realhtml:$sessionvars['examsessionuseranswer'][v:data['questionid']]}{x2;endif}</td>
+											<td>{x2;if:isset($sessionvars['examsessionuseranswer'][v:data['questionid']]) && is_array($sessionvars['examsessionuseranswer'][v:data['questionid']])}{x2;eval: echo implode('',$sessionvars['examsessionuseranswer'][v:data['questionid']])}{x2;else}{x2;(isset(realhtml:$sessionvars['examsessionuseranswer'][v:data['questionid']])?realhtml:$sessionvars['examsessionuseranswer'][v:data['questionid']]:'')}{x2;endif}</td>
 										</tr>
 									</table>
 								</div>
 								<div class="choice" style="line-height:2.5rem;">
-									<input type="text" class="col-xs-12" name="score[{x2;v:data['questionid']}]" value="" maxvalue="{x2;$sessionvars['examsessionsetting']['examsetting']['questype'][v:quest['questid']]['score']}">
-									<span class="text-error">【请根据参考答案给出分值】提示：本题共{x2;$sessionvars['examsessionsetting']['examsetting']['questype'][v:quest['questid']]['score']}分，可输入0.5的倍数。</span>
+									<input type="text" class="col-xs-12" name="score[{x2;(isset(v:data['questionid'])?v:data['questionid']:'')}]" value="" maxvalue="{x2;(isset($sessionvars['examsessionsetting']['examsetting']['questype'][v:quest['questid']]['score'])?$sessionvars['examsessionsetting']['examsetting']['questype'][v:quest['questid']]['score']:'')}">
+									<span class="text-error">【请根据参考答案给出分值】提示：本题共{x2;(isset($sessionvars['examsessionsetting']['examsetting']['questype'][v:quest['questid']]['score'])?$sessionvars['examsessionsetting']['examsetting']['questype'][v:quest['questid']]['score']:'')}分，可输入0.5的倍数。</span>
 								</div>
 							</div>
 							{x2;endtree}
@@ -115,7 +115,7 @@
 			</div>
 			{x2;include:footer}
 		</div>
-	{x2;if:!$userhash}
+	{x2;if:!empty($userhash)}
     </div>
 </div>
 </body>

@@ -1,0 +1,72 @@
+<?php $this->_compileInclude('header'); ?>
+<body>
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="pages">
+            <?php $this->_compileInclude('nav'); ?>
+            <div class="content">
+                <div class="col-xs-9">
+                    <div class="content-box padding">
+                        <h2 class="title">{x2;(isset($elem['seltitle'])?$elem['seltitle']:'')}</h2>
+                        <ul class="list-unstyled list-img">
+                            <?php $cid = 0;
+ foreach((array)($this->tpl_var['contents']['data'] ?? []) as $key => $content){ 
+ $cid++; ?>
+                            <li class="border morepadding">
+                                <h4 class="shorttitle">{x2;(isset(v:content['contenttitle'])?v:content['contenttitle']:'')}</h4>
+                                <div class="intro">
+                                    <?php if(!empty($content['contentthumb'])){ ?>
+                                    <div class="col-xs-3 img">
+                                        <img src="{x2;(isset(v:content['contentthumb'])?v:content['contentthumb']:'')}" />
+                                    </div>
+                                    <?php } ?>
+                                    <div class="desc">
+                                        <p>{x2;(isset(v:content['contentdescribe'])?v:content['contentdescribe']:'')}</p>
+                                        <p class="toolbar">
+                                            <?php echo date('Y-m-d',$content['contentinputtime']); ?>
+                                            <a href="index.php?content-app-content&contentid={x2;(isset(v:content['contentid'])?v:content['contentid']:'')}" class="btn btn-info pull-right more">查看详细</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </li>
+                            <?php } ?>
+                            <?php if(!empty($this->tpl_var['contents']['pages'])){ ?>
+                            <li class="border morepadding">
+                                <ul class="pagination pull-right">
+                                    {x2;(isset($contents['pages'])?$contents['pages']:'')}
+                                </ul>
+                            </li>
+                            <?php } ?>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-xs-3 nopadding">
+                    <div class="content-box padding">
+                        <h2 class="title">推荐专题</h2>
+                        <ul class="list-unstyled list-img">
+                            <?php $sid = 0;
+ foreach((array)($this->tpl_var['topseminars']['data'] ?? []) as $key => $seminar){ 
+ $sid++; ?>
+                            <li class="border padding">
+                                <a href="index.php?seminar-app-seminar&seminarid={x2;(isset(v:seminar['pccontentid'])?v:seminar['pccontentid']:'')}">
+                                    <div class="intro">
+                                        <div class="col-xs-5 img noleftpadding">
+                                            <img src="{x2;(isset(v:seminar['pcthumb'])?v:seminar['pcthumb']:'')}" />
+                                        </div>
+                                        <div class="desc">
+                                            <p>{x2;(isset(v:seminar['pctitle'])?v:seminar['pctitle']:'')}</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            <?php } ?>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <?php $this->_compileInclude('footer'); ?>
+        </div>
+    </div>
+</div>
+</body>
+</html>

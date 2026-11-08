@@ -10,6 +10,7 @@
  * This source file is subject to the MIT license that is bundled.
  */
 
+#[\AllowDynamicProperties]
 class app
 {
     public $G;
@@ -24,9 +25,12 @@ class app
         $this->user = $this->G->make('user', 'user');
         $_user = $this->session->getSessionUser();
 
-        $this->_user = $this->user->getUserById($_user['sessionuserid']);
-        $this->_user['teacher_subjects'] = unserialize($this->_user['teacher_subjects']);
-        $group = $this->user->getGroupById($_user['sessiongroupid']);
+        $this->_user = $this->user->getUserById(isset($_user['sessionuserid']) ? $_user['sessionuserid'] : 0);
+        if (!is_array($this->_user)) {
+            $this->_user = [];
+        }
+        $this->_user['teacher_subjects'] = empty($this->_user['teacher_subjects']) ? false : unserialize($this->_user['teacher_subjects']);
+        $group = $this->user->getGroupById(isset($_user['sessiongroupid']) ? $_user['sessiongroupid'] : 0);
         if (!$this->_user['teacher_subjects']) {
             if ($this->ev->get('userhash')) {
                 exit(json_encode([

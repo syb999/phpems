@@ -1,0 +1,59 @@
+<?php
+
+/*
+ * This file is part of the phpems/phpems.
+ *
+ * (c) oiuv <i@oiuv.cn>
+ *
+ * 项目维护：oiuv(QQ:7300637) | 定制服务：火眼(QQ:278768688)
+ *
+ * This source file is subject to the MIT license that is bundled.
+ */
+
+#[\AllowDynamicProperties]
+class app
+{
+    public $G;
+
+    public function __construct(&$G)
+    {
+        $this->G = $G;
+        $this->ev = $this->G->make('ev');
+        $this->session = $this->G->make('session');
+        $this->tpl = $this->G->make('tpl');
+        $this->pdosql = $this->G->make('pdosql');
+        $this->db = $this->G->make('pdodb');
+        $this->category = $this->G->make('category');
+        $this->html = $this->G->make('html');
+        $this->apps = $this->G->make('apps', 'core');
+        $this->user = $this->G->make('user', 'user');
+        $this->_user = $_user = $this->session->getSessionUser();
+        $group = $this->user->getGroupById(isset($_user['sessiongroupid']) ? $_user['sessiongroupid'] : 0);
+        if (1 != (isset($group['groupid']) ? $group['groupid'] : 0)) {
+            if ($this->ev->get('userhash')) {
+                exit(json_encode([
+                    'statusCode'   => 300,
+                    'message'      => '请您重新登录',
+                    'callbackType' => 'forward',
+                    'forwardUrl'   => 'index.php?core-master-login',
+                ]));
+            }
+
+            header('location:index.php?core-master-login');
+            exit;
+        }
+        $localapps = $this->apps->getLocalAppList();
+        $apps = $this->apps->getAppList();
+        $this->tpl->assign('localapps', $localapps);
+        $this->tpl->assign('apps', $apps);
+        $user = $this->user->getUserById(isset($_user['sessionuserid']) ? $_user['sessionuserid'] : 0);
+        $user['manager_apps'] = empty($user['manager_apps']) ? false : unserialize($user['manager_apps']);
+        $this->tpl->assign('_user', $user);
+        if (!in_array($this->G->app, $user['manager_apps']) && $apps['user']['appsetting']['managemodel']) {
+            header('location:index.php?core-master');
+            exit();
+        }
+        $this->tpl->assign('userhash', $this->ev->get('userhash'));
+        $this->seminar = $this->G->make('seminar', 'seminar');
+    }
+}

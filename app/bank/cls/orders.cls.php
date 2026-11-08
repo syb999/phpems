@@ -10,6 +10,7 @@
  * This source file is subject to the MIT license that is bundled.
  */
 
+#[\AllowDynamicProperties]
 class orders_bank
 {
     public $G;
@@ -53,7 +54,7 @@ class orders_bank
         return $this->db->insertElement(['table' => 'orders', 'query' => $args]);
     }
 
-    public function getOrderById($id, $userid)
+    public function getOrderById($id, $userid = 0)
     {
         if ($userid) {
             $data = [false, 'orders', [['AND', 'ordersn = :ordersn', 'ordersn', $id], ['AND', 'orderuserid = :orderuserid', 'orderuserid', $userid]]];

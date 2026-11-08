@@ -14,12 +14,12 @@
 					<li>
 						<span class="icon-home"></span> <a href="index.php">主页</a> <span class="divider">/</span>
 					</li>
-					{x2;tree:$catbread,cb,cbid}
-					<li><a href="index.php?course-app-category&catid={x2;v:cb['catid']}">{x2;v:cb['catname']}</a> <span class="divider">/</span></li>
+					{x2;tree:(array)($catbread ?? []),cb,cbid}
+					<li><a href="index.php?course-app-category&catid={x2;(isset(v:cb['catid'])?v:cb['catid']:'')}">{x2;(isset(v:cb['catname'])?v:cb['catname']:'')}</a> <span class="divider">/</span></li>
 					{x2;endtree}
-					<li><a href="index.php?course-app-category&catid={x2;$cat['catid']}">{x2;$cat['catname']}</a><span class="divider">/</span></li>
-					<li><a href="index.php?course-app-course&csid={x2;$course['csid']}">{x2;$course['cstitle']}</a><span class="divider">/</span></li>
-					<li class="active">{x2;$content['coursetitle']}</li>
+					<li><a href="index.php?course-app-category&catid={x2;(isset($cat['catid'])?$cat['catid']:'')}">{x2;(isset($cat['catname'])?$cat['catname']:'')}</a><span class="divider">/</span></li>
+					<li><a href="index.php?course-app-course&csid={x2;(isset($course['csid'])?$course['csid']:'')}">{x2;(isset($course['cstitle'])?$course['cstitle']:'')}</a><span class="divider">/</span></li>
+					<li class="active">{x2;(isset($content['coursetitle'])?$content['coursetitle']:'')}</li>
 				</ul>
 			</div>
 			<div class="examcontent">
@@ -28,7 +28,7 @@
 						<div>
 							<div style="width:800px;margin:auto;">
 							  <video id="example_video_1" class="video-js vjs-default-skin" controls preload="none" width="800" height="450" poster="http://video-js.zencoder.com/oceans-clip.png" data-setup="{'example_option':true}">
-							    <source src="{x2;$content['course_files']}" type='video/mp4' />
+							    <source src="{x2;(isset($content['course_files'])?$content['course_files']:'')}" type='video/mp4' />
 							  </video>
 							</div>
 						</div>
@@ -38,11 +38,11 @@
 			<div class="examcontent">
 				<div class="exambox">
 					<div class="examform">
-						<h5 class="title text-center">{x2;$content['coursetitle']}</h5>
+						<h5 class="title text-center">{x2;(isset($content['coursetitle'])?$content['coursetitle']:'')}</h5>
 						<div id="contentTxt">
-							{x2;realhtml:$content['coursedescribe']}
+							{x2;(isset(realhtml:$content['coursedescribe'])?realhtml:$content['coursedescribe']:'')}
 						</div>
-						<p class="text-right">发布时间：{x2;date:$content['courseinputtime'],'Y-m-d'}</p>
+						<p class="text-right">发布时间：{x2;date:$content['courseinputtime'] ?? 0,'Y-m-d'}</p>
 						<div  style="margin-top:20px;border-top:1px solid #dddddd;padding-top:20px;">
 							<div class="bshare-custom pull-right">
 								<a class="bshare-qzone" title="分享到QQ空间"></a>
@@ -63,22 +63,22 @@
 		<div class="span3 examcontent">
 			<div class="exambox">
 				<div class="examform">
-					<h5 class="title"><a href="index.php?course-app-course&csid={x2;$course['csid']}">{x2;$course['cstitle']}</a></h5>
+					<h5 class="title"><a href="index.php?course-app-course&csid={x2;(isset($course['csid'])?$course['csid']:'')}">{x2;(isset($course['cstitle'])?$course['cstitle']:'')}</a></h5>
 					<ul>
-						{x2;tree:$contents['data'],content,cid}
+						{x2;tree:(array)($contents['data'] ?? []),content,cid}
 						<li>
 							{x2;if:v:content['courseid'] == $content['courseid']}
-							<span class="text-warning">{x2;v:content['coursetitle']}</span>
-							<script src="index.php?course-app-course-coursejs&contentid={x2;v:content['courseid']}"></script>
+							<span class="text-warning">{x2;(isset(v:content['coursetitle'])?v:content['coursetitle']:'')}</span>
+							<script src="index.php?course-app-course-coursejs&contentid={x2;(isset(v:content['courseid'])?v:content['courseid']:'')}"></script>
 							{x2;else}
-							<a href="index.php?course-app-content&contentid={x2;v:content['courseid']}" title="{x2;v:content['coursetitle']}">{x2;v:content['coursetitle']}</a>
-							<script src="index.php?course-app-course-coursejs&contentid={x2;v:content['courseid']}"></script>
+							<a href="index.php?course-app-content&contentid={x2;(isset(v:content['courseid'])?v:content['courseid']:'')}" title="{x2;(isset(v:content['coursetitle'])?v:content['coursetitle']:'')}">{x2;(isset(v:content['coursetitle'])?v:content['coursetitle']:'')}</a>
+							<script src="index.php?course-app-course-coursejs&contentid={x2;(isset(v:content['courseid'])?v:content['courseid']:'')}"></script>
 							{x2;endif}
 						</li>
 						{x2;endtree}
 					</ul>
 					<div class="pagination pagination-right">
-						<ul>{x2;$categorys['pages']}</ul>
+						<ul>{x2;(isset($categorys['pages'])?$categorys['pages']:'')}</ul>
 					</div>
 				</div>
 			</div>

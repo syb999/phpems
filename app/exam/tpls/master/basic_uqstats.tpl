@@ -1,4 +1,4 @@
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 {x2;include:header}
 <body>
 {x2;include:nav}
@@ -13,8 +13,8 @@
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
 						<ol class="breadcrumb">
-							<li><a href="index.php?{x2;$_app}-master">{x2;$apps[$_app]['appname']}</a></li>
-							<li><a href="index.php?{x2;$_app}-master-basic">考场管理</a></li>
+							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master">{x2;(isset($apps[$_app]['appname'])?$apps[$_app]['appname']:'')}</a></li>
+							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master-basic">考场管理</a></li>
 							<li class="active">成绩分析</li>
 						</ol>
 					</div>
@@ -44,15 +44,15 @@
 									</tr>
 									</thead>
 									<tbody>
-                                    {x2;if:is_array($member['right'])}
-                                    {x2;tree:$member['right'],stat,sid}
+                                    {x2;if:isset($member['right']) && is_array($member['right'])}
+                                    {x2;tree:(array)($member['right'] ?? []),stat,sid}
 									<tr>
-                                        <td>{x2;v:stat['id']}</td>
+                                        <td>{x2;(isset(v:stat['id'])?v:stat['id']:'')}</td>
                                         <td>
-                                            {x2;v:stat['userid']}
+                                            {x2;(isset(v:stat['userid'])?v:stat['userid']:'')}
 										</td>
 										<td>
-                                            {x2;realhtml:v:stat['username']}
+                                            {x2;(isset(realhtml:v:stat['username'])?realhtml:v:stat['username']:'')}
 										</td>
 									</tr>
                                     {x2;endtree}
@@ -70,15 +70,15 @@
 									</tr>
 									</thead>
 									<tbody>
-                                    {x2;if:is_array($member['wrong'])}
-                                    {x2;tree:$member['wrong'],stat,sid}
+                                    {x2;if:isset($member['wrong']) && is_array($member['wrong'])}
+                                    {x2;tree:(array)($member['wrong'] ?? []),stat,sid}
 									<tr>
-										<td>{x2;v:stat['id']}</td>
+										<td>{x2;(isset(v:stat['id'])?v:stat['id']:'')}</td>
 										<td>
-                                            {x2;v:stat['userid']}
+                                            {x2;(isset(v:stat['userid'])?v:stat['userid']:'')}
 										</td>
 										<td>
-                                            {x2;realhtml:v:stat['username']}
+                                            {x2;(isset(realhtml:v:stat['username'])?realhtml:v:stat['username']:'')}
 										</td>
 									</tr>
                                     {x2;endtree}
@@ -90,7 +90,7 @@
 					</div>
 				</div>
 			</div>
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 		</div>
 	</div>
 </div>

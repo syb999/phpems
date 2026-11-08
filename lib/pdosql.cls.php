@@ -10,6 +10,7 @@
  * This source file is subject to the MIT license that is bundled.
  */
 
+#[\AllowDynamicProperties]
 class pdosql
 {
     public $G;
@@ -30,9 +31,9 @@ class pdosql
         foreach ($tables as $table) {
             $sql = 'SHOW FULL COLUMNS FROM  `'.$this->tablepre.$table.'`';
             $r = $this->G->make('pepdo')->fetchAll(['sql' => $sql]);
-            foreach ($r as $p) {
+            foreach ((array) $r as $p) {
                 if ('auto_increment' != $p['Extra']) {
-                    if ($args[$p['Field']]) {
+                    if (!empty($args[$p['Field']])) {
                         $newargs[$p['Field']] = $args[$p['Field']];
                     } else {
                         if (array_key_exists($p['Field'], $args)) {
@@ -57,10 +58,10 @@ class pdosql
         foreach ($tables as $table) {
             $sql = 'SHOW FULL COLUMNS FROM  `'.$this->tablepre.$table.'`';
             $r = $this->G->make('pepdo')->fetchAll(['sql' => $sql]);
-            foreach ($r as $p) {
+            foreach ((array) $r as $p) {
                 if ('auto_increment' != $p['Extra']) {
                     if (array_key_exists($p['Field'], $args)) {
-                        if ($args[$p['Field']]) {
+                        if (!empty($args[$p['Field']])) {
                             $newargs[$p['Field']] = $args[$p['Field']];
                         } else {
                             $newargs[$p['Field']] = $this->_setDefaultInsetValue($p['Type']);
@@ -114,6 +115,7 @@ class pdosql
     //$data = $this->makeSelect($args,$dbh);
     public function makeSelect($args, $tablepre = null)
     {
+        $v = [];
         if (null === $tablepre) {
             $tb_pre = $this->tablepre;
         } else {

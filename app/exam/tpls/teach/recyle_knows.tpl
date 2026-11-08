@@ -1,4 +1,4 @@
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 {x2;include:header}
 <body>
 {x2;include:nav}
@@ -13,7 +13,7 @@
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
 						<ol class="breadcrumb">
-							<li><a href="index.php?{x2;$_app}-teach">{x2;$apps[$_app]['appname']}</a></li>
+							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-teach">{x2;(isset($apps[$_app]['appname'])?$apps[$_app]['appname']:'')}</a></li>
 							<li><a href="index.php?exam-teach-recyle">回收站</a></li>
 							<li class="active">已删知识点</li>
 						</ol>
@@ -33,14 +33,14 @@
 			                </tr>
 			            </thead>
 			            <tbody>
-		                    {x2;tree:$knows['data'],know,kid}
+		                    {x2;tree:(array)($knows['data'] ?? []),know,kid}
 							<tr>
-								<td>{x2;v:know['knowsid']}</td>
-								<td>{x2;v:know['knows']}</td>
+								<td>{x2;(isset(v:know['knowsid'])?v:know['knowsid']:'')}</td>
+								<td>{x2;(isset(v:know['knows'])?v:know['knows']:'')}</td>
 								<td>
 									<div class="btn-group">
-			                    		<a class="btn ajax" href="index.php?exam-teach-recyle-backknows&page={x2;$page}&knowsid={x2;v:know['knowsid']}{x2;$u}" title="修改"><em class="glyphicon glyphicon-edit"></em></a>
-										<a class="btn ajax" href="index.php?exam-teach-recyle-delknows&page={x2;$page}&knowsid={x2;v:know['knowsid']}{x2;$u}" title="删除"><em class="glyphicon glyphicon-remove"></em></a>
+			                    		<a class="btn ajax" href="index.php?exam-teach-recyle-backknows&page={x2;(isset($page)?$page:'')}&knowsid={x2;(isset(v:know['knowsid'])?v:know['knowsid']:'')}{x2;(isset($u)?$u:'')}" title="修改"><em class="glyphicon glyphicon-edit"></em></a>
+										<a class="btn ajax" href="index.php?exam-teach-recyle-delknows&page={x2;(isset($page)?$page:'')}&knowsid={x2;(isset(v:know['knowsid'])?v:know['knowsid']:'')}{x2;(isset($u)?$u:'')}" title="删除"><em class="glyphicon glyphicon-remove"></em></a>
 			                    	</div>
 			                    </td>
 							</tr>
@@ -55,23 +55,23 @@
 				            <label class="radio-inline">
 				                <input type="radio" name="action" value="delete" />删除
 				            </label>
-				            {x2;tree:$search,arg,sid}
-				            <input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>
+				            {x2;tree:(array)($search ?? []),arg,sid}
+				            <input type="hidden" name="search[{x2;(isset(v:key)?v:key:'')}]" value="{x2;(isset(v:arg)?v:arg:'')}"/>
 				            {x2;endtree}
 				            <label class="radio-inline">
 				            	<button class="btn btn-primary" type="submit">提交</button>
 				            </label>
 				            <input type="hidden" name="modifycontentsequence" value="1"/>
-				            <input type="hidden" name="catid" value="{x2;$catid}"/>
-				            <input type="hidden" name="page" value="{x2;$page}"/>
+				            <input type="hidden" name="catid" value="{x2;(isset($catid)?$catid:'')}"/>
+				            <input type="hidden" name="page" value="{x2;(isset($page)?$page:'')}"/>
 				        </div>
 			        </div>
 					<ul class="pagination pull-right">
-						{x2;$knows['pages']}
+						{x2;(isset($knows['pages'])?$knows['pages']:'')}
 					</ul>
 				</div>
 			</div>
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 		</div>
 	</div>
 </div>

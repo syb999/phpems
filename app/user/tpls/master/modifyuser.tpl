@@ -11,14 +11,14 @@
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
 						<ol class="breadcrumb">
-							<li><a href="index.php?{x2;$_app}-master">{x2;$apps[$_app]['appname']}</a></li>
+							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master">{x2;(isset($apps[$_app]['appname'])?$apps[$_app]['appname']:'')}</a></li>
 							<li><a href="index.php?user-master-user">用户管理</a></li>
 							<li class="active">修改用户</li>
 						</ol>
 					</div>
 				</div>
 				<div class="box itembox" style="padding-top:10px;margin-bottom:0px;">
-					<h4 class="title">{x2;$user['username']}</h4>
+					<h4 class="title">{x2;(isset($user['username'])?$user['username']:'')}</h4>
 					<div id="tabs-694325" class="tabbable" style="margin-top:20px;">
 						<ul class="nav nav-tabs">
 							<li class="active">
@@ -36,11 +36,11 @@
 							<div id="panel-344373" class="tab-pane active">
 								<form action="index.php?user-master-user-modify" method="post" class="form-horizontal">
 									<fieldset>
-										{x2;tree:$forms,form,fid}
+										{x2;tree:(array)($forms ?? []),form,fid}
 										<div class="form-group">
-											<label for="{x2;v:form['id']}" class="control-label col-sm-2">{x2;v:form['title']}：</label>
+											<label for="{x2;(isset(v:form['id'])?v:form['id']:'')}" class="control-label col-sm-2">{x2;(isset(v:form['title'])?v:form['title']:'')}：</label>
 											<div class="col-sm-9">
-											{x2;v:form['html']}
+											{x2;(isset(v:form['html'])?v:form['html']:'')}
 											</div>
 										</div>
 										{x2;endtree}
@@ -48,12 +48,12 @@
 											<label class="control-label col-sm-2"></label>
 											<div class="col-sm-9">
 												<button class="btn btn-primary" type="submit">提交</button>
-												<input type="hidden" name="userid" value="{x2;$user['userid']}"/>
+												<input type="hidden" name="userid" value="{x2;(isset($user['userid'])?$user['userid']:'')}"/>
 												<input type="hidden" name="modifyuserinfo" value="1"/>
-												<input type="hidden" name="page" value="{x2;$page}"/>
-                                                {x2;if:is_array($search)}
-												{x2;tree:$search,arg,aid}
-												<input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>
+												<input type="hidden" name="page" value="{x2;(isset($page)?$page:'')}"/>
+                                                {x2;if:isset($search) && is_array($search)}
+												{x2;tree:(array)($search ?? []),arg,aid}
+												<input type="hidden" name="search[{x2;(isset(v:key)?v:key:'')}]" value="{x2;(isset(v:arg)?v:arg:'')}"/>
 												{x2;endtree}
                                                 {x2;endif}
 											</div>
@@ -66,14 +66,14 @@
 									<fieldset>
 										<div class="form-group">
 											<label class="control-label col-sm-2">电子邮箱：</label>
-											<div class="col-sm-9"><span class="help-block">{x2;$user['useremail']}</span></div>
+											<div class="col-sm-9"><span class="help-block">{x2;(isset($user['useremail'])?$user['useremail']:'')}</span></div>
 										</div>
 										<div class="form-group">
 											<label for="groupid" class="control-label col-sm-2">用户角色：</label>
 											<div class="col-sm-3">
 												<select class="form-control" name="groupid" id="groupid">
-													{x2;tree:$groups,group,gid}
-													<option value="{x2;v:group['groupid']}"{x2;if:$user['usergroupid'] == v:group['groupid']}selected{x2;endif}>{x2;v:group['groupname']}</option>
+													{x2;tree:(array)($groups ?? []),group,gid}
+													<option value="{x2;(isset(v:group['groupid'])?v:group['groupid']:'')}"{x2;if:(isset($user['usergroupid']) ? $user['usergroupid'] : null) == v:group['groupid']}selected{x2;endif}>{x2;(isset(v:group['groupname'])?v:group['groupname']:'')}</option>
 													{x2;endtree}
 												</select>
 											</div>
@@ -82,12 +82,12 @@
 											<label class="control-label col-sm-2"></label>
 											<div class="col-sm-9">
 												<button class="btn btn-primary" type="submit">提交</button>
-												<input type="hidden" name="userid" value="{x2;$user['userid']}"/>
+												<input type="hidden" name="userid" value="{x2;(isset($user['userid'])?$user['userid']:'')}"/>
 												<input type="hidden" name="modifyusergroup" value="1"/>
-												<input type="hidden" name="page" value="{x2;$page}"/>
-                                                {x2;if:is_array($search)}
-												{x2;tree:$search,arg,aid}
-												<input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>
+												<input type="hidden" name="page" value="{x2;(isset($page)?$page:'')}"/>
+                                                {x2;if:isset($search) && is_array($search)}
+												{x2;tree:(array)($search ?? []),arg,aid}
+												<input type="hidden" name="search[{x2;(isset(v:key)?v:key:'')}]" value="{x2;(isset(v:arg)?v:arg:'')}"/>
 												{x2;endtree}
                                                 {x2;endif}
 											</div>
@@ -114,12 +114,12 @@
 											<label class="control-label col-sm-2"></label>
 											<div class="col-sm-9">
 												<button class="btn btn-primary" type="submit">提交</button>
-												<input type="hidden" name="userid" value="{x2;$user['userid']}"/>
+												<input type="hidden" name="userid" value="{x2;(isset($user['userid'])?$user['userid']:'')}"/>
 												<input type="hidden" name="modifyuserpassword" value="1"/>
-												<input type="hidden" name="page" value="{x2;$page}"/>
-                                                {x2;if:is_array($search)}
-												{x2;tree:$search,arg,aid}
-												<input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>
+												<input type="hidden" name="page" value="{x2;(isset($page)?$page:'')}"/>
+                                                {x2;if:isset($search) && is_array($search)}
+												{x2;tree:(array)($search ?? []),arg,aid}
+												<input type="hidden" name="search[{x2;(isset(v:key)?v:key:'')}]" value="{x2;(isset(v:arg)?v:arg:'')}"/>
 												{x2;endtree}
                                                 {x2;endif}
 											</div>

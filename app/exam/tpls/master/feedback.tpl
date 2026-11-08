@@ -1,4 +1,4 @@
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 {x2;include:header}
 <body>
 {x2;include:nav}
@@ -13,8 +13,8 @@
                 <div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
                     <div class="col-xs-12">
                         <ol class="breadcrumb">
-                            <li><a href="index.php?{x2;$_app}-master">{x2;$apps[$_app]['appname']}</a></li>
-                            <li><a href="index.php?{x2;$_app}-master-questions">试题管理</a></li>
+                            <li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master">{x2;(isset($apps[$_app]['appname'])?$apps[$_app]['appname']:'')}</a></li>
+                            <li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master-questions">试题管理</a></li>
                             <li class="active">错题反馈</li>
                         </ol>
                     </div>
@@ -38,22 +38,22 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {x2;tree:$feedback['data'],feed,fid}
-                            <tr{x2;if:v:feed['fbstatus']} class="success"{x2;else} class="danger"{x2;endif}>
-                                <td>{x2;v:feed['fbid']}</td>
-                                <td>{x2;v:feed['fbquestionid']}【 <a target="_blank" href="index.php?exam-master-questions-modifyquestion&questionid={x2;v:feed['fbquestionid']}">编辑</a> 】</td>
-                                <td>{x2;v:feed['fbtype']}</td>
-                                <td>{x2;v:feed['fbcontent']}</td>
-                                <td>{x2;v:feed['fbuserid']}</td>
+                            {x2;tree:(array)($feedback['data'] ?? []),feed,fid}
+                            <tr{x2;if:!empty(v:feed['fbstatus'])} class="success"{x2;else} class="danger"{x2;endif}>
+                                <td>{x2;(isset(v:feed['fbid'])?v:feed['fbid']:'')}</td>
+                                <td>{x2;(isset(v:feed['fbquestionid'])?v:feed['fbquestionid']:'')}【 <a target="_blank" href="index.php?exam-master-questions-modifyquestion&questionid={x2;(isset(v:feed['fbquestionid'])?v:feed['fbquestionid']:'')}">编辑</a> 】</td>
+                                <td>{x2;(isset(v:feed['fbtype'])?v:feed['fbtype']:'')}</td>
+                                <td>{x2;(isset(v:feed['fbcontent'])?v:feed['fbcontent']:'')}</td>
+                                <td>{x2;(isset(v:feed['fbuserid'])?v:feed['fbuserid']:'')}</td>
                                 <td>{x2;date:v:feed['fbtime'],'Y-m-d'}</td>
-                                <td>{x2;if:v:feed['fbstatus']}{x2;v:feed['fbdoneuserid']}{x2;else}未处理{x2;endif}</td>
-                                <td>{x2;if:v:feed['fbstatus']}{x2;date:v:feed['fbdonetime'],'Y-m-d'}{x2;else}未处理{x2;endif}</td>
+                                <td>{x2;if:!empty(v:feed['fbstatus'])}{x2;(isset(v:feed['fbdoneuserid'])?v:feed['fbdoneuserid']:'')}{x2;else}未处理{x2;endif}</td>
+                                <td>{x2;if:!empty(v:feed['fbstatus'])}{x2;date:v:feed['fbdonetime'],'Y-m-d'}{x2;else}未处理{x2;endif}</td>
                                 <td>
                                     <div class="btn-group">
                                         {x2;if:!v:feed['fbstatus']}
-                                        <a class="btn ajax" href="index.php?exam-master-feedback-donefeedback&status=1&fbid={x2;v:feed['fbid']}" title="标记为已处理"><em class="glyphicon glyphicon-ok"></em></a>
+                                        <a class="btn ajax" href="index.php?exam-master-feedback-donefeedback&status=1&fbid={x2;(isset(v:feed['fbid'])?v:feed['fbid']:'')}" title="标记为已处理"><em class="glyphicon glyphicon-ok"></em></a>
                                         {x2;endif}
-                                        <a class="btn confirm" href="index.php?exam-master-feedback-del&fbid={x2;v:feed['fbid']}" title="删除"><em class="glyphicon glyphicon-remove"></em></a>
+                                        <a class="btn confirm" href="index.php?exam-master-feedback-del&fbid={x2;(isset(v:feed['fbid'])?v:feed['fbid']:'')}" title="删除"><em class="glyphicon glyphicon-remove"></em></a>
                                     </div>
                                 </td>
                             </tr>
@@ -61,11 +61,11 @@
                         </tbody>
                     </table>
                     <ul class="pagination pull-right">
-                        {x2;$feedback['pages']}
+                        {x2;(isset($feedback['pages'])?$feedback['pages']:'')}
                     </ul>
                 </div>
             </div>
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
         </div>
     </div>
 </div>

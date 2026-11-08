@@ -14,6 +14,7 @@ require_once 'lib/include/alipay.func.php';
 require_once 'lib/include/alipay_submit.class.php';
 require_once 'lib/include/alipay_notify.class.php';
 
+#[\AllowDynamicProperties]
 class alipay
 {
     public $G;

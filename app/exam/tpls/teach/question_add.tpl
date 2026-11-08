@@ -1,4 +1,4 @@
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 {x2;include:header}
 <body>
 {x2;include:nav}
@@ -13,8 +13,8 @@
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
 						<ol class="breadcrumb">
-							<li><a href="index.php?{x2;$_app}-teach">{x2;$apps[$_app]['appname']}</a></li>
-							<li><a href="index.php?{x2;$_app}-teach-questions&page={x2;$page}{x2;$u}">普通试题管理</a></li>
+							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-teach">{x2;(isset($apps[$_app]['appname'])?$apps[$_app]['appname']:'')}</a></li>
+							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-teach-questions&page={x2;(isset($page)?$page:'')}{x2;(isset($u)?$u:'')}">普通试题管理</a></li>
 							<li class="active">添加普通试题</li>
 						</ol>
 					</div>
@@ -22,7 +22,7 @@
 				<div class="box itembox" style="padding-top:10px;margin-bottom:0px;">
 					<h4 class="title" style="padding:10px;">
 						添加普通试题
-						<a class="btn btn-primary pull-right" href="index.php?{x2;$_app}-teach-questions&page={x2;$page}{x2;$u}">普通试题管理</a>
+						<a class="btn btn-primary pull-right" href="index.php?{x2;(isset($_app)?$_app:'')}-teach-questions&page={x2;(isset($page)?$page:'')}{x2;(isset($u)?$u:'')}">普通试题管理</a>
 					</h4>
 					<form action="index.php?exam-teach-questions-addquestion" method="post" class="form-horizontal">
 						<fieldset>
@@ -37,8 +37,8 @@
 					  		<div class="col-sm-9 form-inline">
 						  		<select class="combox form-control" target="isectionselect" refUrl="?exam-teach-questions-ajax-getsectionsbysubjectid&subjectid={value}">
 					        		<option value="0">选择科目</option>
-							  		{x2;tree:$subjects,subject,sid}
-							  		<option value="{x2;v:subject['subjectid']}">{x2;v:subject['subject']}</option>
+							  		{x2;tree:(array)($subjects ?? []),subject,sid}
+							  		<option value="{x2;(isset(v:subject['subjectid'])?v:subject['subjectid']:'')}">{x2;(isset(v:subject['subject'])?v:subject['subject']:'')}</option>
 							  		{x2;endtree}
 						  		</select>
 						  		<select class="combox form-control" id="isectionselect" target="iknowsselect" refUrl="?exam-teach-questions-ajax-getknowsbysectionid&sectionid={value}">
@@ -60,8 +60,8 @@
 							<label class="control-label col-sm-2">题型：</label>
 						  	<div class="col-sm-3">
 							  	<select needle="needle" msg="您必须为要添加的试题选择一种题型" name="args[questiontype]" class="form-control" onchange="javascript:setAnswerHtml($(this).find('option:selected').attr('rel'),'answerbox');">
-							  		{x2;tree:$questypes,questype,qid}
-							  		<option rel="{x2;if:v:questype['questsort']}0{x2;else}{x2;v:questype['questchoice']}{x2;endif}" value="{x2;v:questype['questid']}"{x2;if:v:questype['questid'] == $question['questiontype']} selected{x2;endif}>{x2;v:questype['questype']}</option>
+							  		{x2;tree:(array)($questypes ?? []),questype,qid}
+							  		<option rel="{x2;if:!empty(v:questype['questsort'])}0{x2;else}{x2;(isset(v:questype['questchoice'])?v:questype['questchoice']:'')}{x2;endif}" value="{x2;(isset(v:questype['questid'])?v:questype['questid']:'')}"{x2;if:v:questype['questid'] == $question['questiontype']} selected{x2;endif}>{x2;(isset(v:questype['questype'])?v:questype['questype']:'')}</option>
 							  		{x2;endtree}
 							  	</select>
 							</div>
@@ -69,14 +69,14 @@
 						<div class="form-group">
 							<label class="control-label col-sm-2">题干：</label>
 						  	<div class="col-sm-10">
-							  	<textarea class="ckeditor" name="args[question]" id="question">{x2;$question['question']}</textarea>
+							  	<textarea class="ckeditor" name="args[question]" id="question">{x2;(isset($question['question'])?$question['question']:'')}</textarea>
 							  	<span class="help-block">需要填空处请以()表示。</span>
 							</div>
 						</div>
 						<div class="form-group" id="selecttext">
 							<label class="control-label col-sm-2">备选项：</label>
 						  	<div class="col-sm-10">
-							  	<textarea class="ckeditor" name="args[questionselect]" id="questionselect">{x2;$question['questionselect']}</textarea>
+							  	<textarea class="ckeditor" name="args[questionselect]" id="questionselect">{x2;(isset($question['questionselect'])?$question['questionselect']:'')}</textarea>
 							  	<span class="help-block">无选择项的请不要填写，如填空题、问答题等主观题。</span>
 							</div>
 						</div>
@@ -188,14 +188,14 @@
 								  	<input type="text" name="targs[questionanswer5]" value="" />
 								</div>
 								<div id="answerbox_0" style="display:none;" class="answerbox">
-							  		<textarea cols="72" rows="7" class="ckeditor" id="questionanswer0" name="targs[questionanswer0]">{x2;$question['questionanswer']}</textarea>
+							  		<textarea cols="72" rows="7" class="ckeditor" id="questionanswer0" name="targs[questionanswer0]">{x2;(isset($question['questionanswer'])?$question['questionanswer']:'')}</textarea>
 								</div>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="control-label col-sm-2">习题解析：</label>
 						  	<div class="col-sm-10">
-						  		<textarea class="ckeditor" name="args[questiondescribe]" id="questiondescribe">{x2;$question['questiondescribe']}</textarea>
+						  		<textarea class="ckeditor" name="args[questiondescribe]" id="questiondescribe">{x2;(isset($question['questiondescribe'])?$question['questiondescribe']:'')}</textarea>
 							</div>
 						</div>
 						<div class="form-group">
@@ -212,17 +212,17 @@
 						  	<label class="control-label col-sm-2"></label>
 						  	<div class="col-sm-9">
 							  	<button class="btn btn-primary" type="submit">提交</button>
-							  	<input type="hidden" name="page" value="{x2;$page}"/>
+							  	<input type="hidden" name="page" value="{x2;(isset($page)?$page:'')}"/>
 							  	<input type="hidden" name="insertquestion" value="1"/>
-							  	{x2;tree:$search,arg,aid}
-								<input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>
+							  	{x2;tree:(array)($search ?? []),arg,aid}
+								<input type="hidden" name="search[{x2;(isset(v:key)?v:key:'')}]" value="{x2;(isset(v:arg)?v:arg:'')}"/>
 								{x2;endtree}
 							</div>
 						</div>
 					</form>
 				</div>
 			</div>
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 		</div>
 	</div>
 </div>

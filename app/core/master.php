@@ -10,6 +10,7 @@
  * This source file is subject to the MIT license that is bundled.
  */
 
+#[\AllowDynamicProperties]
 class app
 {
     public $G;
@@ -27,8 +28,8 @@ class app
         $this->apps = $this->G->make('apps', 'core');
         $this->user = $this->G->make('user', 'user');
         $this->_user = $_user = $this->session->getSessionUser();
-        $group = $this->user->getGroupById($_user['sessiongroupid']);
-        if (1 != $group['groupid'] && 'login' != $this->ev->url(2)) {
+        $group = $this->user->getGroupById(isset($_user['sessiongroupid']) ? $_user['sessiongroupid'] : 0);
+        if (1 != (isset($group['groupid']) ? $group['groupid'] : 0) && 'login' != $this->ev->url(2)) {
             if ($this->ev->get('userhash')) {
                 exit(json_encode([
                 'statusCode' => 300,
@@ -41,8 +42,11 @@ class app
             header('location:index.php?core-master-login');
             exit;
         }
-        $user = $this->user->getUserById($_user['sessionuserid']);
-        $user['manager_apps'] = unserialize($user['manager_apps']);
+        $user = $this->user->getUserById(isset($_user['sessionuserid']) ? $_user['sessionuserid'] : 0);
+        if (!is_array($user)) {
+            $user = [];
+        }
+        $user['manager_apps'] = empty($user['manager_apps']) ? false : unserialize($user['manager_apps']);
         $this->tpl->assign('_user', $user);
         $this->tpl->assign('action', $this->ev->url(2) ? $this->ev->url(2) : 'user');
         $localapps = $this->apps->getLocalAppList();

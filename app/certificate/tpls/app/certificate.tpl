@@ -24,30 +24,30 @@
 						</ol>
 					</div>
 				</div>
-				{x2;tree:$certificates['data'],certificate,cid}
+				{x2;tree:(array)($certificates['data'] ?? []),certificate,cid}
 				<div class="box itembox" style="padding-top:20px;">
 					<div class="col-xs-3">
-						<a href="index.php?certificate-app-certificate-apply&ceid={x2;v:certificate['ceid']}" class="thumbnail pull-left">
-							<img src="{x2;v:certificate['cethumb']}" alt="" width="100%">
+						<a href="index.php?certificate-app-certificate-apply&ceid={x2;(isset(v:certificate['ceid'])?v:certificate['ceid']:'')}" class="thumbnail pull-left">
+							<img src="{x2;(isset(v:certificate['cethumb'])?v:certificate['cethumb']:'')}" alt="" width="100%">
 						</a>
 					</div>
 					<div class="col-xs-9">
-						<a href="index.php?certificate-app-certificate-apply&ceid={x2;v:certificate['ceid']}"><h4 class="title">{x2;v:certificate['cetitle']}</h4></a>
+						<a href="index.php?certificate-app-certificate-apply&ceid={x2;(isset(v:certificate['ceid'])?v:certificate['ceid']:'')}"><h4 class="title">{x2;(isset(v:certificate['cetitle'])?v:certificate['cetitle']:'')}</h4></a>
 						<p>{x2;realsubstring:v:certificate['cedescribe'],240}</p>
 						<hr/>
 						<p>
 							<span>
-								<a class="btn btn-primary" href="index.php?certificate-app-certificate-apply&ceid={x2;v:certificate['ceid']}">申请 （{x2;v:certificate['ceprice']}积分）</a>
+								<a class="btn btn-primary" href="index.php?certificate-app-certificate-apply&ceid={x2;(isset(v:certificate['ceid'])?v:certificate['ceid']:'')}">申请 （{x2;(isset(v:certificate['ceprice'])?v:certificate['ceprice']:'')}积分）</a>
 							</span>
 							<span class="pull-right">
-								<a href="index.php?certificate-app-certificate-apply&ceid={x2;v:certificate['ceid']}"><span class="glyphicon glyphicon-time"></span> <span>{x2;date:v:certificate['cetime'],'Y-m-d H:i:s'}</span></a>&nbsp;&nbsp;
+								<a href="index.php?certificate-app-certificate-apply&ceid={x2;(isset(v:certificate['ceid'])?v:certificate['ceid']:'')}"><span class="glyphicon glyphicon-time"></span> <span>{x2;date:v:certificate['cetime'],'Y-m-d H:i:s'}</span></a>&nbsp;&nbsp;
 							</span>
 						</p>
 					</div>
 				</div>
 				{x2;endtree}
 				<ul class="pagination pull-right">
-					{x2;$certificates['pages']}
+					{x2;(isset($certificates['pages'])?$certificates['pages']:'')}
 				</ul>
 			</div>
 		</div>

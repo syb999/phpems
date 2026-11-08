@@ -15,7 +15,7 @@
 					<li><a href="index.php">首页</a></li>
 					<li><a href="index.php?exam-app">考试</a></li>
 					<li>
-						<a href="index.php?exam-app-basics">{x2;$data['currentbasic']['basic']}</a>
+						<a href="index.php?exam-app-basics">{x2;(isset($data['currentbasic']['basic'])?$data['currentbasic']['basic']:'')}</a>
 					</li>
 					<li class="active">
 						强化训练
@@ -45,8 +45,8 @@
                             <span>章节选择：
                             	<select autocomplete="off" id="thesectionid" name="args[sectionid]" class="combox form-control" ref="theknowsid" refUrl="index.php?exam-app-index-ajax-getknowsbysectionid&sectionid={value}" more="questionnumbers" callback="getSectionContent">
                             		<option value="0">请选择章节</option>
-                            		{x2;tree:$sections,section,sid}
-                            		<option value="{x2;v:section['sectionid']}">{x2;v:section['section']}</option>
+                            		{x2;tree:(array)($sections ?? []),section,sid}
+                            		<option value="{x2;(isset(v:section['sectionid'])?v:section['sectionid']:'')}">{x2;(isset(v:section['section'])?v:section['section']:'')}</option>
                             		{x2;endtree}
                             	</select>
                             </span>
@@ -75,11 +75,11 @@
                     </ol>
                     <div class="col-xs-6">
 	                    <ol id="questionnumbers" style="line-height:3.2em;">
-	                        {x2;tree:$questype,quest,qid}
-                            {x2;if:$numbers[v:quest['questid']]}
+	                        {x2;tree:(array)($questype ?? []),quest,qid}
+                            {x2;if:!empty($numbers[v:quest['questid']])}
 	                        <li class="text_in">
-	                        	{x2;v:quest['questype']}（共{x2;$numbers[v:quest['questid']]}题），选 <input id="question_{x2;v:quest['questid']}" type="text" class="form-control" name="args[number][{x2;v:quest['questid']}]" style="width:60px;" onChange="javascript:check_num(this);" onBlur="" rel="{x2;$numbers[v:quest['questid']]}"/> 题
-	                        	<span id="question_{x2;v:quest['questid']}_error" class="red font_12 main_left0">选择的题数不能超过{x2;$numbers[v:quest['questid']]}</span>
+	                        	{x2;(isset(v:quest['questype'])?v:quest['questype']:'')}（共{x2;(isset($numbers[v:quest['questid']])?$numbers[v:quest['questid']]:'')}题），选 <input id="question_{x2;(isset(v:quest['questid'])?v:quest['questid']:'')}" type="text" class="form-control" name="args[number][{x2;(isset(v:quest['questid'])?v:quest['questid']:'')}]" style="width:60px;" onChange="javascript:check_num(this);" onBlur="" rel="{x2;(isset($numbers[v:quest['questid']])?$numbers[v:quest['questid']]:'')}"/> 题
+	                        	<span id="question_{x2;(isset(v:quest['questid'])?v:quest['questid']:'')}_error" class="red font_12 main_left0">选择的题数不能超过{x2;(isset($numbers[v:quest['questid']])?$numbers[v:quest['questid']]:'')}</span>
 	                        </li>
                             {x2;endif}
 	                    	{x2;endtree}

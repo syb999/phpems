@@ -14,6 +14,7 @@ namespace Model;
 
 use Illuminate\Database\Eloquent\Model;
 
+#[\AllowDynamicProperties]
 class Area extends Model
 {
     protected $table = 'area';

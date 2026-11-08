@@ -1,4 +1,4 @@
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 {x2;include:header}
 <body>
 {x2;include:nav}
@@ -13,7 +13,7 @@
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
 						<ol class="breadcrumb">
-							<li><a href="index.php?{x2;$_app}-master">{x2;$apps[$_app]['appname']}</a></li>
+							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master">{x2;(isset($apps[$_app]['appname'])?$apps[$_app]['appname']:'')}</a></li>
 							<li class="active">订单列表</li>
 						</ol>
 					</div>
@@ -37,22 +37,22 @@
 									</tr>
 								</thead>
 								<tbody>
-									{x2;tree:$orders['data'],order,oid}
+									{x2;tree:(array)($orders['data'] ?? []),order,oid}
 									<tr>
-										<td><input type="checkbox" name="delids[{x2;v:order['ordersn']}]" value="1"></td>
-										<td>{x2;v:order['ordersn']}</td>
-										<td>{x2;v:order['orderuserinfo']['username']}</td>
-										<td>{x2;v:order['orderprice']}</td>
+										<td><input type="checkbox" name="delids[{x2;(isset(v:order['ordersn'])?v:order['ordersn']:'')}]" value="1"></td>
+										<td>{x2;(isset(v:order['ordersn'])?v:order['ordersn']:'')}</td>
+										<td>{x2;(isset(v:order['orderuserinfo']['username'])?v:order['orderuserinfo']['username']:'')}</td>
+										<td>{x2;(isset(v:order['orderprice'])?v:order['orderprice']:'')}</td>
 										<td>{x2;date:v:order['ordercreatetime'],'Y-m-d'}</td>
 										<td>
 								        	<div class="dropdown">
-									        	<a class="dropdown-toggle" href="#" data-toggle="dropdown">{x2;$orderstatus[v:order['orderstatus']]}<strong class="caret"></strong></a>
+									        	<a class="dropdown-toggle" href="#" data-toggle="dropdown">{x2;(isset($orderstatus[v:order['orderstatus']])?$orderstatus[v:order['orderstatus']]:'')}<strong class="caret"></strong></a>
 									        	<ul class="dropdown-menu">
 										        	<li><a href="javascript:;">更改状态</a></li>
 													<li class="divider"></li>
-													{x2;tree:$orderstatus,os,oid}
+													{x2;tree:(array)($orderstatus ?? []),os,oid}
 													{x2;if:v:key > v:order['orderstatus']}
-													<li><a class="ajax" href="index.php?{x2;$_app}-master-orders-change&ordersn={x2;v:order['ordersn']}&orderstatus={x2;v:key}&page={x2;$page}">{x2;v:os}</a></li>
+													<li><a class="ajax" href="index.php?{x2;(isset($_app)?$_app:'')}-master-orders-change&ordersn={x2;(isset(v:order['ordersn'])?v:order['ordersn']:'')}&orderstatus={x2;(isset(v:key)?v:key:'')}&page={x2;(isset($page)?$page:'')}">{x2;(isset(v:os)?v:os:'')}</a></li>
 													{x2;endif}
 													{x2;endtree}
 												</ul>
@@ -60,7 +60,7 @@
 								        </td>
 										<td>
 											<div class="btn-group">
-												<a class="btn confirm" href="index.php?{x2;$_app}-master-orders-remove&ordersn={x2;v:order['ordersn']}&page={x2;$page}{x2;$u}" title="删除订单"><em class="glyphicon glyphicon-remove"></em></a>
+												<a class="btn confirm" href="index.php?{x2;(isset($_app)?$_app:'')}-master-orders-remove&ordersn={x2;(isset(v:order['ordersn'])?v:order['ordersn']:'')}&page={x2;(isset($page)?$page:'')}{x2;(isset($u)?$u:'')}" title="删除订单"><em class="glyphicon glyphicon-remove"></em></a>
 											</div>
 										</td>
 									</tr>
@@ -72,25 +72,25 @@
 						            <label class="radio-inline">
 						                <input type="radio" name="action" value="delete" checked/>删除
 						            </label>
-                                    {x2;if:is_array($search)}
-						            {x2;tree:$search,arg,sid}
-						            <input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>
+                                    {x2;if:isset($search) && is_array($search)}
+						            {x2;tree:(array)($search ?? []),arg,sid}
+						            <input type="hidden" name="search[{x2;(isset(v:key)?v:key:'')}]" value="{x2;(isset(v:arg)?v:arg:'')}"/>
 						            {x2;endtree}
                                     {x2;endif}
 						            <label class="radio-inline">
 						            	<button class="btn btn-primary" type="submit">提交</button>
 						            </label>
-						            <input type="hidden" name="page" value="{x2;$page}"/>
+						            <input type="hidden" name="page" value="{x2;(isset($page)?$page:'')}"/>
 						        </div>
 					        </div>
 							<ul class="pagination pull-right">
-								{x2;$orders['pages']}
+								{x2;(isset($orders['pages'])?$orders['pages']:'')}
 							</ul>
 						</fieldset>
 					</form>
 				</div>
 			</div>
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 		</div>
 	</div>
 </div>

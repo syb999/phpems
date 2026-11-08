@@ -87,6 +87,7 @@
     define('QR_FORMAT_TEXT', 0);
     define('QR_FORMAT_PNG', 1);
 
+    #[\AllowDynamicProperties]
     class qrstr
     {
         public static function set(&$srctab, $x, $y, $repl, $replLen = false)
@@ -138,6 +139,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
+    #[\AllowDynamicProperties]
     class QRtools
     {
         //----------------------------------------------------------------------
@@ -330,6 +332,7 @@
     define('QRCAP_REMINDER', 2);
     define('QRCAP_EC', 3);
 
+    #[\AllowDynamicProperties]
     class QRspec
     {
         public static $capacity = [
@@ -944,6 +947,7 @@
 
     define('QR_IMAGE', true);
 
+    #[\AllowDynamicProperties]
     class QRimage
     {
         //----------------------------------------------------------------------
@@ -1045,6 +1049,7 @@
     define('STRUCTURE_HEADER_BITS', 20);
     define('MAX_STRUCTURED_SYMBOLS', 16);
 
+    #[\AllowDynamicProperties]
     class QRinputItem
     {
         public $mode;
@@ -1284,6 +1289,7 @@
 
     //##########################################################################
 
+    #[\AllowDynamicProperties]
     class QRinput
     {
         public $items;
@@ -1779,6 +1785,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
+    #[\AllowDynamicProperties]
     class QRbitstream
     {
         public $data = [];
@@ -1970,6 +1977,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  */
+    #[\AllowDynamicProperties]
     class QRsplit
     {
         public $dataStr = '';
@@ -2288,6 +2296,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
+    #[\AllowDynamicProperties]
     class QRrsItem
     {
         public $mm;                  // Bits per symbol
@@ -2455,6 +2464,7 @@
 
     //##########################################################################
 
+    #[\AllowDynamicProperties]
     class QRrs
     {
         public static $items = [];
@@ -2525,6 +2535,7 @@
     define('N3', 40);
     define('N4', 10);
 
+    #[\AllowDynamicProperties]
     class QRmask
     {
         public $runLength = [];
@@ -2882,6 +2893,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
+    #[\AllowDynamicProperties]
     class QRrsblock
     {
         public $dataLength;
@@ -2902,6 +2914,7 @@
 
     //##########################################################################
 
+    #[\AllowDynamicProperties]
     class QRrawcode
     {
         public $version;
@@ -3015,6 +3028,7 @@
 
     //##########################################################################
 
+    #[\AllowDynamicProperties]
     class QRcode
     {
         public $version;
@@ -3173,6 +3187,7 @@
 
     //##########################################################################
 
+    #[\AllowDynamicProperties]
     class FrameFiller
     {
         public $width;
@@ -3263,6 +3278,7 @@
 
     //##########################################################################
 
+    #[\AllowDynamicProperties]
     class QRencode
     {
         public $casesensitive = true;

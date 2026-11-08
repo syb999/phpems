@@ -1,4 +1,4 @@
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 {x2;include:header}
 <body>
 {x2;include:nav}
@@ -13,8 +13,8 @@
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
 						<ol class="breadcrumb">
-							<li><a href="index.php?{x2;$_app}-master">{x2;$apps[$_app]['appname']}</a></li>
-							<li><a href="index.php?{x2;$_app}-master-positions">推荐管理</a></li>
+							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master">{x2;(isset($apps[$_app]['appname'])?$apps[$_app]['appname']:'')}</a></li>
+							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master-positions">推荐管理</a></li>
 							<li class="active">添加推荐位</li>
 						</ol>
 					</div>
@@ -22,9 +22,9 @@
 				<div class="box itembox" style="padding-top:10px;margin-bottom:0px;">
 					<h4 class="title" style="padding:10px;">
 						添加推荐位
-						<a class="btn btn-primary pull-right" href="index.php?{x2;$_app}-master-positions">推荐位管理</a>
+						<a class="btn btn-primary pull-right" href="index.php?{x2;(isset($_app)?$_app:'')}-master-positions">推荐位管理</a>
 					</h4>
-					<form action="index.php?{x2;$_app}-master-positions-add" method="post" class="form-horizontal">
+					<form action="index.php?{x2;(isset($_app)?$_app:'')}-master-positions-add" method="post" class="form-horizontal">
 		    			<fieldset>
 		    			<div class="form-group">
 							<label for="section" class="control-label col-sm-2">推荐位名称：</label>
@@ -37,14 +37,14 @@
 						  	<div class="col-sm-9">
 								<button class="btn btn-primary" type="submit">提交</button>
 								<input type="hidden" name="addpos" value="1"/>
-								<input type="hidden" name="page" value="{x2;$page}"/>
+								<input type="hidden" name="page" value="{x2;(isset($page)?$page:'')}"/>
 							</div>
 						</div>
 						</fieldset>
 					</form>
 				</div>
 			</div>
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 		</div>
 	</div>
 </div>

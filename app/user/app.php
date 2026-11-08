@@ -10,6 +10,7 @@
  * This source file is subject to the MIT license that is bundled.
  */
 
+#[\AllowDynamicProperties]
 class app
 {
     public $G;
@@ -33,7 +34,7 @@ class app
         $this->tpl->assign('groups', $groups);
         $this->tpl->assign('userhash', $this->ev->get('userhash'));
         $this->_user = $_user = $this->session->getSessionUser();
-        if ($_user['sessionuserid'] && 'logout' != $this->ev->url(2)) {
+        if (!empty($_user['sessionuserid']) && 'logout' != $this->ev->url(2)) {
             if ($this->ev->get('userhash')) {
                 exit(json_encode([
                 'statusCode' => 200,

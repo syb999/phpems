@@ -14,6 +14,7 @@ namespace Model;
 
 use Illuminate\Database\Eloquent\Model;
 
+#[\AllowDynamicProperties]
 class ExamHistory extends Model
 {
     protected $table = 'examhistory';

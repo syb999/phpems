@@ -1,4 +1,4 @@
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 {x2;include:header}
 <body>
 {x2;include:nav}
@@ -13,9 +13,9 @@
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
 						<ol class="breadcrumb">
-							<li><a href="index.php?{x2;$_app}-master">{x2;$apps[$_app]['appname']}</a></li>
-							<li><a href="index.php?{x2;$_app}-master-basic-subject">科目管理</a></li>
-							<li><a href="index.php?{x2;$_app}-master-basic-section&subjectid={x2;$section['sectionsubjectid']}&page={x2;$page}">章节管理</a></li>
+							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master">{x2;(isset($apps[$_app]['appname'])?$apps[$_app]['appname']:'')}</a></li>
+							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master-basic-subject">科目管理</a></li>
+							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master-basic-section&subjectid={x2;(isset($section['sectionsubjectid'])?$section['sectionsubjectid']:'')}&page={x2;(isset($page)?$page:'')}">章节管理</a></li>
 							<li class="active">知识点管理</li>
 						</ol>
 					</div>
@@ -23,11 +23,11 @@
 				<div class="box itembox" style="padding-top:10px;margin-bottom:0px;">
 					<h4 class="title" style="padding:10px;">
 						知识点管理
-						<a class="btn btn-primary pull-right" href="index.php?exam-master-basic-addpoint&sectionid={x2;$section['sectionid']}&page={x2;$page}{x2;$u}">添加知识点</a>
+						<a class="btn btn-primary pull-right" href="index.php?exam-master-basic-addpoint&sectionid={x2;(isset($section['sectionid'])?$section['sectionid']:'')}&page={x2;(isset($page)?$page:'')}{x2;(isset($u)?$u:'')}">添加知识点</a>
 					</h4>
 			        <form action="index.php?exam-master-basic-addpoint" method="post" class="form-horizontal">
 						<fieldset>
-						<legend>{x2;$section['section']}</legend>
+						<legend>{x2;(isset($section['section'])?$section['section']:'')}</legend>
 						<div class="form-group">
 							<label for="knows" class="control-label col-sm-2">知识点名称：</label>
 							<div class="col-sm-9">
@@ -40,15 +40,15 @@
 						  	<div class="col-sm-9">
 								<button class="btn btn-primary" type="submit">提交</button>
 								<input type="hidden" name="insertknows" value="1"/>
-								<input type="hidden" name="page" value="{x2;$page}"/>
-								<input type="hidden" name="args[knowssectionid]" value="{x2;$section['sectionid']}"/>
+								<input type="hidden" name="page" value="{x2;(isset($page)?$page:'')}"/>
+								<input type="hidden" name="args[knowssectionid]" value="{x2;(isset($section['sectionid'])?$section['sectionid']:'')}"/>
 							</div>
 						</div>
 						</fieldset>
 					</form>
 				</div>
 			</div>
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 		</div>
 	</div>
 </div>

@@ -11,7 +11,7 @@
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 						<div class="col-xs-12">
 							<ol class="breadcrumb">
-								<li><a href="index.php?{x2;$_app}-master">{x2;$apps[$_app]['appname']}</a></li>
+								<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master">{x2;(isset($apps[$_app]['appname'])?$apps[$_app]['appname']:'')}</a></li>
 								<li><a href="index.php?user-master-module">模型管理</a></li>
 								<li class="active">添加模型</li>
 							</ol>
@@ -52,10 +52,10 @@
 									<div class="col-sm-9">
 										<button class="btn btn-primary" type="submit">提交</button>
 										<input type="hidden" name="insertmodule" value="1"/>
-										<input type="hidden" name="page" value="{x2;$page}"/>
-                                        {x2;if:is_array($search)}
-										{x2;tree:$search,arg,aid}
-										<input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>
+										<input type="hidden" name="page" value="{x2;(isset($page)?$page:'')}"/>
+                                        {x2;if:isset($search) && is_array($search)}
+										{x2;tree:(array)($search ?? []),arg,aid}
+										<input type="hidden" name="search[{x2;(isset(v:key)?v:key:'')}]" value="{x2;(isset(v:arg)?v:arg:'')}"/>
 										{x2;endtree}
                                         {x2;endif}
 									</div>

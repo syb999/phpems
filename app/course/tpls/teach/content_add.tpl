@@ -1,4 +1,4 @@
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 {x2;include:header}
 <body>
 {x2;include:nav}
@@ -10,8 +10,8 @@
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
 						<ol class="breadcrumb">
-							<li><a href="index.php?{x2;$_app}-teach">课程</a></li>
-							<li><a href="index.php?{x2;$_app}-teach-contents&page={x2;$page}">课件管理</a></li>
+							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-teach">课程</a></li>
+							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-teach-contents&page={x2;(isset($page)?$page:'')}">课件管理</a></li>
 							<li class="active">添加课件</li>
 						</ol>
 					</div>
@@ -19,7 +19,7 @@
 				<div class="box itembox" style="padding-top:10px;margin-bottom:0px;">
 					<h4 class="title" style="padding:10px;">
 						添加课件
-						<a class="btn btn-primary pull-right" href="index.php?{x2;$_app}-teach-contents&courseid={x2;$courseid}&page={x2;$page}">添加课件</a>
+						<a class="btn btn-primary pull-right" href="index.php?{x2;(isset($_app)?$_app:'')}-teach-contents&courseid={x2;(isset($courseid)?$courseid:'')}&page={x2;(isset($page)?$page:'')}">添加课件</a>
 					</h4>
 					<form action="index.php?course-teach-contents-add" method="post" class="form-horizontal">
 						<div class="form-group">
@@ -33,8 +33,8 @@
 				            <div class="col-sm-3">
 							    <select id="coursemoduleid" refreshjs="on" needle="needle" class="combox form-control" name="args[coursemoduleid]" refUrl="index.php?course-teach-module-moduleforms&moduleid={value}" target="courseforms">
 					            	<option value="">选择信息模型</option>
-					            	{x2;tree:$modules,module,mid}
-					            	<option value="{x2;v:module['moduleid']}">{x2;v:module['modulename']}</option>
+					            	{x2;tree:(array)($modules ?? []),module,mid}
+					            	<option value="{x2;(isset(v:module['moduleid'])?v:module['moduleid']:'')}">{x2;(isset(v:module['modulename'])?v:module['modulename']:'')}</option>
 					            	{x2;endtree}
 					            </select>
 					        </div>
@@ -79,13 +79,13 @@
 				            <div class="col-sm-9">
 					            <button class="btn btn-primary" type="submit">提交</button>
 					            <input type="hidden" name="submit" value="1">
-					            <input type="hidden" name="args[coursecsid]" value="{x2;$courseid}">
+					            <input type="hidden" name="args[coursecsid]" value="{x2;(isset($courseid)?$courseid:'')}">
 					        </div>
 				        </div>
 					</form>
 				</div>
 			</div>
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 		</div>
 	</div>
 </div>

@@ -1,4 +1,4 @@
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 {x2;include:header}
 <body>
 {x2;include:nav}
@@ -13,8 +13,8 @@
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
 						<ol class="breadcrumb">
-							<li><a href="index.php?{x2;$_app}-teach">{x2;$apps[$_app]['appname']}</a></li>
-							<li><a href="index.php?{x2;$_app}-teach-basic">考场管理</a></li>
+							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-teach">{x2;(isset($apps[$_app]['appname'])?$apps[$_app]['appname']:'')}</a></li>
+							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-teach-basic">考场管理</a></li>
 							<li class="active">添加考场</li>
 						</ol>
 					</div>
@@ -29,17 +29,17 @@
 						<div class="form-group">
 							<label for="basic" class="control-label col-sm-2">考场名称</label>
 							<div class="col-sm-6">
-								<input class="form-control" id="basic" name="args[basic]" type="text" value="{x2;$basic['basic']}" needle="needle" msg="您必须输入考场名称" />
+								<input class="form-control" id="basic" name="args[basic]" type="text" value="{x2;(isset($basic['basic'])?$basic['basic']:'')}" needle="needle" msg="您必须输入考场名称" />
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="control-label col-sm-2">考场状态</label>
 							<div class="col-sm-9">
 								<label class="radio-inline">
-									<input name="args[basicclosed]" type="radio" value="0" {x2;if:!$basic['basicclosed']}checked{x2;endif}/>开启
+									<input name="args[basicclosed]" type="radio" value="0" {x2;if:!empty($basic['basicclosed'])}checked{x2;endif}/>开启
 								</label>
 								<label class="radio-inline">
-									<input name="args[basicclosed]" type="radio" value="1" {x2;if:$basic['basicclosed']}checked{x2;endif}/>关闭
+									<input name="args[basicclosed]" type="radio" value="1" {x2;if:!empty($basic['basicclosed'])}checked{x2;endif}/>关闭
 								</label>
 							</div>
 						</div>
@@ -74,7 +74,7 @@
 						<div class="form-group">
 							<label for="basicapi" class="control-label col-sm-2">API标识</label>
 							<div class="col-sm-6">
-								<input class="form-control" id="basicapi" name="args[basicapi]" type="text" value="{x2;$basic['basicapi']}" datatype="datatable" max="12" msg="API标识为不超过12字符的英文或数字" />
+								<input class="form-control" id="basicapi" name="args[basicapi]" type="text" value="{x2;(isset($basic['basicapi'])?$basic['basicapi']:'')}" datatype="datatable" max="12" msg="API标识为不超过12字符的英文或数字" />
 								<span class="help-block">API标识用于对外提供接口信息，如果单独使用本系统无须填写</span>
 							</div>
 						</div>
@@ -83,8 +83,8 @@
 							<div class="col-sm-4">
 								<select class="form-control" id="basicsubjectid" name="args[basicsubjectid]" needle="needle" msg="您必须选择考试科目">
 				        		<option value="">选择科目</option>
-						  		{x2;tree:$subjects,subject,sid}
-						  		<option value="{x2;v:subject['subjectid']}"{x2;if:v:subject['subjectid'] == $basic['basicsubjectid']} selected{x2;endif}>{x2;v:subject['subject']}</option>
+						  		{x2;tree:(array)($subjects ?? []),subject,sid}
+						  		<option value="{x2;(isset(v:subject['subjectid'])?v:subject['subjectid']:'')}"{x2;if:v:subject['subjectid'] == $basic['basicsubjectid']} selected{x2;endif}>{x2;(isset(v:subject['subject'])?v:subject['subject']:'')}</option>
 						  		{x2;endtree}
 						  		</select>
 							</div>
@@ -94,8 +94,8 @@
 							<div class="col-sm-4">
 								<select class="form-control" id="basicareaid" name="args[basicareaid]" needle="needle" msg="您必须选择考试地区">
 				        		<option value="">选择地区</option>
-						  		{x2;tree:$areas,area,aid}
-						  		<option value="{x2;v:area['areaid']}"{x2;if:v:area['areaid'] == $basic['basicareaid']} selected{x2;endif}>{x2;v:area['area']}</option>
+						  		{x2;tree:(array)($areas ?? []),area,aid}
+						  		<option value="{x2;(isset(v:area['areaid'])?v:area['areaid']:'')}"{x2;if:v:area['areaid'] == $basic['basicareaid']} selected{x2;endif}>{x2;(isset(v:area['area'])?v:area['area']:'')}</option>
 						  		{x2;endtree}
 						  		</select>
 							</div>
@@ -104,10 +104,10 @@
 							<label class="control-label col-sm-2">做为免费考场</label>
 							<div class="col-sm-9">
 								<label class="radio-inline">
-									<input name="args[basicdemo]" type="radio" value="1" {x2;if:$basic['basicdemo']}checked{x2;endif}/>是
+									<input name="args[basicdemo]" type="radio" value="1" {x2;if:!empty($basic['basicdemo'])}checked{x2;endif}/>是
 								</label>
 								<label class="radio-inline">
-									<input name="args[basicdemo]" type="radio" value="0" {x2;if:!$basic['basicdemo']}checked{x2;endif}/>否
+									<input name="args[basicdemo]" type="radio" value="0" {x2;if:!empty($basic['basicdemo'])}checked{x2;endif}/>否
 								</label>
 								<span class="help-block">免费考场用户开通考场时不扣除积分</span>
 							</div>
@@ -115,7 +115,7 @@
 						<div class="form-group">
 							<label for="basicprice" class="control-label col-sm-2">价格设置</label>
 							<div class="col-sm-9">
-								<textarea class="form-control" rows="4" name="args[basicprice]" id="basicprice">{x2;$basic['basicprice']}</textarea>
+								<textarea class="form-control" rows="4" name="args[basicprice]" id="basicprice">{x2;(isset($basic['basicprice'])?$basic['basicprice']:'')}</textarea>
 							  	<span class="help-block">请按照“时长:开通所需积分”格式填写，每行一个，时长以天为单位，免费考场此设置无效。</span>
 							</div>
 						</div>
@@ -123,10 +123,10 @@
 							<label for="basic" class="control-label col-sm-2"></label>
 							<div class="col-sm-9">
 								<button class="btn btn-primary" type="submit">提交</button>
-								<input type="hidden" name="page" value="{x2;$page}"/>
+								<input type="hidden" name="page" value="{x2;(isset($page)?$page:'')}"/>
 								<input type="hidden" name="insertbasic" value="1"/>
-								{x2;tree:$search,arg,aid}
-								<input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>
+								{x2;tree:(array)($search ?? []),arg,aid}
+								<input type="hidden" name="search[{x2;(isset(v:key)?v:key:'')}]" value="{x2;(isset(v:arg)?v:arg:'')}"/>
 								{x2;endtree}
 							</div>
 						</div>
@@ -134,7 +134,7 @@
 					</form>
 				</div>
 			</div>
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 		</div>
 	</div>
 </div>

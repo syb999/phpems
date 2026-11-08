@@ -17,6 +17,7 @@ require_once 'lib/include/WxPay.Api.php';
 require_once 'lib/include/WxPay.Notify.php';
 require_once 'lib/include/WxPay.JsApiPay.php';
 
+#[\AllowDynamicProperties]
 class PayNotifyCallBack extends WxPayNotify
 {
     public function __construct($G)
@@ -75,6 +76,7 @@ class PayNotifyCallBack extends WxPayNotify
     }
 }
 
+#[\AllowDynamicProperties]
 class wxpay
 {
     public $G;

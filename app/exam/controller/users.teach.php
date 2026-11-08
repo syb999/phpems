@@ -10,6 +10,7 @@
  * This source file is subject to the MIT license that is bundled.
  */
 
+#[\AllowDynamicProperties]
 class action extends app
 {
     public function display()
@@ -380,7 +381,7 @@ class action extends app
             }
             $sessionvars['ehscore'] = $sumscore;
             $args['ehscorelist'] = $sessionvars['ehscorelist'];
-            $allnumber = floatval(count($sessionvars['ehscorelist']));
+            $allnumber = floatval(count((array) $sessionvars['ehscorelist']));
             $args['ehscore'] = $sessionvars['ehscore'];
             $args['ehstatus'] = 1;
             $this->favor->modifyExamHistory($args, $ehid);

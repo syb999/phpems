@@ -1,4 +1,4 @@
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 {x2;include:header}
 <body>
 <div id="content">
@@ -13,17 +13,17 @@
 			</h5>
 		</header>
 		<div class="container-fluid">
-            {x2;if:is_array($basics)}
-			{x2;tree:$basics,basic,bid}
+            {x2;if:isset($basics) && is_array($basics)}
+			{x2;tree:(array)($basics ?? []),basic,bid}
 			<div style="clear:both;overflow:hidden;background:#FFFFFF;margin-top:0.5rem;padding:0.8rem 0.2rem;">
 				<div class="col-xs-4">
-					<a href="index.php?{x2;$_app}-phone-index-setCurrentBasic&basicid={x2;v:basic['basicid']}" class="ajax" data-page="basic" data-target="basic"><img src="{x2;if:v:basic['basicthumb']}{x2;v:basic['basicthumb']}{x2;else}app/exam/styles/image/paper.png{x2;endif}" style="width:10rem;margin-top:0.5rem"/></a>
+					<a href="index.php?{x2;(isset($_app)?$_app:'')}-phone-index-setCurrentBasic&basicid={x2;(isset(v:basic['basicid'])?v:basic['basicid']:'')}" class="ajax" data-page="basic" data-target="basic"><img src="{x2;if:!empty(v:basic['basicthumb'])}{x2;(isset(v:basic['basicthumb'])?v:basic['basicthumb']:'')}{x2;else}app/exam/styles/image/paper.png{x2;endif}" style="width:10rem;margin-top:0.5rem"/></a>
 				</div>
 				<div class="col-xs-8" style="padding:0.2rem;">
 					<div class="text-left" style="padding:0.2rem;">
-						<a href="index.php?{x2;$_app}-phone-index-setCurrentBasic&basicid={x2;v:basic['basicid']}" class="ajax" data-page="basic" data-target="basic">
-							<h5>{x2;v:basic['basic']}</h5>
-							<p style="font-size:1rem;">{x2;v:basic['basicdescribe']}</p>
+						<a href="index.php?{x2;(isset($_app)?$_app:'')}-phone-index-setCurrentBasic&basicid={x2;(isset(v:basic['basicid'])?v:basic['basicid']:'')}" class="ajax" data-page="basic" data-target="basic">
+							<h5>{x2;(isset(v:basic['basic'])?v:basic['basic']:'')}</h5>
+							<p style="font-size:1rem;">{x2;(isset(v:basic['basicdescribe'])?v:basic['basicdescribe']:'')}</p>
 						</a>
 					</div>
 				</div>
@@ -33,7 +33,7 @@
 		</div>
 		{x2;include:footer}
 		</div>
-	{x2;if:!$userhash}
+	{x2;if:!empty($userhash)}
     </div>
 </div>
 </body>

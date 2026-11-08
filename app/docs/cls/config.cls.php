@@ -10,6 +10,7 @@
  * This source file is subject to the MIT license that is bundled.
  */
 
+#[\AllowDynamicProperties]
 class config_doc
 {
     public $fields = ['docid', 'doccatid', 'dockeywords', 'doccontentid', 'docinputtime', 'docmodifytime', 'docdescribe', 'doclock'];

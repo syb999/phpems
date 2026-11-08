@@ -11,15 +11,15 @@
 				</a>
 			</h4>
 			<div class="col-xs-12" style="padding-left:0px;">
-                {x2;tree:$contents['data'],content,cid}
+                {x2;tree:(array)($contents['data'] ?? []),content,cid}
 				<div class="col-xs-3" style="width:20%">
-					<a href="index.php?course-app-course&csid={x2;v:content['csid']}" class="thumbnail">
-						<img src="{x2;if:v:content['csthumb']}{x2;v:content['csthumb']}{x2;else}app/core/styles/img/item.jpg{x2;endif}" alt="" width="100%">
+					<a href="index.php?course-app-course&csid={x2;(isset(v:content['csid'])?v:content['csid']:'')}" class="thumbnail">
+						<img src="{x2;if:!empty(v:content['csthumb'])}{x2;(isset(v:content['csthumb'])?v:content['csthumb']:'')}{x2;else}app/core/styles/img/item.jpg{x2;endif}" alt="" width="100%">
 					</a>
-					<h5 class="text-center">{x2;v:content['cstitle']}</h5>
+					<h5 class="text-center">{x2;(isset(v:content['cstitle'])?v:content['cstitle']:'')}</h5>
 				</div>
                 {x2;endtree}
-				<ul class="pagination pagination-right">{x2;$contents['pages']}</ul>
+				<ul class="pagination pagination-right">{x2;(isset($contents['pages'])?$contents['pages']:'')}</ul>
 			</div>
 		</div>
 	</div>

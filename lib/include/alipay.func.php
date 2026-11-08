@@ -13,16 +13,11 @@
 function createLinkstring($para)
 {
     $arg = '';
-    while (list($key, $val) = each($para)) {
+    foreach ($para as $key => $val) {
         $arg .= $key.'='.$val.'&';
     }
     //去掉最后一个&字符
-    $arg = substr($arg, 0, count($arg) - 2);
-
-    //如果存在转义字符，那么去掉转义
-    if (get_magic_quotes_gpc()) {
-        $arg = stripslashes($arg);
-    }
+    $arg = substr($arg, 0, -1);
 
     return $arg;
 }
@@ -35,16 +30,11 @@ function createLinkstring($para)
 function createLinkstringUrlencode($para)
 {
     $arg = '';
-    while (list($key, $val) = each($para)) {
+    foreach ($para as $key => $val) {
         $arg .= $key.'='.urlencode($val).'&';
     }
     //去掉最后一个&字符
-    $arg = substr($arg, 0, count($arg) - 2);
-
-    //如果存在转义字符，那么去掉转义
-    if (get_magic_quotes_gpc()) {
-        $arg = stripslashes($arg);
-    }
+    $arg = substr($arg, 0, -1);
 
     return $arg;
 }
@@ -57,7 +47,7 @@ function createLinkstringUrlencode($para)
 function paraFilter($para)
 {
     $para_filter = [];
-    while (list($key, $val) = each($para)) {
+    foreach ($para as $key => $val) {
         if ('sign' == $key || 'sign_type' == $key || '' === $val) {
             continue;
         }
@@ -89,7 +79,7 @@ function logResult($word = '')
 {
     $fp = fopen('log.txt', 'a');
     flock($fp, LOCK_EX);
-    fwrite($fp, '执行日期：'.strftime('%Y%m%d%H%M%S', time())."\n".$word."\n");
+    fwrite($fp, '执行日期：'.date('YmdHis', time())."\n".$word."\n");
     flock($fp, LOCK_UN);
     fclose($fp);
 }

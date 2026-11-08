@@ -12,16 +12,16 @@
 					</ol>
 				</div>
 			</div>
-			{x2;tree:$contents['data'],content,cid}
+			{x2;tree:(array)($contents['data'] ?? []),content,cid}
 			<div class="box itembox" style="padding-top:20px;">
 				<div class="col-xs-3">
-					<a href="index.php?content-app-content&contentid={x2;v:content['contentid']}" class="thumbnail pull-left">
-						<img src="{x2;v:content['contentthumb']}" alt="" width="100%">
+					<a href="index.php?content-app-content&contentid={x2;(isset(v:content['contentid'])?v:content['contentid']:'')}" class="thumbnail pull-left">
+						<img src="{x2;(isset(v:content['contentthumb'])?v:content['contentthumb']:'')}" alt="" width="100%">
 					</a>
 				</div>
 				<div class="col-xs-9">
-					<a href="index.php?content-app-content&contentid={x2;v:content['contentid']}"><h4 class="title">{x2;v:content['contenttitle']}</h4></a>
-					<p>{x2;v:content['contentdescribe']}</p>
+					<a href="index.php?content-app-content&contentid={x2;(isset(v:content['contentid'])?v:content['contentid']:'')}"><h4 class="title">{x2;(isset(v:content['contenttitle'])?v:content['contenttitle']:'')}</h4></a>
+					<p>{x2;(isset(v:content['contentdescribe'])?v:content['contentdescribe']:'')}</p>
 					<hr/>
 					<p>
 						<span class="pull-right">

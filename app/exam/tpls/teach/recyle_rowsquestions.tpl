@@ -1,4 +1,4 @@
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 {x2;include:header}
 <body>
 {x2;include:nav}
@@ -13,7 +13,7 @@
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
 						<ol class="breadcrumb">
-							<li><a href="index.php?{x2;$_app}-teach">{x2;$apps[$_app]['appname']}</a></li>
+							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-teach">{x2;(isset($apps[$_app]['appname'])?$apps[$_app]['appname']:'')}</a></li>
 							<li><a href="index.php?exam-teach-recyle">回收站</a></li>
 							<li class="active">已删题冒题</li>
 						</ol>
@@ -37,19 +37,19 @@
 			                </tr>
 			            </thead>
 			            <tbody>
-		                    {x2;tree:$questions['data'],question,qid}
+		                    {x2;tree:(array)($questions['data'] ?? []),question,qid}
 					        <tr>
 								<td>
-									{x2;v:question['qrid']}
+									{x2;(isset(v:question['qrid'])?v:question['qrid']:'')}
 								</td>
 								<td>
-									{x2;$questypes[v:question['qrtype']]['questype']}
+									{x2;(isset($questypes[v:question['qrtype']]['questype'])?$questypes[v:question['qrtype']]['questype']:'')}
 								</td>
 								<td>
-									<a title="查看试题" class="selfmodal" href="javascript:;" url="index.php?exam-teach-rowsquestions-detail&questionid={x2;v:question['qrid']}&{x2;c:TIME}" data-target="#modal">{x2;realsubstring: v:question['qrquestion'],120}</a>
+									<a title="查看试题" class="selfmodal" href="javascript:;" url="index.php?exam-teach-rowsquestions-detail&questionid={x2;(isset(v:question['qrid'])?v:question['qrid']:'')}&{x2;c:TIME}" data-target="#modal">{x2;realsubstring: v:question['qrquestion'],120}</a>
 								</td>
 								<td>
-									{x2;v:question['qrusername']}
+									{x2;(isset(v:question['qrusername'])?v:question['qrusername']:'')}
 								</td>
 								<td>
 									{x2;date:v:question['qrtime'],'Y-m-d'}
@@ -59,8 +59,8 @@
 								</td>
 								<td>
 									<div class="btn-group">
-			                    		<a class="btn ajax" href="index.php?exam-teach-rowsquestions-backquestion&page={x2;$page}&questionid={x2;v:question['qrid']}{x2;$u}" title="恢复本题将会恢复本题下所有已删除子题"><em class="glyphicon glyphicon-edit"></em></a>
-										<a class="btn ajax" href="index.php?exam-teach-recyle-finaldelrowsquestion&page={x2;$page}&questionid={x2;v:question['qrid']}{x2;$u}" title="彻底删除"><em class="glyphicon glyphicon-remove"></em></a>
+			                    		<a class="btn ajax" href="index.php?exam-teach-rowsquestions-backquestion&page={x2;(isset($page)?$page:'')}&questionid={x2;(isset(v:question['qrid'])?v:question['qrid']:'')}{x2;(isset($u)?$u:'')}" title="恢复本题将会恢复本题下所有已删除子题"><em class="glyphicon glyphicon-edit"></em></a>
+										<a class="btn ajax" href="index.php?exam-teach-recyle-finaldelrowsquestion&page={x2;(isset($page)?$page:'')}&questionid={x2;(isset(v:question['qrid'])?v:question['qrid']:'')}{x2;(isset($u)?$u:'')}" title="彻底删除"><em class="glyphicon glyphicon-remove"></em></a>
 			                    	</div>
 			                    </td>
 					        </tr>
@@ -68,11 +68,11 @@
 			        	</tbody>
 			        </table>
 			        <ul class="pagination pull-right">
-						{x2;$questions['pages']}
+						{x2;(isset($questions['pages'])?$questions['pages']:'')}
 					</ul>
 				</div>
 			</div>
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 		</div>
 	</div>
 </div>

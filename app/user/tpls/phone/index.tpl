@@ -9,9 +9,9 @@
 			<h2 class="text-center">
 				<img src="app/core/styles/img/logo2.png" style="width:6rem;">
 			</h2>
-			<h4 class="text-center">{x2;$_user['username']} 积分:{x2;$_user['usercoin']}</h4>
+			<h4 class="text-center">{x2;(isset($_user['username'])?$_user['username']:'')} 积分:{x2;(isset($_user['usercoin'])?$_user['usercoin']:'')}</h4>
 		</div>
-		{x2;if:$_user['username'] != '888'}
+		{x2;if:(isset($_user['username']) ? $_user['username'] : null) != '888'}
 		<div style="width:95%;margin:auto;margin-top:0.6rem;background-color:#FFFFFF;overflow:hidden;padding:1.2rem;">
 			<a class="ajax" href="index.php?user-phone-payfor" data-target="page2" data-page="page2">积分充值 <span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
 		</div>

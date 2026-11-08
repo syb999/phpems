@@ -1,4 +1,4 @@
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 {x2;include:header}
 <body>
 <div id="content">
@@ -29,13 +29,13 @@
 									试题ID：
 								</td>
 								<td>
-									<input name="search[questionid]" class="form-control" size="10" type="text" class="number" value="{x2;$search['questionid']}"/>
+									<input name="search[questionid]" class="form-control" size="10" type="text" class="number" value="{x2;(isset($search['questionid'])?$search['questionid']:'')}"/>
 								</td>
 								<td>
 									关键字：
 								</td>
 								<td>
-									<input class="form-control" name="search[keyword]" size="10" type="text" value="{x2;$search['keyword']}"/>
+									<input class="form-control" name="search[keyword]" size="10" type="text" value="{x2;(isset($search['keyword'])?$search['keyword']:'')}"/>
 								</td>
 							</tr>
 							<tr>
@@ -45,8 +45,8 @@
 								<td>
 									<select name="search[questiontype]" class="form-control">
 										<option value="0">类型不限</option>
-										{x2;tree:$questypes,questype,qid}
-										<option value="{x2;v:questype['questid']}"{x2;if:$search['questiontype'] == v:questype['questid']} selected{x2;endif}>{x2;v:questype['questype']}</option>
+										{x2;tree:(array)($questypes ?? []),questype,qid}
+										<option value="{x2;(isset(v:questype['questid'])?v:questype['questid']:'')}"{x2;if:(isset($search['questiontype']) ? $search['questiontype'] : null) == v:questype['questid']} selected{x2;endif}>{x2;(isset(v:questype['questype'])?v:questype['questype']:'')}</option>
 										{x2;endtree}
 									</select>
 								</td>
@@ -57,9 +57,9 @@
 								<td>
 									<select name="search[questionlevel]" class="form-control">
 										<option value="0">难度不限</option>
-										<option value="1"{x2;if:$search['questionlevel'] == 1} selected{x2;endif}>易</option>
-										<option value="2"{x2;if:$search['questionlevel'] == 2} selected{x2;endif}>中</option>
-										<option value="3"{x2;if:$search['questionlevel'] == 3} selected{x2;endif}>难</option>
+										<option value="1"{x2;if:(isset($search['questionlevel']) ? $search['questionlevel'] : null) == 1} selected{x2;endif}>易</option>
+										<option value="2"{x2;if:(isset($search['questionlevel']) ? $search['questionlevel'] : null) == 2} selected{x2;endif}>中</option>
+										<option value="3"{x2;if:(isset($search['questionlevel']) ? $search['questionlevel'] : null) == 3} selected{x2;endif}>难</option>
 									</select>
 								</td>
 							</tr>
@@ -70,9 +70,9 @@
 								<td>
 									<select name="search[questionsectionid]" class="combox form-control" id="sectionselect" target="knowsselect" refUrl="index.php?exam-app-questions-getknowsbysectionid&sectionid={value}">
 									<option value="0">选择章节</option>
-									{x2;if:$sections}
-									{x2;tree:$sections,section,sid}
-									<option value="{x2;v:section['sectionid']}"{x2;if:v:section['sectionid'] == $search['questionsectionid']} selected{x2;endif}>{x2;v:section['section']}</option>
+									{x2;if:!empty($sections)}
+									{x2;tree:(array)($sections ?? []),section,sid}
+									<option value="{x2;(isset(v:section['sectionid'])?v:section['sectionid']:'')}"{x2;if:v:section['sectionid'] == $search['questionsectionid']} selected{x2;endif}>{x2;(isset(v:section['section'])?v:section['section']:'')}</option>
 									{x2;endtree}
 									{x2;endif}
 									</select>
@@ -83,9 +83,9 @@
 								<td>
 									<select name="search[questionknowsid]" id="knowsselect" class="form-control">
 										<option value="">选择知识点</option>
-										{x2;if:$knows}
-										{x2;tree:$knows,know,kid}
-										<option value="{x2;v:know['knowsid']}"{x2;if:v:know['knowsid'] == $search['questionknowsid']} selected{x2;endif}>{x2;v:know['knows']}</option>
+										{x2;if:!empty($knows)}
+										{x2;tree:(array)($knows ?? []),know,kid}
+										<option value="{x2;(isset(v:know['knowsid'])?v:know['knowsid']:'')}"{x2;if:v:know['knowsid'] == $search['questionknowsid']} selected{x2;endif}>{x2;(isset(v:know['knows'])?v:know['knows']:'')}</option>
 										{x2;endtree}
 										{x2;endif}
 									</select>
@@ -109,13 +109,13 @@
 							</tr>
 						</thead>
 						<tbody>
-							{x2;tree:$questions['data'],question,qid}
+							{x2;tree:(array)($questions['data'] ?? []),question,qid}
 							<tr>
 								<td>
-									{x2;$questypes[v:question['questiontype']]['questype']}
+									{x2;(isset($questypes[v:question['questiontype']]['questype'])?$questypes[v:question['questiontype']]['questype']:'')}
 								</td>
 								<td>
-									<a title="查看试题" class="ajax" data-target="questiondetail" data-page="questiondetail" href="index.php?exam-phone-questions-detail&questionid={x2;v:question['questionid']}">{x2;substring:strip_tags(html_entity_decode(v:question['question'])),135}</a>
+									<a title="查看试题" class="ajax" data-target="questiondetail" data-page="questiondetail" href="index.php?exam-phone-questions-detail&questionid={x2;(isset(v:question['questionid'])?v:question['questionid']:'')}">{x2;substring:strip_tags(html_entity_decode(v:question['question'])),135}</a>
 								</td>
 								<td>
 									{x2;if:v:question['questionlevel']==2}中{x2;elseif:v:question['questionlevel']==3}难{x2;elseif:v:question['questionlevel']==1}易{x2;endif}
@@ -125,12 +125,12 @@
 						</tbody>
 					</table>
 					<ul class="pagination pull-right">
-						{x2;$questions['pages']}
+						{x2;(isset($questions['pages'])?$questions['pages']:'')}
 					</ul>
 				</div>
 			</div>
 		</div>
-	{x2;if:!$userhash}
+	{x2;if:!empty($userhash)}
     </div>
 </div>
 </body>

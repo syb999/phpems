@@ -10,6 +10,7 @@
  * This source file is subject to the MIT license that is bundled.
  */
 
+#[\AllowDynamicProperties]
 class action extends app
 {
     public function display()
@@ -24,7 +25,7 @@ class action extends app
 
     private function index()
     {
-        if ($this->_user['sessionuserid']) {
+        if (!empty($this->_user['sessionuserid'])) {
             header('location:index.php?exam-phone');
             exit;
         }

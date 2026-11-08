@@ -26,6 +26,7 @@ define('SERIAL_DEVICE_OPENED', 2);
  *
  * @copyright under GPL 2 licence
  */
+#[\AllowDynamicProperties]
 class phpSerial
 {
     public $_device = null;

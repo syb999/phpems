@@ -10,6 +10,7 @@
  * This source file is subject to the MIT license that is bundled.
  */
 
+#[\AllowDynamicProperties]
 class ev
 {
     public $cookie;
@@ -43,7 +44,8 @@ class ev
 
     public function isWeixin()
     {
-        if (false !== strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger')) {
+        $ua = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
+        if (false !== strpos($ua, 'MicroMessenger')) {
             return true;
         }
 
@@ -53,8 +55,9 @@ class ev
     public function isMobile()
     {
         $_SERVER['ALL_HTTP'] = isset($_SERVER['ALL_HTTP']) ? $_SERVER['ALL_HTTP'] : '';
+        $ua = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
         $mobile_browser = '0';
-        if (preg_match('/(up.browser|up.link|mmp|symbian|smartphone|midp|wap|phone|iphone|ipad|ipod|android|xoom)/i', strtolower($_SERVER['HTTP_USER_AGENT']))) {
+        if (preg_match('/(up.browser|up.link|mmp|symbian|smartphone|midp|wap|phone|iphone|ipad|ipod|android|xoom)/i', strtolower($ua))) {
             ++$mobile_browser;
         }
         if ((isset($_SERVER['HTTP_ACCEPT'])) and (false !== strpos(strtolower($_SERVER['HTTP_ACCEPT']), 'application/vnd.wap.xhtml+xml'))) {
@@ -66,7 +69,7 @@ class ev
         if (isset($_SERVER['HTTP_PROFILE'])) {
             ++$mobile_browser;
         }
-        $mobile_ua = strtolower(substr($_SERVER['HTTP_USER_AGENT'], 0, 4));
+        $mobile_ua = strtolower(substr($ua, 0, 4));
         $mobile_agents = [
             'w3c ', 'acs-', 'alav', 'alca', 'amoi', 'audi', 'avan', 'benq', 'bird', 'blac',
             'blaz', 'brew', 'cell', 'cldc', 'cmd-', 'dang', 'doco', 'eric', 'hipt', 'inno',
@@ -84,10 +87,10 @@ class ev
         if (false !== strpos(strtolower($_SERVER['ALL_HTTP']), 'operamini')) {
             ++$mobile_browser;
         }
-        if (false !== strpos(strtolower($_SERVER['HTTP_USER_AGENT']), 'windows')) {
+        if (false !== strpos(strtolower($ua), 'windows')) {
             $mobile_browser = 0;
         }
-        if (false !== strpos(strtolower($_SERVER['HTTP_USER_AGENT']), 'windows phone')) {
+        if (false !== strpos(strtolower($ua), 'windows phone')) {
             ++$mobile_browser;
         }
         if ($mobile_browser > 0) {
@@ -114,6 +117,9 @@ class ev
             }
         } else {
             return false;
+        }
+        if (!isset($r[1])) {
+            $r[1] = '';
         }
         if (!$r[0] || !file_exists('app/'.$r[0].'/')) {
             $r[0] = $this->G->defaultApp;
@@ -165,9 +171,9 @@ class ev
             $time = 0;
         }
         if (CDO) {
-            setcookie(CH.$name, $value, $time, CP, CDO, false, false);
+            setcookie(CH.$name, (string) $value, $time, CP, CDO, false, false);
         } else {
-            setcookie(CH.$name, $value, $time, CP, '', false, false);
+            setcookie(CH.$name, (string) $value, $time, CP, '', false, false);
         }
     }
 
@@ -240,7 +246,7 @@ class ev
                 $data[$key] = $this->stripSlashes($value);
             }
         } else {
-            $data = stripslashes(trim($data));
+            $data = stripslashes(trim((string) $data));
         }
 
         return $data;

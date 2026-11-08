@@ -10,6 +10,7 @@
  * This source file is subject to the MIT license that is bundled.
  */
 
+#[\AllowDynamicProperties]
 class app
 {
     public $G;
@@ -29,7 +30,7 @@ class app
         $this->session = $this->G->make('session');
         $this->user = $this->G->make('user', 'user');
         $this->_user = $this->session->getSessionUser();
-        if (!$this->_user['sessionuserid']) {
+        if (empty($this->_user['sessionuserid'])) {
             if ($this->ev->get('userhash')) {
                 exit(json_encode([
                 'statusCode' => 301,
@@ -43,7 +44,7 @@ class app
             exit;
         }
         $this->ce = $this->G->make('ce', 'certificate');
-        $this->tpl->assign('_user', $this->user->getUserById($this->_user['sessionuserid']));
+        $this->tpl->assign('_user', $this->user->getUserById(isset($this->_user['sessionuserid']) ? $this->_user['sessionuserid'] : 0));
         $this->tpl->assign('userhash', $this->ev->get('userhash'));
     }
 }

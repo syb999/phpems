@@ -10,6 +10,7 @@
  * This source file is subject to the MIT license that is bundled.
  */
 
+#[\AllowDynamicProperties]
 class app
 {
     public $G;
@@ -31,7 +32,7 @@ class app
         $this->tpl->assign('userhash', $this->ev->get('userhash'));
         $this->_user = $_user = $this->session->getSessionUser();
         $this->order = $this->G->make('orders', 'bank');
-        if ($_user['sessionuserid']) {
+        if (!empty($_user['sessionuserid'])) {
             $this->tpl->assign('_user', $this->user->getUserById($_user['sessionuserid']));
         }
         $this->tpl->assign('userhash', $this->ev->get('userhash'));

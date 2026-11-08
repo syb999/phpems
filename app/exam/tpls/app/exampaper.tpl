@@ -9,8 +9,8 @@
 					<ol class="breadcrumb">
 					  <li><a href="index.php">首页</a></li>
 					  <li><a href="index.php?exam-app">考试</a></li>
-					  <li><a href="index.php?exam-app-basics">{x2;$data['currentbasic']['basic']}</a></li>
-					  <li class="active">{x2;$data['currentbasic']['basic']}</li>
+					  <li><a href="index.php?exam-app-basics">{x2;(isset($data['currentbasic']['basic'])?$data['currentbasic']['basic']:'')}</a></li>
+					  <li class="active">{x2;(isset($data['currentbasic']['basic'])?$data['currentbasic']['basic']:'')}</li>
 					</ol>
 				</div>
 			</div>
@@ -25,25 +25,25 @@
 	                </ul>
                 </div>
                 <div class="col-xs-12" style="padding-left:0px;">
-        			{x2;tree:$exams['data'],exam,eid}
+        			{x2;tree:(array)($exams['data'] ?? []),exam,eid}
 					<div class="col-xs-3" style="width:20%">
 						{x2;if:$data['currentbasic']['basicexam']['examnumber'] > 0 && $number['child'][v:exam['examid']] >= $data['currentbasic']['basicexam']['examnumber']}
-							<a action-before="clearStorage" href="index.php?exam-app-exampaper-selectquestions&examid={x2;v:exam['examid']}" class="thumbnail ajax" style="position:relative;">
+							<a action-before="clearStorage" href="index.php?exam-app-exampaper-selectquestions&examid={x2;(isset(v:exam['examid'])?v:exam['examid']:'')}" class="thumbnail ajax" style="position:relative;">
 							<img src="app/core/styles/img/opened.png" style="position:absolute;right:4px;top:4px;">
 						{x2;else}
-							<a action-before="clearStorage" href="index.php?exam-app-exampaper-selectquestions&examid={x2;v:exam['examid']}" class="thumbnail ajax" style="position:relative;">
+							<a action-before="clearStorage" href="index.php?exam-app-exampaper-selectquestions&examid={x2;(isset(v:exam['examid'])?v:exam['examid']:'')}" class="thumbnail ajax" style="position:relative;">
 						{x2;endif}
 							<img src="app/core/styles/img/item.jpg" alt="" width="100%">
 						</a>
 						<h5 class="text-center">
-							{x2;v:exam['exam']}
+							{x2;(isset(v:exam['exam'])?v:exam['exam']:'')}
 						</h5>
 					</div>
 					{x2;if:v:eid % 5 == 0}
 					<div class="col-xs-12"><hr /></div>
 					{x2;endif}
 					{x2;endtree}
-					<ul class="pagination pull-right">{x2;$exams['pages']}</ul>
+					<ul class="pagination pull-right">{x2;(isset($exams['pages'])?$exams['pages']:'')}</ul>
                 </div>
 			</div>
 		</div>

@@ -1,4 +1,4 @@
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 {x2;include:header}
 <body>
 {x2;include:nav}
@@ -13,7 +13,7 @@
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
 						<ol class="breadcrumb">
-							<li><a href="index.php?{x2;$_app}-master">{x2;$apps[$_app]['appname']}</a></li>
+							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master">{x2;(isset($apps[$_app]['appname'])?$apps[$_app]['appname']:'')}</a></li>
 							<li class="active">增加人员</li>
 						</ol>
 					</div>
@@ -21,7 +21,7 @@
 				<div class="box itembox" style="padding-top:10px;margin-bottom:0px;">
 					<h4 class="title" style="padding:10px;">
 						增加人员
-						<a class="btn btn-primary pull-right" href="index.php?{x2;$_app}-master-course-members&courseid={x2;$courseid}">人员列表</a>
+						<a class="btn btn-primary pull-right" href="index.php?{x2;(isset($_app)?$_app:'')}-master-course-members&courseid={x2;(isset($courseid)?$courseid:'')}">人员列表</a>
 					</h4>
 					<div id="tabs-260773" class="tabbable">
 						<ul class="nav nav-tabs" style="margin-bottom:20px;">
@@ -37,7 +37,7 @@
 						</ul>
 						<div class="tab-content">
 							<div id="panel-65699" class="tab-pane">
-								<form action="index.php?{x2;$_app}-master-course-addmember" method="post" class="form-horizontal">
+								<form action="index.php?{x2;(isset($_app)?$_app:'')}-master-course-addmember" method="post" class="form-horizontal">
 									<div class="form-group">
 										<label class="control-label col-sm-2">用户名：</label>
 									  	<div class="col-sm-9">
@@ -55,15 +55,15 @@
 									  	<label class="control-label col-sm-2"></label>
 									  	<div class="col-sm-9">
 										  	<button class="btn btn-primary" type="submit">提交</button>
-										  	<input type="hidden" name="page" value="{x2;$page}"/>
+										  	<input type="hidden" name="page" value="{x2;(isset($page)?$page:'')}"/>
 										  	<input type="hidden" name="addmember" value="1"/>
-										  	<input type="hidden" name="courseid" value="{x2;$courseid}"/>
+										  	<input type="hidden" name="courseid" value="{x2;(isset($courseid)?$courseid:'')}"/>
 										</div>
 									</div>
 								</form>
 							</div>
 							<div id="panel-880294" class="tab-pane active">
-								<form action="index.php?{x2;$_app}-master-course-addmember" method="post" class="form-horizontal">
+								<form action="index.php?{x2;(isset($_app)?$_app:'')}-master-course-addmember" method="post" class="form-horizontal">
 									<div class="form-group">
 										<label class="control-label col-sm-2">用户ID：</label>
 									  	<div class="col-sm-9">
@@ -81,15 +81,15 @@
 									  	<label class="control-label col-sm-2"></label>
 									  	<div class="col-sm-9">
 										  	<button class="btn btn-primary" type="submit">提交</button>
-										  	<input type="hidden" name="page" value="{x2;$page}"/>
+										  	<input type="hidden" name="page" value="{x2;(isset($page)?$page:'')}"/>
 										  	<input type="hidden" name="addmember" value="1"/>
-										  	<input type="hidden" name="courseid" value="{x2;$courseid}"/>
+										  	<input type="hidden" name="courseid" value="{x2;(isset($courseid)?$courseid:'')}"/>
 										</div>
 									</div>
 								</form>
 							</div>
 							<div id="panel-888294" class="tab-pane">
-								<form action="index.php?{x2;$_app}-master-course-addmember" method="post" class="form-horizontal">
+								<form action="index.php?{x2;(isset($_app)?$_app:'')}-master-course-addmember" method="post" class="form-horizontal">
 									<div class="form-group">
 										<label class="control-label col-sm-2">用户组ID：</label>
 									  	<div class="col-sm-9">
@@ -107,9 +107,9 @@
 									  	<label class="control-label col-sm-2"></label>
 									  	<div class="col-sm-9">
 										  	<button class="btn btn-primary" type="submit">提交</button>
-										  	<input type="hidden" name="page" value="{x2;$page}"/>
+										  	<input type="hidden" name="page" value="{x2;(isset($page)?$page:'')}"/>
 										  	<input type="hidden" name="addmember" value="1"/>
-										  	<input type="hidden" name="courseid" value="{x2;$courseid}"/>
+										  	<input type="hidden" name="courseid" value="{x2;(isset($courseid)?$courseid:'')}"/>
 										</div>
 									</div>
 								</form>
@@ -118,7 +118,7 @@
 					</div>
 				</div>
 			</div>
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 		</div>
 	</div>
 </div>

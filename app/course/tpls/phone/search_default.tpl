@@ -13,16 +13,16 @@
 					</ol>
 				</div>
 			</div>
-			{x2;tree:$contents['data'],content,cid}
+			{x2;tree:(array)($contents['data'] ?? []),content,cid}
 			<div class="box itembox" style="padding-top:20px;">
 				<div class="col-xs-3">
-					<a href="index.php?course-app-course&csid={x2;v:content['csid']}" class="thumbnail pull-left">
-						<img src="{x2;v:content['csthumb']}" alt="" width="100%">
+					<a href="index.php?course-app-course&csid={x2;(isset(v:content['csid'])?v:content['csid']:'')}" class="thumbnail pull-left">
+						<img src="{x2;(isset(v:content['csthumb'])?v:content['csthumb']:'')}" alt="" width="100%">
 					</a>
 				</div>
 				<div class="col-xs-9">
-					<a href="index.php?course-app-course&csid={x2;v:content['csid']}"><h4 class="title">{x2;v:content['cstitle']}</h4></a>
-					<p>{x2;realhtml:v:content['csdescribe']}</p>
+					<a href="index.php?course-app-course&csid={x2;(isset(v:content['csid'])?v:content['csid']:'')}"><h4 class="title">{x2;(isset(v:content['cstitle'])?v:content['cstitle']:'')}</h4></a>
+					<p>{x2;(isset(realhtml:v:content['csdescribe'])?realhtml:v:content['csdescribe']:'')}</p>
 					<hr/>
 					<p>
 						<span class="pull-right">
@@ -33,7 +33,7 @@
 				</div>
 			</div>
 			{x2;endtree}
-			<ul class="pagination pagination-right">{x2;$categorys['pages']}</ul>
+			<ul class="pagination pagination-right">{x2;(isset($categorys['pages'])?$categorys['pages']:'')}</ul>
 		</div>
 	</div>
 </div>

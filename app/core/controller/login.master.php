@@ -10,6 +10,7 @@
  * This source file is subject to the MIT license that is bundled.
  */
 
+#[\AllowDynamicProperties]
 class action extends app
 {
     public function display()
@@ -34,7 +35,7 @@ class action extends app
                 if ($user['userid']) {
                     if ($user['userpassword'] == md5($args['userpassword'])) {
                         $group = $this->user->getGroupById($user['groupid']);
-                        if (1 != $group['groupmoduleid']) {
+                        if (1 != (isset($group['groupmoduleid']) ? $group['groupmoduleid'] : 0)) {
                             exit(json_encode([
                                 'statusCode' => 300,
                                 'message' => '您无权进入后台',

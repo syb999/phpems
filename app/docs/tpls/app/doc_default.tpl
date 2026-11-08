@@ -12,18 +12,18 @@
 					<div class="col-xs-12">
 						<ol class="breadcrumb">
 							<li><a href="index.php">首页</a></li>
-							<li class="active"><a href="index.php?docs-app-category&catid={x2;$cat['catid']}">{x2;$cat['catname']}</a></li>
+							<li class="active"><a href="index.php?docs-app-category&catid={x2;(isset($cat['catid'])?$cat['catid']:'')}">{x2;(isset($cat['catname'])?$cat['catname']:'')}</a></li>
 
 						</ol>
 					</div>
 				</div>
 				<div class="box itembox">
 					<div class="col-xs-12">
-						<h2 class="text-left">{x2;$doc['doctitle']}
+						<h2 class="text-left">{x2;(isset($doc['doctitle'])?$doc['doctitle']:'')}
 							<span class="pull-right">
-								<a class="btn btn-primary" href="index.php?docs-app-docs-history&docid={x2;$doc['docid']}">历史版本</a>
-								{x2;if:$_user['userid']}
-								<a class="btn btn-danger" href="index.php?docs-app-mydoc-edit&docid={x2;$doc['docid']}">编辑词条</a>
+								<a class="btn btn-primary" href="index.php?docs-app-docs-history&docid={x2;(isset($doc['docid'])?$doc['docid']:'')}">历史版本</a>
+								{x2;if:!empty($_user['userid'])}
+								<a class="btn btn-danger" href="index.php?docs-app-mydoc-edit&docid={x2;(isset($doc['docid'])?$doc['docid']:'')}">编辑词条</a>
 								{x2;else}
 								<a class="btn btn-danger" href="javascript:;" onclick="javascript:$.loginbox.show();">编辑词条</a>
 								{x2;endif}
@@ -31,14 +31,14 @@
 						</h2>
 					</div>
 					<div class="col-xs-12" id="content">
-						{x2;realhtml:$doc['content']['dhcontent']}
+						{x2;(isset(realhtml:$doc['content']['dhcontent'])?realhtml:$doc['content']['dhcontent']:'')}
 					</div>
 					<div class="col-xs-12">
 						<hr/>
 						<p>
 							<span class="pull-right">
-								<em>创建时间：{x2;date:$doc['docinputtime'],'Y-m-d H:i:s'}</em>&nbsp;&nbsp;
-								<em>本版最后修改时间：{x2;date:$doc['content']['dhtime'],'Y-m-d H:i:s'}</em>
+								<em>创建时间：{x2;date:$doc['docinputtime'] ?? 0,'Y-m-d H:i:s'}</em>&nbsp;&nbsp;
+								<em>本版最后修改时间：{x2;date:$doc['content']['dhtime'] ?? 0,'Y-m-d H:i:s'}</em>
 							</span>
 						</p>
 					</div>

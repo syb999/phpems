@@ -40,15 +40,15 @@
 					<span class="input-group-addon" id="basic-addon1"><a class="glyphicon glyphicon-lock"></a></span>
 					<input class="form-control"  name="repeatpassword" datatype="password" needle="needle" msg="请再次输入密码" placeholder="请再次输入密码" type="password">
 				</div>
-        		{x2;if:$app['appsetting']['registype']}
-				{x2;tree:$forms,form,fid}
+        		{x2;if:!empty($app['appsetting']['registype'])}
+				{x2;tree:(array)($forms ?? []),form,fid}
 				<div class="form-group input-group">
 					<span class="input-group-addon" id="basic-addon1"><a class="glyphicon glyphicon-config"></a></span>
-					{x2;v:form['html']}
+					{x2;(isset(v:form['html'])?v:form['html']:'')}
 				</div>
                 {x2;endtree}
 				{x2;endif}
-				{x2;if:$app['appsetting']['closeregist']}
+				{x2;if:!empty($app['appsetting']['closeregist'])}
 				<button type="button" class="btn btn-primary btn-block" style="line-height:3rem;">管理员禁止用户注册</button>
 				{x2;else}
 				<button type="submit" class="btn btn-primary btn-block" style="line-height:3rem;">注册</button>

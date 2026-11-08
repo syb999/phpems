@@ -1,4 +1,4 @@
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 {x2;include:header}
 <body>
 <div id="content">
@@ -32,7 +32,7 @@
 				</form>
 			</div>
 		</div>
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
     </div>
 </div>
 </body>

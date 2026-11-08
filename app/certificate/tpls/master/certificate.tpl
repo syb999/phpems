@@ -1,4 +1,4 @@
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 {x2;include:header}
 <body>
 {x2;include:nav}
@@ -13,7 +13,7 @@
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
 						<ol class="breadcrumb">
-							<li><a href="index.php?{x2;$_app}-master">{x2;$apps[$_app]['appname']}</a></li>
+							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master">{x2;(isset($apps[$_app]['appname'])?$apps[$_app]['appname']:'')}</a></li>
 							<li class="active">证书管理</li>
 						</ol>
 					</div>
@@ -35,24 +35,24 @@
 			                </tr>
 			            </thead>
 			            <tbody>
-			            	{x2;tree:$certificates['data'],certificate,cid}
+			            	{x2;tree:(array)($certificates['data'] ?? []),certificate,cid}
 			            	<tr>
-			                    <td>{x2;v:certificate['ceid']}</td>
-			                    <td class="picture"><img src="{x2;if:v:certificate['cethumb']}{x2;v:certificate['cethumb']}{x2;else}app/core/styles/images/noupload.gif{x2;endif}" alt="" style="width:60px;"/></td>
+			                    <td>{x2;(isset(v:certificate['ceid'])?v:certificate['ceid']:'')}</td>
+			                    <td class="picture"><img src="{x2;if:!empty(v:certificate['cethumb'])}{x2;(isset(v:certificate['cethumb'])?v:certificate['cethumb']:'')}{x2;else}app/core/styles/images/noupload.gif{x2;endif}" alt="" style="width:60px;"/></td>
 			                    <td>
-			                        {x2;v:certificate['cetitle']}
+			                        {x2;(isset(v:certificate['cetitle'])?v:certificate['cetitle']:'')}
 			                    </td>
 			                    <td>
-			                        {x2;v:certificate['ceprice']}
+			                        {x2;(isset(v:certificate['ceprice'])?v:certificate['ceprice']:'')}
 			                    </td>
 			                    <td>
 			                    	{x2;date:v:certificate['cetime'],'Y-m-d'}
 			                    </td>
 			                    <td class="actions">
 			                    	<div class="btn-group">
-			                    		<a class="btn" href="index.php?certificate-master-certificate-queue&ceid={x2;v:certificate['ceid']}&page={x2;$page}{x2;$u}" title="列表"><em class="glyphicon glyphicon-list"></em></a>
-			                    		<a class="btn" href="index.php?certificate-master-certificate-modify&ceid={x2;v:certificate['ceid']}&page={x2;$page}{x2;$u}" title="修改"><em class="glyphicon glyphicon-edit"></em></a>
-										<a class="btn confirm" href="index.php?certificate-master-certificate-del&ceid={x2;v:certificate['ceid']}&page={x2;$page}{x2;$u}" title="删除"><em class="glyphicon glyphicon-remove"></em></a>
+			                    		<a class="btn" href="index.php?certificate-master-certificate-queue&ceid={x2;(isset(v:certificate['ceid'])?v:certificate['ceid']:'')}&page={x2;(isset($page)?$page:'')}{x2;(isset($u)?$u:'')}" title="列表"><em class="glyphicon glyphicon-list"></em></a>
+			                    		<a class="btn" href="index.php?certificate-master-certificate-modify&ceid={x2;(isset(v:certificate['ceid'])?v:certificate['ceid']:'')}&page={x2;(isset($page)?$page:'')}{x2;(isset($u)?$u:'')}" title="修改"><em class="glyphicon glyphicon-edit"></em></a>
+										<a class="btn confirm" href="index.php?certificate-master-certificate-del&ceid={x2;(isset(v:certificate['ceid'])?v:certificate['ceid']:'')}&page={x2;(isset($page)?$page:'')}{x2;(isset($u)?$u:'')}" title="删除"><em class="glyphicon glyphicon-remove"></em></a>
 			                    	</div>
 			                    </td>
 			                </tr>
@@ -60,11 +60,11 @@
 			        	</tbody>
 			        </table>
 					<ul class="pagination pull-right">
-						{x2;$certificates['pages']}
+						{x2;(isset($certificates['pages'])?$certificates['pages']:'')}
 					</ul>
 				</div>
 			</div>
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 		</div>
 	</div>
 </div>

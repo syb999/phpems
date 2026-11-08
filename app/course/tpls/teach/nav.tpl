@@ -26,18 +26,18 @@
 			</div>
 			<div class="col-xs-2" style="padding-top:22px;">
 				<ul class="list-unstyled list-inline">
-                    {x2;if:$_user['userid']}
+                    {x2;if:!empty($_user['userid'])}
 					<li>
 						<div class="btn-group">
-							<button type="button" class="btn btn-info"><em class="glyphicon glyphicon-user"></em> {x2;$_user['username']}</button>
+							<button type="button" class="btn btn-info"><em class="glyphicon glyphicon-user"></em> {x2;(isset($_user['username'])?$_user['username']:'')}</button>
 							<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								<span class="caret"></span>
 								<span class="sr-only">Toggle Dropdown</span>
 							</button>
 							<ul class="dropdown-menu">
 								<li><a href="index.php?user-center"><em class="glyphicon glyphicon-user"></em> 用户中心</a></li>
-                                {x2;if:$_user['teacher_subjects']}<li><a href="index.php?exam-teach"><em class="glyphicon glyphicon-book"></em> 教师管理</a></li>{x2;endif}
-                                {x2;if:$_user['groupid'] == 1}<li><a href="index.php?core-master"><em class="glyphicon glyphicon-dashboard"></em> 后台管理</a></li>{x2;endif}
+                                {x2;if:!empty($_user['teacher_subjects'])}<li><a href="index.php?exam-teach"><em class="glyphicon glyphicon-book"></em> 教师管理</a></li>{x2;endif}
+                                {x2;if:(isset($_user['groupid']) ? $_user['groupid'] : null) == 1}<li><a href="index.php?core-master"><em class="glyphicon glyphicon-dashboard"></em> 后台管理</a></li>{x2;endif}
 								<li><a class="ajax" href="index.php?user-app-logout"><em class="glyphicon glyphicon-log-out"></em> 退出</a></li>
 							</ul>
 						</div>

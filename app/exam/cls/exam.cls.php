@@ -10,8 +10,10 @@
  * This source file is subject to the MIT license that is bundled.
  */
 
+#[\AllowDynamicProperties]
 class exam_exam
 {
+    public $init = 0;
     public $G;
 
     public function __construct(&$G)

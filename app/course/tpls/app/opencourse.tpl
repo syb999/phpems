@@ -1,4 +1,4 @@
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 {x2;include:header}
 <body>
 {x2;include:nav}
@@ -14,7 +14,7 @@
 					<a href="index.php?course-app-index-lists">开通课程</a>
 				</li>
 				<li class="active">
-					{x2;$course['cstitle']}
+					{x2;(isset($course['cstitle'])?$course['cstitle']:'')}
 				</li>
 			</ul>
 		</div>
@@ -22,30 +22,30 @@
 			<h4 class="title">开通课程</h4>
 			<div class="col-xs-1"></div>
 			<div class="col-xs-3" style="padding-top:30px;">
-				<div class="thumbnail"><img alt="300x200" src="{x2;if:$course['csthumb']}{x2;$course['csthumb']}{x2;else}app/exam/styles/image/paper.png{x2;endif}" /></div>
+				<div class="thumbnail"><img alt="300x200" src="{x2;if:!empty($course['csthumb'])}{x2;(isset($course['csthumb'])?$course['csthumb']:'')}{x2;else}app/exam/styles/image/paper.png{x2;endif}" /></div>
 			</div>
 			<div class="col-xs-1"></div>
 			<div class="col-xs-7">
 				<div class="caption">
-					<h4 class="title">{x2;$course['cstitle']}</h4>
+					<h4 class="title">{x2;(isset($course['cstitle'])?$course['cstitle']:'')}</h4>
 					<p>&nbsp;</p>
-					<p>您现有积分：{x2;$_user['usercoin']} （<a href="index.php?user-center-payfor">支付宝充值</a> / <a href="#myModal" role="button" data-toggle="modal">代金券充值</a>）</p>
-					{x2;if:$isopen}<p>到期时间：{x2;date:$isopen['ocendtime'],'Y-m-d'}</p>{x2;endif}
+					<p>您现有积分：{x2;(isset($_user['usercoin'])?$_user['usercoin']:'')} （<a href="index.php?user-center-payfor">支付宝充值</a> / <a href="#myModal" role="button" data-toggle="modal">代金券充值</a>）</p>
+					{x2;if:!empty($isopen)}<p>到期时间：{x2;date:$isopen['ocendtime'] ?? 0,'Y-m-d'}</p>{x2;endif}
 				</div>
-				{x2;if:!$isopen}
+				{x2;if:!empty($isopen)}
 				<form action="index.php?course-app-course-opencourse" method="post">
-					{x2;if:!$course['csdemo']}
-						{x2;if:$price}
+					{x2;if:!empty($course['csdemo'])}
+						{x2;if:!empty($price)}
 						<p>
 							<select name="opentype" class="form-control" style="width:180px;">
-								{x2;tree:$price,p,pid}
-								<option value="{x2;v:key}">{x2;v:p['price']}积分兑换{x2;v:p['time']}天</option>
+								{x2;tree:(array)($price ?? []),p,pid}
+								<option value="{x2;(isset(v:key)?v:key:'')}">{x2;(isset(v:p['price'])?v:p['price']:'')}积分兑换{x2;(isset(v:p['time'])?v:p['time']:'')}天</option>
 								{x2;endtree}
 							</select>
 						</p>
 						<p>&nbsp;</p>
 						<p>
-							<input value="{x2;$course['csid']}" name="csid" type="hidden"/>
+							<input value="{x2;(isset($course['csid'])?$course['csid']:'')}" name="csid" type="hidden"/>
 							<input value="1" name="opencs" type="hidden"/>
 							<input class="btn btn-primary" value="开通" type="submit"/>
 						</p>
@@ -58,7 +58,7 @@
 					{x2;else}
 					<p>&nbsp;</p>
 					<p>
-						<input value="{x2;$course['csid']}" name="csid" type="hidden"/>
+						<input value="{x2;(isset($course['csid'])?$course['csid']:'')}" name="csid" type="hidden"/>
 						<input value="1" name="opencs" type="hidden"/>
 						<input class="btn btn-primary" value="开通" type="submit"/>
 					</p>
@@ -67,7 +67,7 @@
 				{x2;else}
 				<p>&nbsp;</p>
 				<p>
-					<a class="btn btn-primary" href="index.php?course-app-course&csid={x2;$course['csid']}">开始学习</a>
+					<a class="btn btn-primary" href="index.php?course-app-course&csid={x2;(isset($course['csid'])?$course['csid']:'')}">开始学习</a>
 				</p>
 				{x2;endif}
 			</div>

@@ -11,6 +11,7 @@
  */
 
 session_start();
+#[\AllowDynamicProperties]
 class app
 {
     public $G;
@@ -29,7 +30,7 @@ class app
         $this->user = $this->G->make('user', 'user');
         $this->order = $this->G->make('orders', 'bank');
         $this->_user = $_user = $this->session->getSessionUser();
-        if (!$_user['sessionuserid']) {
+        if (empty($_user['sessionuserid'])) {
             if ($this->ev->get('userhash')) {
                 exit(json_encode([
                 'statusCode' => 301,

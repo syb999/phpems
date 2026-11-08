@@ -10,6 +10,7 @@
  * This source file is subject to the MIT license that is bundled.
  */
 
+#[\AllowDynamicProperties]
 class action extends app
 {
     public function display()
@@ -40,7 +41,13 @@ class action extends app
     {
         $dhid = $this->ev->get('dhid');
         $history = $this->doc->getDocHistroyById($dhid);
+        if (!is_array($history) || !$history) {
+            $this->G->R(['statusCode' => 404, 'message' => '该版本不存在', 'callbackType' => 'forward', 'forwardUrl' => 'index.php?docs-app']);
+        }
         $doc = $this->doc->getDocById($history['dhdocid']);
+        if (!is_array($doc) || !$doc) {
+            $this->G->R(['statusCode' => 404, 'message' => '文档不存在', 'callbackType' => 'forward', 'forwardUrl' => 'index.php?docs-app']);
+        }
         $doc['content'] = $history;
         $this->tpl->assign('doc', $doc);
         $this->tpl->display('history_view');
@@ -50,8 +57,12 @@ class action extends app
     {
         $docid = $this->ev->get('docid');
         $doc = $this->doc->getDocById($docid);
-        $catbread = $this->category->getCategoryPos($doc['doccatid']);
-        $cat = $this->category->getCategoryById($doc['doccatid']);
+        if (!is_array($doc) || !$doc) {
+            $this->G->R(['statusCode' => 404, 'message' => '文档不存在或已删除', 'callbackType' => 'forward', 'forwardUrl' => 'index.php']);
+        }
+        $doccatid = isset($doc['doccatid']) ? $doc['doccatid'] : 0;
+        $catbread = $this->category->getCategoryPos($doccatid);
+        $cat = $this->category->getCategoryById($doccatid);
         $template = 'doc_default';
         $this->tpl->assign('cat', $cat);
         $this->tpl->assign('catbread', $catbread);

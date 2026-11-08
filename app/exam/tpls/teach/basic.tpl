@@ -1,4 +1,4 @@
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 {x2;include:header}
 <body>
 {x2;include:nav}
@@ -13,7 +13,7 @@
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
 						<ol class="breadcrumb">
-							<li><a href="index.php?{x2;$_app}-teach">{x2;$apps[$_app]['appname']}</a></li>
+							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-teach">{x2;(isset($apps[$_app]['appname'])?$apps[$_app]['appname']:'')}</a></li>
 							<li class="active">考场管理</li>
 						</ol>
 					</div>
@@ -39,13 +39,13 @@
 									考场ID：
 								</td>
 								<td>
-									<input name="search[basicid]" class="form-control" type="text" class="number" value="{x2;$search['basicid']}"/>
+									<input name="search[basicid]" class="form-control" type="text" class="number" value="{x2;(isset($search['basicid'])?$search['basicid']:'')}"/>
 								</td>
 								<td>
 									关键字：
 								</td>
 								<td>
-									<input class="form-control" name="search[keyword]" type="text" value="{x2;$search['keyword']}"/>
+									<input class="form-control" name="search[keyword]" type="text" value="{x2;(isset($search['keyword'])?$search['keyword']:'')}"/>
 								</td>
 								<td>
 									地区：
@@ -53,8 +53,8 @@
 					        	<td>
 					        		<select name="search[basicareaid]" class="form-control">
 						        		<option value="0">选择地区</option>
-								  		{x2;tree:$areas,area,aid}
-								  		<option value="{x2;v:area['areaid']}"{x2;if:v:area['areaid'] == $search['basicareaid']} selected{x2;endif}>{x2;v:area['area']}</option>
+								  		{x2;tree:(array)($areas ?? []),area,aid}
+								  		<option value="{x2;(isset(v:area['areaid'])?v:area['areaid']:'')}"{x2;if:v:area['areaid'] == $search['basicareaid']} selected{x2;endif}>{x2;(isset(v:area['area'])?v:area['area']:'')}</option>
 								  		{x2;endtree}
 							  		</select>
 					        	</td>
@@ -65,7 +65,7 @@
 									API标识：
 								</td>
 								<td>
-									<input class="form-control" name="search[basicapi]" type="text" value="{x2;$search['basicapi']}"/>
+									<input class="form-control" name="search[basicapi]" type="text" value="{x2;(isset($search['basicapi'])?$search['basicapi']:'')}"/>
 								</td>
 								<td>
 									科目：
@@ -73,8 +73,8 @@
 								<td>
 					        		<select name="search[basicsubjectid]" class="form-control">
 						        		<option value="0">选择科目</option>
-								  		{x2;tree:$subjects,subject,sid}
-								  		<option value="{x2;v:subject['subjectid']}"{x2;if:v:subject['subjectid'] == $search['basicsubjectid']} selected{x2;endif}>{x2;v:subject['subject']}</option>
+								  		{x2;tree:(array)($subjects ?? []),subject,sid}
+								  		<option value="{x2;(isset(v:subject['subjectid'])?v:subject['subjectid']:'')}"{x2;if:v:subject['subjectid'] == $search['basicsubjectid']} selected{x2;endif}>{x2;(isset(v:subject['subject'])?v:subject['subject']:'')}</option>
 								  		{x2;endtree}
 							  		</select>
 					        	</td>
@@ -113,35 +113,35 @@
 				                </tr>
 				            </thead>
 				            <tbody>
-				                {x2;tree:$basics['data'],basic,bid}
+				                {x2;tree:(array)($basics['data'] ?? []),basic,bid}
 						        <tr>
 									<td>
-										<input type="checkbox" name="delids[{x2;v:basic['basicid']}]" value="1"/>
+										<input type="checkbox" name="delids[{x2;(isset(v:basic['basicid'])?v:basic['basicid']:'')}]" value="1"/>
 									</td>
 									<td>
-										{x2;v:basic['basicid']}
+										{x2;(isset(v:basic['basicid'])?v:basic['basicid']:'')}
 									</td>
 									<td>
-										{x2;v:basic['basic']}
+										{x2;(isset(v:basic['basic'])?v:basic['basic']:'')}
 									</td>
 									<td>
-										{x2;$areas[v:basic['basicareaid']]['area']}
+										{x2;(isset($areas[v:basic['basicareaid']]['area'])?$areas[v:basic['basicareaid']]['area']:'')}
 									</td>
 									<td>
-										{x2;$subjects[v:basic['basicsubjectid']]['subject']}
+										{x2;(isset($subjects[v:basic['basicsubjectid']]['subject'])?$subjects[v:basic['basicsubjectid']]['subject']:'')}
 									</td>
 									<td>
-										<span class="autoloaditem" autoload="index.php?exam-teach-basic-getbasicmembernumber&basicid={x2;v:basic['basicid']}"></span>
+										<span class="autoloaditem" autoload="index.php?exam-teach-basic-getbasicmembernumber&basicid={x2;(isset(v:basic['basicid'])?v:basic['basicid']:'')}"></span>
 									</td>
 									<td>
-										{x2;if:v:basic['basicclosed']}关闭{x2;else}开启{x2;endif}
+										{x2;if:!empty(v:basic['basicclosed'])}关闭{x2;else}开启{x2;endif}
 									</td>
 									<td>
 										<div class="btn-group">
-											<a class="btn" href="index.php?exam-teach-basic-offpaper&page={x2;$page}&basicid={x2;v:basic['basicid']}{x2;$u}" title="考试调度"><em class="glyphicon glyphglyphicon glyphicon-wrench"></em></a>
-											<a class="btn" href="index.php?exam-teach-basic-setexamrange&page={x2;$page}&basicid={x2;v:basic['basicid']}{x2;$u}" title="考试范围"><em class="glyphicon glyphglyphicon glyphicon-cog"></em></a>
-											<a class="btn" href="index.php?exam-teach-basic-modifybasic&page={x2;$page}&basicid={x2;v:basic['basicid']}{x2;$u}" title="修改"><em class="glyphicon glyphglyphicon glyphicon-edit"></em></a>
-											<a class="btn confirm" href="index.php?exam-teach-basic-delbasic&basicid={x2;v:basic['basicid']}&page={x2;$page}{x2;$u}" title="删除"><em class="glyphicon glyphglyphicon glyphicon-remove"></em></a>
+											<a class="btn" href="index.php?exam-teach-basic-offpaper&page={x2;(isset($page)?$page:'')}&basicid={x2;(isset(v:basic['basicid'])?v:basic['basicid']:'')}{x2;(isset($u)?$u:'')}" title="考试调度"><em class="glyphicon glyphglyphicon glyphicon-wrench"></em></a>
+											<a class="btn" href="index.php?exam-teach-basic-setexamrange&page={x2;(isset($page)?$page:'')}&basicid={x2;(isset(v:basic['basicid'])?v:basic['basicid']:'')}{x2;(isset($u)?$u:'')}" title="考试范围"><em class="glyphicon glyphglyphicon glyphicon-cog"></em></a>
+											<a class="btn" href="index.php?exam-teach-basic-modifybasic&page={x2;(isset($page)?$page:'')}&basicid={x2;(isset(v:basic['basicid'])?v:basic['basicid']:'')}{x2;(isset($u)?$u:'')}" title="修改"><em class="glyphicon glyphglyphicon glyphicon-edit"></em></a>
+											<a class="btn confirm" href="index.php?exam-teach-basic-delbasic&basicid={x2;(isset(v:basic['basicid'])?v:basic['basicid']:'')}&page={x2;(isset($page)?$page:'')}{x2;(isset($u)?$u:'')}" title="删除"><em class="glyphicon glyphglyphicon glyphicon-remove"></em></a>
 										</div>
 									</td>
 						        </tr>
@@ -155,11 +155,11 @@
 						</div>
 					</form>
 			        <ul class="pagination pull-right">
-						{x2;$basics['pages']}
+						{x2;(isset($basics['pages'])?$basics['pages']:'')}
 			        </ul>
 				</div>
 			</div>
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 		</div>
 	</div>
 </div>

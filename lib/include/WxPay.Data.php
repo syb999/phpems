@@ -16,6 +16,7 @@
  *
  * @author widyhu
  */
+#[\AllowDynamicProperties]
 class WxPayDataBase
 {
     protected $values = [];
@@ -92,7 +93,9 @@ class WxPayDataBase
         }
         //将XML转为array
         //禁止引用外部xml实体
-        libxml_disable_entity_loader(true);
+        if (PHP_VERSION_ID < 80000) {
+            libxml_disable_entity_loader(true);
+        }
         $this->values = json_decode(json_encode(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA)), true);
 
         return $this->values;
@@ -149,6 +152,7 @@ class WxPayDataBase
  *
  * @author widyhu
  */
+#[\AllowDynamicProperties]
 class WxPayResults extends WxPayDataBase
 {
     /**
@@ -232,6 +236,7 @@ class WxPayResults extends WxPayDataBase
  *
  * @author widyhu
  */
+#[\AllowDynamicProperties]
 class WxPayNotifyReply extends WxPayDataBase
 {
     /**
@@ -291,6 +296,7 @@ class WxPayNotifyReply extends WxPayDataBase
  *
  * @author widyhu
  */
+#[\AllowDynamicProperties]
 class WxPayUnifiedOrder extends WxPayDataBase
 {
     /**
@@ -839,6 +845,7 @@ class WxPayUnifiedOrder extends WxPayDataBase
  *
  * @author widyhu
  */
+#[\AllowDynamicProperties]
 class WxPayOrderQuery extends WxPayDataBase
 {
     /**
@@ -997,6 +1004,7 @@ class WxPayOrderQuery extends WxPayDataBase
  *
  * @author widyhu
  */
+#[\AllowDynamicProperties]
 class WxPayCloseOrder extends WxPayDataBase
 {
     /**
@@ -1125,6 +1133,7 @@ class WxPayCloseOrder extends WxPayDataBase
  *
  * @author widyhu
  */
+#[\AllowDynamicProperties]
 class WxPayRefund extends WxPayDataBase
 {
     /**
@@ -1463,6 +1472,7 @@ class WxPayRefund extends WxPayDataBase
  *
  * @author widyhu
  */
+#[\AllowDynamicProperties]
 class WxPayRefundQuery extends WxPayDataBase
 {
     /**
@@ -1711,6 +1721,7 @@ class WxPayRefundQuery extends WxPayDataBase
  *
  * @author widyhu
  */
+#[\AllowDynamicProperties]
 class WxPayDownloadBill extends WxPayDataBase
 {
     /**
@@ -1899,6 +1910,7 @@ class WxPayDownloadBill extends WxPayDataBase
  *
  * @author widyhu
  */
+#[\AllowDynamicProperties]
 class WxPayReport extends WxPayDataBase
 {
     /**
@@ -2327,6 +2339,7 @@ class WxPayReport extends WxPayDataBase
  *
  * @author widyhu
  */
+#[\AllowDynamicProperties]
 class WxPayShortUrl extends WxPayDataBase
 {
     /**
@@ -2455,6 +2468,7 @@ class WxPayShortUrl extends WxPayDataBase
  *
  * @author widyhu
  */
+#[\AllowDynamicProperties]
 class WxPayMicroPay extends WxPayDataBase
 {
     /**
@@ -2913,6 +2927,7 @@ class WxPayMicroPay extends WxPayDataBase
  *
  * @author widyhu
  */
+#[\AllowDynamicProperties]
 class WxPayReverse extends WxPayDataBase
 {
     /**
@@ -3071,6 +3086,7 @@ class WxPayReverse extends WxPayDataBase
  *
  * @author widyhu
  */
+#[\AllowDynamicProperties]
 class WxPayJsApiPay extends WxPayDataBase
 {
     /**
@@ -3259,6 +3275,7 @@ class WxPayJsApiPay extends WxPayDataBase
  *
  * @author widyhu
  */
+#[\AllowDynamicProperties]
 class WxPayBizPayUrl extends WxPayDataBase
 {
     /**

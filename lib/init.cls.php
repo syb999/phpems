@@ -18,6 +18,7 @@ if (DEBUG) {
     error_reporting(0);
 }
 
+#[\AllowDynamicProperties]
 class ginkgo
 {
     public $G = [];
@@ -73,7 +74,7 @@ class ginkgo
     //执行页面
     public function run()
     {
-        include __DIR__.'/config.inc.php';
+        include_once __DIR__.'/config.inc.php';
         header('P3P: CP=CAO PSA OUR');
         header('Content-Type: text/html; charset='.HE);
         ini_set('date.timezone', 'Asia/Shanghai');
@@ -92,7 +93,7 @@ class ginkgo
             $this->user = $this->make('user', 'user');
             $this->session = $this->make('session');
             $_user = $this->session->getSessionUser();
-            if (!$_user['sessionuserid']) {
+            if (empty($_user['sessionuserid'])) {
                 $r = $this->user->autoLoginWxUser($_SESSION['openid']);
                 if ($r) {
                     header('location:index.php?'.$this->defaultApp.'-'.$this->module.'&userhash='.$ev->get('userhash'));
@@ -109,6 +110,9 @@ class ginkgo
         if (!$method) {
             $this->method = $method = 'index';
         }
+        if (!file_exists('app/'.$app.'/'.$module.'.php')) {
+            $this->R(['statusCode' => 404, 'message' => '页面不存在', 'callbackType' => 'forward', 'forwardUrl' => 'index.php']);
+        }
         include 'app/'.$app.'/'.$module.'.php';
         $modulefile = 'app/'.$app.'/controller/'.$method.'.'.$module.'.php';
         if (file_exists($modulefile)) {
@@ -119,7 +123,7 @@ class ginkgo
             $run = new action($this);
             $run->display();
         } else {
-            die('error:Unknown app to load, the app is '.$app);
+            $this->R(['statusCode' => 404, 'message' => '页面不存在', 'callbackType' => 'forward', 'forwardUrl' => 'index.php']);
         }
     }
 
@@ -140,7 +144,7 @@ class ginkgo
         if ($ev->get('userhash')) {
             exit(json_encode($message));
         }
-        if ('forward' == $message['callbackType']) {
+        if (isset($message['callbackType']) && 'forward' == $message['callbackType']) {
             if ($message['forwardUrl']) {
                 exit("<script>alert('{$message['message']}');window.location = '{$message['forwardUrl']}';</script>");
             }

@@ -1,4 +1,4 @@
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 {x2;include:header}
 <body>
 {x2;include:nav}
@@ -13,8 +13,8 @@
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
 						<ol class="breadcrumb">
-							<li><a href="index.php?{x2;$_app}-master">{x2;$apps[$_app]['appname']}</a></li>
-							<li><a href="index.php?{x2;$_app}-master-basic-subject">科目管理</a></li>
+							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master">{x2;(isset($apps[$_app]['appname'])?$apps[$_app]['appname']:'')}</a></li>
+							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master-basic-subject">科目管理</a></li>
 							<li class="active">修改科目</li>
 						</ol>
 					</div>
@@ -29,15 +29,15 @@
 							<div class="form-group">
 								<label for="subject" class="control-label col-sm-2">科目名称：</label>
 								<div class="col-sm-9">
-									<input class="form-control" name="args[subject]" id="subject" type="text" size="30" value="{x2;$subject['subject']}" needle="needle" msg="您必须输入一个科目名称" />
+									<input class="form-control" name="args[subject]" id="subject" type="text" size="30" value="{x2;(isset($subject['subject'])?$subject['subject']:'')}" needle="needle" msg="您必须输入一个科目名称" />
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="subject" class="control-label col-sm-2">科目题型：</label>
 								<div class="col-sm-9">
-									{x2;tree:$questypes,questype,qid}
+									{x2;tree:(array)($questypes ?? []),questype,qid}
 									<label class="checkbox-inline">
-						          		<input type="checkbox" name="args[subjectsetting][questypes][{x2;v:questype['questid']}]" value="1"{x2;if:$subject['subjectsetting']['questypes'][v:questype['questid']]} checked{x2;endif}/> {x2;v:questype['questype']}
+						          		<input type="checkbox" name="args[subjectsetting][questypes][{x2;(isset(v:questype['questid'])?v:questype['questid']:'')}]" value="1"{x2;if:!empty($subject['subjectsetting']['questypes'][v:questype['questid']])} checked{x2;endif}/> {x2;(isset(v:questype['questype'])?v:questype['questype']:'')}
 						          	</label>
 						          	{x2;endtree}
 								</div>
@@ -47,15 +47,15 @@
 							  	<div class="col-sm-9">
 								  	<button class="btn btn-primary" type="submit">提交</button>
 									<input type="hidden" name="modifysubject" value="1"/>
-									<input type="hidden" name="subjectid" value="{x2;$subject['subjectid']}"/>
-									<input type="hidden" name="page" value="{x2;$page}"/>
+									<input type="hidden" name="subjectid" value="{x2;(isset($subject['subjectid'])?$subject['subjectid']:'')}"/>
+									<input type="hidden" name="page" value="{x2;(isset($page)?$page:'')}"/>
 								</div>
 							</div>
 						</fieldset>
 					</form>
 				</div>
 			</div>
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 		</div>
 	</div>
 </div>

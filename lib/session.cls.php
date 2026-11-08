@@ -10,6 +10,7 @@
  * This source file is subject to the MIT license that is bundled.
  */
 
+#[\AllowDynamicProperties]
 class session
 {
     public $G;
@@ -32,7 +33,7 @@ class session
     public function getSessionId()
     {
         if (!$this->sessionid) {
-            if ($_SESSION['currentuser']) {
+            if (!empty($_SESSION['currentuser'])) {
                 $this->sessionid = $_SESSION['currentuser']['sessionid'];
                 $this->ev->setCookie('psid', $this->sessionid, 3600 * 24);
             } else {
@@ -173,12 +174,12 @@ class session
             $cookie = $this->strings->decode($this->ev->get(CH.'currentuser'));
         }
         if (!$cookie) {
-            $cookie = $_SESSION['currentuser'];
+            $cookie = isset($_SESSION['currentuser']) ? $_SESSION['currentuser'] : false;
             if ($cookie) {
                 $this->ev->setCookie($this->sessionname, $this->strings->encode($cookie), 3600 * 24);
             }
         }
-        if ($cookie['sessionuserid']) {
+        if (!empty($cookie['sessionuserid'])) {
             $user = $this->getSessionValue();
             if ($cookie['sessionuserid'] == $user['sessionuserid'] && $cookie['sessionpassword'] == $user['sessionpassword']) {
                 $this->sessionuser = $user;

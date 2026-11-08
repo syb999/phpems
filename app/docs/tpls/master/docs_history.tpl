@@ -18,7 +18,7 @@
 					</div>
 				</div>
 				<div class="box itembox" style="padding-top:10px;">
-					<h4 class="title">{x2;$doc['doctitle']}</h4>
+					<h4 class="title">{x2;(isset($doc['doctitle'])?$doc['doctitle']:'')}</h4>
 					<form action="index.php?docs-master-docs-setdochistory" method="post">
 						<fieldset>
 							<table class="table table-bordered">
@@ -33,14 +33,14 @@
 								</tr>
 								</thead>
 								<tbody>
-								{x2;tree:$histories['data'],history,hid}
+								{x2;tree:(array)($histories['data'] ?? []),history,hid}
 								<tr>
-									<td><input type="checkbox" name="delids[{x2;v:history['dhid']}]" value="1"></td>
-									<td>{x2;v:history['dhid']}</td>
-									<td>{x2;if:$doc['doccontentid'] == v:history['dhid']}【 当前版本 】{x2;endif}<a target="_blank" href="index.php?docs-app-docs-viewhistory&dhid={x2;v:history['dhid']}">{x2;v:history['dhtitle']}</a></td>
+									<td><input type="checkbox" name="delids[{x2;(isset(v:history['dhid'])?v:history['dhid']:'')}]" value="1"></td>
+									<td>{x2;(isset(v:history['dhid'])?v:history['dhid']:'')}</td>
+									<td>{x2;if:(isset($doc['doccontentid']) ? $doc['doccontentid'] : null) == v:history['dhid']}【 当前版本 】{x2;endif}<a target="_blank" href="index.php?docs-app-docs-viewhistory&dhid={x2;(isset(v:history['dhid'])?v:history['dhid']:'')}">{x2;(isset(v:history['dhtitle'])?v:history['dhtitle']:'')}</a></td>
 									<td>{x2;date:v:history['dhtime'],'Y-m-d H:i:s'}</td>
 									<td>{x2;if:v:history['dhstatus'] == 2}未通过{x2;elseif:v:history['dhstatus'] == 1}已审核{x2;else}未审核{x2;endif}</td>
-									<td>{x2;if:v:history['dhstatus'] == 1 && $doc['doccontentid'] != v:history['dhid']}<a msg="确定设为当前版本吗？" href="index.php?docs-master-docs-setdochistory&action=nowuse&dhid={x2;v:history['dhid']}" class="confirm glyphicon glyphicon-bookmark" title="设为当前版本"></a> {x2;endif}</td>
+									<td>{x2;if:v:history['dhstatus'] == 1 && $doc['doccontentid'] != v:history['dhid']}<a msg="确定设为当前版本吗？" href="index.php?docs-master-docs-setdochistory&action=nowuse&dhid={x2;(isset(v:history['dhid'])?v:history['dhid']:'')}" class="confirm glyphicon glyphicon-bookmark" title="设为当前版本"></a> {x2;endif}</td>
 								</tr>
 								{x2;endtree}
 								</tbody>
@@ -59,9 +59,9 @@
 									<label class="radio-inline">
 										<input type="radio" name="action" value="delete" />删除
 									</label>
-                                    {x2;if:is_array($search)}
-                                    {x2;tree:$search,arg,sid}
-									<input type="hidden"-name="search[{x2;v:key}]" value="{x2;v:arg}"/>
+                                    {x2;if:isset($search) && is_array($search)}
+                                    {x2;tree:(array)($search ?? []),arg,sid}
+									<input type="hidden"-name="search[{x2;(isset(v:key)?v:key:'')}]" value="{x2;(isset(v:arg)?v:arg:'')}"/>
                                     {x2;endtree}
                                     {x2;endif}
 									<label class="radio-inline">
@@ -71,7 +71,7 @@
 								</div>
 							</div>
 							<ul class="pagination pull-right">
-                                {x2;$histories['pages']}
+                                {x2;(isset($histories['pages'])?$histories['pages']:'')}
 							</ul>
 						</fieldset>
 					</form>

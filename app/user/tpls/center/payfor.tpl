@@ -12,7 +12,7 @@
 					<div class="col-xs-12">
 						<ol class="breadcrumb">
 							<li><a href="index.php">首页</a></li>
-							<li><a href="index.php?{x2;$_app}-app">用户中心</a></li>
+							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-app">用户中心</a></li>
 							<li class="active">积分充值</li>
 						</ol>
 					</div>
@@ -32,18 +32,18 @@
 									</tr>
 								</thead>
 								<tbody>
-									{x2;tree:$orders['data'],order,oid}
+									{x2;tree:(array)($orders['data'] ?? []),order,oid}
 									<tr>
-										<td>{x2;v:order['ordersn']}</td>
-										<td>{x2;v:order['orderprice']}</td>
+										<td>{x2;(isset(v:order['ordersn'])?v:order['ordersn']:'')}</td>
+										<td>{x2;(isset(v:order['orderprice'])?v:order['orderprice']:'')}</td>
 										<td>{x2;date:v:order['ordercreatetime'],'Y-m-d'}</td>
-										<td>{x2;$orderstatus[v:order['orderstatus']]}</td>
+										<td>{x2;(isset($orderstatus[v:order['orderstatus']])?$orderstatus[v:order['orderstatus']]:'')}</td>
 										<td>
 											<div class="btn-group">
-												<a class="btn" href="index.php?user-center-payfor-orderdetail&ordersn={x2;v:order['ordersn']}" title="详细"><em class="glyphicon glyphicon-th-list"></em></a>
+												<a class="btn" href="index.php?user-center-payfor-orderdetail&ordersn={x2;(isset(v:order['ordersn'])?v:order['ordersn']:'')}" title="详细"><em class="glyphicon glyphicon-th-list"></em></a>
 												{x2;if:v:order['orderstatus'] == 1}
-												<a class="btn" href="index.php?user-center-payfor-orderdetail&ordersn={x2;v:order['ordersn']}" title="支付"><em class="glyphicon glyphicon-shopping-cart"></em></a>
-												<a class="btn confirm" href="index.php?user-center-payfor-remove&ordersn={x2;v:order['ordersn']}" title="撤单"><em class="glyphicon glyphicon-remove"></em></a>
+												<a class="btn" href="index.php?user-center-payfor-orderdetail&ordersn={x2;(isset(v:order['ordersn'])?v:order['ordersn']:'')}" title="支付"><em class="glyphicon glyphicon-shopping-cart"></em></a>
+												<a class="btn confirm" href="index.php?user-center-payfor-remove&ordersn={x2;(isset(v:order['ordersn'])?v:order['ordersn']:'')}" title="撤单"><em class="glyphicon glyphicon-remove"></em></a>
 												{x2;endif}
 											</div>
 										</td>
@@ -51,7 +51,7 @@
 									{x2;endtree}
 								</tbody>
 							</table>
-							<ul class="pagination pagination-right">{x2;$orders['pages']}</ul>
+							<ul class="pagination pagination-right">{x2;(isset($orders['pages'])?$orders['pages']:'')}</ul>
 						</div>
 						<div class="col-xs-4">
 							<form action="index.php?user-center-payfor" method="post">

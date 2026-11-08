@@ -8,7 +8,7 @@
 		</div>
 		<div class="span10">
 			<ul class="breadcrumb">
-				<li><a href="index.php?{x2;$_app}-teach">{x2;$apps[$_app]['appname']}</a> <span class="divider">/</span></li>
+				<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-teach">{x2;(isset($apps[$_app]['appname'])?$apps[$_app]['appname']:'')}</a> <span class="divider">/</span></li>
 				<li class="active">首页</li>
 			</ul>
 			<div class="row-fluid">

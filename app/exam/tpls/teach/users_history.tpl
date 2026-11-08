@@ -1,4 +1,4 @@
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 {x2;include:header}
 <body>
 {x2;include:nav}
@@ -13,8 +13,8 @@
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
 						<ol class="breadcrumb">
-							<li><a href="index.php?{x2;$_app}-teach">{x2;$apps[$_app]['appname']}</a></li>
-							<li><a href="index.php?{x2;$_app}-teach-users">课程成绩</a> <span class="divider">/</span></li>
+							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-teach">{x2;(isset($apps[$_app]['appname'])?$apps[$_app]['appname']:'')}</a></li>
+							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-teach-users">课程成绩</a> <span class="divider">/</span></li>
 							<li class="active">教师评卷</li>
 						</ol>
 					</div>
@@ -34,13 +34,13 @@
 			                </tr>
 			            </thead>
 			            <tbody>
-		                    {x2;tree:$exams['data'],exam,eid}
+		                    {x2;tree:(array)($exams['data'] ?? []),exam,eid}
 					        <tr>
 								<td>
-									{x2;v:exam['ehid']}
+									{x2;(isset(v:exam['ehid'])?v:exam['ehid']:'')}
 								</td>
 								<td>
-									{x2;v:exam['ehexam']}
+									{x2;(isset(v:exam['ehexam'])?v:exam['ehexam']:'')}
 								</td>
 								<td>
 									{x2;date:v:exam['ehstarttime'],'Y-m-d'}
@@ -50,7 +50,7 @@
 								</td>
 								<td>
 									<div class="btn-group">
-                                        <a class="btn" href="index.php?{x2;$_app}-teach-users-score&page={x2;$page}&ehid={x2;v:exam['ehid']}{x2;$u}" title="评卷"><em class="glyphicon glyphicon-check"></em></a>
+                                        <a class="btn" href="index.php?{x2;(isset($_app)?$_app:'')}-teach-users-score&page={x2;(isset($page)?$page:'')}&ehid={x2;(isset(v:exam['ehid'])?v:exam['ehid']:'')}{x2;(isset($u)?$u:'')}" title="评卷"><em class="glyphicon glyphicon-check"></em></a>
 									</div>
 								</td>
 					        </tr>
@@ -58,11 +58,11 @@
 			        	</tbody>
 			        </table>
 			        <ul class="pagination pull-right">
-			            {x2;$exams['pages']}
+			            {x2;(isset($exams['pages'])?$exams['pages']:'')}
 			        </ul>
 				</div>
 			</div>
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 		</div>
 	</div>
 </div>

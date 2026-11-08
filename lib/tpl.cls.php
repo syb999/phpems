@@ -11,6 +11,7 @@
  */
 
 if (intval(PHP_VERSION) >= 7) {
+    #[\AllowDynamicProperties]
     class tpl
     {
         public $tpl_var = [];
@@ -424,6 +425,7 @@ if (intval(PHP_VERSION) >= 7) {
         }
     }
 } else {
+    #[\AllowDynamicProperties]
     class tpl
     {
         public $tpl_var = [];

@@ -10,6 +10,7 @@
  * This source file is subject to the MIT license that is bundled.
  */
 
+#[\AllowDynamicProperties]
 class module
 {
     public $G;
@@ -96,9 +97,10 @@ class module
         if (1 == $userinfo) {
             return $r;
         }
+        $usergroup = isset($userinfo['group']) && is_array($userinfo['group']) ? $userinfo['group'] : [];
         foreach ($r as $key => $p) {
-            if (1 == $userinfo['group']['groupmoduleid']) {
-                if (false !== strpos($p['fieldforbidactors'], ','.$userinfo['group']['groupid'].',')) {
+            if (1 == (isset($usergroup['groupmoduleid']) ? $usergroup['groupmoduleid'] : 0)) {
+                if (false !== strpos($p['fieldforbidactors'], ','.(isset($usergroup['groupid']) ? $usergroup['groupid'] : 0).',')) {
                     unset($r[$key]);
                 }
             } else {

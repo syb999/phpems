@@ -33,8 +33,8 @@
 					<div class="col-sm-10">
 						<button class="btn btn-primary btn-block" type="submit">提交</button>
 						<input type="hidden" name="reporterror" value="1"/>
-						<input type="hidden" name="args[fbquestionid]" value="{x2;$questionid}"/>
-						<input type="hidden" name="page" value="{x2;$page}"/>
+						<input type="hidden" name="args[fbquestionid]" value="{x2;(isset($questionid)?$questionid:'')}"/>
+						<input type="hidden" name="page" value="{x2;(isset($page)?$page:'')}"/>
 					</div>
 				</div>
 			</fieldset>

@@ -12,7 +12,7 @@
 					<div class="col-xs-12">
 						<ol class="breadcrumb">
 							<li><a href="index.php">首页</a></li>
-							<li><a href="index.php?{x2;$_app}-app">用户中心</a></li>
+							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-app">用户中心</a></li>
 							<li class="active">学习进度</li>
 						</ol>
 					</div>
@@ -33,21 +33,21 @@
 						</tr>
 						</thead>
 						<tbody>
-                        {x2;tree:$progresses['data'],progress,pid}
+                        {x2;tree:(array)($progresses['data'] ?? []),progress,pid}
 						<tr>
-							<td>{x2;v:progress['prsid']}</td>
-							<td>{x2;$courses[v:progress['prscourseid']]['cstitle']}</td>
-							<td>{x2;$status[v:progress['prscoursestatus']]}</td>
-							<td>{x2;$basics[v:progress['prsexamid']]['basic']}</td>
-							<td>{x2;$status[v:progress['prsexamstatus']]}</td>
+							<td>{x2;(isset(v:progress['prsid'])?v:progress['prsid']:'')}</td>
+							<td>{x2;(isset($courses[v:progress['prscourseid']]['cstitle'])?$courses[v:progress['prscourseid']]['cstitle']:'')}</td>
+							<td>{x2;(isset($status[v:progress['prscoursestatus']])?$status[v:progress['prscoursestatus']]:'')}</td>
+							<td>{x2;(isset($basics[v:progress['prsexamid']]['basic'])?$basics[v:progress['prsexamid']]['basic']:'')}</td>
+							<td>{x2;(isset($status[v:progress['prsexamstatus']])?$status[v:progress['prsexamstatus']]:'')}</td>
 							<td>{x2;date:v:progress['prstime'],'Y-m-d'}</td>
-							<td>{x2;if:v:progress['prsendtime']}{x2;date:v:progress['prsendtime'],'Y-m-d'}{x2;else}-{x2;endif}</td>
-							<td>{x2;$status[v:progress['prstatus']]}</td>
+							<td>{x2;if:!empty(v:progress['prsendtime'])}{x2;date:v:progress['prsendtime'],'Y-m-d'}{x2;else}-{x2;endif}</td>
+							<td>{x2;(isset($status[v:progress['prstatus']])?$status[v:progress['prstatus']]:'')}</td>
 						</tr>
                         {x2;endtree}
 						</tbody>
 					</table>
-					<ul class="pagination pagination-right">{x2;$progresses['pages']}</ul>
+					<ul class="pagination pagination-right">{x2;(isset($progresses['pages'])?$progresses['pages']:'')}</ul>
 				</div>
 			</div>
 		</div>

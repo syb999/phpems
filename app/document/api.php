@@ -10,6 +10,7 @@
  * This source file is subject to the MIT license that is bundled.
  */
 
+#[\AllowDynamicProperties]
 class app
 {
     public $G;
@@ -24,8 +25,8 @@ class app
         $this->user = $this->G->make('user', 'user');
         $this->apps = $this->G->make('apps', 'core');
         $_user = $this->_user = $this->session->getSessionUser();
-        $group = $this->user->getGroupById($_user['sessiongroupid']);
-        if (!$_user['sessionuserid']) {
+        $group = $this->user->getGroupById(isset($_user['sessiongroupid']) ? $_user['sessiongroupid'] : 0);
+        if (empty($_user['sessionuserid'])) {
             if ($this->ev->get('userhash')) {
                 exit(json_encode([
                 'statusCode' => 300,

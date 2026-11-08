@@ -22,7 +22,7 @@
 						<span class="input-group-addon" id="basic-addon1"><a class="glyphicon glyphicon-lock" style="font-size:16px;"></a></span>
 						<input class="form-control"  name="args[userpassword]" datatype="password" needle="needle" msg="请你输入密码" placeholder="请输入密码" type="password" style="height:44px;line-height:24px;font-size:16px;">
 					</div>
-                    {x2;if:$app['appsetting']['emailverify']}
+                    {x2;if:!empty($app['appsetting']['emailverify'])}
 					<div class="form-group" style="overflow:hidden;">
 						<div class="col-sm-8" style="padding-left:0px;">
 							<div class="input-group">
@@ -35,7 +35,7 @@
 						</div>
 					</div>
                     {x2;endif}
-					{x2;if:$app['appsetting']['closeregist']}
+					{x2;if:!empty($app['appsetting']['closeregist'])}
 					<button type="button" class="btn btn-primary btn-block" style="height:44px;line-height:32px;font-size:16px;margin-top:30px;">管理员禁止用户注册</button>
 					{x2;else}
 					<button type="submit" class="btn btn-primary btn-block" style="height:44px;line-height:32px;font-size:16px;margin-top:30px;">注册</button>
@@ -47,7 +47,7 @@
 		</div>
 	</div>
 </div>
-{x2;if:$app['appsetting']['emailverify']}
+{x2;if:!empty($app['appsetting']['emailverify'])}
 <script>
     var sendstatus = true;
     $('#sendphonecode').click(function(){

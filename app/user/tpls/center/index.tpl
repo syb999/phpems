@@ -22,21 +22,21 @@
 						<tr>
 							<td width="30%">
 								<div class="thumbnail" style="width:80%;">
-									<img style="max-width:210px;" alt="300x200" src="{x2;if:$_user['photo']}{x2;$_user['photo']}{x2;else}app/exam/styles/image/paper.png{x2;endif}" />
+									<img style="max-width:210px;" alt="300x200" src="{x2;if:!empty($_user['photo'])}{x2;(isset($_user['photo'])?$_user['photo']:'')}{x2;else}app/exam/styles/image/paper.png{x2;endif}" />
 								</div>
 							</td>
 							<td width="35%" style="padding:10px;">
-								<h3>{x2;$_user['username']}</h3>
-								<p>注册日期：{x2;date:$_user['userregtime'],'Y-m-d'}</p>
-								<p>注册IP：{x2;$_user['userregip']}</p>
-								<p>您现有积分：{x2;$_user['usercoin']}</p>
+								<h3>{x2;(isset($_user['username'])?$_user['username']:'')}</h3>
+								<p>注册日期：{x2;date:$_user['userregtime'] ?? 0,'Y-m-d'}</p>
+								<p>注册IP：{x2;(isset($_user['userregip'])?$_user['userregip']:'')}</p>
+								<p>您现有积分：{x2;(isset($_user['usercoin'])?$_user['usercoin']:'')}</p>
 								<p>&nbsp;</p>
 								<p><a class="btn btn-primary" href="index.php?user-center-payfor">充值</a></p>
 							</td>
 							<td style="padding:10px;">
-								<p>用户组：{x2;$groups[$_user['usergroupid']]['groupname']}</p>
-								<p>真实姓名：{x2;$_user['usertruename']}</p>
-								<p>邮箱：{x2;$_user['useremail']}</p>
+								<p>用户组：{x2;(isset($groups[$_user['usergroupid']]['groupname'])?$groups[$_user['usergroupid']]['groupname']:'')}</p>
+								<p>真实姓名：{x2;(isset($_user['usertruename'])?$_user['usertruename']:'')}</p>
+								<p>邮箱：{x2;(isset($_user['useremail'])?$_user['useremail']:'')}</p>
 								<p>&nbsp;</p>
 							</td>
 						</tr>

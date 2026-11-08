@@ -26,9 +26,9 @@
 						{x2;if:$ehtype == 0}
 						<p><span class="text-warning">提示：</span>强化训练最多记录20条信息。</p>
 						{x2;elseif:$ehtype == 1}
-						<p>您完成了<b class="text-warning">{x2;$exams['number']}</b>次考试， 平均分：<b class="text-warning">{x2;$avgscore}</b>分！</p>
+						<p>您完成了<b class="text-warning">{x2;(isset($exams['number'])?$exams['number']:'')}</b>次考试， 平均分：<b class="text-warning">{x2;(isset($avgscore)?$avgscore:'')}</b>分！</p>
 						{x2;elseif:$ehtype == 2}
-						<p>您完成了<b class="text-warning">{x2;$exams['number']}</b>次考试， 平均分：<b class="text-warning">{x2;$avgscore}</b>分！</p>
+						<p>您完成了<b class="text-warning">{x2;(isset($exams['number'])?$exams['number']:'')}</b>次考试， 平均分：<b class="text-warning">{x2;(isset($avgscore)?$avgscore:'')}</b>分！</p>
 						{x2;endif}
 					</blockquote>
 				</div>
@@ -40,14 +40,14 @@
 							<td>解析</td>
 							<td>删除</td>
 						</tr>
-						{x2;tree:$exams['data'],exam,eid}
+						{x2;tree:(array)($exams['data'] ?? []),exam,eid}
 						<tr>
-							<td>{x2;v:exam['ehexam']}</td>
-							<td><b class="red">{x2;if:!v:exam['ehstatus'] && v:exam['ehdecide']}评分中{x2;else}{x2;v:exam['ehscore']}{x2;endif}</b></td>
-							<td><a href="index.php?exam-phone-history-view&ehid={x2;v:exam['ehid']}" class="ajax" data-target="views" data-page="views">解析</a></td>
+							<td>{x2;(isset(v:exam['ehexam'])?v:exam['ehexam']:'')}</td>
+							<td><b class="red">{x2;if:!v:exam['ehstatus'] && v:exam['ehdecide']}评分中{x2;else}{x2;(isset(v:exam['ehscore'])?v:exam['ehscore']:'')}{x2;endif}</b></td>
+							<td><a href="index.php?exam-phone-history-view&ehid={x2;(isset(v:exam['ehid'])?v:exam['ehid']:'')}" class="ajax" data-target="views" data-page="views">解析</a></td>
 							<td>
 								{x2;if:$ehtype != 2}
-								<a class="ajax" href="index.php?exam-phone-history-del&ehid={x2;v:exam['ehid']}">删除</a>
+								<a class="ajax" href="index.php?exam-phone-history-del&ehid={x2;(isset(v:exam['ehid'])?v:exam['ehid']:'')}">删除</a>
 								{x2;else}
 								-
 								{x2;endif}
@@ -56,7 +56,7 @@
 					{x2;endtree}
 					</table>
 					{x2;if:$exams['pages'] && $ehtype}
-					<ul class="pagination pull-right">{x2;$exams['pages']}</ul>
+					<ul class="pagination pull-right">{x2;(isset($exams['pages'])?$exams['pages']:'')}</ul>
 					{x2;endif}
 				</div>
 			</div>

@@ -1,4 +1,4 @@
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 {x2;include:header}
 <body>
 {x2;include:nav}
@@ -13,8 +13,8 @@
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
 						<ol class="breadcrumb">
-							<li><a href="index.php?{x2;$_app}-master">{x2;$apps[$_app]['appname']}</a></li>
-							<li><a href="index.php?{x2;$_app}-master-users">开通课程</a></li>
+							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master">{x2;(isset($apps[$_app]['appname'])?$apps[$_app]['appname']:'')}</a></li>
+							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master-users">开通课程</a></li>
 							<li class="active">课程选择</li>
 						</ol>
 					</div>
@@ -22,9 +22,9 @@
 				<div class="box itembox" style="padding-top:10px;margin-bottom:0px;">
 					<h4 class="title" style="padding:10px;">
 						课程选择
-						<a class="btn btn-primary pull-right" href="index.php?{x2;$_app}-master-users">开通课程</a>
+						<a class="btn btn-primary pull-right" href="index.php?{x2;(isset($_app)?$_app:'')}-master-users">开通课程</a>
 					</h4>
-			        <form action="index.php?exam-master-users-basics&userid={x2;$userid}" method="post" class="form-inline">
+			        <form action="index.php?exam-master-users-basics&userid={x2;(isset($userid)?$userid:'')}" method="post" class="form-inline">
 						<table class="table">
 							<thead>
 								<tr>
@@ -36,13 +36,13 @@
 									考场ID：
 								</td>
 								<td>
-									<input class="form-control" name="search[basicid]" class="inline" type="text" class="number" value="{x2;$search['basicid']}"/>
+									<input class="form-control" name="search[basicid]" class="inline" type="text" class="number" value="{x2;(isset($search['basicid'])?$search['basicid']:'')}"/>
 								</td>
 								<td>
 									关键字：
 								</td>
 								<td>
-									<input class="form-control" name="search[keyword]" type="text" value="{x2;$search['keyword']}"/>
+									<input class="form-control" name="search[keyword]" type="text" value="{x2;(isset($search['keyword'])?$search['keyword']:'')}"/>
 								</td>
 								<td>
 									地区：
@@ -50,8 +50,8 @@
 					        	<td>
 					        		<select class="form-control" name="search[basicareaid]">
 					        		<option value="0">选择地区</option>
-							  		{x2;tree:$areas,area,aid}
-							  		<option value="{x2;v:area['areaid']}"{x2;if:v:area['areaid'] == $search['basicareaid']} selected{x2;endif}>{x2;v:area['area']}</option>
+							  		{x2;tree:(array)($areas ?? []),area,aid}
+							  		<option value="{x2;(isset(v:area['areaid'])?v:area['areaid']:'')}"{x2;if:v:area['areaid'] == $search['basicareaid']} selected{x2;endif}>{x2;(isset(v:area['area'])?v:area['area']:'')}</option>
 							  		{x2;endtree}
 							  		</select>
 					        	</td>
@@ -61,7 +61,7 @@
 									API标识：
 								</td>
 								<td>
-									<input class="form-control" name="search[basicapi]" type="text" value="{x2;$search['basicapi']}"/>
+									<input class="form-control" name="search[basicapi]" type="text" value="{x2;(isset($search['basicapi'])?$search['basicapi']:'')}"/>
 								</td>
 								<td>
 									科目：
@@ -69,9 +69,9 @@
 								<td>
 					        		<select class="form-control" name="search[basicsubjectid]">
 					        		<option value="0">选择科目</option>
-                                        {x2;if:is_array($subjects)}
-							  		{x2;tree:$subjects,subject,sid}
-							  		<option value="{x2;v:subject['subjectid']}"{x2;if:v:subject['subjectid'] == $search['basicsubjectid']} selected{x2;endif}>{x2;v:subject['subject']}</option>
+                                        {x2;if:isset($subjects) && is_array($subjects)}
+							  		{x2;tree:(array)($subjects ?? []),subject,sid}
+							  		<option value="{x2;(isset(v:subject['subjectid'])?v:subject['subjectid']:'')}"{x2;if:v:subject['subjectid'] == $search['basicsubjectid']} selected{x2;endif}>{x2;(isset(v:subject['subject'])?v:subject['subject']:'')}</option>
 							  		{x2;endtree}
                                         {x2;endif}
 							  		</select>
@@ -96,36 +96,36 @@
 			                </tr>
 			            </thead>
 			            <tbody>
-		                    {x2;tree:$basics['data'],basic,bid}
+		                    {x2;tree:(array)($basics['data'] ?? []),basic,bid}
 					        <tr>
 								<td>
-									{x2;v:basic['basicid']}
+									{x2;(isset(v:basic['basicid'])?v:basic['basicid']:'')}
 								</td>
 								<td>
-									{x2;v:basic['basic']}
+									{x2;(isset(v:basic['basic'])?v:basic['basic']:'')}
 								</td>
 								<td>
-									{x2;$areas[v:basic['basicareaid']]['area']}
+									{x2;(isset($areas[v:basic['basicareaid']]['area'])?$areas[v:basic['basicareaid']]['area']:'')}
 								</td>
 								<td>
-									{x2;$subjects[v:basic['basicsubjectid']]['subject']}
+									{x2;(isset($subjects[v:basic['basicsubjectid']]['subject'])?$subjects[v:basic['basicsubjectid']]['subject']:'')}
 								</td>
 								<td>
-									{x2;if:$openbasics[v:basic['basicid']]}{x2;date:$openbasics[v:basic['basicid']]['obendtime'],'Y-m-d'}{x2;else}未开启{x2;endif}
+									{x2;if:!empty($openbasics[v:basic['basicid']])}{x2;date:$openbasics[v:basic['basicid']]['obendtime'] ?? 0,'Y-m-d'}{x2;else}未开启{x2;endif}
 								</td>
 								<td>
-									{x2;if:$openbasics[v:basic['basicid']]}<a class="ajax btn" title="关闭考场" href="index.php?exam-master-users-closebasics&userid={x2;$userid}&basicid={x2;v:basic['basicid']}"><em class="glyphicon glyphicon-minus-sign"></em></a>{x2;else}<a class="ajax btn" href="index.php?exam-master-users-openbasics&userid={x2;$userid}&basicid={x2;v:basic['basicid']}" title="开启考场"><em class="glyphicon glyphicon-plus-sign"></em></a>{x2;endif}
+									{x2;if:!empty($openbasics[v:basic['basicid']])}<a class="ajax btn" title="关闭考场" href="index.php?exam-master-users-closebasics&userid={x2;(isset($userid)?$userid:'')}&basicid={x2;(isset(v:basic['basicid'])?v:basic['basicid']:'')}"><em class="glyphicon glyphicon-minus-sign"></em></a>{x2;else}<a class="ajax btn" href="index.php?exam-master-users-openbasics&userid={x2;(isset($userid)?$userid:'')}&basicid={x2;(isset(v:basic['basicid'])?v:basic['basicid']:'')}" title="开启考场"><em class="glyphicon glyphicon-plus-sign"></em></a>{x2;endif}
 								</td>
 					        </tr>
 					        {x2;endtree}
 			        	</tbody>
 			        </table>
 			        <ul class="pagination pull-right">
-			            {x2;$basics['pages']}
+			            {x2;(isset($basics['pages'])?$basics['pages']:'')}
 			        </ul>
 				</div>
 			</div>
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 		</div>
 	</div>
 </div>

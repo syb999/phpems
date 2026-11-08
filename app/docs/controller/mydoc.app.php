@@ -10,12 +10,13 @@
  * This source file is subject to the MIT license that is bundled.
  */
 
+#[\AllowDynamicProperties]
 class action extends app
 {
     public function display()
     {
         $this->_user = $this->session->getSessionUser();
-        if (!$this->_user['sessionuserid']) {
+        if (empty($this->_user['sessionuserid'])) {
             if ($this->ev->get('userhash')) {
                 exit(json_encode([
                     'statusCode' => 301,

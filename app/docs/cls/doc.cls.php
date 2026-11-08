@@ -10,6 +10,7 @@
  * This source file is subject to the MIT license that is bundled.
  */
 
+#[\AllowDynamicProperties]
 class doc_docs
 {
     public $G;
@@ -76,7 +77,10 @@ class doc_docs
         $data = [false, 'docs', [['AND', 'docid = :docid', 'docid', $id]]];
         $sql = $this->pdosql->makeSelect($data);
         $r = $this->db->fetch($sql);
-        if ($r['doccontentid'] && $withcontent) {
+        if (!is_array($r)) {
+            $r = [];
+        }
+        if (!empty($r['doccontentid']) && $withcontent) {
             $data = [false, 'dochistory', [['AND', 'dhid = :dhid', 'dhid', $r['doccontentid']]]];
             $sql = $this->pdosql->makeSelect($data);
             $rs = $this->db->fetch($sql);

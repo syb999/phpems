@@ -1,4 +1,4 @@
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 {x2;include:header}
 <body>
 {x2;include:nav}
@@ -13,8 +13,8 @@
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
 						<ol class="breadcrumb">
-							<li><a href="index.php?{x2;$_app}-master">{x2;$apps[$_app]['appname']}</a></li>
-							<li><a href="index.php?{x2;$_app}-master-basic-area">地区管理</a></li>
+							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master">{x2;(isset($apps[$_app]['appname'])?$apps[$_app]['appname']:'')}</a></li>
+							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master-basic-area">地区管理</a></li>
 							<li class="active">添加地区</li>
 						</ol>
 					</div>
@@ -22,7 +22,7 @@
 				<div class="box itembox" style="padding-top:10px;margin-bottom:0px;">
 					<h4 class="title" style="padding:10px;">
 						添加地区
-						<a class="btn btn-primary pull-right" href="index.php?exam-master-basic-area&page={x2;$page}{x2;$u}">地区设置</a>
+						<a class="btn btn-primary pull-right" href="index.php?exam-master-basic-area&page={x2;(isset($page)?$page:'')}{x2;(isset($u)?$u:'')}">地区设置</a>
 					</h4>
 			        <form action="index.php?exam-master-basic-addarea" method="post" class="form-horizontal">
 						<fieldset>
@@ -43,14 +43,14 @@
 						  	<div class="col-sm-9">
 							  	<button class="btn btn-primary" type="submit">提交</button>
 								<input type="hidden" name="insertarea" value="1"/>
-								<input type="hidden" name="page" value="{x2;$page}"/>
+								<input type="hidden" name="page" value="{x2;(isset($page)?$page:'')}"/>
 							</div>
 						</div>
 						</fieldset>
 					</form>
 				</div>
 			</div>
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 		</div>
 	</div>
 </div>

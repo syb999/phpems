@@ -6,7 +6,7 @@
 		</h5>
 	</header>
 	<div class="col-xs-12" style="margin-top:1rem;background:#FFFFFF;padding:1rem;margin-bottom:1rem;">
-		<h4 class="title">订单号：{x2;$order['ordersn']}</h4>
+		<h4 class="title">订单号：{x2;(isset($order['ordersn'])?$order['ordersn']:'')}</h4>
 		<table class="table table-bordered">
 			<thead>
 				<td>充值金额</td>
@@ -14,27 +14,27 @@
 				<td>下单时间</td>
 			</thead>
 			<tr>
-				<td>{x2;$order['orderprice']}</td>
+				<td>{x2;(isset($order['orderprice'])?$order['orderprice']:'')}</td>
 				<td>{x2;eval:echo $order['orderprice']*10}</td>
-				<td>{x2;date:$order['ordercreatetime'],'Y-m-d'}</td>
+				<td>{x2;date:$order['ordercreatetime'] ?? 0,'Y-m-d'}</td>
 			</tr>
 			<tr>
-				<td colspan="3"><p class="text-right">应付款：￥{x2;$order['orderprice']}</p></td>
+				<td colspan="3"><p class="text-right">应付款：￥{x2;(isset($order['orderprice'])?$order['orderprice']:'')}</p></td>
 			</tr>
 		</table>
 		<p class="text-right">
-			{x2;if:$order['orderstatus'] == 1}
+			{x2;if:(isset($order['orderstatus']) ? $order['orderstatus'] : null) == 1}
 				<a class="btn btn-success btn-block" href="javascript:;" onclick="javascript:callpay();">微信支付</a>
 			{x2;else}
-				<a class="btn btn-default btn-block">{x2;$orderstatus[$order['orderstatus']]}</a>
+				<a class="btn btn-default btn-block">{x2;(isset($orderstatus[$order['orderstatus']])?$orderstatus[$order['orderstatus']]:'')}</a>
 			{x2;endif}
 		</p>
 	</div>
-	{x2;if:$order['orderstatus'] == 1}
+	{x2;if:(isset($order['orderstatus']) ? $order['orderstatus'] : null) == 1}
 	<script>
 	function goorderlist()
 	{
-		var par = {'url':'index.php?user-phone-payfor-orderdetail&ordersn={x2;$order['ordersn']}'};
+		var par = {'url':'index.php?user-phone-payfor-orderdetail&ordersn={x2;(isset($order['ordersn'])?$order['ordersn']:'')}'};
 		alert('支付成功');
 		submitAjax(par);
 	}
@@ -42,7 +42,7 @@
     {
         WeixinJSBridge.invoke(
                 'getBrandWCPayRequest',
-                {x2;$jsApiParameters },
+                {x2;(isset($jsApiParameters)?$jsApiParameters:'')},
                 function(res){
                     WeixinJSBridge.log(res.err_msg);
                     if(res.err_msg == 'get_brand_wcpay_request:cancel')

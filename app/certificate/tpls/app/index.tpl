@@ -24,20 +24,20 @@
 						</ol>
 					</div>
 				</div>
-				{x2;tree:$certificates['data'],certificate,cid}
+				{x2;tree:(array)($certificates['data'] ?? []),certificate,cid}
 				<div class="box itembox" style="padding-top:20px;">
 					<div class="col-xs-3">
 						<a href="javascript:;" class="thumbnail pull-left">
-							<img src="{x2;v:certificate['cethumb']}" alt="" width="100%">
+							<img src="{x2;(isset(v:certificate['cethumb'])?v:certificate['cethumb']:'')}" alt="" width="100%">
 						</a>
 					</div>
 					<div class="col-xs-9">
-						<h4 class="title">{x2;v:certificate['cetitle']}</h4>
+						<h4 class="title">{x2;(isset(v:certificate['cetitle'])?v:certificate['cetitle']:'')}</h4>
 						<p>{x2;realsubstring:v:certificate['cedescribe'],240}</p>
 						<hr/>
 						<p>
 							<span>
-								<button class="btn{x2;if:v:certificate['ceqstatus'] == 3} btn-danger{x2;elseif:v:certificate['ceqstatus'] == 2} btn-success{x2;else} btn-primary{x2;endif}">{x2;$status[v:certificate['ceqstatus']]}</button>
+								<button class="btn{x2;if:v:certificate['ceqstatus'] == 3} btn-danger{x2;elseif:v:certificate['ceqstatus'] == 2} btn-success{x2;else} btn-primary{x2;endif}">{x2;(isset($status[v:certificate['ceqstatus']])?$status[v:certificate['ceqstatus']]:'')}</button>
 							</span>
 							<span class="pull-right">
 								<span class="glyphicon glyphicon-time"></span> <span>申请时间：{x2;date:v:certificate['ceqtime'],'Y-m-d H:i:s'}</span>
@@ -47,7 +47,7 @@
 				</div>
 				{x2;endtree}
 				<ul class="pagination pull-right">
-					{x2;$certificates['pages']}
+					{x2;(isset($certificates['pages'])?$certificates['pages']:'')}
 				</ul>
 			</div>
 		</div>

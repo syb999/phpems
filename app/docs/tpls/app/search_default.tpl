@@ -13,16 +13,16 @@
 					</ol>
 				</div>
 			</div>
-			{x2;tree:$docs['data'],doc,did}
+			{x2;tree:(array)($docs['data'] ?? []),doc,did}
 			<div class="box itembox" style="padding-top:20px;">
 				<div class="col-xs-3">
-					<a href="index.php?docs-app-docs&docid={x2;v:doc['docid']}" class="thumbnail pull-left">
-						<img src="{x2;v:doc['docthumb']}" alt="" width="100%">
+					<a href="index.php?docs-app-docs&docid={x2;(isset(v:doc['docid'])?v:doc['docid']:'')}" class="thumbnail pull-left">
+						<img src="{x2;(isset(v:doc['docthumb'])?v:doc['docthumb']:'')}" alt="" width="100%">
 					</a>
 				</div>
 				<div class="col-xs-9">
-					<a href="index.php?docs-app-docs&docid={x2;v:doc['docid']}"><h4 class="title">{x2;v:doc['doctitle']}</h4></a>
-					<p>{x2;v:doc['docdescribe']}</p>
+					<a href="index.php?docs-app-docs&docid={x2;(isset(v:doc['docid'])?v:doc['docid']:'')}"><h4 class="title">{x2;(isset(v:doc['doctitle'])?v:doc['doctitle']:'')}</h4></a>
+					<p>{x2;(isset(v:doc['docdescribe'])?v:doc['docdescribe']:'')}</p>
 					<hr/>
 					<p>
 						<span class="pull-right">

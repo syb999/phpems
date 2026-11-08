@@ -31,7 +31,7 @@
 							<input class="form-control"  name="args[userpassword]" datatype="password" needle="needle" msg="请你输入密码" placeholder="请输入密码" type="password">
 						</div>
 					</div>
-                    {x2;if:$app['appsetting']['emailverify']}
+                    {x2;if:!empty($app['appsetting']['emailverify'])}
 					<div class="form-group" style="overflow:hidden;">
 						<div class="col-sm-8" style="padding-left:0px;">
 							<div class="input-group">
@@ -44,14 +44,14 @@
 						</div>
 					</div>
                     {x2;endif}
-					{x2;tree:$forms,form,fid}
+					{x2;tree:(array)($forms ?? []),form,fid}
 					<div class="form-group">
-						<label class="col-sm-3 control-label">{x2;v:form['title']}</label>
-						<div class="col-sm-9">{x2;v:form['html']}</div>
+						<label class="col-sm-3 control-label">{x2;(isset(v:form['title'])?v:form['title']:'')}</label>
+						<div class="col-sm-9">{x2;(isset(v:form['html'])?v:form['html']:'')}</div>
 					</div>
 					{x2;endif}
 					<div class="form-group">
-						{x2;if:$app['appsetting']['closeregist']}
+						{x2;if:!empty($app['appsetting']['closeregist'])}
 						<button type="button" class="btn btn-primary btn-block" style="height:44px;line-height:32px;font-size:16px;">管理员禁止用户注册</button>
 						{x2;else}
 						<button type="submit" class="btn btn-primary btn-block" style="height:44px;line-height:32px;font-size:16px;">注册</button>
@@ -64,7 +64,7 @@
 		</div>
 	</div>
 </div>
-{x2;if:$app['appsetting']['emailverify']}
+{x2;if:!empty($app['appsetting']['emailverify'])}
 <script>
     var sendstatus = true;
     $('#sendphonecode').click(function(){

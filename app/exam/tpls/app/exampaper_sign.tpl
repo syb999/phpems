@@ -13,25 +13,25 @@
                 <div id="exam_page">
                 	<p class="ta_r mb_10"><span class="mr_10"><i class="exam_icon_yes"></i>已答试题</span><span class="mr_10"><i class="exam_icon_no"></i>未答试题</span></p>
                 	{x2;eval: v:oid = 0}
-                	{x2;tree:$questype,quest,qid}
+                	{x2;tree:(array)($questype ?? []),quest,qid}
                 	{x2;if:$sessionvars['examsessionquestion']['questions'][v:quest['questid']] || $sessionvars['examsessionquestion']['questionrows'][v:quest['questid']]}
 	                {x2;eval: v:oid++}
 	                <dl class="clear">
-                    	<dt class="float_l"><b>{x2;v:quest['questype']}</b></dt>
+                    	<dt class="float_l"><b>{x2;(isset(v:quest['questype'])?v:quest['questype']:'')}</b></dt>
                         <dd id="signcontent">
                         	{x2;eval: v:tid = 0}
-			                {x2;tree:$sessionvars['examsessionquestion']['questions'][v:quest['questid']],question,qnid}
+			                {x2;tree:(array)($sessionvars['examsessionquestion']['questions'][v:quest['questid']] ?? []),question,qnid}
 			                {x2;eval: v:tid++}
-                        	<a href="?exam-app-exampaper-paper#qtion_{x2;v:question['questionid']}" rel="_{x2;v:quest['questid']}-{x2;v:tid}" class="the {x2;if:$sessionvars['examsessionuseranswer'][v:question['questionid']]}yes {x2;endif}{x2;if:$sessionvars['examsessionsign'][v:question['questionid']]}mark{x2;endif}">{x2;v:tid}</a>
+                        	<a href="?exam-app-exampaper-paper#qtion_{x2;(isset(v:question['questionid'])?v:question['questionid']:'')}" rel="_{x2;(isset(v:quest['questid'])?v:quest['questid']:'')}-{x2;(isset(v:tid)?v:tid:'')}" class="the {x2;if:!empty($sessionvars['examsessionuseranswer'][v:question['questionid']])}yes {x2;endif}{x2;if:!empty($sessionvars['examsessionsign'][v:question['questionid']])}mark{x2;endif}">{x2;(isset(v:tid)?v:tid:'')}</a>
                         	{x2;endtree}
-                        	{x2;tree:$sessionvars['examsessionquestion']['questionrows'][v:quest['questid']],questionrow,qrid}
+                        	{x2;tree:(array)($sessionvars['examsessionquestion']['questionrows'][v:quest['questid']] ?? []),questionrow,qrid}
 			                {x2;eval: v:tid++}
 							{x2;eval: v:alreadydo = ''}
 							{x2;eval: v:alreadymark = ''}
-			                {x2;tree:v:questionrow['data'],data,did}
-							{x2;if:$sessionvars['examsessionuseranswer'][v:data['questionid']]}{x2;eval: v:alreadydo = 'yes'}{x2;endif}
-							{x2;if:$sessionvars['examsessionsign'][v:data['questionid']]}{x2;eval: v:alreadymark = 'mark'}{x2;endif}
-							<a href="?exam-app-exampaper-paper#qtion_{x2;v:data['questionid']}" rel="_{x2;v:quest['questid']}-{x2;v:tid}" class="the {x2;if:$sessionvars['examsessionuseranswer'][v:data['questionid']]}yes {x2;endif}{x2;if:$sessionvars['examsessionsign'][v:data['questionid']]}mark{x2;endif}">{x2;v:tid}-{x2;v:did}</a>
+			                {x2;tree:(array)(v:questionrow['data'] ?? []),data,did}
+							{x2;if:!empty($sessionvars['examsessionuseranswer'][v:data['questionid']])}{x2;eval: v:alreadydo = 'yes'}{x2;endif}
+							{x2;if:!empty($sessionvars['examsessionsign'][v:data['questionid']])}{x2;eval: v:alreadymark = 'mark'}{x2;endif}
+							<a href="?exam-app-exampaper-paper#qtion_{x2;(isset(v:data['questionid'])?v:data['questionid']:'')}" rel="_{x2;(isset(v:quest['questid'])?v:quest['questid']:'')}-{x2;(isset(v:tid)?v:tid:'')}" class="the {x2;if:!empty($sessionvars['examsessionuseranswer'][v:data['questionid']])}yes {x2;endif}{x2;if:!empty($sessionvars['examsessionsign'][v:data['questionid']])}mark{x2;endif}">{x2;(isset(v:tid)?v:tid:'')}-{x2;(isset(v:did)?v:did:'')}</a>
 			                {x2;endtree}
 			                {x2;endtree}
                         </dd>
@@ -54,7 +54,7 @@
 $(document).ready(function(){
 $.get('?exam-app-index-ajax-lefttime&rand'+Math.random(),function(data){
 		var setting = {
-			time:{x2;$sessionvars['examsessiontime']},
+			time:{x2;(isset($sessionvars['examsessiontime'])?$sessionvars['examsessiontime']:'')},
 			hbox:$("#timer_h"),
 			mbox:$("#timer_m"),
 			sbox:$("#timer_s"),

@@ -19,6 +19,7 @@
  *
  * @author widy
  */
+#[\AllowDynamicProperties]
 class JsApiPay
 {
     /**

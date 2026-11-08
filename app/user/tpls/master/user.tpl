@@ -1,4 +1,4 @@
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 {x2;include:header}
 <body>
 {x2;include:nav}
@@ -13,7 +13,7 @@
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
 						<ol class="breadcrumb">
-							<li><a href="index.php?{x2;$_app}-master">{x2;$apps[$_app]['appname']}</a></li>
+							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master">{x2;(isset($apps[$_app]['appname'])?$apps[$_app]['appname']:'')}</a></li>
 							<li class="active">用户管理</li>
 						</ol>
 					</div>
@@ -36,19 +36,19 @@
 									用户ID：
 								</td>
 								<td style="border-top:0px;">
-									<input name="search[userid]" class="form-control" size="15" type="text" class="number" value="{x2;$search['userid']}"/>
+									<input name="search[userid]" class="form-control" size="15" type="text" class="number" value="{x2;(isset($search['userid'])?$search['userid']:'')}"/>
 								</td>
 								<td style="border-top:0px;">
 									注册时间：
 								</td>
 								<td style="border-top:0px;">
-									<input class="form-control datetimepicker" data-date="{x2;date:TIME,'Y-m-d'}" data-date-format="yyyy-mm-dd" type="text" name="search[stime]" size="10" id="stime" value="{x2;$search['stime']}"/> - <input class="form-control datetimepicker" data-date="{x2;date:TIME,'Y-m-d'}" data-date-format="yyyy-mm-dd" size="10" type="text" name="search[etime]" id="etime" value="{x2;$search['etime']}"/>
+									<input class="form-control datetimepicker" data-date="{x2;date:TIME,'Y-m-d'}" data-date-format="yyyy-mm-dd" type="text" name="search[stime]" size="10" id="stime" value="{x2;(isset($search['stime'])?$search['stime']:'')}"/> - <input class="form-control datetimepicker" data-date="{x2;date:TIME,'Y-m-d'}" data-date-format="yyyy-mm-dd" size="10" type="text" name="search[etime]" id="etime" value="{x2;(isset($search['etime'])?$search['etime']:'')}"/>
 								</td>
 								<td style="border-top:0px;">
 									用户名：
 								</td>
 								<td style="border-top:0px;">
-									<input class="form-control" name="search[username]" size="15" type="text" value="{x2;$search['username']}"/>
+									<input class="form-control" name="search[username]" size="15" type="text" value="{x2;(isset($search['username'])?$search['username']:'')}"/>
 								</td>
 							</tr>
 					        <tr>
@@ -56,7 +56,7 @@
 									电子邮箱：
 								</td>
 					        	<td>
-					        		<input class="form-control" name="search[useremail]" size="15" type="text" value="{x2;$search['useremail']}"/>
+					        		<input class="form-control" name="search[useremail]" size="15" type="text" value="{x2;(isset($search['useremail'])?$search['useremail']:'')}"/>
 					        	</td>
 					        	<td>
 									用户组：
@@ -64,8 +64,8 @@
 								<td>
 									<select name="search[groupid]" class="form-control">
 								  		<option value="0">不限</option>
-								  		{x2;tree:$groups,group,gid}
-								  		<option value="{x2;v:group['groupid']}"{x2;if:$search['groupid'] == v:group['groupid']} selected{x2;endif}>{x2;v:group['groupname']}</option>
+								  		{x2;tree:(array)($groups ?? []),group,gid}
+								  		<option value="{x2;(isset(v:group['groupid'])?v:group['groupid']:'')}"{x2;if:(isset($search['groupid']) ? $search['groupid'] : null) == v:group['groupid']} selected{x2;endif}>{x2;(isset(v:group['groupname'])?v:group['groupname']:'')}</option>
 								  		{x2;endtree}
 							  		</select>
 								</td>
@@ -95,19 +95,19 @@
 								</tr>
 							</thead>
 							<tbody>
-								{x2;tree:$users['data'],user,uid}
+								{x2;tree:(array)($users['data'] ?? []),user,uid}
 								<tr>
-									<td>{x2;if:v:user['userid'] != $_user['userid']}<input type="checkbox" name="delids[{x2;v:user['userid']}]" value="1">{x2;endif}</td>
-									<td>{x2;v:user['userid']}</td>
-									<td>{x2;v:user['username']}</td>
-									<td>{x2;v:user['useremail']}</td><td>{x2;v:user['userregip']}</td>
-									<td>{x2;v:user['usercoin']}</td><td>{x2;$groups[v:user['usergroupid']]['groupname']}</td>
+									<td>{x2;if:v:user['userid'] != $_user['userid']}<input type="checkbox" name="delids[{x2;(isset(v:user['userid'])?v:user['userid']:'')}]" value="1">{x2;endif}</td>
+									<td>{x2;(isset(v:user['userid'])?v:user['userid']:'')}</td>
+									<td>{x2;(isset(v:user['username'])?v:user['username']:'')}</td>
+									<td>{x2;(isset(v:user['useremail'])?v:user['useremail']:'')}</td><td>{x2;(isset(v:user['userregip'])?v:user['userregip']:'')}</td>
+									<td>{x2;(isset(v:user['usercoin'])?v:user['usercoin']:'')}</td><td>{x2;(isset($groups[v:user['usergroupid']]['groupname'])?$groups[v:user['usergroupid']]['groupname']:'')}</td>
 									<td>{x2;date:v:user['userregtime'],'Y-m-d'}</td>
 									<td>
 										<div class="btn-group">
-											<a class="btn" href="index.php?user-master-user-modify&userid={x2;v:user['userid']}&page={x2;$page}{x2;$u}"><em class="glyphicon glyphicon-edit"></em></a>
+											<a class="btn" href="index.php?user-master-user-modify&userid={x2;(isset(v:user['userid'])?v:user['userid']:'')}&page={x2;(isset($page)?$page:'')}{x2;(isset($u)?$u:'')}"><em class="glyphicon glyphicon-edit"></em></a>
 											{x2;if:v:user['userid'] != $_user['userid']}
-											<a msg="删除后不能恢复，您确定要进行此操作吗？" class="btn confirm" href="index.php?user-master-user-del&userid={x2;v:user['userid']}&page={x2;$page}{x2;$u}"><em class="glyphicon glyphicon-remove"></em></a>
+											<a msg="删除后不能恢复，您确定要进行此操作吗？" class="btn confirm" href="index.php?user-master-user-del&userid={x2;(isset(v:user['userid'])?v:user['userid']:'')}&page={x2;(isset($page)?$page:'')}{x2;(isset($u)?$u:'')}"><em class="glyphicon glyphicon-remove"></em></a>
 											{x2;endif}
 										</div>
 									</td>
@@ -120,9 +120,9 @@
 					            <label class="radio-inline">
 					                <input type="radio" name="action" value="delete" checked/>删除
 					            </label>
-                                {x2;if:is_array($search)}
-					            {x2;tree:$search,arg,sid}
-					            <input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>
+                                {x2;if:isset($search) && is_array($search)}
+					            {x2;tree:(array)($search ?? []),arg,sid}
+					            <input type="hidden" name="search[{x2;(isset(v:key)?v:key:'')}]" value="{x2;(isset(v:arg)?v:arg:'')}"/>
 					            {x2;endtree}
                                 {x2;endif}
 					            <label class="radio-inline">
@@ -132,11 +132,11 @@
 				        </div>
 					</form>
 					<ul class="pagination pull-right">
-						{x2;$users['pages']}
+						{x2;(isset($users['pages'])?$users['pages']:'')}
 					</div>
 				</div>
 			</div>
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 		</div>
 	</div>
 </div>

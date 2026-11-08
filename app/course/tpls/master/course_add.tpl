@@ -1,4 +1,4 @@
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 {x2;include:header}
 <body>
 {x2;include:nav}
@@ -13,8 +13,8 @@
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
 						<ol class="breadcrumb">
-							<li><a href="index.php?{x2;$_app}-master">{x2;$apps[$_app]['appname']}</a></li>
-							<li><a href="index.php?{x2;$_app}-master-course&page={x2;$page}">课程管理</a></li>
+							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master">{x2;(isset($apps[$_app]['appname'])?$apps[$_app]['appname']:'')}</a></li>
+							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master-course&page={x2;(isset($page)?$page:'')}">课程管理</a></li>
 							<li class="active">添加课程</li>
 						</ol>
 					</div>
@@ -22,7 +22,7 @@
 				<div class="box itembox" style="padding-top:10px;margin-bottom:0px;">
 					<h4 class="title" style="padding:10px;">
 						添加课程
-						<a class="btn btn-primary pull-right" href="index.php?{x2;$_app}-master-course&page={x2;$page}{x2;$u}">课程管理</a>
+						<a class="btn btn-primary pull-right" href="index.php?{x2;(isset($_app)?$_app:'')}-master-course&page={x2;(isset($page)?$page:'')}{x2;(isset($u)?$u:'')}">课程管理</a>
 					</h4>
 					<form action="index.php?course-master-course-add" method="post" class="form-horizontal">
 						<div class="form-group">
@@ -64,8 +64,8 @@
 				        	<div class="col-sm-9 form-inline">
 							    <select id="cscatid" msg="您必须选择一个分类" needle="needle" class="autocombox form-control" name="args[cscatid]" refUrl="index.php?course-master-category-ajax-getchildcategory&catid={value}">
 					            	<option value="">选择一级分类</option>
-					            	{x2;tree:$parentcat,cat,cid}
-					            	<option value="{x2;v:cat['catid']}">{x2;v:cat['catname']}</option>
+					            	{x2;tree:(array)($parentcat ?? []),cat,cid}
+					            	<option value="{x2;(isset(v:cat['catid'])?v:cat['catid']:'')}">{x2;(isset(v:cat['catname'])?v:cat['catname']:'')}</option>
 					            	{x2;endtree}
 					            </select>
 					        </div>
@@ -75,8 +75,8 @@
 				        	<div class="col-sm-9 form-inline">
 							    <select id="cscatid" msg="请选择科目" needle="needle" target="csbasicid" class="combox form-control" name="args[cssubjectid]" refUrl="index.php?course-master-index-getajaxbasiclist&subjectid={value}">
 					            	<option value="">请选择科目</option>
-					            	{x2;tree:$subjects,subject,sid}
-					            	<option value="{x2;v:subject['subjectid']}">{x2;v:subject['subject']}</option>
+					            	{x2;tree:(array)($subjects ?? []),subject,sid}
+					            	<option value="{x2;(isset(v:subject['subjectid'])?v:subject['subjectid']:'')}">{x2;(isset(v:subject['subject'])?v:subject['subject']:'')}</option>
 					            	{x2;endtree}
 					            </select>
 					            <a href="index.php?exam-master-basic-subject" class="btn btn-primary" target="_blank">编辑科目</a>
@@ -100,10 +100,10 @@
 							<label class="control-label col-sm-2">学习模式</label>
 							<div class="col-sm-9">
 								<label class="radio-inline">
-									<input name="args[cstype]" type="radio" value="0" {x2;if:!$course['cstype']}checked{x2;endif}/>开放模式
+									<input name="args[cstype]" type="radio" value="0" {x2;if:!empty($course['cstype'])}checked{x2;endif}/>开放模式
 								</label>
 								<label class="radio-inline">
-									<input name="args[cstype]" type="radio" value="1" {x2;if:$course['cstype']}checked{x2;endif}/>解锁模式
+									<input name="args[cstype]" type="radio" value="1" {x2;if:!empty($course['cstype'])}checked{x2;endif}/>解锁模式
 								</label>
 							</div>
 						</div>
@@ -111,10 +111,10 @@
 							<label class="control-label col-sm-2">免费课程</label>
 							<div class="col-sm-9">
 								<label class="radio-inline">
-									<input name="args[csdemo]" type="radio" value="1" {x2;if:$course['csdemo']}checked{x2;endif}/>是
+									<input name="args[csdemo]" type="radio" value="1" {x2;if:!empty($course['csdemo'])}checked{x2;endif}/>是
 								</label>
 								<label class="radio-inline">
-									<input name="args[csdemo]" type="radio" value="0" {x2;if:!$course['csdemo']}checked{x2;endif}/>否
+									<input name="args[csdemo]" type="radio" value="0" {x2;if:!empty($course['csdemo'])}checked{x2;endif}/>否
 								</label>
 								<span class="help-block">免费课程无须开通即可学习</span>
 							</div>
@@ -122,7 +122,7 @@
 						<div class="form-group">
 							<label for="basicprice" class="control-label col-sm-2">价格设置</label>
 							<div class="col-sm-9">
-								<textarea class="form-control" rows="4" name="args[csprice]" id="csprice">{x2;$course['csprice']}</textarea>
+								<textarea class="form-control" rows="4" name="args[csprice]" id="csprice">{x2;(isset($course['csprice'])?$course['csprice']:'')}</textarea>
 							  	<span class="help-block">请按照“时长:开通所需积分”格式填写，每行一个，时长以天为单位，免费课程此设置无效。</span>
 							</div>
 						</div>
@@ -136,7 +136,7 @@
 					</form>
 				</div>
 			</div>
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 		</div>
 	</div>
 </div>

@@ -10,6 +10,7 @@
  * This source file is subject to the MIT license that is bundled.
  */
 
+#[\AllowDynamicProperties]
 class html
 {
     public $G;
@@ -42,7 +43,7 @@ class html
                     if (!is_array($field['fieldhtmlproperty'])) {
                         $field['fieldhtmlproperty'] = [];
                     }
-                    $field['fieldhtmlproperty'][] = ['key' => 'value', 'value' => $values[$field['field']]];
+                    $field['fieldhtmlproperty'][] = ['key' => 'value', 'value' => isset($values[$field['field']]) ? $values[$field['field']] : ''];
                 } elseif ($field['fielddefault']) {
                     $field['fieldhtmlproperty'][] = ['key' => 'value', 'value' => $field['fielddefault']];
                 }
@@ -55,7 +56,7 @@ class html
             $tmp['describe'] = $field['fielddescribe'];
             if (is_array($values)) {
                 //$tmp['html'] = $this->$field['fieldhtmltype'](array('pars'=>$field['fieldhtmlproperty'],'values'=>$field['fieldvalues'],'default'=>$values[$field['field']]));
-                $tmp['html'] = call_user_func([$this, $field['fieldhtmltype']], ['pars' => $field['fieldhtmlproperty'], 'values' => $field['fieldvalues'], 'default' => $values[$field['field']]]);
+                $tmp['html'] = call_user_func([$this, $field['fieldhtmltype']], ['pars' => $field['fieldhtmlproperty'], 'values' => $field['fieldvalues'], 'default' => isset($values[$field['field']]) ? $values[$field['field']] : '']);
             } else {
                 //$tmp['html'] = $this->$field['fieldhtmltype'](array('pars'=>$field['fieldhtmlproperty'],'values'=>$field['fieldvalues'],'default'=>$field['fielddefault']));
                 $tmp['html'] = call_user_func([$this, $field['fieldhtmltype']], ['pars' => $field['fieldhtmlproperty'], 'values' => $field['fieldvalues'], 'default' => $field['fielddefault']]);

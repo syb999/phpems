@@ -1,4 +1,4 @@
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 {x2;include:header}
 <body>
 {x2;include:nav}
@@ -13,37 +13,37 @@
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
 						<ol class="breadcrumb">
-							<li><a href="index.php?{x2;$_app}-master">{x2;$apps[$_app]['appname']}</a></li>
-							<li><a href="index.php?{x2;$_app}-master-basic">考场管理</a></li>
+							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master">{x2;(isset($apps[$_app]['appname'])?$apps[$_app]['appname']:'')}</a></li>
+							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master-basic">考场管理</a></li>
 							<li class="active">成员列表</li>
 						</ol>
 					</div>
 				</div>
 				<div class="box itembox" style="padding-top:10px;margin-bottom:0px;">
 					<h4 class="title" style="padding:10px;">
-						【{x2;$basic['basic']}】成员列表
+						【{x2;(isset($basic['basic'])?$basic['basic']:'')}】成员列表
 						<span class="dropdown pull-right">
 							<a class="btn btn-primary" href="#" data-toggle="dropdown">增加人员 <strong class="caret"></strong></a>
 							<ul class="dropdown-menu">
-								<li><a href="index.php?exam-master-users-batopen&basicid={x2;$basicid}">根据条件增加</a></li>
-								<li><a href="index.php?{x2;$_app}-master-basic-selectmember&basicid={x2;$basicid}">用户列表选择</a></li>
+								<li><a href="index.php?exam-master-users-batopen&basicid={x2;(isset($basicid)?$basicid:'')}">根据条件增加</a></li>
+								<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master-basic-selectmember&basicid={x2;(isset($basicid)?$basicid:'')}">用户列表选择</a></li>
 		                    </ul>
 						</span>
 					</h4>
-			        <form action="index.php?exam-master-basic-members&basicid={x2;$basicid}" method="post" class="form-inline">
+			        <form action="index.php?exam-master-basic-members&basicid={x2;(isset($basicid)?$basicid:'')}" method="post" class="form-inline">
 						<table class="table">
 							<tr>
 								<td style="border-top:0px;">
 									用户ID：
 								</td>
 								<td style="border-top:0px;">
-									<input name="search[userid]" class="form-control" size="25" type="text" class="number" value="{x2;$search['userid']}"/>
+									<input name="search[userid]" class="form-control" size="25" type="text" class="number" value="{x2;(isset($search['userid'])?$search['userid']:'')}"/>
 								</td>
 								<td style="border-top:0px;">
 									用户名：
 								</td>
 								<td style="border-top:0px;">
-									<input class="form-control" name="search[username]" size="25" type="text" value="{x2;$search['username']}"/>
+									<input class="form-control" name="search[username]" size="25" type="text" value="{x2;(isset($search['username'])?$search['username']:'')}"/>
 								</td>
 								<td style="border-top:0px;">
 									<button class="btn btn-primary" type="submit">搜索</button>
@@ -67,17 +67,17 @@
 			                </tr>
 			            </thead>
 			            <tbody>
-			            	{x2;tree:$members['data'],user,uid}
+			            	{x2;tree:(array)($members['data'] ?? []),user,uid}
 			            	<tr>
-			                    <td>{x2;v:user['userid']}</td>
-			                    <td>{x2;v:user['username']}</td>
-			                    <td>{x2;v:user['usertruename']}</td>
-								<td>{x2;date:v:user['obtime'],'Y-m-d'}</td><td>{x2;v:user['userregip']}</td>
-								<td>{x2;v:user['usercoin']}</td><td>{x2;$groups[v:user['usergroupid']]['groupname']}</td>
+			                    <td>{x2;(isset(v:user['userid'])?v:user['userid']:'')}</td>
+			                    <td>{x2;(isset(v:user['username'])?v:user['username']:'')}</td>
+			                    <td>{x2;(isset(v:user['usertruename'])?v:user['usertruename']:'')}</td>
+								<td>{x2;date:v:user['obtime'],'Y-m-d'}</td><td>{x2;(isset(v:user['userregip'])?v:user['userregip']:'')}</td>
+								<td>{x2;(isset(v:user['usercoin'])?v:user['usercoin']:'')}</td><td>{x2;(isset($groups[v:user['usergroupid']]['groupname'])?$groups[v:user['usergroupid']]['groupname']:'')}</td>
 								<td>{x2;date:v:user['obendtime'],'Y-m-d'}</td>
 								<td>
 								  	<div class="btn-group">
-			                    		<a class="btn confirm" href="index.php?exam-master-users-closebasics&userid={x2;v:user['userid']}&basicid={x2;v:user['obbasicid']}{x2;$u}" title="取消开通"><em class="glyphicon glyphicon-remove"></em></a>
+			                    		<a class="btn confirm" href="index.php?exam-master-users-closebasics&userid={x2;(isset(v:user['userid'])?v:user['userid']:'')}&basicid={x2;(isset(v:user['obbasicid'])?v:user['obbasicid']:'')}{x2;(isset($u)?$u:'')}" title="取消开通"><em class="glyphicon glyphicon-remove"></em></a>
 									</div>
 								</td>
 			                </tr>
@@ -85,11 +85,11 @@
 			        	</tbody>
 			        </table>
 			        <ul class="pagination pull-right">
-			            {x2;$members['pages']}
+			            {x2;(isset($members['pages'])?$members['pages']:'')}
 			        </ul>
 				</div>
 			</div>
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 		</div>
 	</div>
 </div>

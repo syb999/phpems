@@ -10,6 +10,7 @@
  * This source file is subject to the MIT license that is bundled.
  */
 
+#[\AllowDynamicProperties]
 class app
 {
     public $G;
@@ -32,7 +33,7 @@ class app
         $this->content = $this->G->make('content', 'content');
         $this->user = $this->G->make('user', 'user');
         $this->_user = $_user = $this->session->getSessionUser();
-        $this->tpl->assign('_user', $this->user->getUserById($this->_user['sessionuserid']));
+        $this->tpl->assign('_user', $this->user->getUserById(isset($this->_user['sessionuserid']) ? $this->_user['sessionuserid'] : 0));
         $rcats = $this->category->getCategoriesByArgs([['AND', "catparent = '0'"]]);
         $this->tpl->assign('rcats', $rcats);
     }

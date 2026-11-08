@@ -10,6 +10,7 @@
  * This source file is subject to the MIT license that is bundled.
  */
 
+#[\AllowDynamicProperties]
 class action extends app
 {
     public function display()
@@ -26,7 +27,10 @@ class action extends app
     {
         $oid = $this->ev->get('ordersn');
         $order = $this->orders->getOrderById($oid);
-        if (1 == $order['orderstatus'] || 99 == $order['orderstatus']) {
+        if (!is_array($order) || !$order) {
+            $this->G->R(['statusCode' => 404, 'message' => '订单不存在', 'callbackType' => 'forward', 'forwardUrl' => 'index.php?bank-master-orders']);
+        }
+        if (1 == (isset($order['orderstatus']) ? $order['orderstatus'] : 0) || 99 == (isset($order['orderstatus']) ? $order['orderstatus'] : 0)) {
             $this->orders->delOrder($oid);
             $message = [
                 'statusCode' => 200,
@@ -46,9 +50,12 @@ class action extends app
     private function batremove()
     {
         $delids = $this->ev->get('delids');
+        if (!is_array($delids)) {
+            $delids = [];
+        }
         foreach ($delids as $oid => $p) {
             $order = $this->orders->getOrderById($oid);
-            if (1 == $order['orderstatus'] || 99 == $order['orderstatus']) {
+            if (1 == (isset($order['orderstatus']) ? $order['orderstatus'] : 0) || 99 == (isset($order['orderstatus']) ? $order['orderstatus'] : 0)) {
                 $this->orders->delOrder($oid);
             }
         }

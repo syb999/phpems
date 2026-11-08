@@ -12,33 +12,33 @@
 					<div class="col-xs-12">
 						<ol class="breadcrumb">
 							<li><a href="index.php">首页</a></li>
-							<li><a href="index.php?docs-app-docs&docid={x2;$doc['docid']}">{x2;$doc['doctitle']}</a></li>
+							<li><a href="index.php?docs-app-docs&docid={x2;(isset($doc['docid'])?$doc['docid']:'')}">{x2;(isset($doc['doctitle'])?$doc['doctitle']:'')}</a></li>
 							<li class="active">历史版本详情</li>
 						</ol>
 					</div>
 				</div>
 				<div class="box itembox">
-					{x2;if:$doc['doccontentid'] == $doc['content']['dhid']}
+					{x2;if:(isset($doc['doccontentid']) ? $doc['doccontentid'] : null) == $doc['content']['dhid']}
 					<p class="alert alert-info" style="margin-top: 15px;">本内容为当前使用版本</p>
 					{x2;else}
 					<p class="alert alert-danger" style="margin-top: 15px;">本内容为历史版本</p>
 					{x2;endif}
 					<div class="col-xs-12">
-						<h2 class="text-left">{x2;$doc['doctitle']}
+						<h2 class="text-left">{x2;(isset($doc['doctitle'])?$doc['doctitle']:'')}
 							<span class="pull-right">
-								<a class="btn btn-primary" href="index.php?docs-app-docs&docid={x2;$doc['docid']}">返回词条</a>
-								<a class="btn btn-danger" href="index.php?docs-app-docs-history&docid={x2;$doc['docid']}">其他版本</a>
+								<a class="btn btn-primary" href="index.php?docs-app-docs&docid={x2;(isset($doc['docid'])?$doc['docid']:'')}">返回词条</a>
+								<a class="btn btn-danger" href="index.php?docs-app-docs-history&docid={x2;(isset($doc['docid'])?$doc['docid']:'')}">其他版本</a>
 							</span>
 						</h2>
 					</div>
 					<div class="col-xs-12" id="content">
-						{x2;realhtml:$doc['content']['dhcontent']}
+						{x2;(isset(realhtml:$doc['content']['dhcontent'])?realhtml:$doc['content']['dhcontent']:'')}
 					</div>
 					<div class="col-xs-12">
 						<hr/>
 						<p>
 							<span class="pull-right">
-								<em>本版提交时间 {x2;date:$doc['content']['dhtime'],'Y-m-d H:i:s'}</em>
+								<em>本版提交时间 {x2;date:$doc['content']['dhtime'] ?? 0,'Y-m-d H:i:s'}</em>
 							</span>
 						</p>
 					</div>

@@ -1,4 +1,4 @@
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 {x2;include:header}
 <body>
 <div id="content">
@@ -13,19 +13,19 @@
 				</h5>
 			</header>
 			<div class="container-fluid">
-				{x2;tree:$certificates['data'],certificate,cid}
+				{x2;tree:(array)($certificates['data'] ?? []),certificate,cid}
 				<div style="clear:both;overflow:hidden;background:#FFFFFF;margin-top:0.5rem;padding:0.8rem 0.2rem;">
 					<div class="col-xs-4">
-						<a href="index.php?certificate-phone-certificate-apply&ceid={x2;v:certificate['ceid']}" class="ajax" data-target="certificate" data-page="certificate">
-							<img src="{x2;v:certificate['cethumb']}" style="width:10rem;margin-top:0.5rem"/>
+						<a href="index.php?certificate-phone-certificate-apply&ceid={x2;(isset(v:certificate['ceid'])?v:certificate['ceid']:'')}" class="ajax" data-target="certificate" data-page="certificate">
+							<img src="{x2;(isset(v:certificate['cethumb'])?v:certificate['cethumb']:'')}" style="width:10rem;margin-top:0.5rem"/>
 						</a>
 					</div>
 					<div class="col-xs-8" style="padding:0.2rem;">
 						<div class="text-left" style="padding:0.2rem;">
-							<a href="index.php?certificate-phone-certificate-apply&ceid={x2;v:certificate['ceid']}" class="ajax" data-target="certificate" data-page="certificate">
-								<h5>{x2;v:certificate['cetitle']}</h5>
+							<a href="index.php?certificate-phone-certificate-apply&ceid={x2;(isset(v:certificate['ceid'])?v:certificate['ceid']:'')}" class="ajax" data-target="certificate" data-page="certificate">
+								<h5>{x2;(isset(v:certificate['cetitle'])?v:certificate['cetitle']:'')}</h5>
 								<p style="font-size:1rem;">
-									<button class="btn btn-primary">申请 （{x2;v:certificate['ceprice']}积分）</button>
+									<button class="btn btn-primary">申请 （{x2;(isset(v:certificate['ceprice'])?v:certificate['ceprice']:'')}积分）</button>
 								</p>
 							</a>
 						</div>
@@ -33,12 +33,12 @@
 				</div>
 				{x2;endtree}
 				<ul class="pagination pull-right">
-                    {x2;$certificates['pages']}
+                    {x2;(isset($certificates['pages'])?$certificates['pages']:'')}
 				</ul>
 			</div>
 			{x2;include:footer}
 		</div>
-	{x2;if:!$userhash}
+	{x2;if:!empty($userhash)}
     </div>
 </div>
 </body>

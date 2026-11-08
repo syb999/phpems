@@ -10,6 +10,7 @@
  * This source file is subject to the MIT license that is bundled.
  */
 
+#[\AllowDynamicProperties]
 class app
 {
     public $G;
@@ -32,7 +33,7 @@ class app
         $this->content = $this->G->make('content', 'course');
         $this->user = $this->G->make('user', 'user');
         $this->_user = $_user = $this->session->getSessionUser();
-        if (!$this->_user['sessionuserid']) {
+        if (empty($this->_user['sessionuserid'])) {
             if ($this->ev->get('userhash')) {
                 exit(json_encode([
                     'statusCode' => 301,
@@ -45,7 +46,7 @@ class app
             header('location:index.php?user-app-login');
             exit;
         }
-        $this->tpl->assign('_user', $this->user->getUserById($this->_user['sessionuserid']));
+        $this->tpl->assign('_user', $this->user->getUserById(isset($this->_user['sessionuserid']) ? $this->_user['sessionuserid'] : 0));
         $this->rcats = $rcats = $this->category->getCategoriesByArgs("catparent  = '0'");
         $this->tpl->assign('rcats', $rcats);
         $this->tpl->assign('userhash', $this->ev->get('userhash'));

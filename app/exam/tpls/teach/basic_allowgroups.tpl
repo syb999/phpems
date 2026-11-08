@@ -42,23 +42,23 @@
 	                </tr>
 	            </thead>
 	            <tbody>
-                    {x2;tree:$actors['data'],actor,aid}
+                    {x2;tree:(array)($actors['data'] ?? []),actor,aid}
 			        <tr>
 						<td>
-							<input rel="1" class="sbox" type="checkbox" name="ids[]" value="{x2;v:actor['groupid']}" onclick="javascript:selectexams(this,'{x2;$target}')"/>
+							<input rel="1" class="sbox" type="checkbox" name="ids[]" value="{x2;(isset(v:actor['groupid'])?v:actor['groupid']:'')}" onclick="javascript:selectexams(this,'{x2;(isset($target)?$target:'')}')"/>
 						</td>
 						<td>
-							{x2;v:actor['groupname']}
+							{x2;(isset(v:actor['groupname'])?v:actor['groupname']:'')}
 						</td>
 			        </tr>
 			        {x2;endtree}
 	        	</tbody>
 	        </table>
 	        <div class="pagination pagination-right">
-	            <ul>{x2;$actors['pages']}</ul>
+	            <ul>{x2;(isset($actors['pages'])?$actors['pages']:'')}</ul>
 	        </div>
 	        <script type="text/javascript">
 	    		jQuery(function($) {
-					markSelectedExams('ids[]','{x2;$target}');
+					markSelectedExams('ids[]','{x2;(isset($target)?$target:'')}');
 	    		});
 	    	</script>

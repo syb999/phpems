@@ -10,8 +10,10 @@
  * This source file is subject to the MIT license that is bundled.
  */
 
+#[\AllowDynamicProperties]
 class pg
 {
+    public $isPhone = 0;
     public $G;
     public $pre = '<li>';
     public $end = '</li>';

@@ -8,24 +8,24 @@
 				<div class="col-xs-12">
 					<ol class="breadcrumb">
 						<li><a href="index.php">首页</a></li>
-						<li class="active"><a href="index.php?content-app-category&catid={x2;$cat['catid']}">{x2;$cat['catname']}</a></li>
+						<li class="active"><a href="index.php?content-app-category&catid={x2;(isset($cat['catid'])?$cat['catid']:'')}">{x2;(isset($cat['catname'])?$cat['catname']:'')}</a></li>
 					</ol>
 				</div>
 			</div>
 			<div class="box itembox" style="padding-top:20px;">
 				<div class="col-xs-12">
-					<h2 class="text-center">{x2;$content['contenttitle']}</h2>
+					<h2 class="text-center">{x2;(isset($content['contenttitle'])?$content['contenttitle']:'')}</h2>
 					<hr/>
-                    {x2;if:$content['contentdescribe']}<blockquote>{x2;$content['contentdescribe']}</blockquote>{x2;endif}
+                    {x2;if:!empty($content['contentdescribe'])}<blockquote>{x2;(isset($content['contentdescribe'])?$content['contentdescribe']:'')}</blockquote>{x2;endif}
 				</div>
 				<div class="col-xs-12" id="content">
-                    {x2;realhtml:$content['contenttext']}
+                    {x2;(isset(realhtml:$content['contenttext'])?realhtml:$content['contenttext']:'')}
 				</div>
 				<div class="col-xs-12">
 					<hr/>
 					<p>
 						<span class="pull-right">
-							<a href=""><span class="glyphicon glyphicon-time"></span> <span>{x2;date:$content['contentinputtime'],'Y-m-d H:i:s'}</span></a>&nbsp;&nbsp;
+							<a href=""><span class="glyphicon glyphicon-time"></span> <span>{x2;date:$content['contentinputtime'] ?? 0,'Y-m-d H:i:s'}</span></a>&nbsp;&nbsp;
 						</span>
 					</p>
 				</div>

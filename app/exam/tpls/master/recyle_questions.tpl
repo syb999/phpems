@@ -1,4 +1,4 @@
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 {x2;include:header}
 <body>
 {x2;include:nav}
@@ -13,7 +13,7 @@
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
 						<ol class="breadcrumb">
-							<li><a href="index.php?{x2;$_app}-master">{x2;$apps[$_app]['appname']}</a></li>
+							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master">{x2;(isset($apps[$_app]['appname'])?$apps[$_app]['appname']:'')}</a></li>
 							<li><a href="index.php?exam-master-recyle">回收站</a></li>
 							<li class="active">已删试题</li>
 						</ol>
@@ -37,19 +37,19 @@
 			                </tr>
 			            </thead>
 			            <tbody>
-		                    {x2;tree:$questions['data'],question,qid}
+		                    {x2;tree:(array)($questions['data'] ?? []),question,qid}
 					        <tr>
 								<td>
-									{x2;v:question['questionid']}
+									{x2;(isset(v:question['questionid'])?v:question['questionid']:'')}
 								</td>
 								<td>
-									{x2;$questypes[v:question['questiontype']]['questype']}
+									{x2;(isset($questypes[v:question['questiontype']]['questype'])?$questypes[v:question['questiontype']]['questype']:'')}
 								</td>
 								<td>
-									<a title="查看试题" class="selfmodal" href="javascript:;" url="index.php?exam-master-questions-detail&questionid={x2;v:question['questionid']}" data-target="#modal">{x2;substring:strip_tags(html_entity_decode(v:question['question'])),135}</a>
+									<a title="查看试题" class="selfmodal" href="javascript:;" url="index.php?exam-master-questions-detail&questionid={x2;(isset(v:question['questionid'])?v:question['questionid']:'')}" data-target="#modal">{x2;substring:strip_tags(html_entity_decode(v:question['question'])),135}</a>
 								</td>
 								<td>
-									{x2;v:question['questionusername']}
+									{x2;(isset(v:question['questionusername'])?v:question['questionusername']:'')}
 								</td>
 								<td>
 									{x2;date:v:question['questioncreatetime'],'Y-m-d'}
@@ -59,8 +59,8 @@
 								</td>
 								<td>
 									<div class="btn-group">
-			                    		<a class="btn ajax" href="index.php?exam-master-questions-backquestion&page={x2;$page}&questionid={x2;v:question['questionid']}{x2;$u}" title="恢复本题将会恢复本题下所有已删除子题"><em class="glyphicon glyphicon-edit"></em></a>
-										<a class="btn confirm" href="index.php?exam-master-recyle-finaldelquestion&questionparent=0&page={x2;$page}&questionid={x2;v:question['questionid']}{x2;$u}" title="彻底删除"><em class="glyphicon glyphicon-remove"></em></a>
+			                    		<a class="btn ajax" href="index.php?exam-master-questions-backquestion&page={x2;(isset($page)?$page:'')}&questionid={x2;(isset(v:question['questionid'])?v:question['questionid']:'')}{x2;(isset($u)?$u:'')}" title="恢复本题将会恢复本题下所有已删除子题"><em class="glyphicon glyphicon-edit"></em></a>
+										<a class="btn confirm" href="index.php?exam-master-recyle-finaldelquestion&questionparent=0&page={x2;(isset($page)?$page:'')}&questionid={x2;(isset(v:question['questionid'])?v:question['questionid']:'')}{x2;(isset($u)?$u:'')}" title="彻底删除"><em class="glyphicon glyphicon-remove"></em></a>
 			                    	</div>
 								</td>
 					        </tr>
@@ -68,11 +68,11 @@
 			        	</tbody>
 			        </table>
 					<ul class="pagination pull-right">
-						{x2;$questions['pages']}
+						{x2;(isset($questions['pages'])?$questions['pages']:'')}
 					</ul>
 				</div>
 			</div>
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 		</div>
 	</div>
 </div>

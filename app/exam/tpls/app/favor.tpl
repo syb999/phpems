@@ -1,4 +1,4 @@
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 {x2;include:header}
 <body>
 {x2;include:nav}
@@ -12,10 +12,10 @@
                         <span class="icon-home"></span> <a href="index.php?exam">考场选择</a>
                     </li>
                     <li>
-                        <a href="index.php?exam-app-basics">{x2;$data['currentbasic']['basic']}</a>
+                        <a href="index.php?exam-app-basics">{x2;(isset($data['currentbasic']['basic'])?$data['currentbasic']['basic']:'')}</a>
                     </li>
                     <li>
-                        <a href="index.php?exam-app-history&ehtype={x2;$ehtype}">考试记录</a>
+                        <a href="index.php?exam-app-history&ehtype={x2;(isset($ehtype)?$ehtype:'')}">考试记录</a>
                     </li>
                     <li class="active">
                         查看解析
@@ -24,10 +24,10 @@
             </div>
             <div class="box itembox" style="padding-top:24px;">
                 <ul class="nav nav-tabs">
-                    <li{x2;if:!$type} class="active"{x2;endif}>
+                    <li{x2;if:!empty($type)} class="active"{x2;endif}>
                         <a href="index.php?exam-app-favor">普通试题</a>
                     </li>
-                    <li{x2;if:$type} class="active"{x2;endif}>
+                    <li{x2;if:!empty($type)} class="active"{x2;endif}>
                         <a href="index.php?exam-app-favor&type=1">题冒题</a>
                     </li>
                 </ul>
@@ -41,35 +41,35 @@
                                 <td width="80%">
                                     <select name="search[questype]" class="form-control" autocomplete="off">
                                         <option value="0">请选择题型</option>
-                                        {x2;tree:$questype,quest,qid}
-                                        <option value="{x2;v:quest['questid']}"{x2;if:$search['questype'] == v:quest['questid']}
-                                                selected{x2;endif}>{x2;v:quest['questype']}</option>
+                                        {x2;tree:(array)($questype ?? []),quest,qid}
+                                        <option value="{x2;(isset(v:quest['questid'])?v:quest['questid']:'')}"{x2;if:(isset($search['questype']) ? $search['questype'] : null) == v:quest['questid']}
+                                                selected{x2;endif}>{x2;(isset(v:quest['questype'])?v:quest['questype']:'')}</option>
                                         {x2;endtree}
                                     </select>
                                 </td>
                                 <td width="10%">
                                     <button class="btn btn-primary" type="submit">提交</button>
-                                    <input type="hidden" value="{x2;$type}" name="type"/>
+                                    <input type="hidden" value="{x2;(isset($type)?$type:'')}" name="type"/>
                                 </td>
                             </tr>
                         </table>
                     </blockquote>
                 </form>
-                {x2;if:$type}
+                {x2;if:!empty($type)}
                 {x2;eval:v:ishead = 0}
                 {x2;eval:v:ispre = 0}
-                {x2;if:is_array($favors['data'])}
-                {x2;tree:$favors['data'],question,qid}
+                {x2;if:isset($favors['data']) && is_array($favors['data'])}
+                {x2;tree:(array)($favors['data'] ?? []),question,qid}
                 {x2;if:v:pre != v:question['questionparent']}
                 {x2;eval:v:ishead = 0}
                 {x2;endif}
                 <div class="box itembox paperexamcontent">
                     {x2;if:!v:ishead}
                     <h4 class="title">
-                        【{x2;$questype[v:question['questiontype']]['questype']}】
+                        【{x2;(isset($questype[v:question['questiontype']]['questype'])?$questype[v:question['questiontype']]['questype']:'')}】
                     </h4>
                     <div class="choice">
-                        {x2;realhtml:v:question['qrquestion']}
+                        {x2;(isset(realhtml:v:question['qrquestion'])?realhtml:v:question['qrquestion']:'')}
                     </div>
                     {x2;endif}
                     <blockquote
@@ -78,17 +78,17 @@
                             第{x2;eval: echo ($page-1)*20+v:qid}题
                             <span class="pull-right">
 										<a class="btn btn-danger qicon ajax"
-                                           href="index.php?exam-app-favor-ajax-delfavor&favorid={x2;v:question['favorid']}"><i
+                                           href="index.php?exam-app-favor-ajax-delfavor&favorid={x2;(isset(v:question['favorid'])?v:question['favorid']:'')}"><i
                                                     class="glyphicon glyphicon-remove"></i></a>
 									</span>
                         </h4>
                         <div class="choice">
-                            {x2;realhtml:v:question['question']}
+                            {x2;(isset(realhtml:v:question['question'])?realhtml:v:question['question']:'')}
                         </div>
                         {x2;if:!$questypes[v:question['questiontype']]['questsort']}
                         {x2;if:v:question['questionselect'] && $questype[v:question['questiontype']]['questchoice'] != 5}
                         <div class="choice">
-                            {x2;realhtml:v:question['questionselect']}
+                            {x2;(isset(realhtml:v:question['questionselect'])?realhtml:v:question['questionselect']:'')}
                         </div>
                         {x2;endif}
                         {x2;endif}
@@ -96,21 +96,21 @@
                             <table class="table">
                                 <tr>
                                     <td width="15%" style="border-top:0px;">正确答案：</td>
-                                    <td style="border-top:0px;">{x2;realhtml:v:question['questionanswer']}</td>
+                                    <td style="border-top:0px;">{x2;(isset(realhtml:v:question['questionanswer'])?realhtml:v:question['questionanswer']:'')}</td>
                                 </tr>
                                 <tr>
                                     <td>所在章：</td>
-                                    <td>{x2;tree:v:question['qrknowsid'],knowsid,kid}{x2;$globalsections[$globalknows[v:knowsid['knowsid']]['knowssectionid']]['section']}
+                                    <td>{x2;tree:(array)(v:question['qrknowsid'] ?? []),knowsid,kid}{x2;(isset($globalsections[$globalknows[v:knowsid['knowsid']]['knowssectionid']]['section'])?$globalsections[$globalknows[v:knowsid['knowsid']]['knowssectionid']]['section']:'')}
                                         &nbsp;&nbsp;&nbsp;{x2;endtree}</td>
                                 </tr>
                                 <tr>
                                     <td>知识点：</td>
-                                    <td>{x2;tree:v:question['qrknowsid'],knowsid,kid}{x2;$globalknows[v:knowsid['knowsid']]['knows']}
+                                    <td>{x2;tree:(array)(v:question['qrknowsid'] ?? []),knowsid,kid}{x2;(isset($globalknows[v:knowsid['knowsid']]['knows'])?$globalknows[v:knowsid['knowsid']]['knows']:'')}
                                         &nbsp;&nbsp;&nbsp;{x2;endtree}</td>
                                 </tr>
                                 <tr>
                                     <td>答案解析：</td>
-                                    <td>{x2;realhtml:v:question['questiondescribe']}</td>
+                                    <td>{x2;(isset(realhtml:v:question['questiondescribe'])?realhtml:v:question['questiondescribe']:'')}</td>
                                 </tr>
                             </table>
                         </div>
@@ -121,23 +121,23 @@
                 {x2;endif}
             </div>
             {x2;else}
-            {x2;tree:$favors['data'],question,qid}
+            {x2;tree:(array)($favors['data'] ?? []),question,qid}
             <div class="box itembox paperexamcontent">
                 <h4 class="title">
-                    第{x2;eval: echo ($page-1)*20+v:qid}题【{x2;$questype[v:question['questiontype']]['questype']}】
+                    第{x2;eval: echo ($page-1)*20+v:qid}题【{x2;(isset($questype[v:question['questiontype']]['questype'])?$questype[v:question['questiontype']]['questype']:'')}】
                     <span class="pull-right">
 								<a class="btn btn-danger qicon ajax"
-                                   href="index.php?exam-app-favor-ajax-delfavor&favorid={x2;v:question['favorid']}"><i
+                                   href="index.php?exam-app-favor-ajax-delfavor&favorid={x2;(isset(v:question['favorid'])?v:question['favorid']:'')}"><i
                                             class="glyphicon glyphicon-remove"></i></a>
 							</span>
                 </h4>
                 <div class="choice">
-                    {x2;realhtml:v:question['question']}
+                    {x2;(isset(realhtml:v:question['question'])?realhtml:v:question['question']:'')}
                 </div>
                 {x2;if:!$questype[v:question['questiontype']]['questsort']}
                 {x2;if:v:question['questionselect'] && $questype[v:question['questiontype']]['questchoice'] != 5}
                 <div class="choice">
-                    {x2;realhtml:v:question['questionselect']}
+                    {x2;(isset(realhtml:v:question['questionselect'])?realhtml:v:question['questionselect']:'')}
                 </div>
                 {x2;endif}
                 {x2;endif}
@@ -145,30 +145,30 @@
                     <table class="table">
                         <tr>
                             <td width="15%" style="border-top:0px;">正确答案：</td>
-                            <td style="border-top:0px;">{x2;realhtml:v:question['questionanswer']}</td>
+                            <td style="border-top:0px;">{x2;(isset(realhtml:v:question['questionanswer'])?realhtml:v:question['questionanswer']:'')}</td>
                         </tr>
                         <tr>
                             <td>所在章：</td>
-                            <td>{x2;tree:v:question['questionknowsid'],knowsid,kid}{x2;$globalsections[$globalknows[v:knowsid['knowsid']]['knowssectionid']]['section']}
+                            <td>{x2;tree:(array)(v:question['questionknowsid'] ?? []),knowsid,kid}{x2;(isset($globalsections[$globalknows[v:knowsid['knowsid']]['knowssectionid']]['section'])?$globalsections[$globalknows[v:knowsid['knowsid']]['knowssectionid']]['section']:'')}
                                 &nbsp;&nbsp;&nbsp;{x2;endtree}</td>
                         </tr>
                         <tr>
                             <td>知识点：</td>
-                            <td>{x2;tree:v:question['questionknowsid'],knowsid,kid}{x2;$globalknows[v:knowsid['knowsid']]['knows']}
+                            <td>{x2;tree:(array)(v:question['questionknowsid'] ?? []),knowsid,kid}{x2;(isset($globalknows[v:knowsid['knowsid']]['knows'])?$globalknows[v:knowsid['knowsid']]['knows']:'')}
                                 &nbsp;&nbsp;&nbsp;{x2;endtree}</td>
                         </tr>
                         <tr>
                             <td>答案解析：</td>
-                            <td>{x2;realhtml:v:question['questiondescribe']}</td>
+                            <td>{x2;(isset(realhtml:v:question['questiondescribe'])?realhtml:v:question['questiondescribe']:'')}</td>
                         </tr>
                     </table>
                 </div>
             </div>
             {x2;endtree}
             {x2;endif}
-            <ul class="pagination pagination-right">{x2;$favors['pages']}</ul>
+            <ul class="pagination pagination-right">{x2;(isset($favors['pages'])?$favors['pages']:'')}</ul>
         </div>
-        {x2;if:!$userhash}
+        {x2;if:!empty($userhash)}
     </div>
 </div>
 </div>

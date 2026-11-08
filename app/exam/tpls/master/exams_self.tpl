@@ -1,4 +1,4 @@
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 {x2;include:header}
 <body>
 {x2;include:nav}
@@ -13,8 +13,8 @@
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
 						<ol class="breadcrumb">
-							<li><a href="index.php?{x2;$_app}-teach">{x2;$apps[$_app]['appname']}</a></li>
-							<li><a href="index.php?{x2;$_app}-master-exams&page={x2;$page}{x2;$u}">试卷管理</a></li>
+							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-teach">{x2;(isset($apps[$_app]['appname'])?$apps[$_app]['appname']:'')}</a></li>
+							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master-exams&page={x2;(isset($page)?$page:'')}{x2;(isset($u)?$u:'')}">试卷管理</a></li>
 							<li class="active">手工组卷</li>
 						</ol>
 					</div>
@@ -22,7 +22,7 @@
 				<div class="box itembox" style="padding-top:10px;margin-bottom:0px;">
 					<h4 class="title" style="padding:10px;">
 						手工组卷
-						<a class="btn btn-primary pull-right" href="index.php?{x2;$_app}-master-exams&page={x2;$page}{x2;$u}">试卷管理</a>
+						<a class="btn btn-primary pull-right" href="index.php?{x2;(isset($_app)?$_app:'')}-master-exams&page={x2;(isset($page)?$page:'')}{x2;(isset($u)?$u:'')}">试卷管理</a>
 					</h4>
 			        <form action="index.php?exam-master-exams-selfpage" method="post" class="form-horizontal">
 						<table class="table table-hover table-bordered">
@@ -64,9 +64,9 @@
 								<td width="150" align="center">
 									<select class="combox form-control" autocomplete="off" id="selectedsubjectid" msg="请选择科目" needle="needle" min="1" name="args[examsubject]" onchange="javascript:loadsubjectsetting(this);">
 										<option value="">请选择科目</option>
-                                        {x2;if:is_array($subjects)}
-										{x2;tree:$subjects,subject,sid}
-										<option value="{x2;v:subject['subjectid']}">{x2;v:subject['subject']}</option>
+                                        {x2;if:isset($subjects) && is_array($subjects)}
+										{x2;tree:(array)($subjects ?? []),subject,sid}
+										<option value="{x2;(isset(v:subject['subjectid'])?v:subject['subjectid']:'')}">{x2;(isset(v:subject['subject'])?v:subject['subject']:'')}</option>
 										{x2;endtree}
                                         {x2;endif}
 									</select>
@@ -109,20 +109,20 @@
 							</tr>
 							</thead>
 						</table>
-						{x2;tree:$questypes,questype,qid}
-							<div class="form-group questpanel panel_{x2;v:questype['questid']}">
-								<label class="control-label col-sm-2">{x2;v:questype['questype']}</label>
+						{x2;tree:(array)($questypes ?? []),questype,qid}
+							<div class="form-group questpanel panel_{x2;(isset(v:questype['questid'])?v:questype['questid']:'')}">
+								<label class="control-label col-sm-2">{x2;(isset(v:questype['questype'])?v:questype['questype']:'')}</label>
 								<div class="col-sm-10 form-inline">
-									<input id="iselectallnumber_{x2;v:questype['questid']}" type="text" class="form-control" needle="needle" name="args[examsetting][questype][{x2;v:questype['questid']}][number]" value="0" align="left" size="2" msg="您必须填写总题数"/>
-									<input class="form-control" needle="needle" type="text" name="args[examsetting][questype][{x2;v:questype['questid']}][score]" value="0" size="2" msg="您必须填写每题的分值"/>
+									<input id="iselectallnumber_{x2;(isset(v:questype['questid'])?v:questype['questid']:'')}" type="text" class="form-control" needle="needle" name="args[examsetting][questype][{x2;(isset(v:questype['questid'])?v:questype['questid']:'')}][number]" value="0" align="left" size="2" msg="您必须填写总题数"/>
+									<input class="form-control" needle="needle" type="text" name="args[examsetting][questype][{x2;(isset(v:questype['questid'])?v:questype['questid']:'')}][score]" value="0" size="2" msg="您必须填写每题的分值"/>
 									<span class="info">&nbsp&nbsp&nbsp</span>
-									<span id="ialreadyselectnumber_{x2;v:key}">0</span>
+									<span id="ialreadyselectnumber_{x2;(isset(v:key)?v:key:'')}">0</span>
 									<span class="info">&nbsp&nbsp&nbsp</span>
-									<a class="selfmodal btn btn-info" href="javascript:;" data-target="#modal" url="index.php?exam-master-exams-selected&questionids={iselectquestions_{x2;v:key}}&rowsquestionids={iselectrowsquestions_{x2;v:key}}" valuefrom="iselectquestions_{x2;v:key}|iselectrowsquestions_{x2;v:key}">看题</a>
-									<a class="selfmodal btn btn-primary" href="javascript:;" data-target="#modal" url="index.php?exam-master-exams-selectquestions&search[questionsubjectid]={selectedsubjectid}&search[questiontype]={x2;v:key}&questionids={iselectquestions_{x2;v:key}}&rowsquestionids={iselectrowsquestions_{x2;v:key}}&useframe=1" valuefrom="iselectquestions_{x2;v:key}|iselectrowsquestions_{x2;v:key}|selectedsubjectid">选题</a>
-				  					<input type="hidden" value="" id="iselectquestions_{x2;v:key}" name="args[examquestions][{x2;v:key}][questions]" />
-				  					<input type="hidden" value="" id="iselectrowsquestions_{x2;v:key}" name="args[examquestions][{x2;v:key}][rowsquestions]" />
-									<input class="form-control" type="text" name="args[examsetting][questype][{x2;v:questype['questid']}][describe]" value="" size="52" placeholder="选填"/>
+									<a class="selfmodal btn btn-info" href="javascript:;" data-target="#modal" url="index.php?exam-master-exams-selected&questionids={iselectquestions_{x2;(isset(v:key)?v:key:'')}}&rowsquestionids={iselectrowsquestions_{x2;(isset(v:key)?v:key:'')}}" valuefrom="iselectquestions_{x2;(isset(v:key)?v:key:'')}|iselectrowsquestions_{x2;(isset(v:key)?v:key:'')}">看题</a>
+									<a class="selfmodal btn btn-primary" href="javascript:;" data-target="#modal" url="index.php?exam-master-exams-selectquestions&search[questionsubjectid]={selectedsubjectid}&search[questiontype]={x2;(isset(v:key)?v:key:'')}&questionids={iselectquestions_{x2;(isset(v:key)?v:key:'')}}&rowsquestionids={iselectrowsquestions_{x2;(isset(v:key)?v:key:'')}}&useframe=1" valuefrom="iselectquestions_{x2;(isset(v:key)?v:key:'')}|iselectrowsquestions_{x2;(isset(v:key)?v:key:'')}|selectedsubjectid">选题</a>
+				  					<input type="hidden" value="" id="iselectquestions_{x2;(isset(v:key)?v:key:'')}" name="args[examquestions][{x2;(isset(v:key)?v:key:'')}][questions]" />
+				  					<input type="hidden" value="" id="iselectrowsquestions_{x2;(isset(v:key)?v:key:'')}" name="args[examquestions][{x2;(isset(v:key)?v:key:'')}][rowsquestions]" />
+									<input class="form-control" type="text" name="args[examsetting][questype][{x2;(isset(v:questype['questid'])?v:questype['questid']:'')}][describe]" value="" size="52" placeholder="选填"/>
 								</div>
 							</div>
 						{x2;endtree}
@@ -130,8 +130,8 @@
 							<label class="control-label col-sm-2">题型排序</label>
 							<div class="col-sm-9">
 								<div class="sortable btn-group">
-									{x2;tree:$questypes,questype,qid}
-									<a class="btn btn-primary questpanel panel_{x2;v:questype['questid']}">{x2;v:questype['questype']}<input type="hidden" name="args[examsetting][questypelite][{x2;v:questype['questid']}]" value="1" class="questypepanelinput" id="panel_{x2;v:questype['questid']}"/></a>
+									{x2;tree:(array)($questypes ?? []),questype,qid}
+									<a class="btn btn-primary questpanel panel_{x2;(isset(v:questype['questid'])?v:questype['questid']:'')}">{x2;(isset(v:questype['questype'])?v:questype['questype']:'')}<input type="hidden" name="args[examsetting][questypelite][{x2;(isset(v:questype['questid'])?v:questype['questid']:'')}]" value="1" class="questypepanelinput" id="panel_{x2;(isset(v:questype['questid'])?v:questype['questid']:'')}"/></a>
 									{x2;endtree}
 									<font color="#999999">&nbsp&nbsp&nbsp&nbsp拖拽进行题型排序</font>
 								</div>
@@ -147,7 +147,7 @@
 					</form>
 				</div>
 			</div>
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 		</div>
 	</div>
 </div>

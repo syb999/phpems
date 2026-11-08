@@ -18,22 +18,22 @@
 					</div>
 				</div>
 				<div class="box itembox" style="padding-top:10px;margin-bottom:0px;">
-					<h5 class="title">{x2;if:$app['appname']}{x2;$app['appname']}{x2;else}{x2;$appid}{x2;endif}</h5>
+					<h5 class="title">{x2;if:!empty($app['appname'])}{x2;(isset($app['appname'])?$app['appname']:'')}{x2;else}{x2;(isset($appid)?$appid:'')}{x2;endif}</h5>
 					<form action="index.php?core-master-apps-config" method="post" class="form-horizontal" style="padding-top:10px;margin-bottom:0px;">
 						<div class="form-group">
 							<label for="appname" class="col-sm-2 control-label">模块名称：</label>
 							<div class="col-sm-6">
-								<input id="appname" class="form-control" name="args[appname]" type="text" value="{x2;$app['appname']}" needle="needle" msg="您必须输入模块名称" />
+								<input id="appname" class="form-control" name="args[appname]" type="text" value="{x2;(isset($app['appname'])?$app['appname']:'')}" needle="needle" msg="您必须输入模块名称" />
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-sm-2 control-label">模块状态：</label>
 							<div class="col-sm-10">
 								<label class="radio-inline">
-									<input name="args[appstatus]" type="radio" value="1" {x2;if:$app['appstatus']}checked{x2;endif}/>开启
+									<input name="args[appstatus]" type="radio" value="1" {x2;if:!empty($app['appstatus'])}checked{x2;endif}/>开启
 								</label>
 								<label class="radio-inline">
-									<input name="args[appstatus]" type="radio" value="0" {x2;if:!$app['appstatus']}checked{x2;endif}/>禁用
+									<input name="args[appstatus]" type="radio" value="0" {x2;if:!empty($app['appstatus'])}checked{x2;endif}/>禁用
 								</label>
 							</div>
 						</div>
@@ -54,8 +54,8 @@
 								            <ul class="qq-upload-list-selector list-unstyled" aria-live="polite" aria-relevant="additions removals" style="clear:both;">
 									            <li class="text-center">
 									                <div class="thumbnail">
-														<img class="qq-thumbnail-selector" src="{x2;if:$app['appthumb']}{x2;$app['appthumb']}{x2;else}app/core/styles/images/noimage.gif{x2;endif}" alt="点击上传新图片">
-														<input type="hidden" class="qq-edit-filename-selector" name="args[appthumb]" tabindex="0" value="{x2;if:$app['appthumb']}{x2;$app['appthumb']}{x2;else}app/core/styles/images/noimage.gif{x2;endif}">
+														<img class="qq-thumbnail-selector" src="{x2;if:!empty($app['appthumb'])}{x2;(isset($app['appthumb'])?$app['appthumb']:'')}{x2;else}app/core/styles/images/noimage.gif{x2;endif}" alt="点击上传新图片">
+														<input type="hidden" class="qq-edit-filename-selector" name="args[appthumb]" tabindex="0" value="{x2;if:!empty($app['appthumb'])}{x2;(isset($app['appthumb'])?$app['appthumb']:'')}{x2;else}app/core/styles/images/noimage.gif{x2;endif}">
 						                			</div>
 									            </li>
 									        </ul>
@@ -69,19 +69,19 @@
 						<div class="form-group">
 							<label for="seo_title" class="col-sm-2 control-label">SEO Title：</label>
 							<div class="col-sm-9">
-								<input id="seo_title" class="form-control" name="args[appsetting][seo][title]" type="text" value="{x2;$app['appsetting']['seo']['title']}"/>
+								<input id="seo_title" class="form-control" name="args[appsetting][seo][title]" type="text" value="{x2;(isset($app['appsetting']['seo']['title'])?$app['appsetting']['seo']['title']:'')}"/>
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="seo_keywords" class="col-sm-2 control-label">SEO Keywords：</label>
 							<div class="col-sm-9">
-								<input id="seo_keywords" class="form-control" name="args[appsetting][seo][keywords]" type="text" value="{x2;$app['appsetting']['seo']['keywords']}"/>
+								<input id="seo_keywords" class="form-control" name="args[appsetting][seo][keywords]" type="text" value="{x2;(isset($app['appsetting']['seo']['keywords'])?$app['appsetting']['seo']['keywords']:'')}"/>
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="seo_description" class="col-sm-2 control-label">SEO Description：</label>
 							<div class="col-sm-9">
-								<textarea id="seo_description" class="form-control" name="args[appsetting][seo][description]" class="input-xxlarge">{x2;$app['appsetting']['seo']['description']}</textarea>
+								<textarea id="seo_description" class="form-control" name="args[appsetting][seo][description]" class="input-xxlarge">{x2;(isset($app['appsetting']['seo']['description'])?$app['appsetting']['seo']['description']:'')}</textarea>
 							</div>
 						</div>
 						-->
@@ -89,12 +89,12 @@
 							<label for="seo_description" class="col-sm-2 control-label"></label>
 							<div class="col-sm-9">
 								<button class="btn btn-primary" type="submit">提交</button>
-								<input type="hidden" name="page" value="{x2;$page}"/>
+								<input type="hidden" name="page" value="{x2;(isset($page)?$page:'')}"/>
 								<input type="hidden" name="appconfig" value="1"/>
-								<input type="hidden" name="appid" value="{x2;$appid}"/>
-                                {x2;if:is_array($search)}
-								{x2;tree:$search,arg,aid}
-								<input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>
+								<input type="hidden" name="appid" value="{x2;(isset($appid)?$appid:'')}"/>
+                                {x2;if:isset($search) && is_array($search)}
+								{x2;tree:(array)($search ?? []),arg,aid}
+								<input type="hidden" name="search[{x2;(isset(v:key)?v:key:'')}]" value="{x2;(isset(v:arg)?v:arg:'')}"/>
 								{x2;endtree}
                                 {x2;endif}
 							</div>

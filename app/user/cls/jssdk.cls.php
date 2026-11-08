@@ -10,6 +10,7 @@
  * This source file is subject to the MIT license that is bundled.
  */
 
+#[\AllowDynamicProperties]
 class jssdk_user
 {
     private $appId;
@@ -27,7 +28,7 @@ class jssdk_user
 
         // 注意 URL 一定要动态获取，不能 hardcode.
         $protocol = (!empty($_SERVER['HTTPS']) && 'off' !== $_SERVER['HTTPS'] || 443 == $_SERVER['SERVER_PORT']) ? 'https://' : 'http://';
-        $url = "$protocol$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+        $url = $protocol.(isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '').(isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '');
 
         $timestamp = time();
         $nonceStr = $this->createNonceStr();
@@ -63,14 +64,18 @@ class jssdk_user
     private function getJsApiTicket()
     {
         // jsapi_ticket 应该全局存储与更新，以下代码以写入到文件中做示例
-        $data = json_decode(file_get_contents('data/jsapi_ticket.json'));
-        if ($data->expire_time < time()) {
+        $cache = 'data/jsapi_ticket.json';
+        $data = file_exists($cache) ? json_decode(file_get_contents($cache)) : null;
+        if (!is_object($data)) {
+            $data = new stdClass();
+        }
+        if (!isset($data->expire_time) || $data->expire_time < time()) {
             $accessToken = $this->getAccessToken();
             // 如果是企业号用以下 URL 获取 ticket
             // $url = "https://qyapi.weixin.qq.com/cgi-bin/get_jsapi_ticket?access_token=$accessToken";
             $url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?type=jsapi&access_token=$accessToken";
             $res = json_decode($this->httpGet($url));
-            $ticket = $res->ticket;
+            $ticket = isset($res->ticket) ? $res->ticket : '';
             if ($ticket) {
                 $data->expire_time = time() + 7000;
                 $data->jsapi_ticket = $ticket;
@@ -79,7 +84,7 @@ class jssdk_user
                 fclose($fp);
             }
         } else {
-            $ticket = $data->jsapi_ticket;
+            $ticket = isset($data->jsapi_ticket) ? $data->jsapi_ticket : '';
         }
 
         return $ticket;
@@ -88,13 +93,17 @@ class jssdk_user
     private function getAccessToken()
     {
         // access_token 应该全局存储与更新，以下代码以写入到文件中做示例
-        $data = json_decode(file_get_contents('data/access_token.json'));
-        if ($data->expire_time < time()) {
+        $cache = 'data/access_token.json';
+        $data = file_exists($cache) ? json_decode(file_get_contents($cache)) : null;
+        if (!is_object($data)) {
+            $data = new stdClass();
+        }
+        if (!isset($data->expire_time) || $data->expire_time < time()) {
             // 如果是企业号用以下URL获取access_token
             // $url = "https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=$this->appId&corpsecret=$this->appSecret";
             $url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$this->appId&secret=$this->appSecret";
             $res = json_decode($this->httpGet($url));
-            $access_token = $res->access_token;
+            $access_token = isset($res->access_token) ? $res->access_token : '';
             if ($access_token) {
                 $data->expire_time = time() + 7000;
                 $data->access_token = $access_token;
@@ -103,7 +112,7 @@ class jssdk_user
                 fclose($fp);
             }
         } else {
-            $access_token = $data->access_token;
+            $access_token = isset($data->access_token) ? $data->access_token : '';
         }
 
         return $access_token;

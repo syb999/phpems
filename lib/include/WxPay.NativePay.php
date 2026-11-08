@@ -15,6 +15,7 @@
  *
  * @author widyhu
  */
+#[\AllowDynamicProperties]
 class NativePay
 {
     /**

@@ -1,4 +1,4 @@
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 {x2;include:header}
 <body>
 {x2;include:nav}
@@ -13,7 +13,7 @@
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
 						<ol class="breadcrumb">
-							<li><a href="index.php?{x2;$_app}-master">{x2;$apps[$_app]['appname']}</a></li>
+							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master">{x2;(isset($apps[$_app]['appname'])?$apps[$_app]['appname']:'')}</a></li>
 							<li class="active">文件类型</li>
 						</ol>
 					</div>
@@ -21,9 +21,9 @@
 				<div class="box itembox" style="padding-top:10px;margin-bottom:0px;">
 					<h4 class="title" style="padding:10px;">
 						文件类型
-						<a class="btn btn-primary pull-right" href="index.php?{x2;$_app}-master-attachtype-add">添加文件类型</a>
+						<a class="btn btn-primary pull-right" href="index.php?{x2;(isset($_app)?$_app:'')}-master-attachtype-add">添加文件类型</a>
 					</h4>
-			        <form action="index.php?{x2;$_app}-master-attachtype-batdel" method="post">
+			        <form action="index.php?{x2;(isset($_app)?$_app:'')}-master-attachtype-batdel" method="post">
 				       <table class="table table-hover table-bordered">
 							<thead>
 								<tr class="info">
@@ -35,24 +35,24 @@
 				                </tr>
 				            </thead>
 				            <tbody>
-				                {x2;tree:$types,type,tid}
+				                {x2;tree:(array)($types ?? []),type,tid}
 						        <tr>
 									<td>
-										<input type="checkbox" name="delids[{x2;v:type['atid']}]" value="1"/>
+										<input type="checkbox" name="delids[{x2;(isset(v:type['atid'])?v:type['atid']:'')}]" value="1"/>
 									</td>
 									<td>
-										{x2;v:type['atid']}
+										{x2;(isset(v:type['atid'])?v:type['atid']:'')}
 									</td>
 									<td>
-										{x2;v:type['attachtype']}
+										{x2;(isset(v:type['attachtype'])?v:type['attachtype']:'')}
 									</td>
 									<td>
-										{x2;v:type['attachexts']}
+										{x2;(isset(v:type['attachexts'])?v:type['attachexts']:'')}
 									</td>
 									<td>
 										<div class="btn-group">
-											<a class="btn" href="index.php?{x2;$_app}-master-attachtype-modify&page={x2;$page}&atid={x2;v:type['atid']}{x2;$u}" title="修改"><em class="glyphicon glyphicon-edit"></em></a>
-											<a class="btn confirm" href="index.php?{x2;$_app}-master-attachtype-del&atid={x2;v:type['atid']}&page={x2;$page}{x2;$u}" title="删除"><em class="glyphicon glyphicon-remove"></em></a>
+											<a class="btn" href="index.php?{x2;(isset($_app)?$_app:'')}-master-attachtype-modify&page={x2;(isset($page)?$page:'')}&atid={x2;(isset(v:type['atid'])?v:type['atid']:'')}{x2;(isset($u)?$u:'')}" title="修改"><em class="glyphicon glyphicon-edit"></em></a>
+											<a class="btn confirm" href="index.php?{x2;(isset($_app)?$_app:'')}-master-attachtype-del&atid={x2;(isset(v:type['atid'])?v:type['atid']:'')}&page={x2;(isset($page)?$page:'')}{x2;(isset($u)?$u:'')}" title="删除"><em class="glyphicon glyphicon-remove"></em></a>
 										</div>
 									</td>
 						        </tr>
@@ -66,11 +66,11 @@
 						</div>
 					</form>
 			        <div class="pagination pagination-right">
-						<ul>{x2;$basics['pages']}</ul>
+						<ul>{x2;(isset($basics['pages'])?$basics['pages']:'')}</ul>
 			        </div>
 				</div>
 			</div>
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 		</div>
 	</div>
 </div>

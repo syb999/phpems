@@ -1,4 +1,4 @@
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 {x2;include:header}
 <body>
 {x2;include:nav}
@@ -13,23 +13,23 @@
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
 						<ol class="breadcrumb">
-							<li><a href="index.php?{x2;$_app}-master">{x2;$apps[$_app]['appname']}</a></li>
-							<li><a href="index.php?{x2;$_app}-master-module">用户模型</a></li>
-							<li><a href="index.php?{x2;$_app}-master-module-fields&moduleid={x2;$module['moduleid']}">字段管理</a></li>
-							<li class="active">添加{x2;if:$fieldpublic}公共{x2;else}模型{x2;endif}字段</li>
+							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master">{x2;(isset($apps[$_app]['appname'])?$apps[$_app]['appname']:'')}</a></li>
+							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master-module">用户模型</a></li>
+							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master-module-fields&moduleid={x2;(isset($module['moduleid'])?$module['moduleid']:'')}">字段管理</a></li>
+							<li class="active">添加{x2;if:!empty($fieldpublic)}公共{x2;else}模型{x2;endif}字段</li>
 						</ol>
 					</div>
 				</div>
 				<div class="box itembox">
 					<h4 class="title" style="padding:10px;">
-						{x2;if:$fieldpublic}
+						{x2;if:!empty($fieldpublic)}
 						公共字段
 						{x2;else}
-						{x2;$module['modulename']}
+						{x2;(isset($module['modulename'])?$module['modulename']:'')}
 						{x2;endif}
-						<a class="pull-right btn btn-primary" href="index.php?{x2;$_app}-master-module-fields&moduleid={x2;$module['moduleid']}">字段列表</a>
+						<a class="pull-right btn btn-primary" href="index.php?{x2;(isset($_app)?$_app:'')}-master-module-fields&moduleid={x2;(isset($module['moduleid'])?$module['moduleid']:'')}">字段列表</a>
 					</h4>
-					<form action="index.php?{x2;$_app}-master-module-addfield" method="post" class="form-horizontal">
+					<form action="index.php?{x2;(isset($_app)?$_app:'')}-master-module-addfield" method="post" class="form-horizontal">
 						<fieldset>
 							<div class="form-group">
 								<label for="fieldtitle" class="control-label col-sm-2">字段别名：</label>
@@ -37,7 +37,7 @@
 									<input type="text" class="form-control" size="40" name="args[fieldtitle]" needle="needle" datatype="userName" id="fieldtitle" msg="您必须填写字段别名，字段别名必须为中英文字符或数字"/>
 								</div>
 							</div>
-							{x2;if:$fieldpublic}
+							{x2;if:!empty($fieldpublic)}
 							<div class="form-group">
 								<label for="field" class="control-label col-sm-2">字段名称：</label>
 								<div class="col-sm-3">
@@ -50,7 +50,7 @@
 								<label for="field" class="control-label col-sm-2">字段名称：</label>
 								<div class="col-sm-4">
 									<div class="input-group">
-										<span class="input-group-addon">{x2;$module['modulecode']}_</span>
+										<span class="input-group-addon">{x2;(isset($module['modulecode'])?$module['modulecode']:'')}_</span>
 										<input class="form-control" type="text" size="40" name="args[field]" needle="needle" datatype="datatable" id="field" msg="您必须填写字段名称，必须为英文字符和数字"/>
 									</div>
 									<span class="help-block">填写英文字符或数字组成的字段名称</span>
@@ -133,10 +133,10 @@
 									<label class="checkbox-inline">
 						          		<input type="checkbox" class="form-control" name="args[fieldforbidactors][]" value="-1"/> 本用户
 						          	</label>
-						          	{x2;tree:$groups,group,gid}
+						          	{x2;tree:(array)($groups ?? []),group,gid}
 						          	{x2;if:v:group['groupmoduleid'] == 1}
 						          	<label class="checkbox-inline">
-						          		<input type="checkbox" class="form-control" name="args[fieldforbidactors][]" value="{x2;v:group['groupid']}"/> {x2;v:group['groupname']}
+						          		<input type="checkbox" class="form-control" name="args[fieldforbidactors][]" value="{x2;(isset(v:group['groupid'])?v:group['groupid']:'')}"/> {x2;(isset(v:group['groupname'])?v:group['groupname']:'')}
 						          	</label>
 						          	{x2;endif}
 						          	{x2;endtree}
@@ -165,17 +165,17 @@
 					            <div class="col-sm-9">
 						            <button class="btn btn-primary" type="submit">提交</button>
 						            <input type="hidden" name="submit" value="1">
-						            <input type="hidden" name="page" value="{x2;$page}">
+						            <input type="hidden" name="page" value="{x2;(isset($page)?$page:'')}">
 						            <input type="hidden" name="insertfield" value="1"/>
-									<input type="hidden" name="args[fieldmoduleid]" value="{x2;$moduleid}"/>
-									<input type="hidden" name="args[fieldpublic]" value="{x2;$fieldpublic}"/>
+									<input type="hidden" name="args[fieldmoduleid]" value="{x2;(isset($moduleid)?$moduleid:'')}"/>
+									<input type="hidden" name="args[fieldpublic]" value="{x2;(isset($fieldpublic)?$fieldpublic:'')}"/>
 								</div>
 					        </div>
 						</fieldset>
 					</form>
 				</div>
 			</div>
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 		</div>
 	</div>
 </div>

@@ -10,6 +10,7 @@
  * This source file is subject to the MIT license that is bundled.
  */
 
+#[\AllowDynamicProperties]
 class action extends app
 {
     public function display()
@@ -122,7 +123,7 @@ class action extends app
             }
             $sessionvars['examsessionscore'] = $sumscore;
             $args['examsessionscorelist'] = $sessionvars['examsessionscorelist'];
-            $allnumber = floatval(count($sessionvars['examsessionscorelist']));
+            $allnumber = floatval(count((array) $sessionvars['examsessionscorelist']));
             $args['examsessionscore'] = floatval(($sessionvars['examsessionscore'] * 100) / $allnumber);
             $args['examsessionstatus'] = 2;
             $this->exam->modifyExamSession($args);

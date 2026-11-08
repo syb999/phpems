@@ -1,4 +1,4 @@
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 {x2;include:header}
 <body>
 <div id="content">
@@ -8,7 +8,7 @@
 			<header class="container-fluid" style="background-color:#337AB7;">
 				<h5 class="text-center">
 					<em style="font-size:2rem;" class="pull-left glyphicon glyphicon-chevron-left" onclick="javascript:$.goPrePage();"></em>
-					{x2;$data['currentbasic']['basic']}
+					{x2;(isset($data['currentbasic']['basic'])?$data['currentbasic']['basic']:'')}
 					<a style="font-size:2rem;color:#FFFFFF;" href="index.php?user-phone" class="pull-right glyphicon glyphicon-user ajax" data-target="user" data-page="user"></a>
 				</h5>
 			</header>
@@ -88,7 +88,7 @@
 			</div>
 			{x2;include:footer}
 		</div>
-	{x2;if:!$userhash}
+	{x2;if:!empty($userhash)}
     </div>
 </div>
 </body>

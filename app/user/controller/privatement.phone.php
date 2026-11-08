@@ -10,6 +10,7 @@
  * This source file is subject to the MIT license that is bundled.
  */
 
+#[\AllowDynamicProperties]
 class action extends app
 {
     public function display()
@@ -27,7 +28,7 @@ class action extends app
         if ($this->ev->get('modifyuserpassword')) {
             $args = $this->ev->get('args');
             $oldpassword = $this->ev->get('oldpassword');
-            $userid = $this->_user['sessionuserid'];
+            $userid = isset($this->_user['sessionuserid']) ? $this->_user['sessionuserid'] : 0;
             $user = $this->user->getUserById($userid);
             if (md5($oldpassword) != $user['userpassword']) {
                 $message = [
@@ -57,16 +58,6 @@ class action extends app
         $this->tpl->display('modifypass');
     }
 
-    private function comment()
-    {
-        $page = $this->ev->get('page');
-        $this->pg->setUrlTarget('modal-body" data-target="page6" class="ajax');
-        $this->pg->setPageType('wap');
-        $comments = $this->comment->getCommentList($page, $this->_user['sessionuserid']);
-        $this->tpl->assign('comments', $comments);
-        $this->tpl->assign('page', $page);
-        $this->tpl->display('comment');
-    }
 
     private function index()
     {
@@ -81,7 +72,7 @@ class action extends app
         }
         if ($this->ev->get('modifyuserinfo')) {
             $args = $this->ev->get('args');
-            $userid = $this->_user['sessionuserid'];
+            $userid = isset($this->_user['sessionuserid']) ? $this->_user['sessionuserid'] : 0;
             $group = $this->user->getGroupById($this->_user['sessiongroupid']);
             $args = $this->module->tidyNeedFieldsPars($args, $group['groupmoduleid'], ['iscurrentuser' => 1, 'group' => $group]);
             unset($args['userischeck']);
@@ -95,13 +86,17 @@ class action extends app
             exit(json_encode($message));
         }
 
-        $userid = $this->_user['sessionuserid'];
+        $userid = isset($this->_user['sessionuserid']) ? $this->_user['sessionuserid'] : 0;
         $user = $this->user->getUserById($userid);
-        $group = $this->user->getGroupById($user['usergroupid']);
-        $fields = $this->module->getMoudleFields($group['groupmoduleid'], ['iscurrentuser' => $userid == $this->_user['sessionuserid'], 'group' => $group]);
+        if (!is_array($user)) {
+            $user = [];
+        }
+        $group = $this->user->getGroupById(isset($user['usergroupid']) ? $user['usergroupid'] : 0);
+        $moduleid = isset($group['groupmoduleid']) ? $group['groupmoduleid'] : 0;
+        $fields = $this->module->getMoudleFields($moduleid, ['iscurrentuser' => true, 'group' => $group]);
         $forms = $this->html->buildHtml($fields, $user);
-        $actors = $this->user->getGroupsByModuleid($group['groupmoduleid']);
-        $this->tpl->assign('moduleid', $group['groupmoduleid']);
+        $actors = $this->user->getGroupsByModuleid($moduleid);
+        $this->tpl->assign('moduleid', $moduleid);
         $this->tpl->assign('fields', $fields);
         $this->tpl->assign('forms', $forms);
         $this->tpl->assign('actors', $actors);

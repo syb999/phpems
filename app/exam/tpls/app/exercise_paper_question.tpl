@@ -11,23 +11,23 @@
 	<div class="modal-body" id="modal-body" style="max-height:560px;">
 		{x2;eval: v:oid = 0}
 		{x2;eval: v:qmid = 0}
-    	{x2;tree:$questype,quest,qid}
+    	{x2;tree:(array)($questype ?? []),quest,qid}
     	{x2;if:$sessionvars['examsessionquestion']['questions'][v:quest['questid']] || $sessionvars['examsessionquestion']['questionrows'][v:quest['questid']]}
         {x2;eval: v:oid++}
         <dl class="clear">
-        	<dt class="float_l"><b>{x2;v:oid}、{x2;v:quest['questype']}</b></dt>
+        	<dt class="float_l"><b>{x2;(isset(v:oid)?v:oid:'')}、{x2;(isset(v:quest['questype'])?v:quest['questype']:'')}</b></dt>
             <dd>
             	{x2;eval: v:tid = 0}
-                {x2;tree:$sessionvars['examsessionquestion']['questions'][v:quest['questid']],question,qnid}
+                {x2;tree:(array)($sessionvars['examsessionquestion']['questions'][v:quest['questid']] ?? []),question,qnid}
                 {x2;eval: v:tid++}
                 {x2;eval: v:qmid++}
-            	<a id="sign_{x2;v:question['questionid']}" href="javascript:;" onclick="javascript:gotoquestion({x2;v:question['questionid']},{x2;v:quest['questid']},false);" rel="0" class="badge questionindex{x2;if:$sessionvars['examsessionsign'][v:question['questionid']]} signBorder{x2;endif}">{x2;v:tid}</a>
+            	<a id="sign_{x2;(isset(v:question['questionid'])?v:question['questionid']:'')}" href="javascript:;" onclick="javascript:gotoquestion({x2;(isset(v:question['questionid'])?v:question['questionid']:'')},{x2;(isset(v:quest['questid'])?v:quest['questid']:'')},false);" rel="0" class="badge questionindex{x2;if:!empty($sessionvars['examsessionsign'][v:question['questionid']])} signBorder{x2;endif}">{x2;(isset(v:tid)?v:tid:'')}</a>
             	{x2;endtree}
-            	{x2;tree:$sessionvars['examsessionquestion']['questionrows'][v:quest['questid']],questionrow,qrid}
+            	{x2;tree:(array)($sessionvars['examsessionquestion']['questionrows'][v:quest['questid']] ?? []),questionrow,qrid}
                 {x2;eval: v:tid++}
                 {x2;eval: v:qmid++}
-                {x2;tree:v:questionrow['data'],data,did}
-				<a id="sign_{x2;v:data['questionid']}" href="javascript:;" onclick="javascript:gotoquestion({x2;v:questionrow['qrid']},{x2;v:quest['questid']},true);" rel="0" class="badge questionindex{x2;if:$sessionvars['examsessionsign'][v:data['questionid']]} signBorder{x2;endif}">{x2;v:tid}-{x2;v:did}</a>
+                {x2;tree:(array)(v:questionrow['data'] ?? []),data,did}
+				<a id="sign_{x2;(isset(v:data['questionid'])?v:data['questionid']:'')}" href="javascript:;" onclick="javascript:gotoquestion({x2;(isset(v:questionrow['qrid'])?v:questionrow['qrid']:'')},{x2;(isset(v:quest['questid'])?v:quest['questid']:'')},true);" rel="0" class="badge questionindex{x2;if:!empty($sessionvars['examsessionsign'][v:data['questionid']])} signBorder{x2;endif}">{x2;(isset(v:tid)?v:tid:'')}-{x2;(isset(v:did)?v:did:'')}</a>
                 {x2;endtree}
                 {x2;endtree}
             </dd>
@@ -48,145 +48,145 @@
 						<span class="icon-home"></span> <a href="index.php?exam">考场选择</a> <span class="divider">/</span>
 					</li>
 					<li>
-						<a href="index.php?exam-app-basics">{x2;$data['currentbasic']['basic']}</a> <span class="divider">/</span>
+						<a href="index.php?exam-app-basics">{x2;(isset($data['currentbasic']['basic'])?$data['currentbasic']['basic']:'')}</a> <span class="divider">/</span>
 					</li>
 					<li>
 						<a href="index.php?exam-app-exam">正式考试</a> <span class="divider">/</span>
 					</li>
 					<li class="active">
-						{x2;$sessionvars['examsession']}
+						{x2;(isset($sessionvars['examsession'])?$sessionvars['examsession']:'')}
 					</li>
 				</ul>
-				<h3 class="text-center">{x2;$sessionvars['examsession']}</h3>
+				<h3 class="text-center">{x2;(isset($sessionvars['examsession'])?$sessionvars['examsession']:'')}</h3>
 				{x2;eval: v:oid = 0}
 				{x2;eval: v:qcid = 0}
-				{x2;tree:$questype,quest,qid}
+				{x2;tree:(array)($questype ?? []),quest,qid}
 				{x2;if:$sessionvars['examsessionquestion']['questions'][v:quest['questid']] || $sessionvars['examsessionquestion']['questionrows'][v:quest['questid']]}
 				{x2;eval: v:oid++}
-				<div id="panel-type-{x2;v:quest['questid']}" class="questionpanel tab-pane{x2;if:(!$ctype && v:qid == 1) || ($ctype == v:quest['questid'])} active{x2;endif}">
+				<div id="panel-type-{x2;(isset(v:quest['questid'])?v:quest['questid']:'')}" class="questionpanel tab-pane{x2;if:(!$ctype && v:qid == 1) || ($ctype == v:quest['questid'])} active{x2;endif}">
 					<ul class="breadcrumb">
 						<li>
-							<h5>{x2;v:oid}、{x2;v:quest['questype']}{x2;$sessionvars['examsessionsetting']['examsetting']['questype'][v:quest['questid']]['describe']}</h5>
+							<h5>{x2;(isset(v:oid)?v:oid:'')}、{x2;(isset(v:quest['questype'])?v:quest['questype']:'')}{x2;(isset($sessionvars['examsessionsetting']['examsetting']['questype'][v:quest['questid']]['describe'])?$sessionvars['examsessionsetting']['examsetting']['questype'][v:quest['questid']]['describe']:'')}</h5>
 						</li>
 					</ul>
 					{x2;eval: v:tid = 0}
-	                {x2;tree:$sessionvars['examsessionquestion']['questions'][v:quest['questid']],question,qnid}
+	                {x2;tree:(array)($sessionvars['examsessionquestion']['questions'][v:quest['questid']] ?? []),question,qnid}
 	                {x2;eval: v:tid++}
 	                {x2;eval: v:qcid++}
-	                <div id="question_{x2;v:question['questionid']}" class="paperexamcontent">
+	                <div id="question_{x2;(isset(v:question['questionid'])?v:question['questionid']:'')}" class="paperexamcontent">
 						<div class="media well">
 							<ul class="nav nav-tabs">
 								<li class="active">
-									<span class="badge badge-info questionindex">{x2;v:tid}</span>
+									<span class="badge badge-info questionindex">{x2;(isset(v:tid)?v:tid:'')}</span>
 								</li>
 								<li class="btn-group pull-right">
-									<button class="btn" type="button" onclick="javascript:signQuestion('{x2;v:question['questionid']}',this);"><em class="{x2;if:$sessionvars['examsessionsign'][v:question['questionid']]}icon-star{x2;else}icon-star-empty{x2;endif}" title="标注"></em></button>
+									<button class="btn" type="button" onclick="javascript:signQuestion('{x2;(isset(v:question['questionid'])?v:question['questionid']:'')}',this);"><em class="{x2;if:!empty($sessionvars['examsessionsign'][v:question['questionid']])}icon-star{x2;else}icon-star-empty{x2;endif}" title="标注"></em></button>
 								</li>
 							</ul>
 							<div class="media-body well text-warning">
-								<a name="question_{x2;v:question['questionid']}"></a>{x2;realhtml:v:question['question']}
+								<a name="question_{x2;(isset(v:question['questionid'])?v:question['questionid']:'')}"></a>{x2;(isset(realhtml:v:question['question'])?realhtml:v:question['question']:'')}
 							</div>
 							{x2;if:!v:quest['questsort']}
 							<div class="media-body well">
-		                    	{x2;realhtml:v:question['questionselect']}
+		                    	{x2;(isset(realhtml:v:question['questionselect'])?realhtml:v:question['questionselect']:'')}
 		                    </div>
 							<div class="media-body well">
 		                    	{x2;if:v:quest['questchoice'] == 1 || v:quest['questchoice'] == 4}
-			                        {x2;tree:$selectorder,so,sid}
+			                        {x2;tree:(array)($selectorder ?? []),so,sid}
 			                        {x2;if:v:key == v:question['questionselectnumber']}
 			                        {x2;eval: break;}
 			                        {x2;endif}
-			                        <label class="radio inline"><input type="radio" name="question[{x2;v:question['questionid']}]" rel="{x2;v:question['questionid']}" value="{x2;v:so}" {x2;if:v:so == $sessionvars['examsessionuseranswer'][v:question['questionid']]}checked{x2;endif}/>{x2;v:so} </label>
+			                        <label class="radio inline"><input type="radio" name="question[{x2;(isset(v:question['questionid'])?v:question['questionid']:'')}]" rel="{x2;(isset(v:question['questionid'])?v:question['questionid']:'')}" value="{x2;(isset(v:so)?v:so:'')}" {x2;if:v:so == $sessionvars['examsessionuseranswer'][v:question['questionid']]}checked{x2;endif}/>{x2;(isset(v:so)?v:so:'')} </label>
 			                        {x2;endtree}
 		                        {x2;else}
-			                        {x2;tree:$selectorder,so,sid}
+			                        {x2;tree:(array)($selectorder ?? []),so,sid}
 			                        {x2;if:v:key >= v:question['questionselectnumber']}
 			                        {x2;eval: break;}
 			                        {x2;endif}
-			                        <label class="checkbox inline"><input type="checkbox" name="question[{x2;v:question['questionid']}][{x2;v:key}]" rel="{x2;v:question['questionid']}" value="{x2;v:so}" {x2;if:in_array(v:so,$sessionvars['examsessionuseranswer'][v:question['questionid']])}checked{x2;endif}/>{x2;v:so} </label>
+			                        <label class="checkbox inline"><input type="checkbox" name="question[{x2;(isset(v:question['questionid'])?v:question['questionid']:'')}][{x2;(isset(v:key)?v:key:'')}]" rel="{x2;(isset(v:question['questionid'])?v:question['questionid']:'')}" value="{x2;(isset(v:so)?v:so:'')}" {x2;if:in_array(v:so,$sessionvars['examsessionuseranswer'][v:question['questionid']])}checked{x2;endif}/>{x2;(isset(v:so)?v:so:'')} </label>
 			                        {x2;endtree}
 		                        {x2;endif}
 		                    </div>
 							{x2;else}
 							<div class="media-body well">
 								{x2;eval: $dataid = v:question['questionid']}
-								<textarea class="jckeditor" etype="simple" id="editor{x2;$dataid}" name="question[{x2;$dataid}]" rel="{x2;v:question['questionid']}">{x2;realhtml:$sessionvars['examsessionuseranswer'][$dataid]}</textarea>
+								<textarea class="jckeditor" etype="simple" id="editor{x2;(isset($dataid)?$dataid:'')}" name="question[{x2;(isset($dataid)?$dataid:'')}]" rel="{x2;(isset(v:question['questionid'])?v:question['questionid']:'')}">{x2;(isset(realhtml:$sessionvars['examsessionuseranswer'][$dataid])?realhtml:$sessionvars['examsessionuseranswer'][$dataid]:'')}</textarea>
 							</div>
 							{x2;endif}
 							<div class="media-body well">
 								<div class="btn-group pull-right">
 				            		{x2;if:v:qcid > 1}
-				            		<a class="btn" href="javascript:;" onclick="javascript:gotoindexquestion({x2;eval: echo v:qcid - 2},{x2;v:quest['questid']});" title="上一题">上一题</a>
+				            		<a class="btn" href="javascript:;" onclick="javascript:gotoindexquestion({x2;eval: echo v:qcid - 2},{x2;(isset(v:quest['questid'])?v:quest['questid']:'')});" title="上一题">上一题</a>
 				            		{x2;endif}
 				            		{x2;if:v:qcid < v:qmid}
-				            		<a class="btn" href="javascript:;" onclick="javascript:gotoindexquestion({x2;v:qcid},{x2;v:quest['questid']});" title="下一题">下一题</a>
+				            		<a class="btn" href="javascript:;" onclick="javascript:gotoindexquestion({x2;(isset(v:qcid)?v:qcid:'')},{x2;(isset(v:quest['questid'])?v:quest['questid']:'')});" title="下一题">下一题</a>
 									{x2;endif}
 				            	</div>
 			            	</div>
 						</div>
 					</div>
 					{x2;endtree}
-					{x2;tree:$sessionvars['examsessionquestion']['questionrows'][v:quest['questid']],questionrow,qrid}
+					{x2;tree:(array)($sessionvars['examsessionquestion']['questionrows'][v:quest['questid']] ?? []),questionrow,qrid}
 	                {x2;eval: v:tid++}
 	                {x2;eval: v:qid++}
-	                <div id="questionrow_{x2;v:questionrow['qrid']}" class="paperexamcontent">
+	                <div id="questionrow_{x2;(isset(v:questionrow['qrid'])?v:questionrow['qrid']:'')}" class="paperexamcontent">
 						<div class="media well">
 							<ul class="nav nav-tabs">
 								<li class="active">
-									<span class="badge badge-info questionindex">{x2;v:tid}</span>
+									<span class="badge badge-info questionindex">{x2;(isset(v:tid)?v:tid:'')}</span>
 								</li>
 							</ul>
 							<div class="media-body well">
-								{x2;realhtml:v:questionrow['qrquestion']}
+								{x2;(isset(realhtml:v:questionrow['qrquestion'])?realhtml:v:questionrow['qrquestion']:'')}
 							</div>
-							{x2;tree:v:questionrow['data'],data,did}
+							{x2;tree:(array)(v:questionrow['data'] ?? []),data,did}
 							<div>
 								<ul class="nav nav-tabs">
 									<li class="active">
-										<span class="badge questionindex">{x2;v:did}</span>
+										<span class="badge questionindex">{x2;(isset(v:did)?v:did:'')}</span>
 									</li>
 									<li class="btn-group pull-right">
-										<button class="btn" type="button" onclick="javascript:signQuestion('{x2;v:data['questionid']}',this);"><em class="{x2;if:$sessionvars['examsessionsign'][v:data['questionid']]}icon-star{x2;else}icon-star-empty{x2;endif}" title="标注"></em></button>
+										<button class="btn" type="button" onclick="javascript:signQuestion('{x2;(isset(v:data['questionid'])?v:data['questionid']:'')}',this);"><em class="{x2;if:!empty($sessionvars['examsessionsign'][v:data['questionid']])}icon-star{x2;else}icon-star-empty{x2;endif}" title="标注"></em></button>
 									</li>
 								</ul>
 								<div class="media-body well text-warning">
-									<a name="question_{x2;v:data['questionid']}"></a>{x2;realhtml:v:data['question']}
+									<a name="question_{x2;(isset(v:data['questionid'])?v:data['questionid']:'')}"></a>{x2;(isset(realhtml:v:data['question'])?realhtml:v:data['question']:'')}
 								</div>
 								{x2;if:!v:quest['questsort']}
 								<div class="media-body well">
-			                    	{x2;realhtml:v:data['questionselect']}
+			                    	{x2;(isset(realhtml:v:data['questionselect'])?realhtml:v:data['questionselect']:'')}
 			                    </div>
 								<div class="media-body well">
 			                    	{x2;if:v:quest['questchoice'] == 1 || v:quest['questchoice'] == 4}
-				                        {x2;tree:$selectorder,so,sid}
+				                        {x2;tree:(array)($selectorder ?? []),so,sid}
 				                        {x2;if:v:key == v:data['questionselectnumber']}
 				                        {x2;eval: break;}
 				                        {x2;endif}
-				                        <label class="radio inline"><input type="radio" name="question[{x2;v:data['questionid']}]" rel="{x2;v:data['questionid']}" value="{x2;v:so}" {x2;if:v:so == $sessionvars['examsessionuseranswer'][v:data['questionid']]}checked{x2;endif}/>{x2;v:so} </label>
+				                        <label class="radio inline"><input type="radio" name="question[{x2;(isset(v:data['questionid'])?v:data['questionid']:'')}]" rel="{x2;(isset(v:data['questionid'])?v:data['questionid']:'')}" value="{x2;(isset(v:so)?v:so:'')}" {x2;if:v:so == $sessionvars['examsessionuseranswer'][v:data['questionid']]}checked{x2;endif}/>{x2;(isset(v:so)?v:so:'')} </label>
 				                        {x2;endtree}
 			                        {x2;else}
-				                        {x2;tree:$selectorder,so,sid}
+				                        {x2;tree:(array)($selectorder ?? []),so,sid}
 				                        {x2;if:v:key >= v:data['questionselectnumber']}
 				                        {x2;eval: break;}
 				                        {x2;endif}
-				                        <label class="checkbox inline"><input type="checkbox" name="question[{x2;v:data['questionid']}][{x2;v:key}]" rel="{x2;v:data['questionid']}" value="{x2;v:so}" {x2;if:in_array(v:so,$sessionvars['examsessionuseranswer'][v:data['questionid']])}checked{x2;endif}/>{x2;v:so} </label>
+				                        <label class="checkbox inline"><input type="checkbox" name="question[{x2;(isset(v:data['questionid'])?v:data['questionid']:'')}][{x2;(isset(v:key)?v:key:'')}]" rel="{x2;(isset(v:data['questionid'])?v:data['questionid']:'')}" value="{x2;(isset(v:so)?v:so:'')}" {x2;if:in_array(v:so,$sessionvars['examsessionuseranswer'][v:data['questionid']])}checked{x2;endif}/>{x2;(isset(v:so)?v:so:'')} </label>
 				                        {x2;endtree}
 			                        {x2;endif}
 			                    </div>
 								{x2;else}
 								<div class="media-body well">
 									{x2;eval: $dataid = v:data['questionid']}
-									<textarea class="jckeditor" etype="simple" id="editor{x2;$dataid}" name="question[{x2;$dataid}]" rel="{x2;v:data['questionid']}">{x2;realhtml:$sessionvars['examsessionuseranswer'][$dataid]}</textarea>
+									<textarea class="jckeditor" etype="simple" id="editor{x2;(isset($dataid)?$dataid:'')}" name="question[{x2;(isset($dataid)?$dataid:'')}]" rel="{x2;(isset(v:data['questionid'])?v:data['questionid']:'')}">{x2;(isset(realhtml:$sessionvars['examsessionuseranswer'][$dataid])?realhtml:$sessionvars['examsessionuseranswer'][$dataid]:'')}</textarea>
 								</div>
 								{x2;endif}
 							</div>
 							<div class="media-body well">
 								<div class="btn-group pull-right">
 				            		{x2;if:v:qcid > 1}
-				            		<a class="btn" href="javascript:;" onclick="javascript:gotoindexquestion({x2;eval: echo v:qcid - 2},{x2;v:quest['questid']});" title="上一题">上一题</a>
+				            		<a class="btn" href="javascript:;" onclick="javascript:gotoindexquestion({x2;eval: echo v:qcid - 2},{x2;(isset(v:quest['questid'])?v:quest['questid']:'')});" title="上一题">上一题</a>
 				            		{x2;endif}
 				            		{x2;if:v:qcid < v:qmid}
-				            		<a class="btn" href="javascript:;" onclick="javascript:gotoindexquestion({x2;v:qcid},{x2;v:quest['questid']});" title="下一题">下一题</a>
+				            		<a class="btn" href="javascript:;" onclick="javascript:gotoindexquestion({x2;(isset(v:qcid)?v:qcid:'')},{x2;(isset(v:quest['questid'])?v:quest['questid']:'')});" title="下一题">下一题</a>
 									{x2;endif}
 				            	</div>
 			            	</div>
@@ -232,7 +232,7 @@
 			</div>
 			<div class="span6">
 				<ul class="unstyled">
-					<li><h6>已做 <span class="yesdonumber">0</span> 题 共 <span class="allquestionnumber">50</span> 题 总分：<span class="orange">{x2;$sessionvars['examsessionsetting']['examsetting']['score']}</span>分 合格分数线：<span class="orange">{x2;$sessionvars['examsessionsetting']['examsetting']['passscore']}</span>分 考试时间：<span class="orange">{x2;$sessionvars['examsessionsetting']['examsetting']['examtime']}</span>分钟</h6></li>
+					<li><h6>已做 <span class="yesdonumber">0</span> 题 共 <span class="allquestionnumber">50</span> 题 总分：<span class="orange">{x2;(isset($sessionvars['examsessionsetting']['examsetting']['score'])?$sessionvars['examsessionsetting']['examsetting']['score']:'')}</span>分 合格分数线：<span class="orange">{x2;(isset($sessionvars['examsessionsetting']['examsetting']['passscore'])?$sessionvars['examsessionsetting']['examsetting']['passscore']:'')}</span>分 考试时间：<span class="orange">{x2;(isset($sessionvars['examsessionsetting']['examsetting']['examtime'])?$sessionvars['examsessionsetting']['examsetting']['examtime']:'')}</span>分钟</h6></li>
 				</ul>
 			</div>
 			<div class="span2">
@@ -269,10 +269,10 @@ $(document).ready(function(){
 			{x2;if:$data['currentbasic']['basicexam']['opentime']['end']-300 <= ($sessionvars['examsessiontime'] * 60 + $sessionvars['examsessionstarttime'])}
 			time:{x2;eval: echo intval(($data['currentbasic']['basicexam']['opentime']['end']- 300 - $sessionvars['examsessionstarttime'])/60)},
 			{x2;else}
-			time:{x2;$sessionvars['examsessiontime']},
+			time:{x2;(isset($sessionvars['examsessiontime'])?$sessionvars['examsessiontime']:'')},
 			{x2;endif}
 			{x2;else}
-			time:{x2;$sessionvars['examsessiontime']},
+			time:{x2;(isset($sessionvars['examsessiontime'])?$sessionvars['examsessiontime']:'')},
 			{x2;endif}
 			hbox:$("#timer_h"),
 			mbox:$("#timer_m"),

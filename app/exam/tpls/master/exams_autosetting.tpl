@@ -9,13 +9,13 @@
 			                </tr>
 			            </thead>
 			            <tbody>
-		                    {x2;tree:$rs,r,rid}
+		                    {x2;tree:(array)($rs ?? []),r,rid}
 							<tr>
-								<td>{x2;v:r['knows']}</td>
-								<td>{x2;v:r['number']}</td>
-								<td>{x2;if:v:r['easy']}{x2;v:r['easy']}{x2;else}不限{x2;endif}</td>
-								<td>{x2;if:v:r['mid']}{x2;v:r['mid']}{x2;else}不限{x2;endif}</td>
-								<td>{x2;if:v:r['hard']}{x2;v:r['hard']}{x2;else}不限{x2;endif}</td>
+								<td>{x2;(isset(v:r['knows'])?v:r['knows']:'')}</td>
+								<td>{x2;(isset(v:r['number'])?v:r['number']:'')}</td>
+								<td>{x2;if:!empty(v:r['easy'])}{x2;(isset(v:r['easy'])?v:r['easy']:'')}{x2;else}不限{x2;endif}</td>
+								<td>{x2;if:!empty(v:r['mid'])}{x2;(isset(v:r['mid'])?v:r['mid']:'')}{x2;else}不限{x2;endif}</td>
+								<td>{x2;if:!empty(v:r['hard'])}{x2;(isset(v:r['hard'])?v:r['hard']:'')}{x2;else}不限{x2;endif}</td>
 							</tr>
 							{x2;endtree}
 			        	</tbody>

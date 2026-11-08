@@ -9,27 +9,27 @@
 					<ol class="breadcrumb">
 					  <li><a href="index.php">首页</a></li>
 					  <li><a href="index.php?exam-app">考试</a></li>
-					  <li><a href="index.php?exam-app-basics">{x2;$data['currentbasic']['basic']}</a></li>
+					  <li><a href="index.php?exam-app-basics">{x2;(isset($data['currentbasic']['basic'])?$data['currentbasic']['basic']:'')}</a></li>
 					  <li class="active">课后练习</li>
 					</ol>
 				</div>
 			</div>
 			<div class="box itembox">
 				<h4 class="title">课后练习</h4>
-				{x2;if:$record}
-				<p>系统检测到您上次做到《{x2;$knows[$record['exerknowsid']]['knows']}》的{x2;$questype[$record['exerqutype']]['questype']}第{x2;$record['exernumber']}题，点此<a class="ajax" href="index.php?exam-app-lesson-ajax-setlesson&questype={x2;$record['exerqutype']}&knowsid={x2;$record['exerknowsid']}&number={x2;$record['exernumber']}">继续练习</a></p>
+				{x2;if:!empty($record)}
+				<p>系统检测到您上次做到《{x2;(isset($knows[$record['exerknowsid']]['knows'])?$knows[$record['exerknowsid']]['knows']:'')}》的{x2;(isset($questype[$record['exerqutype']]['questype'])?$questype[$record['exerqutype']]['questype']:'')}第{x2;(isset($record['exernumber'])?$record['exernumber']:'')}题，点此<a class="ajax" href="index.php?exam-app-lesson-ajax-setlesson&questype={x2;(isset($record['exerqutype'])?$record['exerqutype']:'')}&knowsid={x2;(isset($record['exerknowsid'])?$record['exerknowsid']:'')}&number={x2;(isset($record['exernumber'])?$record['exernumber']:'')}">继续练习</a></p>
 				{x2;endif}
-				{x2;tree:$sections,section,sid}
+				{x2;tree:(array)($sections ?? []),section,sid}
 				<table class="table table-hover table-bordered">
-					<tr class="info"><td colspan="6">{x2;v:section['section']}</td></tr>
+					<tr class="info"><td colspan="6">{x2;(isset(v:section['section'])?v:section['section']:'')}</td></tr>
 					<tr>
-						{x2;tree:$basic['basicknows'][v:section['sectionid']],know,kid}
-				    	<td><a href="index.php?route=exam-app-lesson-lessonnumber&knowsid={x2;v:know}" target="lessonknows" class="ajax" onclick="javascript:$('#submodal').modal('show');">{x2;$knows[v:know]['knows']}</a></td>
+						{x2;tree:(array)($basic['basicknows'][v:section['sectionid']] ?? []),know,kid}
+				    	<td><a href="index.php?route=exam-app-lesson-lessonnumber&knowsid={x2;(isset(v:know)?v:know:'')}" target="lessonknows" class="ajax" onclick="javascript:$('#submodal').modal('show');">{x2;(isset($knows[v:know]['knows'])?$knows[v:know]['knows']:'')}</a></td>
 				    	{x2;if:v:kid % 6 == 0}</tr><tr>{x2;endif}
 				    	{x2;endtree}
 				    	{x2;if:(v:kid % 6 != 0) && (v:kid/6 >= 1)}
 				    	{x2;eval: v:mod = 6 - v:kid % 6;}
-				    	<td colspan="{x2;v:mod}"></td>
+				    	<td colspan="{x2;(isset(v:mod)?v:mod:'')}"></td>
 				    	{x2;endif}
 					</tr>
 				</table>

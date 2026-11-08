@@ -10,6 +10,7 @@
  * This source file is subject to the MIT license that is bundled.
  */
 
+#[\AllowDynamicProperties]
 class action extends app
 {
     public function display()
@@ -25,7 +26,10 @@ class action extends app
     private function wxpay()
     {
         $ordersn = $this->ev->get('ordersn');
-        $order = $this->order->getOrderById($ordersn, $this->_user['sessionuserid']);
+        $order = $this->order->getOrderById($ordersn, isset($this->_user['sessionuserid']) ? $this->_user['sessionuserid'] : 0);
+        if (!is_array($order) || !$order) {
+            $this->G->R(['statusCode' => 404, 'message' => '订单不存在', 'callbackType' => 'forward', 'forwardUrl' => 'index.php?user-phone-payfor']);
+        }
         $wxpay = $this->G->make('wxpay');
         $result = $wxpay->outUrl2($order);
         $this->tpl->assign('order', $order);
@@ -38,7 +42,10 @@ class action extends app
     private function ispayfor()
     {
         $ordersn = $this->ev->get('ordersn');
-        $order = $this->order->getOrderById($ordersn, $this->_user['sessionuserid']);
+        $order = $this->order->getOrderById($ordersn, isset($this->_user['sessionuserid']) ? $this->_user['sessionuserid'] : 0);
+        if (!is_array($order) || !$order) {
+            $this->G->R(['statusCode' => 404, 'message' => '订单不存在', 'callbackType' => 'forward', 'forwardUrl' => 'index.php?user-phone-payfor']);
+        }
         if (2 == $order['orderstatus']) {
             $message = [
                 'statusCode' => 200,
@@ -58,7 +65,10 @@ class action extends app
     private function remove()
     {
         $oid = $this->ev->get('ordersn');
-        $order = $this->order->getOrderById($oid, $this->_user['sessionuserid']);
+        $order = $this->order->getOrderById($oid, isset($this->_user['sessionuserid']) ? $this->_user['sessionuserid'] : 0);
+        if (!is_array($order) || !$order) {
+            $this->G->R(['statusCode' => 404, 'message' => '订单不存在', 'callbackType' => 'forward', 'forwardUrl' => 'index.php?user-phone-payfor']);
+        }
         if (1 == $order['orderstatus']) {
             $this->order->delOrder($oid);
             $message = [
@@ -86,7 +96,10 @@ class action extends app
             ];
             exit(json_encode($message));
         }
-        $order = $this->order->getOrderById($oid, $this->_user['sessionuserid']);
+        $order = $this->order->getOrderById($oid, isset($this->_user['sessionuserid']) ? $this->_user['sessionuserid'] : 0);
+        if (!is_array($order) || !$order) {
+            $this->G->R(['statusCode' => 404, 'message' => '订单不存在', 'callbackType' => 'forward', 'forwardUrl' => 'index.php?user-phone-payfor']);
+        }
         if (1 == $order['orderstatus']) {
             $this->wxpay = $this->G->make('wxpay');
             $jsApiParameters = $this->wxpay->outJsPay($order);
@@ -126,7 +139,7 @@ class action extends app
         }
 
         $page = $this->ev->get('page');
-        $args = [['AND', 'orderuserid = :orderuserid', 'orderuserid', $this->_user['sessionuserid']]];
+        $args = [['AND', 'orderuserid = :orderuserid', 'orderuserid', isset($this->_user['sessionuserid']) ? $this->_user['sessionuserid'] : 0]];
         $myorders = $this->order->getOrderList($args, $page);
         $this->tpl->assign('orders', $myorders);
         $this->tpl->display('payfor');

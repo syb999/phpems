@@ -1,4 +1,4 @@
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 {x2;include:header}
 <body>
 {x2;include:nav}
@@ -13,8 +13,8 @@
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
 						<ol class="breadcrumb">
-							<li><a href="index.php?{x2;$_app}-master">{x2;$apps[$_app]['appname']}</a></li>
-							<li><a href="index.php?{x2;$_app}-master-questions">试题管理</a></li>
+							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master">{x2;(isset($apps[$_app]['appname'])?$apps[$_app]['appname']:'')}</a></li>
+							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master-questions">试题管理</a></li>
 							<li class="active">普通试题管理</li>
 						</ol>
 					</div>
@@ -25,11 +25,11 @@
 						<span class="pull-right">
 							<a data-toggle="dropdown" class="btn btn-primary" href="#">添加试题 <strong class="caret"></strong></a>
 							<ul class="dropdown-menu">
-								<li><a href="index.php?{x2;$_app}-master-questions-addquestion&page={x2;$page}{x2;$u}">单题添加</a></li>
+								<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master-questions-addquestion&page={x2;(isset($page)?$page:'')}{x2;(isset($u)?$u:'')}">单题添加</a></li>
 								<!--
-								<li><a href="index.php?{x2;$_app}-master-questions-bataddquestion&page={x2;$page}{x2;$u}">批量添加</a></li>
+								<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master-questions-bataddquestion&page={x2;(isset($page)?$page:'')}{x2;(isset($u)?$u:'')}">批量添加</a></li>
 								-->
-								<li><a href="index.php?{x2;$_app}-master-questions-filebataddquestion&page={x2;$page}{x2;$u}">CSV导入</a></li>
+								<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master-questions-filebataddquestion&page={x2;(isset($page)?$page:'')}{x2;(isset($u)?$u:'')}">CSV导入</a></li>
 							</ul>
 						</span>
 					</h4>
@@ -49,19 +49,19 @@
 									试题ID：
 								</td>
 								<td>
-									<input name="search[questionid]" class="form-control" size="10" type="text" class="number" value="{x2;$search['questionid']}"/>
+									<input name="search[questionid]" class="form-control" size="10" type="text" class="number" value="{x2;(isset($search['questionid'])?$search['questionid']:'')}"/>
 								</td>
 								<td>
 									录入时间：
 								</td>
 								<td>
-									<input class="form-control datetimepicker" data-date="{x2;date:TIME,'Y-m-d'}" data-date-format="yyyy-mm-dd" type="text" name="search[stime]" size="10" id="stime" value="{x2;$search['stime']}"/> - <input class="form-control datetimepicker" data-date="{x2;date:TIME,'Y-m-d'}" data-date-format="yyyy-mm-dd" size="10" type="text" name="search[etime]" id="etime" value="{x2;$search['etime']}"/>
+									<input class="form-control datetimepicker" data-date="{x2;date:TIME,'Y-m-d'}" data-date-format="yyyy-mm-dd" type="text" name="search[stime]" size="10" id="stime" value="{x2;(isset($search['stime'])?$search['stime']:'')}"/> - <input class="form-control datetimepicker" data-date="{x2;date:TIME,'Y-m-d'}" data-date-format="yyyy-mm-dd" size="10" type="text" name="search[etime]" id="etime" value="{x2;(isset($search['etime'])?$search['etime']:'')}"/>
 								</td>
 								<td>
 									关键字：
 								</td>
 								<td>
-									<input class="form-control" name="search[keyword]" size="10" type="text" value="{x2;$search['keyword']}"/>
+									<input class="form-control" name="search[keyword]" size="10" type="text" value="{x2;(isset($search['keyword'])?$search['keyword']:'')}"/>
 								</td>
 							</tr>
 					        <tr>
@@ -71,9 +71,9 @@
 								<td>
 					        		<select name="search[questionsubjectid]" class="combox form-control" target="sectionselect" refUrl="?exam-master-questions-ajax-getsectionsbysubjectid&subjectid={value}">
 						        		<option value="0">选择科目</option>
-                                        {x2;if:is_array($subjects)}
-								  		{x2;tree:$subjects,subject,sid}
-								  		<option value="{x2;v:subject['subjectid']}"{x2;if:v:subject['subjectid'] == $search['questionsubjectid']} selected{x2;endif}>{x2;v:subject['subject']}</option>
+                                        {x2;if:isset($subjects) && is_array($subjects)}
+								  		{x2;tree:(array)($subjects ?? []),subject,sid}
+								  		<option value="{x2;(isset(v:subject['subjectid'])?v:subject['subjectid']:'')}"{x2;if:v:subject['subjectid'] == $search['questionsubjectid']} selected{x2;endif}>{x2;(isset(v:subject['subject'])?v:subject['subject']:'')}</option>
 								  		{x2;endtree}
                                         {x2;endif}
 							  		</select>
@@ -84,9 +84,9 @@
 								<td>
 							  		<select name="search[questionsectionid]" class="combox form-control" id="sectionselect" target="knowsselect" refUrl="?exam-master-questions-ajax-getknowsbysectionid&sectionid={value}">
 							  		<option value="0">选择章节</option>
-							  		{x2;if:$sections}
-							  		{x2;tree:$sections,section,sid}
-							  		<option value="{x2;v:section['sectionid']}"{x2;if:v:section['sectionid'] == $search['questionsectionid']} selected{x2;endif}>{x2;v:section['section']}</option>
+							  		{x2;if:!empty($sections)}
+							  		{x2;tree:(array)($sections ?? []),section,sid}
+							  		<option value="{x2;(isset(v:section['sectionid'])?v:section['sectionid']:'')}"{x2;if:v:section['sectionid'] == $search['questionsectionid']} selected{x2;endif}>{x2;(isset(v:section['section'])?v:section['section']:'')}</option>
 							  		{x2;endtree}
 							  		{x2;endif}
 							  		</select>
@@ -97,9 +97,9 @@
 								<td>
 							  		<select name="search[questionknowsid]" id="knowsselect" class="form-control">
 								  		<option value="">选择知识点</option>
-								  		{x2;if:$knows}
-								  		{x2;tree:$knows,know,kid}
-								  		<option value="{x2;v:know['knowsid']}"{x2;if:v:know['knowsid'] == $search['questionknowsid']} selected{x2;endif}>{x2;v:know['knows']}</option>
+								  		{x2;if:!empty($knows)}
+								  		{x2;tree:(array)($knows ?? []),know,kid}
+								  		<option value="{x2;(isset(v:know['knowsid'])?v:know['knowsid']:'')}"{x2;if:v:know['knowsid'] == $search['questionknowsid']} selected{x2;endif}>{x2;(isset(v:know['knows'])?v:know['knows']:'')}</option>
 								  		{x2;endtree}
 								  		{x2;endif}
 							  		</select>
@@ -110,7 +110,7 @@
 									录入人：
 								</td>
 					        	<td>
-					        		<input class="form-control" name="search[username]" size="10" type="text" value="{x2;$search['username']}"/>
+					        		<input class="form-control" name="search[username]" size="10" type="text" value="{x2;(isset($search['username'])?$search['username']:'')}"/>
 					        	</td>
 					        	<td>
 									试题类型：
@@ -118,8 +118,8 @@
 								<td>
 									<select name="search[questiontype]" class="form-control">
 								  		<option value="0">类型不限</option>
-								  		{x2;tree:$questypes,questype,qid}
-								  		<option value="{x2;v:questype['questid']}">{x2;v:questype['questype']}</option>
+								  		{x2;tree:(array)($questypes ?? []),questype,qid}
+								  		<option value="{x2;(isset(v:questype['questid'])?v:questype['questid']:'')}">{x2;(isset(v:questype['questype'])?v:questype['questype']:'')}</option>
 								  		{x2;endtree}
 							  		</select>
 								</td>
@@ -129,9 +129,9 @@
 								<td>
 									<select name="search[questionlevel]" class="form-control">
 								  		<option value="0">难度不限</option>
-										<option value="1"{x2;if:$search['questionlevel'] == 1} checked{x2;endif}>易</option>
-										<option value="2"{x2;if:$search['questionlevel'] == 2} checked{x2;endif}>中</option>
-										<option value="3"{x2;if:$search['questionlevel'] == 3} checked{x2;endif}>难</option>
+										<option value="1"{x2;if:(isset($search['questionlevel']) ? $search['questionlevel'] : null) == 1} checked{x2;endif}>易</option>
+										<option value="2"{x2;if:(isset($search['questionlevel']) ? $search['questionlevel'] : null) == 2} checked{x2;endif}>中</option>
+										<option value="3"{x2;if:(isset($search['questionlevel']) ? $search['questionlevel'] : null) == 3} checked{x2;endif}>难</option>
 							  		</select>
 								</td>
 							</tr>
@@ -160,31 +160,31 @@
 					                </tr>
 					            </thead>
 					            <tbody>
-				                    {x2;tree:$questions['data'],question,qid}
+				                    {x2;tree:(array)($questions['data'] ?? []),question,qid}
 							        <tr>
-										<td><input type="checkbox" name="delids[{x2;v:question['questionid']}]" value="1"></td>
+										<td><input type="checkbox" name="delids[{x2;(isset(v:question['questionid'])?v:question['questionid']:'')}]" value="1"></td>
 										<td>
-											{x2;v:question['questionid']}
+											{x2;(isset(v:question['questionid'])?v:question['questionid']:'')}
 										</td>
 										<td>
-											{x2;$questypes[v:question['questiontype']]['questype']}
+											{x2;(isset($questypes[v:question['questiontype']]['questype'])?$questypes[v:question['questiontype']]['questype']:'')}
 										</td>
 										<td>
-											<a title="查看试题" class="selfmodal" href="javascript:;" url="index.php?exam-master-questions-detail&questionid={x2;v:question['questionid']}" data-target="#modal">{x2;substring:strip_tags(html_entity_decode(v:question['question'])),135}</a>
+											<a title="查看试题" class="selfmodal" href="javascript:;" url="index.php?exam-master-questions-detail&questionid={x2;(isset(v:question['questionid'])?v:question['questionid']:'')}" data-target="#modal">{x2;substring:strip_tags(html_entity_decode(v:question['question'])),135}</a>
 										</td>
 										<td>
-                                            {x2;v:question['questionusername']}<br />{x2;date:v:question['questioncreatetime'],'Y-m-d'}
+                                            {x2;(isset(v:question['questionusername'])?v:question['questionusername']:'')}<br />{x2;date:v:question['questioncreatetime'],'Y-m-d'}
 										</td>
 										<td>
-                                            {x2;if:v:question['questiondeler']}{x2;v:question['questiondeler']}<br />{x2;date:v:question['questiondeltime'],'Y-m-d'}{x2;endif}
+                                            {x2;if:!empty(v:question['questiondeler'])}{x2;(isset(v:question['questiondeler'])?v:question['questiondeler']:'')}<br />{x2;date:v:question['questiondeltime'],'Y-m-d'}{x2;endif}
 										</td>
 										<td>
 											{x2;if:v:question['questionlevel']==2}中{x2;elseif:v:question['questionlevel']==3}难{x2;elseif:v:question['questionlevel']==1}易{x2;endif}
 										</td>
 										<td>
 											<div class="btn-group">
-					                    		<a class="btn" href="index.php?exam-master-questions-modifyquestion&page={x2;$page}&questionid={x2;v:question['questionid']}{x2;$u}" title="修改"><em class="glyphicon glyphicon-edit"></em></a>
-												<a class="btn confirm" href="index.php?exam-master-questions-delquestion&questionparent=0&page={x2;$page}&questionid={x2;v:question['questionid']}{x2;$u}" title="删除"><em class="glyphicon glyphicon-remove"></em></a>
+					                    		<a class="btn" href="index.php?exam-master-questions-modifyquestion&page={x2;(isset($page)?$page:'')}&questionid={x2;(isset(v:question['questionid'])?v:question['questionid']:'')}{x2;(isset($u)?$u:'')}" title="修改"><em class="glyphicon glyphicon-edit"></em></a>
+												<a class="btn confirm" href="index.php?exam-master-questions-delquestion&questionparent=0&page={x2;(isset($page)?$page:'')}&questionid={x2;(isset(v:question['questionid'])?v:question['questionid']:'')}{x2;(isset($u)?$u:'')}" title="删除"><em class="glyphicon glyphicon-remove"></em></a>
 					                    	</div>
 										</td>
 							        </tr>
@@ -196,25 +196,25 @@
 						            <label class="radio-inline">
 						                <input type="radio" name="action" value="delete" checked/>删除
 						            </label>
-                                    {x2;if:is_array($search)}
-						            {x2;tree:$search,arg,sid}
-						            <input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>
+                                    {x2;if:isset($search) && is_array($search)}
+						            {x2;tree:(array)($search ?? []),arg,sid}
+						            <input type="hidden" name="search[{x2;(isset(v:key)?v:key:'')}]" value="{x2;(isset(v:arg)?v:arg:'')}"/>
 						            {x2;endtree}
 						            {x2;endif}
                                     <label class="radio-inline">
 						            	<button class="btn btn-primary" type="submit">提交</button>
 						            </label>
-						            <input type="hidden" name="page" value="{x2;$page}"/>
+						            <input type="hidden" name="page" value="{x2;(isset($page)?$page:'')}"/>
 						        </div>
 					        </div>
 					        <ul class="pagination pull-right">
-					            {x2;$questions['pages']}
+					            {x2;(isset($questions['pages'])?$questions['pages']:'')}
 					        </ul>
 				        </fieldset>
 					</form>
 				</div>
 			</div>
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 		</div>
 	</div>
 </div>

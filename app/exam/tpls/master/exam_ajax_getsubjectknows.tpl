@@ -1,12 +1,12 @@
 						<table class="table table-hover table-bordered" style="width:86%;margin:auto;">
-							{x2;if:$sections}
-							{x2;tree:$sections,section,sid}
+							{x2;if:!empty($sections)}
+							{x2;tree:(array)($sections ?? []),section,sid}
 							<tr class="info">
-								<td colspan="3">{x2;v:section['section']}</td>
+								<td colspan="3">{x2;(isset(v:section['section'])?v:section['section']:'')}</td>
 							</tr>
 							<tr>
-								{x2;tree:$knows[v:section['sectionid']],know,kid}
-								<td><input type="checkbox" value="{x2;v:know['knowsid']}"/> {x2;v:know['knows']}</td>
+								{x2;tree:(array)($knows[v:section['sectionid']] ?? []),know,kid}
+								<td><input type="checkbox" value="{x2;(isset(v:know['knowsid'])?v:know['knowsid']:'')}"/> {x2;(isset(v:know['knows'])?v:know['knows']:'')}</td>
 								{x2;if:v:kid % 3 == 0}
 								</tr><tr>
 								{x2;endif}

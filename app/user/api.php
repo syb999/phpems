@@ -10,6 +10,7 @@
  * This source file is subject to the MIT license that is bundled.
  */
 
+#[\AllowDynamicProperties]
 class app
 {
     public $G;
@@ -23,7 +24,7 @@ class app
         $this->user = $this->G->make('user', 'user');
         $this->tpl->assign('userhash', $this->ev->get('userhash'));
         $this->_user = $_user = $this->session->getSessionUser();
-        if (!$_user['sessionuserid']) {
+        if (empty($_user['sessionuserid'])) {
             if ($this->ev->get('userhash')) {
                 exit(json_encode([
                 'statusCode' => 301,

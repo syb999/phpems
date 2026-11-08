@@ -1,4 +1,4 @@
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 {x2;include:header}
 <body>
 {x2;include:nav}
@@ -13,7 +13,7 @@
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
 						<ol class="breadcrumb">
-							<li><a href="index.php?{x2;$_app}-master">{x2;$apps[$_app]['appname']}</a></li>
+							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master">{x2;(isset($apps[$_app]['appname'])?$apps[$_app]['appname']:'')}</a></li>
 							<li class="active">科目管理</li>
 						</ol>
 					</div>
@@ -32,17 +32,17 @@
 			                </tr>
 			            </thead>
 			            <tbody>
-                            {x2;if:is_array($subjects)}
-		                    {x2;tree:$subjects,subject,sid}
+                            {x2;if:isset($subjects) && is_array($subjects)}
+		                    {x2;tree:(array)($subjects ?? []),subject,sid}
 							<tr>
-								<td>{x2;v:subject['subjectid']}</td>
-								<td>{x2;v:subject['subject']}</td>
+								<td>{x2;(isset(v:subject['subjectid'])?v:subject['subjectid']:'')}</td>
+								<td>{x2;(isset(v:subject['subject'])?v:subject['subject']:'')}</td>
 								<td>
 									<div class="btn-group">
-										<a class="btn ajax" href="index.php?exam-master-basic-output&subjectid={x2;v:subject['subjectid']}&page={x2;$page}{x2;$u}" title="导出题库"><em class="glyphicon glyphicon-download-alt"></em></a>
-										<a class="btn" href="index.php?exam-master-basic-section&subjectid={x2;v:subject['subjectid']}&page=1&basicid={x2;v:basic['basicid']}{x2;$u}" title="章节列表"><em class="glyphicon glyphicon-th-list"></em></a>
-										<a class="btn" href="index.php?exam-master-basic-modifysubject&subjectid={x2;v:subject['subjectid']}&page={x2;$page}{x2;$u}" title="修改科目信息"><em class="glyphicon glyphicon-edit"></em></a>
-										<a class="btn ajax" href="index.php?exam-master-basic-delsubject&subjectid={x2;v:subject['subjectid']}&page={x2;$page}{x2;$u}" title="删除科目"><em class="glyphicon glyphicon-remove"></em></a>
+										<a class="btn ajax" href="index.php?exam-master-basic-output&subjectid={x2;(isset(v:subject['subjectid'])?v:subject['subjectid']:'')}&page={x2;(isset($page)?$page:'')}{x2;(isset($u)?$u:'')}" title="导出题库"><em class="glyphicon glyphicon-download-alt"></em></a>
+										<a class="btn" href="index.php?exam-master-basic-section&subjectid={x2;(isset(v:subject['subjectid'])?v:subject['subjectid']:'')}&page=1&basicid={x2;(isset(v:basic['basicid'])?v:basic['basicid']:'')}{x2;(isset($u)?$u:'')}" title="章节列表"><em class="glyphicon glyphicon-th-list"></em></a>
+										<a class="btn" href="index.php?exam-master-basic-modifysubject&subjectid={x2;(isset(v:subject['subjectid'])?v:subject['subjectid']:'')}&page={x2;(isset($page)?$page:'')}{x2;(isset($u)?$u:'')}" title="修改科目信息"><em class="glyphicon glyphicon-edit"></em></a>
+										<a class="btn ajax" href="index.php?exam-master-basic-delsubject&subjectid={x2;(isset(v:subject['subjectid'])?v:subject['subjectid']:'')}&page={x2;(isset($page)?$page:'')}{x2;(isset($u)?$u:'')}" title="删除科目"><em class="glyphicon glyphicon-remove"></em></a>
 									</div>
 								</td>
 							</tr>
@@ -52,7 +52,7 @@
 			        </table>
 				</div>
 			</div>
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 		</div>
 	</div>
 </div>

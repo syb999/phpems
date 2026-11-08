@@ -1,4 +1,4 @@
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 {x2;include:header}
 <body>
 <div id="content">
@@ -14,29 +14,29 @@
 			</header>
 			<div class="container-fluid">
 				<div class="row-fluid">
-                    {x2;tree:$contents['data'],content,cid}
+                    {x2;tree:(array)($contents['data'] ?? []),content,cid}
 					<div class="col-xs-6" style="padding:2px;">
 						<div style="padding:1rem;background-color:#FFFFFF;overflow: auto;">
-							<a href="index.php?course-phone-course&csid={x2;v:content['csid']}" class="ajax" data-target="courseplatform" data-page="courseplatform">
-								<img src="{x2;v:content['csthumb']}" alt="">
+							<a href="index.php?course-phone-course&csid={x2;(isset(v:content['csid'])?v:content['csid']:'')}" class="ajax" data-target="courseplatform" data-page="courseplatform">
+								<img src="{x2;(isset(v:content['csthumb'])?v:content['csthumb']:'')}" alt="">
 							</a>
-							<h5 class="text-center">{x2;v:content['cstitle']}</h5>
+							<h5 class="text-center">{x2;(isset(v:content['cstitle'])?v:content['cstitle']:'')}</h5>
 						</div>
 					</div>
 					{x2;endtree}
 				</div>
 			</div>
-            {x2;if:$contents['pages']}
+            {x2;if:!empty($contents['pages'])}
 			<div style="clear:both;overflow:hidden;background:#FFFFFF;margin-top:0.5rem">
 				<div class="col-xs-12" style="padding-left:0px;">
 					<ul class="pagination pull-right">
-                        {x2;$contents['pages']}
+                        {x2;(isset($contents['pages'])?$contents['pages']:'')}
 					</ul>
 				</div>
 			</div>
             {x2;endif}
 		</div>
-        {x2;if:!$userhash}
+        {x2;if:!empty($userhash)}
 	</div>
 </div>
 {x2;include:footer}

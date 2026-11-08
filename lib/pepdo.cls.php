@@ -10,6 +10,7 @@
  * This source file is subject to the MIT license that is bundled.
  */
 
+#[\AllowDynamicProperties]
 class pepdo
 {
     public $G;
@@ -35,7 +36,7 @@ class pepdo
     public function connect($host = DH, $dbuser = DU, $password = DP, $dbname = DB, $dbcode = HE)
     {
         $dsn = "mysql:host={$host};dbname={$dbname};";
-        $this->linkid = new PDO($dsn, $dbuser, $password);
+        $this->linkid = new PDO($dsn, $dbuser, $password, [PDO::ATTR_ERRMODE => PDO::ERRMODE_SILENT]);
         if (HE == 'utf-8') {
             $this->linkid->query('set names utf8');
         } else {
@@ -76,7 +77,10 @@ class pepdo
             $this->connect();
         }
         $query = $this->linkid->prepare($sql['sql']);
-        $rs = $query->execute($sql['v']);
+        if (!$query) {
+            return [];
+        }
+        $rs = $query->execute(isset($sql['v']) ? $sql['v'] : []);
         $this->_log($sql, $query);
         if ($rs) {
             $query->setFetchMode(PDO::FETCH_ASSOC);
@@ -86,10 +90,10 @@ class pepdo
                 if ($unserialize) {
                     if (is_array($unserialize)) {
                         foreach ($unserialize as $value) {
-                            $tmp[$value] = unserialize($tmp[$value]);
+                            $tmp[$value] = isset($tmp[$value]) && '' !== $tmp[$value] ? unserialize($tmp[$value]) : false;
                         }
                     } else {
-                        $tmp[$unserialize] = unserialize($tmp[$unserialize]);
+                        $tmp[$unserialize] = isset($tmp[$unserialize]) && '' !== $tmp[$unserialize] ? unserialize($tmp[$unserialize]) : false;
                     }
                 }
                 if ($index) {
@@ -102,7 +106,7 @@ class pepdo
             return $r;
         }
 
-        return false;
+        return [];
     }
 
     public function fetch($sql, $unserialize = false)
@@ -114,7 +118,10 @@ class pepdo
             $this->connect();
         }
         $query = $this->linkid->prepare($sql['sql']);
-        $rs = $query->execute($sql['v']);
+        if (!$query) {
+            return [];
+        }
+        $rs = $query->execute(isset($sql['v']) ? $sql['v'] : []);
         $this->_log($sql, $query);
         if ($rs) {
             $query->setFetchMode(PDO::FETCH_ASSOC);
@@ -123,10 +130,10 @@ class pepdo
                 if ($unserialize) {
                     if (is_array($unserialize)) {
                         foreach ($unserialize as $value) {
-                            $tmp[$value] = unserialize($tmp[$value]);
+                            $tmp[$value] = isset($tmp[$value]) && '' !== $tmp[$value] ? unserialize($tmp[$value]) : false;
                         }
                     } else {
-                        $tmp[$unserialize] = unserialize($tmp[$unserialize]);
+                        $tmp[$unserialize] = isset($tmp[$unserialize]) && '' !== $tmp[$unserialize] ? unserialize($tmp[$unserialize]) : false;
                     }
                 }
             }
@@ -134,7 +141,7 @@ class pepdo
             return $tmp;
         }
 
-        return false;
+        return [];
     }
 
     public function query($sql)
@@ -158,11 +165,14 @@ class pepdo
         if (!$this->linkid) {
             $this->connect();
         }
-        if ($sql['dim']) {
+        if (!empty($sql['dim'])) {
             return $this->dimexec($sql);
         }
         $query = $this->linkid->prepare($sql['sql']);
-        $rs = $query->execute($sql['v']);
+        if (!$query) {
+            return [];
+        }
+        $rs = $query->execute(isset($sql['v']) ? $sql['v'] : []);
         $this->_log($sql, $query);
         $this->affectedRows = $rs;
 
@@ -200,7 +210,7 @@ class pepdo
         return $this->lastInsertId();
     }
 
-    public function listElements($page, $number = 20, $args, $tablepre = DTH)
+    public function listElements($page, $number, $args, $tablepre = DTH)
     {
         if (!is_array($args)) {
             return false;
@@ -208,22 +218,23 @@ class pepdo
         $pg = $this->G->make('pg');
         $page = $page > 0 ? $page : 1;
         $r = [];
-        $data = [$args['select'], $args['table'], $args['query'], $args['groupby'], $args['orderby'], [intval($page - 1) * $number, $number]];
+        $data = [$args['select'], $args['table'], $args['query'], isset($args['groupby']) ? $args['groupby'] : null, isset($args['orderby']) ? $args['orderby'] : null, [intval($page - 1) * $number, $number]];
         $sql = $this->sql->makeSelect($data, $tablepre);
-        $r['data'] = $this->fetchAll($sql, $args['index'], $args['serial']);
+        $r['data'] = $this->fetchAll($sql, isset($args['index']) ? $args['index'] : false, isset($args['serial']) ? $args['serial'] : false);
         $data = ['count(*) AS number', $args['table'], $args['query']];
         $sql = $this->sql->makeSelect($data, $tablepre);
         $t = $this->fetch($sql);
-        $pages = $pg->outPage($pg->getPagesNumber($t['number'], $number), $page);
+        $total = isset($t['number']) ? $t['number'] : 0;
+        $pages = $pg->outPage($pg->getPagesNumber($total, $number), $page);
         $r['pages'] = $pages;
-        $r['number'] = $t['number'];
+        $r['number'] = $total;
 
         return $r;
     }
 
     public function delElement($args)
     {
-        $data = [$args['table'], $args['query'], $args['orderby'], $args['limit']];
+        $data = [$args['table'], $args['query'], isset($args['orderby']) ? $args['orderby'] : false, isset($args['limit']) ? $args['limit'] : false];
         $sql = $this->sql->makeDelete($data);
 
         return $this->exec($sql);

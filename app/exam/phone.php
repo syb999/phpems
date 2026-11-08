@@ -10,6 +10,7 @@
  * This source file is subject to the MIT license that is bundled.
  */
 
+#[\AllowDynamicProperties]
 class app
 {
     public $G;
@@ -27,7 +28,7 @@ class app
         $this->html = $this->G->make('html');
         $this->session = $this->G->make('session');
         $this->_user = $this->session->getSessionUser();
-        if (!$this->_user['sessionuserid']) {
+        if (empty($this->_user['sessionuserid'])) {
             if ($this->ev->get('userhash')) {
                 exit(json_encode([
                 'statusCode' => 301,
@@ -71,7 +72,7 @@ class app
         $this->tpl->assign('subjects', $this->subjects);
         $this->tpl->assign('globalsections', $this->section->getSectionListByArgs([['AND', 'sectionsubjectid = :sectionsubjectid', 'sectionsubjectid', $this->data['currentbasic']['basicsubjectid']]]));
         $this->tpl->assign('globalknows', $this->section->getAllKnowsBySubject($this->data['currentbasic']['basicsubjectid']));
-        $this->tpl->assign('_user', $this->user->getUserById($this->_user['sessionuserid']));
+        $this->tpl->assign('_user', $this->user->getUserById(isset($this->_user['sessionuserid']) ? $this->_user['sessionuserid'] : 0));
         $this->tpl->assign('userhash', $this->ev->get('userhash'));
     }
 }

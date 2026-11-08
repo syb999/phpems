@@ -1,4 +1,4 @@
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 {x2;include:header}
 <body>
 <div id="content">
@@ -13,19 +13,19 @@
 				</h5>
 			</header>
 			<div class="container-fluid">
-				{x2;tree:$certificates['data'],certificate,cid}
+				{x2;tree:(array)($certificates['data'] ?? []),certificate,cid}
 				<div style="clear:both;overflow:hidden;background:#FFFFFF;margin-top:0.5rem;padding:0.8rem 0.2rem;">
 					<div class="col-xs-4">
 						<a data-markPrepage="no" href="javascript:;">
-							<img src="{x2;v:certificate['cethumb']}" style="width:10rem;margin-top:0.5rem"/>
+							<img src="{x2;(isset(v:certificate['cethumb'])?v:certificate['cethumb']:'')}" style="width:10rem;margin-top:0.5rem"/>
 						</a>
 					</div>
 					<div class="col-xs-8" style="padding:0.2rem;">
 						<div class="text-left" style="padding:0.2rem;">
 							<a data-markPrepage="no" href="javascript:;">
-								<h5>{x2;v:certificate['cetitle']}</h5>
+								<h5>{x2;(isset(v:certificate['cetitle'])?v:certificate['cetitle']:'')}</h5>
 								<p style="font-size:1rem;">
-									<button class="btn{x2;if:v:certificate['ceqstatus'] == 3} btn-danger{x2;elseif:v:certificate['ceqstatus'] == 2} btn-success{x2;else} btn-primary{x2;endif}">{x2;$status[v:certificate['ceqstatus']]}</button>
+									<button class="btn{x2;if:v:certificate['ceqstatus'] == 3} btn-danger{x2;elseif:v:certificate['ceqstatus'] == 2} btn-success{x2;else} btn-primary{x2;endif}">{x2;(isset($status[v:certificate['ceqstatus']])?$status[v:certificate['ceqstatus']]:'')}</button>
 									<span>{x2;date:v:certificate['ceqtime'],'Y-m-d H:i:s'}</span>
 								</p>
 							</a>
@@ -34,12 +34,12 @@
 				</div>
 				{x2;endtree}
 				<ul class="pagination pull-right">
-                    {x2;$certificates['pages']}
+                    {x2;(isset($certificates['pages'])?$certificates['pages']:'')}
 				</ul>
 			</div>
 			{x2;include:footer}
 		</div>
-	{x2;if:!$userhash}
+	{x2;if:!empty($userhash)}
     </div>
 </div>
 </body>

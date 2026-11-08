@@ -10,6 +10,7 @@
  * This source file is subject to the MIT license that is bundled.
  */
 
+#[\AllowDynamicProperties]
 class action extends app
 {
     public function display()
@@ -25,6 +26,7 @@ class action extends app
     private function index()
     {
         header('Content-type: image/png');
+        $rand = '';
         $rand = $this->session->setRandCode($rand);
         echo $this->files->createRandImage($rand, 100, 42);
     }

@@ -10,7 +10,7 @@
             <div class="col-xs-10" id="datacontent">
                 <div class="box itembox" style="margin-bottom:0;border-bottom:1px solid #CCCCCC;">
                     <ul class="breadcrumb">
-                        <li><a href="index.php?{x2;$_app}-master">{x2;$apps[$_app]['appname']}</a> <span
+                        <li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master">{x2;(isset($apps[$_app]['appname'])?$apps[$_app]['appname']:'')}</a> <span
                                 class="divider">/</span></li>
                         <li><a href="index.php?bank-master-coupon">代金券管理</a> <span class="divider">/</span></li>
                         <li class="active">导出代金券</li>
@@ -41,9 +41,9 @@
                                 <div class="controls">
                                     <button class="btn btn-primary" type="submit">提交</button>
                                     <input type="hidden" name="outcoupon" value="1"/>
-                                    {x2;if:is_array($search)}
-                                    {x2;tree:$search,arg,aid}
-                                    <input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>
+                                    {x2;if:isset($search) && is_array($search)}
+                                    {x2;tree:(array)($search ?? []),arg,aid}
+                                    <input type="hidden" name="search[{x2;(isset(v:key)?v:key:'')}]" value="{x2;(isset(v:arg)?v:arg:'')}"/>
                                     {x2;endtree}
                                     {x2;endif}
                                 </div>

@@ -10,6 +10,7 @@
  * This source file is subject to the MIT license that is bundled.
  */
 
+#[\AllowDynamicProperties]
 class config_content
 {
     public $fields = ['contentid', 'contentcatid', 'contentmoduleid', 'contentuserid', 'contentusername', 'contenttitle', 'contentthumb', 'contentlink', 'contentinputtime', 'contentmodifytime', 'contentsequence', 'contentdescribe', 'contentstatus', 'contenttemplate', 'contenttext'];

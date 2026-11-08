@@ -1,4 +1,4 @@
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 {x2;include:header}
 {x2;eval: v:signPackage = v:this->G->make('jssdk','user')->GetSignPackage();}
 <body>
@@ -17,11 +17,11 @@
             <div class="container-fluid" style="overflow:hidden;margin-top:1rem;margin-bottom:0.4rem;">
                 <div class="swiper-container">
                     <div class="swiper-wrapper">
-                        {x2;tree:$contents[2]['data'],content,cid}
+                        {x2;tree:(array)($contents[2]['data'] ?? []),content,cid}
                         <div class="swiper-slide">
-                            <a href="index.php?content-phone-content&contentid={x2;v:content['contentid']}" class="ajax"
+                            <a href="index.php?content-phone-content&contentid={x2;(isset(v:content['contentid'])?v:content['contentid']:'')}" class="ajax"
                                data-page="rollpage" data-target="rollpage">
-                                <img src="{x2;v:content['contentthumb']}">
+                                <img src="{x2;(isset(v:content['contentthumb'])?v:content['contentthumb']:'')}">
                             </a>
                         </div>
                         {x2;endtree}
@@ -72,14 +72,14 @@
                     <span class="pull-right" style="width:35%"><hr/></span>
                 </h4>
                 <div style="clear:both;padding:1.5rem;background-color:#FFFFFF;margin-bottom:1rem;" class="col-xs-12">
-                    {x2;tree:$basics['basic'],basic,bid}
+                    {x2;tree:(array)($basics['basic'] ?? []),basic,bid}
                     <div class="media">
                         <div class="media-body">
                             <h5 class="media-heading"><a
-                                        href="index.php?exam-phone-index-setCurrentBasic&basicid={x2;v:basic['basicid']}"
-                                        class="ajax" data-target="basic" data-page="basic">{x2;v:basic['basic']}</a>
+                                        href="index.php?exam-phone-index-setCurrentBasic&basicid={x2;(isset(v:basic['basicid'])?v:basic['basicid']:'')}"
+                                        class="ajax" data-target="basic" data-page="basic">{x2;(isset(v:basic['basic'])?v:basic['basic']:'')}</a>
                             </h5>
-                            <p style="font-size:1rem;">{x2;v:basic['basicdescribe']}</p>
+                            <p style="font-size:1rem;">{x2;(isset(v:basic['basicdescribe'])?v:basic['basicdescribe']:'')}</p>
                         </div>
                     </div>
                     {x2;endtree}
@@ -93,20 +93,20 @@
 				</h4>
 			</div>
 			<div style="clear:both;padding:1.5rem;background-color:#FFFFFF;margin-bottom:1rem;" class="col-xs-12">
-				{x2;tree:$courses['data'],course,cid}
+				{x2;tree:(array)($courses['data'] ?? []),course,cid}
 				<div class="media">
-					<a class="pull-left ajax" href="index.php?course-phone-course&csid={x2;v:course['csid']}" data-target="coursecontent" data-page="coursecontent" style="width:8rem;">
-						<img src="{x2;v:course['csthumb']}" style="width:8rem;" alt="{x2;v:course['cstitle']}">
+					<a class="pull-left ajax" href="index.php?course-phone-course&csid={x2;(isset(v:course['csid'])?v:course['csid']:'')}" data-target="coursecontent" data-page="coursecontent" style="width:8rem;">
+						<img src="{x2;(isset(v:course['csthumb'])?v:course['csthumb']:'')}" style="width:8rem;" alt="{x2;(isset(v:course['cstitle'])?v:course['cstitle']:'')}">
 					</a>
 					<div class="media-body">
-						<h5 class="media-heading"><a class="ajax" href="index.php?course-phone-course&csid={x2;v:course['csid']}" data-target="coursecontent" data-page="coursecontent">{x2;v:course['cstitle']}</a></h5>
+						<h5 class="media-heading"><a class="ajax" href="index.php?course-phone-course&csid={x2;(isset(v:course['csid'])?v:course['csid']:'')}" data-target="coursecontent" data-page="coursecontent">{x2;(isset(v:course['cstitle'])?v:course['cstitle']:'')}</a></h5>
 						<p style="font-size:1rem;">{x2;substring:v:course['csdescribe'],81} </p>
 					</div>
 				</div>
 				{x2;endtree}
 			</div>
 			-->
-                {x2;tree:$contents,contents,cid}
+                {x2;tree:(array)($contents ?? []),contents,cid}
                 {x2;if:v:key != 2}
                 <div>
                     <h4 style="overflow:hidden;clear:both;padding-top:0.2rem;">
@@ -117,13 +117,13 @@
                     </h4>
                 </div>
                 <div style="clear:both;padding:1.5rem;background-color:#FFFFFF;margin-bottom:1rem;" class="col-xs-12">
-                    {x2;tree:v:contents['data'],content,cid}
+                    {x2;tree:(array)(v:contents['data'] ?? []),content,cid}
                     <div class="media">
                         <div class="media-body">
                             <h5 class="media-heading"><a class="ajax"
-                                                         href="index.php?content-phone-content&contentid={x2;v:content['contentid']}"
+                                                         href="index.php?content-phone-content&contentid={x2;(isset(v:content['contentid'])?v:content['contentid']:'')}"
                                                          data-target="contentpage"
-                                                         data-page="contentpage">{x2;v:content['contenttitle']}</a></h5>
+                                                         data-page="contentpage">{x2;(isset(v:content['contenttitle'])?v:content['contenttitle']:'')}</a></h5>
                             <p style="font-size:1rem;">{x2;substring:v:content['contentdescribe'],81} </p>
                         </div>
                     </div>
@@ -145,17 +145,17 @@
             });
         </script>
         {x2;include:footer}
-        {x2;if:!$userhash}
+        {x2;if:!empty($userhash)}
     </div>
 </div>
 <script src="//res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
 <script>
     wx.config({
         debug: false,
-        appId: '{x2;v:signPackage['appId']}',
-        timestamp: {x2;v:signPackage['timestamp']},
-        nonceStr: '{x2;v:signPackage['nonceStr']}',
-        signature: '{x2;v:signPackage['signature']}',
+        appId: '{x2;(isset(v:signPackage['appId'])?v:signPackage['appId']:'')}',
+        timestamp: {x2;(isset(v:signPackage['timestamp'])?v:signPackage['timestamp']:'')},
+        nonceStr: '{x2;(isset(v:signPackage['nonceStr'])?v:signPackage['nonceStr']:'')}',
+        signature: '{x2;(isset(v:signPackage['signature'])?v:signPackage['signature']:'')}',
         jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage']
     });
 </script>

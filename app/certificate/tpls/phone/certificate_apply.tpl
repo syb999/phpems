@@ -1,4 +1,4 @@
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 {x2;include:header}
 <body>
 <div id="content">
@@ -21,48 +21,48 @@
 							<table class="table table-bordered">
 								<tr>
 									<td style="width:8rem;">照片：</td>
-									<td><img src="{x2;$_user['photo']}" class="pull-right" style="width:16rem;"/></td>
+									<td><img src="{x2;(isset($_user['photo'])?$_user['photo']:'')}" class="pull-right" style="width:16rem;"/></td>
 								</tr>
 								<tr>
 									<td>证书名：</td>
-									<td>{x2;$ce['cetitle']}</td>
+									<td>{x2;(isset($ce['cetitle'])?$ce['cetitle']:'')}</td>
 								</tr>
 								<tr>
 									<td>价格：</td>
-									<td>{x2;$ce['ceprice']}积分</td>
+									<td>{x2;(isset($ce['ceprice'])?$ce['ceprice']:'')}积分</td>
 								</tr>
 								<tr>
 									<td>身份证号：</td>
-									<td>{x2;$_user['username']}</td>
+									<td>{x2;(isset($_user['username'])?$_user['username']:'')}</td>
 								</tr>
 								<tr>
 									<td>姓名：</td>
-									<td>{x2;$_user['usertruename']}</td>
+									<td>{x2;(isset($_user['usertruename'])?$_user['usertruename']:'')}</td>
 								</tr>
 								<tr>
 									<td>性别：</td>
-									<td>{x2;$_user['usersex']}</td>
+									<td>{x2;(isset($_user['usersex'])?$_user['usersex']:'')}</td>
 								</tr>
 								<tr>
 									<td>文化程度：</td>
-									<td>{x2;$_user['userdegree']}</td>
+									<td>{x2;(isset($_user['userdegree'])?$_user['userdegree']:'')}</td>
 								</tr>
 								<tr>
 									<td>地址：</td>
-									<td>{x2;$_user['useraddress']}</td>
+									<td>{x2;(isset($_user['useraddress'])?$_user['useraddress']:'')}</td>
 								</tr>
 								<tr>
 									<td>联系电话：</td>
-									<td>{x2;$_user['userphone']}</td>
+									<td>{x2;(isset($_user['userphone'])?$_user['userphone']:'')}</td>
 								</tr>
 							</table>
 							<div class="form-group">
 								<div class="col-sm-8">
-									<a class="btn btn-primary ajax btn-block" msg="申请证书将扣除余额{x2;$ce['ceprice']}元，确定支付吗？" href="index.php?certificate-phone-certificate-apply&apply=1&ceid={x2;$ce['ceid']}">资料无误 申请证书</a>
+									<a class="btn btn-primary ajax btn-block" msg="申请证书将扣除余额{x2;(isset($ce['ceprice'])?$ce['ceprice']:'')}元，确定支付吗？" href="index.php?certificate-phone-certificate-apply&apply=1&ceid={x2;(isset($ce['ceid'])?$ce['ceid']:'')}">资料无误 申请证书</a>
 									<input type="hidden" name="modifyuserinfo" value="1"/>
-									<input type="hidden" name="page" value="{x2;$page}"/>
-									{x2;tree:$search,arg,aid}
-									<input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>
+									<input type="hidden" name="page" value="{x2;(isset($page)?$page:'')}"/>
+									{x2;tree:(array)($search ?? []),arg,aid}
+									<input type="hidden" name="search[{x2;(isset(v:key)?v:key:'')}]" value="{x2;(isset(v:arg)?v:arg:'')}"/>
 									{x2;endtree}
 								</div>
 						</fieldset>
@@ -70,7 +70,7 @@
 				</div>
 			</div>
 		</div>
-	{x2;if:!$userhash}
+	{x2;if:!empty($userhash)}
     </div>
 </div>
 </body>

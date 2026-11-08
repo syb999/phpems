@@ -28,8 +28,8 @@
                                     refUrl="index.php?exam-phone-index-ajax-getknowsbysectionid&sectionid={value}"
                                     more="questionnumbers" callback="getSectionContent">
                                 <option value="0">请选择章节</option>
-                                {x2;tree:$sections,section,sid}
-                                <option value="{x2;v:section['sectionid']}">{x2;v:section['section']}</option>
+                                {x2;tree:(array)($sections ?? []),section,sid}
+                                <option value="{x2;(isset(v:section['sectionid'])?v:section['sectionid']:'')}">{x2;(isset(v:section['section'])?v:section['section']:'')}</option>
                                 {x2;endtree}
                             </select>
                         </div>
@@ -63,13 +63,13 @@
                     </div>
                     <div class="col-xs-12">
                         <ol id="questionnumbers" class="list-unstyled" style="line-height:3.2rem;">
-                            {x2;tree:$questype,quest,qid}
-                            {x2;if:$numbers[v:quest['questid']]}
+                            {x2;tree:(array)($questype ?? []),quest,qid}
+                            {x2;if:!empty($numbers[v:quest['questid']])}
                             <li style="border-bottom:1px dotted #CCCCCC;padding:0.5rem;">
-                                {x2;v:quest['questype']}（共{x2;$numbers[v:quest['questid']]}题），选 <input
-                                        id="question_{x2;v:quest['questid']}" type="text"
+                                {x2;(isset(v:quest['questype'])?v:quest['questype']:'')}（共{x2;(isset($numbers[v:quest['questid']])?$numbers[v:quest['questid']]:'')}题），选 <input
+                                        id="question_{x2;(isset(v:quest['questid'])?v:quest['questid']:'')}" type="text"
                                         style="width:6rem;height:34px;padding: 1.2rem;background-color: #fff;border: 1px solid #ccc;border-radius: 4px;"
-                                        name="args[number][{x2;v:quest['questid']}]" rel="{x2;$numbers[v:quest['questid']]}"/> 题
+                                        name="args[number][{x2;(isset(v:quest['questid'])?v:quest['questid']:'')}]" rel="{x2;(isset($numbers[v:quest['questid']])?$numbers[v:quest['questid']]:'')}"/> 题
                             </li>
                             {x2;endif}
                             {x2;endtree}

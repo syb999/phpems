@@ -10,6 +10,7 @@
  * This source file is subject to the MIT license that is bundled.
  */
 
+#[\AllowDynamicProperties]
 class category
 {
     public $G;
@@ -133,8 +134,8 @@ class category
         $child = [];
         $parent = [$id];
         $i = 0;
-        while ($parent[$i]) {
-            if ($categories[$parent[$i]]) {
+        while (!empty($parent[$i])) {
+            if (!empty($categories[$parent[$i]])) {
                 foreach ($categories[$parent[$i]] as $n) {
                     $child[] = $n['catid'];
                     $parent[] = $n['catid'];
@@ -148,6 +149,7 @@ class category
 
     public function getChildCategoryString($id, $withself = 1)
     {
+        $s = '';
         if ($this->getChildCategory($id)) {
             $s = implode(',', $this->getChildCategory($id));
         }
@@ -165,9 +167,9 @@ class category
     public function getCategoryPos($id)
     {
         $this->tidyCategory();
-        if ($this->categories[$id]) {
+        if (!empty($this->categories[$id])) {
             $categories = [];
-            while ($this->categories[$id]['catparent']) {
+            while (!empty($this->categories[$id]['catparent'])) {
                 $categories[] = $this->categories[$this->categories[$id]['catparent']];
                 $id = $this->categories[$id]['catparent'];
             }

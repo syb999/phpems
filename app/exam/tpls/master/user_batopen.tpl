@@ -1,4 +1,4 @@
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 {x2;include:header}
 <body>
 {x2;include:nav}
@@ -13,7 +13,7 @@
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
 						<ol class="breadcrumb">
-							<li><a href="index.php?{x2;$_app}-master">{x2;$apps[$_app]['appname']}</a></li>
+							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master">{x2;(isset($apps[$_app]['appname'])?$apps[$_app]['appname']:'')}</a></li>
 							<li class="active">批量开通课程</li>
 						</ol>
 					</div>
@@ -47,7 +47,7 @@
 									<div class="form-group">
 										<label class="control-label col-sm-2">考场ID：</label>
 									  	<div class="col-sm-9">
-										  	<textarea class="form-control" rows="4" needle="needle" msg="您最少需要填写一个考场" name="basics">{x2;$basicid}</textarea>
+										  	<textarea class="form-control" rows="4" needle="needle" msg="您最少需要填写一个考场" name="basics">{x2;(isset($basicid)?$basicid:'')}</textarea>
 									  		<span class="help-block">每个考场ID请使用英文逗号隔开</span>
 										</div>
 									</div>
@@ -61,7 +61,7 @@
 									  	<label class="control-label col-sm-2"></label>
 									  	<div class="col-sm-9">
 										  	<button class="btn btn-primary" type="submit">提交</button>
-										  	<input type="hidden" name="page" value="{x2;$page}"/>
+										  	<input type="hidden" name="page" value="{x2;(isset($page)?$page:'')}"/>
 										  	<input type="hidden" name="batopen" value="1"/>
 										</div>
 									</div>
@@ -79,7 +79,7 @@
 									<div class="form-group">
 										<label class="control-label col-sm-2">考场ID：</label>
 									  	<div class="col-sm-9">
-										  	<textarea class="form-control" rows="4" needle="needle" msg="您最少需要填写一个考场" name="basics">{x2;$basicid}</textarea>
+										  	<textarea class="form-control" rows="4" needle="needle" msg="您最少需要填写一个考场" name="basics">{x2;(isset($basicid)?$basicid:'')}</textarea>
 									  		<span class="help-block">每个考场ID请使用英文逗号隔开</span>
 										</div>
 									</div>
@@ -93,7 +93,7 @@
 									  	<label class="control-label col-sm-2"></label>
 									  	<div class="col-sm-9">
 										  	<button class="btn btn-primary" type="submit">提交</button>
-										  	<input type="hidden" name="page" value="{x2;$page}"/>
+										  	<input type="hidden" name="page" value="{x2;(isset($page)?$page:'')}"/>
 										  	<input type="hidden" name="batopen" value="1"/>
 										</div>
 									</div>
@@ -111,7 +111,7 @@
 									<div class="form-group">
 										<label class="control-label col-sm-2">考场ID：</label>
 									  	<div class="col-sm-9">
-										  	<textarea class="form-control" rows="4" needle="needle" msg="您最少需要填写一个考场" name="basics">{x2;$basicid}</textarea>
+										  	<textarea class="form-control" rows="4" needle="needle" msg="您最少需要填写一个考场" name="basics">{x2;(isset($basicid)?$basicid:'')}</textarea>
 									  		<span class="help-block">每个考场ID请使用英文逗号隔开</span>
 										</div>
 									</div>
@@ -125,7 +125,7 @@
 									  	<label class="control-label col-sm-2"></label>
 									  	<div class="col-sm-9">
 										  	<button class="btn btn-primary" type="submit">提交</button>
-										  	<input type="hidden" name="page" value="{x2;$page}"/>
+										  	<input type="hidden" name="page" value="{x2;(isset($page)?$page:'')}"/>
 										  	<input type="hidden" name="batopen" value="1"/>
 										</div>
 									</div>
@@ -135,7 +135,7 @@
 					</div>
 				</div>
 			</div>
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 		</div>
 	</div>
 </div>

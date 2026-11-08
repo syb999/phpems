@@ -1,4 +1,4 @@
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 {x2;include:header}
 <body>
 {x2;include:nav}
@@ -13,7 +13,7 @@
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
 						<ol class="breadcrumb">
-							<li><a href="index.php?{x2;$_app}-master">{x2;$apps[$_app]['appname']}</a></li>
+							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master">{x2;(isset($apps[$_app]['appname'])?$apps[$_app]['appname']:'')}</a></li>
 							<li class="active">附件管理</li>
 						</ol>
 					</div>
@@ -38,7 +38,7 @@
 									上传时间：
 								</td>
 								<td>
-									<input class="form-control datetimepicker" data-date="{x2;date:TIME,'Y-m-d'}" data-date-format="yyyy-mm-dd" type="text" name="search[stime]" size="10" id="stime" value="{x2;$search['stime']}"/> - <input class="form-control datetimepicker" data-date="{x2;date:TIME,'Y-m-d'}" data-date-format="yyyy-mm-dd" size="10" type="text" name="search[etime]" id="etime" value="{x2;$search['etime']}"/>
+									<input class="form-control datetimepicker" data-date="{x2;date:TIME,'Y-m-d'}" data-date-format="yyyy-mm-dd" type="text" name="search[stime]" size="10" id="stime" value="{x2;(isset($search['stime'])?$search['stime']:'')}"/> - <input class="form-control datetimepicker" data-date="{x2;date:TIME,'Y-m-d'}" data-date-format="yyyy-mm-dd" size="10" type="text" name="search[etime]" id="etime" value="{x2;(isset($search['etime'])?$search['etime']:'')}"/>
 								</td>
 								<td>
 									文件类型：
@@ -46,8 +46,8 @@
 								<td>
 					        		<select name="search[atttype]" class="form-control">
 						        		<option value="0">选择文件类型</option>
-								  		{x2;tree:$attachtypes,att,aid}
-								  		<option value="{x2;v:att['atid']}"{x2;if:v:att['atid'] == $search['atttype']} selected{x2;endif}>{x2;v:att['attachtype']}</option>
+								  		{x2;tree:(array)($attachtypes ?? []),att,aid}
+								  		<option value="{x2;(isset(v:att['atid'])?v:att['atid']:'')}"{x2;if:v:att['atid'] == $search['atttype']} selected{x2;endif}>{x2;(isset(v:att['attachtype'])?v:att['attachtype']:'')}</option>
 								  		{x2;endtree}
 							  		</select>
 					        	</td>
@@ -57,13 +57,13 @@
 									上传用户：
 								</td>
 					        	<td>
-					        		<input class="form-control" name="search[username]" size="15" type="text" value="{x2;$search['username']}"/>
+					        		<input class="form-control" name="search[username]" size="15" type="text" value="{x2;(isset($search['username'])?$search['username']:'')}"/>
 					        	</td>
 					        	<td>
 									附件ID：
 								</td>
 								<td>
-									<input name="search[attid]" class="form-control" size="15" type="text" class="number" value="{x2;$search['attid']}"/>
+									<input name="search[attid]" class="form-control" size="15" type="text" class="number" value="{x2;(isset($search['attid'])?$search['attid']:'')}"/>
 								</td>
 								<td colspan="2">
 									<button class="btn btn-primary" type="submit">搜索</button>
@@ -86,25 +86,25 @@
 					                </tr>
 					            </thead>
 					            <tbody>
-				                    {x2;tree:$attach['data'],attach,aid}
+				                    {x2;tree:(array)($attach['data'] ?? []),attach,aid}
 							        <tr>
-										<td><input type="checkbox" name="delids[{x2;v:attach['attid']}]" value="1"></td>
+										<td><input type="checkbox" name="delids[{x2;(isset(v:attach['attid'])?v:attach['attid']:'')}]" value="1"></td>
 										<td>
-											{x2;v:attach['attid']}
+											{x2;(isset(v:attach['attid'])?v:attach['attid']:'')}
 										</td>
 										<td>
-											{x2;v:attach['atttitle']}
+											{x2;(isset(v:attach['atttitle'])?v:attach['atttitle']:'')}
 										</td>
 										<td>
-											{x2;v:attach['attpath']}
+											{x2;(isset(v:attach['attpath'])?v:attach['attpath']:'')}
 										</td>
 										<td>
 											{x2;date:v:attach['attinputtime'],'Y-m-d'}
 										</td>
 										<td>
 											<div class="btn-group">
-					                    		<a class="btn" href="index.php?document-master-files-modify&page={x2;$page}&attid={x2;v:attach['attid']}{x2;$u}" title="修改"><em class="glyphicon glyphicon-edit"></em></a>
-												<a class="btn confirm" href="index.php?document-master-files-del&page={x2;$page}&attid={x2;v:attach['attid']}{x2;$u}" title="删除"><em class="glyphicon glyphicon-remove"></em></a>
+					                    		<a class="btn" href="index.php?document-master-files-modify&page={x2;(isset($page)?$page:'')}&attid={x2;(isset(v:attach['attid'])?v:attach['attid']:'')}{x2;(isset($u)?$u:'')}" title="修改"><em class="glyphicon glyphicon-edit"></em></a>
+												<a class="btn confirm" href="index.php?document-master-files-del&page={x2;(isset($page)?$page:'')}&attid={x2;(isset(v:attach['attid'])?v:attach['attid']:'')}{x2;(isset($u)?$u:'')}" title="删除"><em class="glyphicon glyphicon-remove"></em></a>
 					                    	</div>
 										</td>
 							        </tr>
@@ -116,25 +116,25 @@
 						            <label class="radio-inline">
 						                <input type="radio" name="action" value="delete" checked/>删除
 						            </label>
-                                    {x2;if:is_array($search)}
-						            {x2;tree:$search,arg,sid}
-						            <input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>
+                                    {x2;if:isset($search) && is_array($search)}
+						            {x2;tree:(array)($search ?? []),arg,sid}
+						            <input type="hidden" name="search[{x2;(isset(v:key)?v:key:'')}]" value="{x2;(isset(v:arg)?v:arg:'')}"/>
 						            {x2;endtree}
                                     {x2;endif}
 						            <label class="radio-inline">
 						            	<button class="btn btn-primary" type="submit">提交</button>
 						            </label>
-						            <input type="hidden" name="page" value="{x2;$page}"/>
+						            <input type="hidden" name="page" value="{x2;(isset($page)?$page:'')}"/>
 						        </div>
 					        </div>
 					        <ul class="pagination pull-right">
-					            {x2;$attach['pages']}
+					            {x2;(isset($attach['pages'])?$attach['pages']:'')}
 					        </ul>
 				        </fieldset>
 					</form>
 				</div>
 			</div>
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 		</div>
 	</div>
 </div>

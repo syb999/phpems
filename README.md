@@ -15,10 +15,9 @@ php composer.phar
 cp /opt/bin/composer.phar /opt/bin/composer
 
 
-# 现在可以下载phpems5的源码:
+# 现在可以下载phpems的源码:
 
 git clone https://github.com/syb999/phpems.git
-
 
 # 进入phpems目录:
 
@@ -53,7 +52,7 @@ source /phpems/phpems/examples/phpems.sql;
 exit;
 
 # 最后修改/phpems/phpems/lib/config.inc.php文件: 按照数据库相关的配置修改即可。
-按照数据库相关的配置修改即可。
+按照数据库相关的配置修改即可。 注意要用utf8无bom格式保存。
 
 在lib/config.inc.php文件中设置数据库参数，注意都要保存为utf8无bom形式。
 
@@ -67,3 +66,4 @@ exit;
 
 默认管理员：用户名：peadmin  密码：peadmin
 可以登录到后台页面->用户模块->用户管理，来修改peadmin的密码。
+

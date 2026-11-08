@@ -10,6 +10,7 @@
  * This source file is subject to the MIT license that is bundled.
  */
 
+#[\AllowDynamicProperties]
 class app
 {
     public $G;
@@ -32,7 +33,7 @@ class app
         $this->content = $this->G->make('content', 'course');
         $this->user = $this->G->make('user', 'user');
         $this->_user = $_user = $this->session->getSessionUser();
-        if (!$this->_user['sessionuserid']) {
+        if (empty($this->_user['sessionuserid'])) {
             if ($this->ev->get('userhash')) {
                 exit(json_encode([
                 'statusCode' => 301,

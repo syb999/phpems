@@ -1,4 +1,4 @@
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 {x2;include:header}
 <body>
 {x2;include:nav}
@@ -13,8 +13,8 @@
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
 						<ol class="breadcrumb">
-							<li><a href="index.php?{x2;$_app}-master">{x2;$apps[$_app]['appname']}</a></li>
-							<li><a href="index.php?{x2;$_app}-master-docs&page={x2;$page}">内容管理</a></li>
+							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master">{x2;(isset($apps[$_app]['appname'])?$apps[$_app]['appname']:'')}</a></li>
+							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master-docs&page={x2;(isset($page)?$page:'')}">内容管理</a></li>
 							<li class="active">添加内容</li>
 						</ol>
 					</div>
@@ -22,7 +22,7 @@
 				<div class="box itembox" style="padding-top:10px;margin-bottom:0px;overflow:visible">
 					<h4 class="title" style="padding:10px;">
 						添加内容
-						<a class="btn btn-primary pull-right" href="index.php?{x2;$_app}-master-docs&catid={x2;$catid}&page={x2;$page}">内容管理</a>
+						<a class="btn btn-primary pull-right" href="index.php?{x2;(isset($_app)?$_app:'')}-master-docs&catid={x2;(isset($catid)?$catid:'')}&page={x2;(isset($page)?$page:'')}">内容管理</a>
 					</h4>
 					<form action="index.php?docs-master-docs-add" method="post" class="form-horizontal">
 						<div class="form-group">
@@ -64,8 +64,8 @@
 				        	<div class="col-sm-9 form-inline">
 							    <select id="contentcatid" msg="您必须选择一个分类" needle="needle" class="autocombox form-control" name="args[doccatid]" refUrl="index.php?docs-master-category-ajax-getchildcategory&catid={value}">
 					            	<option value="">选择一级分类</option>
-					            	{x2;tree:$parentcat,cat,cid}
-					            	<option value="{x2;v:cat['catid']}">{x2;v:cat['catname']}</option>
+					            	{x2;tree:(array)($parentcat ?? []),cat,cid}
+					            	<option value="{x2;(isset(v:cat['catid'])?v:cat['catid']:'')}">{x2;(isset(v:cat['catname'])?v:cat['catname']:'')}</option>
 					            	{x2;endtree}
 					            </select>
 					        </div>
@@ -86,7 +86,7 @@
 					</form>
 				</div>
 			</div>
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 		</div>
 	</div>
 </div>

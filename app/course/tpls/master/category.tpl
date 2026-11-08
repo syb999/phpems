@@ -1,4 +1,4 @@
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 {x2;include:header}
 <body>
 {x2;include:nav}
@@ -13,7 +13,7 @@
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
 						<ol class="breadcrumb">
-							<li><a href="index.php?{x2;$_app}-master">{x2;$apps[$_app]['appname']}</a></li>
+							<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master">{x2;(isset($apps[$_app]['appname'])?$apps[$_app]['appname']:'')}</a></li>
 							<li class="active">分类管理</li>
 						</ol>
 					</div>
@@ -24,13 +24,13 @@
 						<span class="dropdown pull-right">
 							<a class="btn btn-primary" href="#" data-toggle="dropdown">添加分类 <strong class="caret"></strong></a>
 							<ul class="dropdown-menu">
-								<li><a href="index.php?{x2;$_app}-master-category-add&parent={x2;$parent}">添加分类</a></li>
-								<li><a href="index.php?{x2;$_app}-master-category&parent={x2;$categories[$parent]['catparent']}">上级分类</a></li>
+								<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master-category-add&parent={x2;(isset($parent)?$parent:'')}">添加分类</a></li>
+								<li><a href="index.php?{x2;(isset($_app)?$_app:'')}-master-category&parent={x2;(isset($categories[$parent]['catparent'])?$categories[$parent]['catparent']:'')}">上级分类</a></li>
 		                    </ul>
 						</span>
 					</h4>
-					<h4>{x2;if:$parent}{x2;$categories[$parent]['catname']}{x2;else}一级分类{x2;endif}</h4>
-					<form action="index.php?{x2;$_app}-master-category-lite" method="post">
+					<h4>{x2;if:!empty($parent)}{x2;(isset($categories[$parent]['catname'])?$categories[$parent]['catname']:'')}{x2;else}一级分类{x2;endif}</h4>
+					<form action="index.php?{x2;(isset($_app)?$_app:'')}-master-category-lite" method="post">
 						<fieldset>
 							<table class="table table-hover table-bordered">
 								<thead>
@@ -43,18 +43,18 @@
 									</tr>
 								</thead>
 								<tbody>
-									{x2;tree:$categorys['data'],category,cid}
+									{x2;tree:(array)($categorys['data'] ?? []),category,cid}
 									<tr>
-										<td><input type="text" class="form-control" name="ids[{x2;v:category['catid']}]" value="{x2;v:category['catlite']}" style="width:48px;padding:2px 5px;"/></td>
-										<td>{x2;v:category['catid']}</td>
-										<td><img src="{x2;if:v:category['catimg']}{x2;v:category['catimg']}{x2;else}app/core/styles/images/noupload.gif{x2;endif}" alt="" style="width:48px;"/></td>
-										<td><span>{x2;v:category['catname']}</span></td>
+										<td><input type="text" class="form-control" name="ids[{x2;(isset(v:category['catid'])?v:category['catid']:'')}]" value="{x2;(isset(v:category['catlite'])?v:category['catlite']:'')}" style="width:48px;padding:2px 5px;"/></td>
+										<td>{x2;(isset(v:category['catid'])?v:category['catid']:'')}</td>
+										<td><img src="{x2;if:!empty(v:category['catimg'])}{x2;(isset(v:category['catimg'])?v:category['catimg']:'')}{x2;else}app/core/styles/images/noupload.gif{x2;endif}" alt="" style="width:48px;"/></td>
+										<td><span>{x2;(isset(v:category['catname'])?v:category['catname']:'')}</span></td>
 										<td>
 											<div class="btn-group">
-												<a class="btn" href="index.php?{x2;$_app}-master-category-add&parent={x2;v:category['catid']}{x2;$u}"><em class="glyphicon glyphicon-plus"></em></a>
-												<a class="btn" href="index.php?{x2;$_app}-master-category&parent={x2;v:category['catid']}{x2;$u}"><em class="glyphicon glyphicon-list"></em></a>
-												<a class="btn" href="index.php?{x2;$_app}-master-category-edit&page={x2;$page}&catid={x2;v:category['catid']}{x2;$u}"><em class="glyphicon glyphicon-edit"></em></a>
-												<a class="btn confirm" href="index.php?{x2;$_app}-master-category-del&catid={x2;v:category['catid']}&page={x2;$page}{x2;$u}"><em class="glyphicon glyphicon-remove"></em></a>
+												<a class="btn" href="index.php?{x2;(isset($_app)?$_app:'')}-master-category-add&parent={x2;(isset(v:category['catid'])?v:category['catid']:'')}{x2;(isset($u)?$u:'')}"><em class="glyphicon glyphicon-plus"></em></a>
+												<a class="btn" href="index.php?{x2;(isset($_app)?$_app:'')}-master-category&parent={x2;(isset(v:category['catid'])?v:category['catid']:'')}{x2;(isset($u)?$u:'')}"><em class="glyphicon glyphicon-list"></em></a>
+												<a class="btn" href="index.php?{x2;(isset($_app)?$_app:'')}-master-category-edit&page={x2;(isset($page)?$page:'')}&catid={x2;(isset(v:category['catid'])?v:category['catid']:'')}{x2;(isset($u)?$u:'')}"><em class="glyphicon glyphicon-edit"></em></a>
+												<a class="btn confirm" href="index.php?{x2;(isset($_app)?$_app:'')}-master-category-del&catid={x2;(isset(v:category['catid'])?v:category['catid']:'')}&page={x2;(isset($page)?$page:'')}{x2;(isset($u)?$u:'')}"><em class="glyphicon glyphicon-remove"></em></a>
 											</div>
 										</td>
 									</tr>
@@ -63,26 +63,26 @@
 							</table>
 							<div class="control-group">
 					            <div class="controls">
-                                    {x2;if:is_array($search)}
-						            {x2;tree:$search,arg,sid}
-						            <input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>
+                                    {x2;if:isset($search) && is_array($search)}
+						            {x2;tree:(array)($search ?? []),arg,sid}
+						            <input type="hidden" name="search[{x2;(isset(v:key)?v:key:'')}]" value="{x2;(isset(v:arg)?v:arg:'')}"/>
 						            {x2;endtree}
                                     {x2;endif}
 						            <label class="radio-inline">
 						            	<button class="btn btn-primary" type="submit">更改排序</button>
 						            </label>
 						            <input type="hidden" name="modifycategorysequence" value="1"/>
-						            <input type="hidden" name="page" value="{x2;$page}"/>
+						            <input type="hidden" name="page" value="{x2;(isset($page)?$page:'')}"/>
 						        </div>
 					        </div>
 							<ul class="pagination pull-right">
-								{x2;$categorys['pages']}
+								{x2;(isset($categorys['pages'])?$categorys['pages']:'')}
 							</ul>
 						</fieldset>
 					</form>
 				</div>
 			</div>
-{x2;if:!$userhash}
+{x2;if:!empty($userhash)}
 		</div>
 	</div>
 </div>
