@@ -18,7 +18,9 @@
 cd phpems
 
 # 配置composer源并安装phpems相关依赖，安装耗时很久(可以用composer config -gl 查看配置):
+
 composer config -g repo.packagist composer https://packagist.phpcomposer.com
+
 composer install -vvv
 
 # 复制packages.json文件至目录/root/.cache/composer/repo/https---packagist.laravel-china.org/
