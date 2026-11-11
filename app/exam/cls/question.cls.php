@@ -202,6 +202,8 @@ class question_exam
 
     public function selectScaleQuestions($examid, $basic)
     {
+        $question = [];
+        $questionrow = [];
         $exam = $this->exam->getExamSettingById($examid);
         if (!$exam['examsetting']['scalemodel']) {
             return $this->selectQuestions($examid, $basic);
@@ -521,6 +523,8 @@ class question_exam
 
     public function selectQuestionsByKnows($knowsid, $qt)
     {
+        $question = [];
+        $questionrow = [];
         $knowsids = $knowsid;
         foreach ($qt as $key => $t) {
             $qrid = 0;

@@ -96,6 +96,7 @@ class action extends app
     private function index()
     {
         $search = $this->ev->get('search');
+        $search = is_array($search) ? $search : [];
         $page = intval($this->ev->get('page'));
         $u = '';
         if ($search) {

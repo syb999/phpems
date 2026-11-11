@@ -83,6 +83,8 @@ class action extends app
         $questypes = $this->basic->getQuestypeList();
         $basic = $this->data['currentbasic'];
         $search = $this->ev->get('search');
+        $search = is_array($search) ? $search : [];
+        $search += ['questionid' => '', 'questiontype' => '', 'keyword' => '', 'qrlevel' => '', 'questionknowsid' => '', 'questionsectionid' => ''];
         $args = [['AND', 'quest2knows.qkquestionid = questionrows.qrid'], ['AND', 'quest2knows.qktype = 1'], ['AND', "questionrows.qrstatus = '1'"]];
         if ($search['questionid']) {
             $args[] = ['AND', 'questionrows.qrid = :qrid', 'qrid', $search['questionid']];
@@ -135,6 +137,8 @@ class action extends app
     {
         $page = $this->ev->get('page');
         $search = $this->ev->get('search');
+        $search = is_array($search) ? $search : [];
+        $search += ['questionid' => '', 'keyword' => '', 'questiontype' => '', 'questionlevel' => '', 'questionknowsid' => '', 'questionsectionid' => ''];
         $basic = $this->data['currentbasic'];
         $sections = $this->section->getSectionListByArgs([['AND', 'sectionsubjectid = :sectionsubjectid', 'sectionsubjectid', $basic['basicsubjectid']]]);
         $args = [['AND', 'quest2knows.qkquestionid = questions.questionid'], ['AND', "questions.questionstatus = '1'"], ['AND', 'questions.questionparent = 0'], ['AND', 'quest2knows.qktype = 0']];

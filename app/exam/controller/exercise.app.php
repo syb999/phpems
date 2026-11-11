@@ -111,6 +111,12 @@ class action extends app
         if ($this->ev->get('makescore')) {
             $questype = $this->basic->getQuestypeList();
             $sessionvars = $this->exam->getExamSessionBySessionid();
+            if (!isset($sessionvars['examsessionscorelist']) || !is_array($sessionvars['examsessionscorelist'])) {
+                $sessionvars['examsessionscorelist'] = [];
+            }
+            if (!isset($sessionvars['examsessionsetting']) || !is_array($sessionvars['examsessionsetting'])) {
+                $sessionvars['examsessionsetting'] = [];
+            }
             $score = $this->ev->get('score');
             $sumscore = 0;
             if (is_array($score)) {
@@ -124,10 +130,19 @@ class action extends app
             $sessionvars['examsessionscore'] = $sumscore;
             $args['examsessionscorelist'] = $sessionvars['examsessionscorelist'];
             $allnumber = floatval(count((array) $sessionvars['examsessionscorelist']));
-            $args['examsessionscore'] = floatval(($sessionvars['examsessionscore'] * 100) / $allnumber);
+            $args['examsessionscore'] = $allnumber > 0 ? floatval(($sessionvars['examsessionscore'] * 100) / $allnumber) : 0;
             $args['examsessionstatus'] = 2;
             $this->exam->modifyExamSession($args);
             $ehid = $this->favor->addExamHistory();
+            if (!$ehid) {
+                $message = [
+                    'statusCode' => 200,
+                    'message' => '本次练习已经交卷，无需重复提交',
+                    'callbackType' => 'forward',
+                    'forwardUrl' => 'index.php?exam-app-history&ehtype=0',
+                ];
+                $this->G->R($message);
+            }
             if ($this->ev->get('direct')) {
                 header("location:index.php?exam-app-exercise-makescore&ehid={$ehid}");
                 exit;
@@ -143,6 +158,10 @@ class action extends app
         } else {
             $ehid = $this->ev->get('ehid');
             $eh = $this->favor->getExamHistoryById($ehid);
+            if (!$eh) {
+                header('location:index.php?exam-app-exercise');
+                exit;
+            }
             $sessionvars = [
                 'examsession' => $eh['ehexam'],
                 'examsessiontype' => 2 == $eh['ehtype'] ? 1 : $eh['ehtype'],
@@ -166,27 +185,27 @@ class action extends app
                 $number[$key] = 0;
                 $right[$key] = 0;
                 $score[$key] = 0;
-                if ($sessionvars['examsessionquestion']['questions'][$key]) {
+                if (!empty($sessionvars['examsessionquestion']['questions'][$key])) {
                     foreach ($sessionvars['examsessionquestion']['questions'][$key] as $p) {
                         ++$number[$key];
                         ++$allnumber;
-                        if (1 == $sessionvars['examsessionscorelist'][$p['questionid']]) {
+                        if (1 == (isset($sessionvars['examsessionscorelist'][$p['questionid']]) ? $sessionvars['examsessionscorelist'][$p['questionid']] : 0)) {
                             ++$right[$key];
                             ++$allright;
                         }
-                        $score[$key] = $score[$key] + $sessionvars['examsessionscorelist'][$p['questionid']];
+                        $score[$key] = $score[$key] + (isset($sessionvars['examsessionscorelist'][$p['questionid']]) ? $sessionvars['examsessionscorelist'][$p['questionid']] : 0);
                     }
                 }
-                if ($sessionvars['examsessionquestion']['questionrows'][$key]) {
+                if (!empty($sessionvars['examsessionquestion']['questionrows'][$key])) {
                     foreach ($sessionvars['examsessionquestion']['questionrows'][$key] as $v) {
                         foreach ($v['data'] as $p) {
                             ++$number[$key];
                             ++$allnumber;
-                            if (1 == $sessionvars['examsessionscorelist'][$p['questionid']]) {
+                            if (1 == (isset($sessionvars['examsessionscorelist'][$p['questionid']]) ? $sessionvars['examsessionscorelist'][$p['questionid']] : 0)) {
                                 ++$right[$key];
                                 ++$allright;
                             }
-                            $score[$key] = $score[$key] + $sessionvars['examsessionscorelist'][$p['questionid']];
+                            $score[$key] = $score[$key] + (isset($sessionvars['examsessionscorelist'][$p['questionid']]) ? $sessionvars['examsessionscorelist'][$p['questionid']] : 0);
                         }
                     }
                 }
@@ -211,15 +230,22 @@ class action extends app
         $needhand = 0;
         if ($this->ev->get('insertscore')) {
             $question = $this->ev->get('question');
+            if (!is_array($question)) {
+                $question = [];
+            }
+            if (!isset($sessionvars['examsessionuseranswer']) || !is_array($sessionvars['examsessionuseranswer'])) {
+                $sessionvars['examsessionuseranswer'] = [];
+            }
+            $scorelist = [];
             foreach ($question as $key => $a) {
                 $sessionvars['examsessionuseranswer'][$key] = $a;
             }
             foreach ($sessionvars['examsessionquestion']['questions'] as $key => $tmp) {
                 if (!$questype[$key]['questsort']) {
                     foreach ($tmp as $p) {
-                        if (is_array($sessionvars['examsessionuseranswer'][$p['questionid']])) {
+                        if (isset($sessionvars['examsessionuseranswer'][$p['questionid']]) && is_array($sessionvars['examsessionuseranswer'][$p['questionid']])) {
                             $nanswer = '';
-                            $answer = $sessionvars['examsessionuseranswer'][$p['questionid']];
+                            $answer = isset($sessionvars['examsessionuseranswer'][$p['questionid']]) ? $sessionvars['examsessionuseranswer'][$p['questionid']] : '';
                             asort($answer);
                             $nanswer = implode('', $answer);
                             if ($nanswer == $p['questionanswer']) {
@@ -242,7 +268,7 @@ class action extends app
                                 }
                             }
                         } else {
-                            $answer = $sessionvars['examsessionuseranswer'][$p['questionid']];
+                            $answer = isset($sessionvars['examsessionuseranswer'][$p['questionid']]) ? $sessionvars['examsessionuseranswer'][$p['questionid']] : '';
                             if ($answer == $p['questionanswer']) {
                                 $score = 1;
                             } else {
@@ -261,8 +287,8 @@ class action extends app
                 if (!$questype[$key]['questsort']) {
                     foreach ($tmp as $tmp2) {
                         foreach ($tmp2['data'] as $p) {
-                            if (is_array($sessionvars['examsessionuseranswer'][$p['questionid']])) {
-                                $answer = $sessionvars['examsessionuseranswer'][$p['questionid']];
+                            if (isset($sessionvars['examsessionuseranswer'][$p['questionid']]) && is_array($sessionvars['examsessionuseranswer'][$p['questionid']])) {
+                                $answer = isset($sessionvars['examsessionuseranswer'][$p['questionid']]) ? $sessionvars['examsessionuseranswer'][$p['questionid']] : '';
                                 asort($answer);
                                 $nanswer = implode('', $answer);
                                 if ($nanswer == $p['questionanswer']) {
@@ -285,7 +311,7 @@ class action extends app
                                     }
                                 }
                             } else {
-                                $answer = $sessionvars['examsessionuseranswer'][$p['questionid']];
+                                $answer = isset($sessionvars['examsessionuseranswer'][$p['questionid']]) ? $sessionvars['examsessionuseranswer'][$p['questionid']] : '';
                                 if ($answer == $p['questionanswer']) {
                                     $score = 1;
                                 } else {
@@ -362,6 +388,17 @@ class action extends app
         $questype = $this->basic->getQuestypeList();
         if ($this->ev->get('setExecriseConfig')) {
             $args = $this->ev->get('args');
+            if (!is_array($args)) {
+                $args = [];
+            }
+            foreach (['knowsid' => '', 'sectionid' => '', 'title' => '', 'time' => 0] as $key => $default) {
+                if (!isset($args[$key])) {
+                    $args[$key] = $default;
+                }
+            }
+            if (!isset($args['number']) || !is_array($args['number'])) {
+                $args['number'] = [];
+            }
             $sessionvars = $this->exam->getExamSessionBySessionid();
             if (!$args['knowsid']) {
                 $args['knowsid'] = '';
@@ -386,6 +423,13 @@ class action extends app
                     ];
                     $this->G->R($message);
                 }
+            }
+            if ($snumber <= 0) {
+                $message = [
+                    'statusCode' => 300,
+                    'message' => '请先选择题量，至少抽取一道题',
+                ];
+                $this->G->R($message);
             }
             $dt = key($args['number']);
             $questionids = $this->question->selectQuestionsByKnows($args['knowsid'], $args['number'], $dt);
@@ -419,7 +463,16 @@ class action extends app
                 }
             }
             $sargs['examsessionquestion'] = ['questionids' => $questionids, 'questions' => $questions, 'questionrows' => $questionrows];
-            $sargs['examsessionsetting'] = $args;
+            //练习每道题按1分计，把 examsetting 一起存下来，成绩单/答卷页才能显示总分与题型分值
+            $setting = $args;
+            $setting['examsetting'] = ['score' => 0, 'passscore' => 0, 'questype' => []];
+            foreach ($args['number'] as $type => $num) {
+                if (intval($num) > 0) {
+                    $setting['examsetting']['questype'][$type] = ['score' => 1, 'describe' => ''];
+                    $setting['examsetting']['score'] += intval($num);
+                }
+            }
+            $sargs['examsessionsetting'] = $setting;
             $sargs['examsessionstarttime'] = TIME;
             $sargs['examsessionuseranswer'] = null;
             $sargs['examsession'] = $args['title'];

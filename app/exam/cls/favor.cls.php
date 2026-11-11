@@ -236,7 +236,7 @@ class favor_exam
         $r['ehquestion'] = empty($r['ehquestion']) ? [] : (unserialize(gzuncompress(base64_decode($r['ehquestion']))) ?: []);
         $r['ehsetting'] = empty($r['ehsetting']) ? [] : (unserialize(gzuncompress(base64_decode($r['ehsetting']))) ?: []);
 
-        return $r;
+        return $this->normalizeHistory($r);
     }
 
     public function getExamHistoryByArgs($args)
@@ -249,6 +249,58 @@ class favor_exam
         }
         $r['ehquestion'] = empty($r['ehquestion']) ? [] : (unserialize(gzuncompress(base64_decode($r['ehquestion']))) ?: []);
         $r['ehsetting'] = empty($r['ehsetting']) ? [] : (unserialize(gzuncompress(base64_decode($r['ehsetting']))) ?: []);
+
+        return $this->normalizeHistory($r);
+    }
+
+    //补齐考试记录的字段，题目结构保证有 questions / questionrows
+    private function normalizeHistory($r)
+    {
+        $defaults = ['ehexam' => '', 'ehtype' => 0, 'ehbasicid' => 0, 'ehtime' => 0, 'ehscore' => 0,
+            'ehstarttime' => 0, 'ehuserid' => 0, 'ehquestion' => [], 'ehsetting' => [],
+            'ehscorelist' => [], 'ehuseranswer' => [], 'ehtimelist' => [], ];
+        foreach ($defaults as $key => $default) {
+            if (!isset($r[$key])) {
+                $r[$key] = $default;
+            }
+        }
+        if (!is_array($r['ehquestion'])) {
+            $r['ehquestion'] = [];
+        }
+        foreach (['questions', 'questionrows'] as $key) {
+            if (!isset($r['ehquestion'][$key]) || !is_array($r['ehquestion'][$key])) {
+                $r['ehquestion'][$key] = [];
+            }
+        }
+        foreach (['ehsetting', 'ehscorelist', 'ehuseranswer', 'ehtimelist'] as $key) {
+            if (!is_array($r[$key])) {
+                $r[$key] = [];
+            }
+        }
+        //老记录/练习会话没有 examsetting，按题目数补一份（每题1分），成绩单才能显示总分和各题型分值
+        if (!isset($r['ehsetting']['examsetting']) || !is_array($r['ehsetting']['examsetting'])) {
+            $setting = ['score' => 0, 'passscore' => 0, 'questype' => []];
+            foreach ($r['ehquestion']['questions'] as $type => $list) {
+                if (!isset($setting['questype'][$type])) {
+                    $setting['questype'][$type] = ['score' => 1, 'describe' => ''];
+                }
+                $setting['score'] += count($list);
+            }
+            foreach ($r['ehquestion']['questionrows'] as $type => $rows) {
+                if (!isset($setting['questype'][$type])) {
+                    $setting['questype'][$type] = ['score' => 1, 'describe' => ''];
+                }
+                foreach ($rows as $row) {
+                    $setting['score'] += isset($row['data']) ? count($row['data']) : 0;
+                }
+            }
+            $r['ehsetting']['examsetting'] = $setting;
+        }
+        if (!isset($r['ehsetting']['examsetting']['questype']) || !is_array($r['ehsetting']['examsetting']['questype'])) {
+            $r['ehsetting']['examsetting']['questype'] = [];
+        }
+        //历史记录表的列名是 ehuseranswer，部分控制器按 ehanswer 取，这里统一别名
+        $r['ehanswer'] = $r['ehuseranswer'];
 
         return $r;
     }
@@ -310,14 +362,20 @@ class favor_exam
     public function addExamHistory($sessionid = false, $status = 1)
     {
         $exam = $this->exam->getExamSessionBySessionid($sessionid);
-        if (!$exam) {
+        if (!$exam || empty($exam['examsessionid'])) {
             return false;
         }
         $t = TIME - $exam['examsessionstarttime'];
         $user = $this->G->make('user', 'user')->getUserById($exam['examsessionuserid']);
+        if (!is_array($user)) {
+            $user = [];
+        }
         if ($t >= $exam['examsessiontime'] * 60) {
             $t = $exam['examsessiontime'] * 60;
         }
+        $sersetting = isset($exam['examsessionsetting']) && is_array($exam['examsessionsetting']) ? $exam['examsessionsetting'] : [];
+        $examdecide = isset($sersetting['examdecide']) ? intval($sersetting['examdecide']) : 0;
+        $passscore = isset($sersetting['examsetting']['passscore']) ? $sersetting['examsetting']['passscore'] : 0;
         $args = [
                     'ehtype' => $exam['examsessiontype'],
                     'ehtimelist' => $exam['examsessiontimelist'],
@@ -332,10 +390,10 @@ class favor_exam
                     'ehscore' => $exam['examsessionscore'],
                     'ehscorelist' => $exam['examsessionscorelist'],
                     'ehuserid' => $exam['examsessionuserid'],
-                    'ehusername' => $user['username'],
-                    'ehdecide' => intval($exam['examsessionsetting']['examdecide']),
+                    'ehusername' => isset($user['username']) ? $user['username'] : '',
+                    'ehdecide' => $examdecide,
                     'ehstatus' => $status,
-                    'ehispass' => $exam['examsessionscore'] >= $exam['examsessionsetting']['examsetting']['passscore'] ? 1 : 0,
+                    'ehispass' => $exam['examsessionscore'] >= $passscore ? 1 : 0,
         ];
         /**
         try
@@ -359,9 +417,18 @@ class favor_exam
             return false;
         }
          **/
+        //同一场练习重复提交时直接返回已有记录，避免重复插入
+        $exists = $this->db->fetch($this->pdosql->makeSelect([false, 'examhistory', [
+            ['AND', 'ehuserid = :ehuserid', 'ehuserid', $args['ehuserid']],
+            ['AND', 'ehstarttime = :ehstarttime', 'ehstarttime', $args['ehstarttime']],
+            ['AND', 'ehexam = :ehexam', 'ehexam', $args['ehexam']],
+        ]]));
+        if (is_array($exists) && !empty($exists['ehid'])) {
+            return $exists['ehid'];
+        }
         $data = ['examhistory', $args];
         $sql = $this->pdosql->makeInsert($data);
-        $aff = $this->db->exec($sql);
+        $this->db->exec($sql);
         $ehid = $this->db->lastInsertId();
         $this->exam->delExamSession($sessionid);
 

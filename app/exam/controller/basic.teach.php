@@ -324,6 +324,8 @@ class action extends app
     {
         $page = $this->ev->get('page');
         $search = $this->ev->get('search');
+        $search = is_array($search) ? $search : [];
+        $search += ['basicid' => '', 'keyword' => '', 'basicareaid' => '', 'basicsubjectid' => '', 'basicapi' => ''];
         $page = $page > 1 ? $page : 1;
         $subjects = $this->basic->getSubjectList([['AND', 'find_in_set(subjectid,:subjectid)', 'subjectid', $this->teachsubjects]]);
         $args = [['AND', 'find_in_set(basicsubjectid,:basicsubjectid)', 'basicsubjectid', $this->teachsubjects]];

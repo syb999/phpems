@@ -92,6 +92,8 @@ class action extends app
     private function outdata()
     {
         $search = $this->ev->get('search');
+        $search = is_array($search) ? $search : [];
+        $search += ['username' => '', 'ceqstatus' => '', 'stime' => '', 'etime' => ''];
         $ceid = $this->ev->get('ceid');
         $ce = $this->ce->getCeById($ceid);
         $args = [];
@@ -155,6 +157,8 @@ class action extends app
     {
         $page = intval($this->ev->get('page'));
         $search = $this->ev->get('search');
+        $search = is_array($search) ? $search : [];
+        $search += ['username' => '', 'ceqstatus' => '', 'stime' => '', 'etime' => ''];
         $this->u = '';
         if ($search) {
             $this->tpl->assign('search', $search);

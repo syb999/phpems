@@ -123,6 +123,10 @@ class action extends app
         } else {
             $ehid = $this->ev->get('ehid');
             $eh = $this->favor->getExamHistoryById($ehid);
+            if (!$eh) {
+                header('location:index.php?exam-app-history&ehtype=2');
+                exit;
+            }
             $sessionvars = [
                 'examsession'           => $eh['ehexam'],
                 'examsessiontype'       => 2 == $eh['ehtype'] ? 1 : $eh['ehtype'],

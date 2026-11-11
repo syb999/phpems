@@ -20,6 +20,7 @@ class action extends app
             $action = 'index';
         }
         $search = $this->ev->get('search');
+        $search = is_array($search) ? $search : [];
         $this->u = '';
         if ($search) {
             $this->tpl->assign('search', $search);
@@ -123,6 +124,8 @@ class action extends app
             $this->G->R($message);
         } else {
             $search = $this->ev->get('search');
+            $search = is_array($search) ? $search : [];
+            $search += ['questionsubjectid' => '', 'questionsectionid' => ''];
             $questypes = $this->basic->getQuestypeList();
             $subjects = $this->basic->getSubjectList();
             $sections = $this->section->getSectionListByArgs([['AND', 'sectionsubjectid = :sectionsubjectid', 'sectionsubjectid', $search['questionsubjectid']]]);

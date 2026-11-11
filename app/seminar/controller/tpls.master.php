@@ -26,6 +26,7 @@ class action extends app
             'plugin' => '插件',
         ];
         $search = $this->ev->get('search');
+        $search = is_array($search) ? $search : [];
         $this->u = '';
         if ($search) {
             $this->tpl->assign('search', $search);

@@ -266,6 +266,8 @@ class action extends app
         $courseid = intval($this->ev->get('courseid'));
         $page = $this->ev->get('page');
         $search = $this->ev->get('search');
+        $search = is_array($search) ? $search : [];
+        $search += ['courseid' => '', 'coursemoduleid' => '', 'stime' => '', 'etime' => '', 'keyword' => '', 'username' => ''];
         if (!$courseid) {
             header('location:index.php?course-teach-course');
             exit;

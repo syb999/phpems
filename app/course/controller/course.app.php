@@ -191,9 +191,10 @@ class action extends app
                 exit;
             }
         }
+        $cdata = ['lock' => []];
         if ($course['cstype']) {
             $cdata = $this->course->getCourseContentStatus($course['csid'], $this->_user['sessionuserid']);
-            if ($cdata['lock'][$contentid]) {
+            if (!empty($cdata['lock'][$contentid])) {
                 $message = [
                     'statusCode' => 300,
                     'message' => '请先学完上节课程',
@@ -216,7 +217,7 @@ class action extends app
             }
         }
         $module = $this->module->getModuleById($content['coursemoduleid']);
-        switch ($module['modulecode']) {
+        switch (isset($module['modulecode']) ? $module['modulecode'] : '') {
             case 'pdf':
             $template = 'course_pdf';
             break;

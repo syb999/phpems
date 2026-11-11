@@ -17,6 +17,7 @@ class action extends app
     {
         $action = $this->ev->url(3);
         $search = $this->ev->get('search');
+        $search = is_array($search) ? $search : [];
         $this->u = '';
         if ($search) {
             $this->tpl->assign('search', $search);

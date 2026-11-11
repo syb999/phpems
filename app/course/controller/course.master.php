@@ -44,6 +44,8 @@ class action extends app
         $courseid = intval($this->ev->get('courseid'));
         $course = $this->course->getCourseById($courseid);
         $search = $this->ev->get('search');
+        $search = is_array($search) ? $search : [];
+        $search += ['userid' => '', 'username' => '', 'useremail' => '', 'groupid' => '', 'stime' => '', 'etime' => ''];
         $u = '';
         if ($search) {
             foreach ($search as $key => $arg) {
@@ -250,6 +252,8 @@ class action extends app
     {
         $courseid = $this->ev->get('courseid');
         $search = $this->ev->get('search');
+        $search = is_array($search) ? $search : [];
+        $search += ['userid' => '', 'username' => ''];
         $page = $this->ev->get('page');
         $args = [];
         $args[] = ['AND', 'opencourse.occourseid = :occourseid', 'occourseid', $courseid];

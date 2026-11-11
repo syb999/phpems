@@ -26,6 +26,8 @@ class action extends app
     private function selectexams()
     {
         $search = $this->ev->get('search');
+        $search = is_array($search) ? $search : [];
+        $search += ['subjectid' => ''];
         $useframe = $this->ev->get('useframe');
         $target = $this->ev->get('target');
         $page = $this->ev->get('page');
@@ -274,6 +276,8 @@ class action extends app
     {
         $useframe = $this->ev->get('useframe');
         $search = $this->ev->get('search');
+        $search = is_array($search) ? $search : [];
+        $search += ['questionisrows' => '', 'keyword' => '', 'knowsids' => '', 'stime' => '', 'etime' => '', 'questiontype' => '', 'questionlevel' => '', 'questionknowsid' => '', 'questionsectionid' => '', 'questionsubjectid' => '', 'qrlevel' => ''];
         $page = $this->ev->get('page');
         $page = $page > 0 ? $page : 1;
         $this->pg->setUrlTarget('modal-body" class="ajax');
@@ -455,6 +459,7 @@ class action extends app
         $page = $page > 0 ? $page : 1;
 
         $search = $this->ev->get('search');
+        $search = is_array($search) ? $search : [];
         if ($this->ev->get('submitsetting')) {
             $examid = $this->ev->get('examid');
             $args = $this->ev->get('args');
@@ -491,6 +496,8 @@ class action extends app
     private function index()
     {
         $search = $this->ev->get('search');
+        $search = is_array($search) ? $search : [];
+        $search += ['examsubject' => '', 'examtype' => ''];
         $page = $this->ev->get('page');
         $page = $page > 0 ? $page : 1;
         $args = [['AND', 'find_in_set(examsubject,:examsubject)', 'examsubject', $this->teachsubjects]];

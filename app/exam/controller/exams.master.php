@@ -47,6 +47,8 @@ class action extends app
     private function selectexams()
     {
         $search = $this->ev->get('search');
+        $search = is_array($search) ? $search : [];
+        $search += ['subjectid' => ''];
         $useframe = $this->ev->get('useframe');
         $target = $this->ev->get('target');
         $page = $this->ev->get('page');
@@ -551,6 +553,8 @@ class action extends app
     private function selectquestions()
     {
         $search = $this->ev->get('search');
+        $search = is_array($search) ? $search : [];
+        $search += ['questionisrows' => '', 'keyword' => '', 'knowsids' => '', 'stime' => '', 'etime' => '', 'questiontype' => '', 'questionlevel' => '', 'questionknowsid' => '', 'questionsectionid' => '', 'questionsubjectid' => '', 'qrlevel' => ''];
         $useframe = $this->ev->get('useframe');
         $page = $this->ev->get('page');
         $page = $page > 0 ? $page : 1;
@@ -676,6 +680,7 @@ class action extends app
     private function modify()
     {
         $search = $this->ev->get('search');
+        $search = is_array($search) ? $search : [];
         $examid = $this->ev->get('examid');
         $exam = $this->exam->getExamSettingById($examid);
         if ($this->ev->get('submitsetting')) {
@@ -804,6 +809,8 @@ class action extends app
     private function index()
     {
         $search = $this->ev->get('search');
+        $search = is_array($search) ? $search : [];
+        $search += ['examsubject' => '', 'examtype' => ''];
         $page = $this->ev->get('page');
         $page = $page > 0 ? $page : 1;
         $args = [];

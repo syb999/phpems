@@ -101,6 +101,8 @@ class action extends app
         }
 
         $search = $this->ev->get('search');
+        $search = is_array($search) ? $search : [];
+        $search += ['questionsubjectid' => '', 'questionsectionid' => ''];
         $questypes = $this->basic->getQuestypeList();
         $subjects = $this->basic->getSubjectList([['AND', 'find_in_set(subjectid,:subjectid)', 'subjectid', $this->teachsubjects]]);
         $sections = $this->section->getSectionListByArgs([['AND', 'sectionsubjectid = :sectionsubjectid', 'sectionsubjectid', $search['questionsubjectid']]]);
@@ -304,6 +306,8 @@ class action extends app
     private function index()
     {
         $search = $this->ev->get('search');
+        $search = is_array($search) ? $search : [];
+        $search += ['questionid' => '', 'keyword' => '', 'knowsids' => '', 'stime' => '', 'etime' => '', 'questiontype' => '', 'questionlevel' => '', 'questionknowsid' => '', 'questionsectionid' => '', 'questionsubjectid' => ''];
         $page = $this->ev->get('page');
         $page = $page > 0 ? $page : 1;
         $args = [['AND', 'quest2knows.qkquestionid = questions.questionid'], ['AND', "questions.questionstatus = '1'"], ['AND', 'questions.questionparent = 0'], ['AND', 'quest2knows.qktype = 0']];

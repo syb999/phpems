@@ -30,7 +30,7 @@
                 </div>
                 <div class="col-xs-8">
                     <div><b class="text-info">考试详情：</b></div>
-                      <p>总分：<b class="text-warning">100</b>分 合格分数线：<b class="text-warning">60</b>分 答卷耗时：<b class="text-warning">{x2;if:(isset($sessionvars['examsessiontime']) ? $sessionvars['examsessiontime'] : null) >= 60}{x2;if:$sessionvars['examsessiontime']%60}{x2;eval: echo intval($sessionvars['examsessiontime']/60)+1}{x2;else}{x2;eval: echo intval($sessionvars['examsessiontime']/60)}{x2;endif}分钟{x2;else}{x2;(isset($sessionvars['examsessiontime']) ? $sessionvars['examsessiontime'] : '')}秒{x2;endif}</b></p>
+                      <p>总分：<b class="text-warning">{x2;(isset($sessionvars['examsessionsetting']['examsetting']['score']) ? $sessionvars['examsessionsetting']['examsetting']['score'] : 0)}</b>分 合格分数线：<b class="text-warning">{x2;(isset($sessionvars['examsessionsetting']['examsetting']['passscore']) ? $sessionvars['examsessionsetting']['examsetting']['passscore'] : 0)}</b>分 答卷耗时：<b class="text-warning">{x2;if:(isset($sessionvars['examsessiontime']) ? $sessionvars['examsessiontime'] : null) >= 60}{x2;if:$sessionvars['examsessiontime']%60}{x2;eval: echo intval($sessionvars['examsessiontime']/60)+1}{x2;else}{x2;eval: echo intval($sessionvars['examsessiontime']/60)}{x2;endif}分钟{x2;else}{x2;(isset($sessionvars['examsessiontime']) ? $sessionvars['examsessiontime'] : '')}秒{x2;endif}</b></p>
                       <table class="table table-hover table-bordered">
                       <tr class="success">
                         <th>题型</th>

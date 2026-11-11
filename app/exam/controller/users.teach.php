@@ -18,6 +18,7 @@ class action extends app
         $this->module = $this->G->make('module');
         $action = $this->ev->url(3);
         $search = $this->ev->get('search');
+        $search = is_array($search) ? $search : [];
         $u = '';
         if ($search) {
             $this->tpl->assign('search', $search);
@@ -36,6 +37,8 @@ class action extends app
     private function stats()
     {
         $search = $this->ev->get('search');
+        $search = is_array($search) ? $search : [];
+        $search += ['stime' => '', 'etime' => '', 'sscore' => '', 'escore' => '', 'examid' => ''];
         $page = $this->ev->get('page');
         if ($page < 1) {
             $page = 1;
@@ -165,6 +168,8 @@ class action extends app
     private function outanswer()
     {
         $search = $this->ev->get('search');
+        $search = is_array($search) ? $search : [];
+        $search += ['stime' => '', 'etime' => '', 'sscore' => '', 'escore' => '', 'examid' => ''];
         $args = [];
         $basicid = $this->ev->get('basicid');
         if ($basicid) {
@@ -284,6 +289,8 @@ class action extends app
         }
 
         $search = $this->ev->get('search');
+        $search = is_array($search) ? $search : [];
+        $search += ['stime' => '', 'etime' => '', 'sscore' => '', 'escore' => '', 'examid' => ''];
         $args = [];
         $basicid = $this->ev->get('basicid');
         if ($basicid) {
@@ -476,6 +483,8 @@ class action extends app
 
         $page = $this->ev->get('page');
         $search = $this->ev->get('search');
+        $search = is_array($search) ? $search : [];
+        $search += ['stime' => '', 'etime' => '', 'sscore' => '', 'escore' => '', 'examid' => ''];
         $basicid = intval($this->ev->get('basicid'));
         $basic = $this->basic->getBasicById($basicid);
         $page = $page > 0 ? $page : 1;
@@ -543,6 +552,8 @@ class action extends app
     {
         $page = $this->ev->get('page');
         $search = $this->ev->get('search');
+        $search = is_array($search) ? $search : [];
+        $search += ['basicid' => '', 'keyword' => '', 'basicareaid' => '', 'basicsubjectid' => '', 'basicapi' => ''];
         $page = $page > 1 ? $page : 1;
         $subjects = $this->basic->getSubjectList([['AND', 'find_in_set(subjectid,:subjectid)', 'subjectid', $this->teachsubjects]]);
         $args = [['AND', 'find_in_set(basicsubjectid,:basicsubjectid)', 'basicsubjectid', $this->teachsubjects]];

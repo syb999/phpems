@@ -14,7 +14,7 @@
 class module
 {
     public $G;
-    private $cache = [];
+    private $cache = ['module' => []];
 
     public function __construct(&$G)
     {
@@ -51,10 +51,14 @@ class module
     //根据ID获取模型
     public function getModuleById($moduleid)
     {
-        if (!$this->cache['module'][$moduleid]) {
+        if (!isset($this->cache['module'][$moduleid])) {
             $data = [false, 'module', [['AND', 'moduleid = :moduleid', 'moduleid', $moduleid]]];
             $sql = $this->pdosql->makeSelect($data);
-            $this->cache['module'][$moduleid] = $this->db->fetch($sql, 'modulefields');
+            $module = $this->db->fetch($sql, 'modulefields');
+            if (!is_array($module)) {
+                $module = [];
+            }
+            $this->cache['module'][$moduleid] = $module;
         }
 
         return $this->cache['module'][$moduleid];

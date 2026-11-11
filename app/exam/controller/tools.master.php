@@ -26,6 +26,8 @@ class action extends app
     private function clearouttimeexamsession()
     {
         $search = $this->ev->get('search');
+        $search = is_array($search) ? $search : [];
+        $search += ['argsmodel' => '', 'stime' => ''];
         if ($search['argsmodel']) {
             if ($search['stime']) {
                 $time = strtotime($search['stime']);
@@ -49,6 +51,8 @@ class action extends app
     private function clearouttimesession()
     {
         $search = $this->ev->get('search');
+        $search = is_array($search) ? $search : [];
+        $search += ['argsmodel' => '', 'stime' => ''];
         if ($search['argsmodel']) {
             if ($search['stime']) {
                 $time = strtotime($search['stime']);
@@ -77,6 +81,8 @@ class action extends app
     private function clearquestionrows()
     {
         $search = $this->ev->get('search');
+        $search = is_array($search) ? $search : [];
+        $search += ['argsmodel' => '', 'questionid' => '', 'questiontype' => '', 'keyword' => '', 'stime' => '', 'etime' => '', 'qrlevel' => '', 'questionknowsid' => '', 'questionsectionid' => '', 'questionsubjectid' => ''];
         if ($search['argsmodel']) {
             $args = [['AND', 'quest2knows.qkquestionid = questionrows.qrid']];
             if ($search['questionid']) {
@@ -142,6 +148,8 @@ class action extends app
     private function clearhistory()
     {
         $search = $this->ev->get('search');
+        $search = is_array($search) ? $search : [];
+        $search += ['argsmodel' => '', 'stime' => '', 'etime' => ''];
         if ($search['argsmodel']) {
             if ($search['stime'] || $search['etime']) {
                 $args = [];
@@ -174,6 +182,8 @@ class action extends app
     private function clearquestions()
     {
         $search = $this->ev->get('search');
+        $search = is_array($search) ? $search : [];
+        $search += ['argsmodel' => '', 'knowsids' => '', 'stime' => '', 'etime' => '', 'questiontype' => '', 'questionlevel' => '', 'questionknowsid' => '', 'questionsectionid' => '', 'questionsubjectid' => ''];
         if ($search['argsmodel']) {
             $args = [['AND', 'quest2knows.qkquestionid = questions.questionid'], ['AND', 'questions.questionparent = 0'], ['AND', 'quest2knows.qktype = 0']];
             if ($search['knowsids']) {

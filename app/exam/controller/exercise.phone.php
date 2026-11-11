@@ -124,7 +124,7 @@ class action extends app
             $sessionvars['examsessionscore'] = $sumscore;
             $args['examsessionscorelist'] = $sessionvars['examsessionscorelist'];
             $allnumber = floatval(count((array) $sessionvars['examsessionscorelist']));
-            $args['examsessionscore'] = floatval(($sessionvars['examsessionscore'] * 100) / $allnumber);
+            $args['examsessionscore'] = $allnumber > 0 ? floatval(($sessionvars['examsessionscore'] * 100) / $allnumber) : 0;
             $args['examsessionstatus'] = 2;
             $this->exam->modifyExamSession($args);
             $ehid = $this->favor->addExamHistory();

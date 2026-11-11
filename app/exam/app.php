@@ -74,8 +74,18 @@ class app
         if (!is_array($this->data['currentbasic'])) {
             $this->data['currentbasic'] = [];
         }
+        foreach (['basicid' => 0, 'basicsubjectid' => 0, 'basicknows' => ''] as $key => $default) {
+            if (!isset($this->data['currentbasic'][$key])) {
+                $this->data['currentbasic'][$key] = $default;
+            }
+        }
         if (!isset($this->data['currentbasic']['basicexam']) || !is_array($this->data['currentbasic']['basicexam'])) {
             $this->data['currentbasic']['basicexam'] = [];
+        }
+        foreach (['auto', 'train', 'self', 'autotemplate', 'selftemplate', 'rulemodel', 'model', 'selectrule', 'examnumber', 'allowgroup'] as $key) {
+            if (!isset($this->data['currentbasic']['basicexam'][$key])) {
+                $this->data['currentbasic']['basicexam'][$key] = '';
+            }
         }
         if (!isset($this->data['currentbasic']['basicexam']['opentime']) || !is_array($this->data['currentbasic']['basicexam']['opentime'])) {
             $this->data['currentbasic']['basicexam']['opentime'] = ['start' => 0, 'end' => 0];

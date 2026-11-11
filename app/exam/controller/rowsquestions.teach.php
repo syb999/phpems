@@ -350,6 +350,8 @@ class action extends app
     {
         $page = $this->ev->get('page');
         $search = $this->ev->get('search');
+        $search = is_array($search) ? $search : [];
+        $search += ['questionid' => '', 'questiontype' => '', 'keyword' => '', 'stime' => '', 'etime' => '', 'qrlevel' => '', 'questionknowsid' => '', 'questionsectionid' => '', 'questionsubjectid' => ''];
         $page = $page > 0 ? $page : 1;
         $args = [['AND', 'quest2knows.qkquestionid = questionrows.qrid'], ['AND', 'quest2knows.qktype = 1'], ['AND', "questionrows.qrstatus = '1'"]];
         if ($search['questionid']) {

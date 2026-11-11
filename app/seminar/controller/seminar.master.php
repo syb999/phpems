@@ -19,6 +19,7 @@ class action extends app
         $this->layout = $this->G->make('layout', 'seminar');
         $this->position = $this->G->make('position', 'content');
         $search = $this->ev->get('search');
+        $search = is_array($search) ? $search : [];
         $this->u = '';
         if ($search) {
             $this->tpl->assign('search', $search);
@@ -123,6 +124,8 @@ class action extends app
         }
 
         $search = $this->ev->get('search');
+        $search = is_array($search) ? $search : [];
+        $search += ['contentcatid' => '', 'contentid' => '', 'contentmoduleid' => '', 'stime' => '', 'etime' => '', 'keyword' => '', 'username' => ''];
         $catid = intval($this->ev->get('catid'));
         $page = intval($this->ev->get('page'));
         $page = $page ? $page : 1;

@@ -20,6 +20,7 @@ class action extends app
             $action = 'index';
         }
         $search = $this->ev->get('search');
+        $search = is_array($search) ? $search : [];
         $page = $this->ev->get('page');
         $u = '';
         if ($search) {
@@ -38,6 +39,8 @@ class action extends app
     {
         $page = $this->ev->get('page');
         $search = $this->ev->get('search');
+        $search = is_array($search) ? $search : [];
+        $search += ['basicid' => '', 'keyword' => '', 'basicareaid' => '', 'basicsubjectid' => '', 'basicapi' => ''];
         $page = $page > 1 ? $page : 1;
         $userid = $this->ev->get('userid');
         $subjects = $this->basic->getSubjectList();

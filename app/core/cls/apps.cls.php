@@ -34,7 +34,16 @@ class apps_core
         $data = [false, 'app', [['AND', 'appid = :appid', 'appid', $appid]]];
         $sql = $this->pdosql->makeSelect($data);
 
-        return $this->db->fetch($sql, ['appsetting', 'appusersetting']);
+        $app = $this->db->fetch($sql, ['appsetting', 'appusersetting']);
+        if (is_array($app)) {
+            foreach (['appsetting', 'appusersetting'] as $key) {
+                if (!isset($app[$key]) || !is_array($app[$key])) {
+                    $app[$key] = [];
+                }
+            }
+        }
+
+        return $app;
     }
 
     //修改应用信息
@@ -72,6 +81,10 @@ class apps_core
         foreach ($r as $key => $p) {
             if (!file_exists('app/'.$key)) {
                 unset($r[$key]);
+                continue;
+            }
+            if (!isset($r[$key]['appsetting']) || !is_array($r[$key]['appsetting'])) {
+                $r[$key]['appsetting'] = [];
             }
         }
 

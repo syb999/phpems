@@ -111,7 +111,48 @@ class exam_exam
         $data = [false, 'examsession', [['AND', 'examsessionid = :examsessionid', 'examsessionid', $sessionid]]];
         $sql = $this->pdosql->makeSelect($data);
 
-        return $this->db->fetch($sql, ['examsessionquestion', 'examsessionsign', 'examsessionsetting', 'examsessionuseranswer', 'examsessionscorelist']);
+        $sessionvars = $this->db->fetch($sql, ['examsessionquestion', 'examsessionsign', 'examsessionsetting', 'examsessionuseranswer', 'examsessionscorelist']);
+        if (!is_array($sessionvars)) {
+            $sessionvars = [];
+        }
+
+        return $this->normalizeSessionVars($sessionvars);
+    }
+
+    //把会话字段补齐并保证数组字段一定是数组（空值 unserialize 出来是 false）
+    private function normalizeSessionVars($sessionvars)
+    {
+        foreach ($this->sessionDefaultVars() as $key => $default) {
+            if (!isset($sessionvars[$key]) || (is_array($default) && !is_array($sessionvars[$key]))) {
+                $sessionvars[$key] = $default;
+            }
+        }
+
+        return $sessionvars;
+    }
+
+    //考试会话的字段默认值，没有会话时返回这组空值
+    private function sessionDefaultVars()
+    {
+        return [
+            'examsessionid' => '',
+            'examsession' => '',
+            'examsessionuserid' => 0,
+            'examsessionbasic' => 0,
+            'examsessiontype' => 0,
+            'examsessionstatus' => 0,
+            'examsessiontime' => 0,
+            'examsessionstarttime' => 0,
+            'examsessionscore' => 0,
+            'examsessionissave' => 0,
+            'examsessionkey' => '',
+            'examsessiontimelist' => '',
+            'examsessionquestion' => [],
+            'examsessionsign' => [],
+            'examsessionsetting' => [],
+            'examsessionuseranswer' => [],
+            'examsessionscorelist' => [],
+        ];
     }
 
     public function getExamSessionByUserid($userid, $basicid, $sessionid = 0, $usesession = 0, $type = 2)
@@ -130,7 +171,12 @@ class exam_exam
         $data = [false, 'examsession', $args, false, 'examsessionstarttime DESC'];
         $sql = $this->pdosql->makeSelect($data);
 
-        return $this->db->fetch($sql, ['examsessionquestion', 'examsessionsign', 'examsessionsetting', 'examsessionuseranswer', 'examsessionscorelist']);
+        $sessionvars = $this->db->fetch($sql, ['examsessionquestion', 'examsessionsign', 'examsessionsetting', 'examsessionuseranswer', 'examsessionscorelist']);
+        if (!is_array($sessionvars)) {
+            $sessionvars = [];
+        }
+
+        return $this->normalizeSessionVars($sessionvars);
     }
 
     public function getExamSessionByArgs($args, $page = 1, $number = 20)
