@@ -10,9 +10,7 @@
 
 # 安装composer:
 
-curl -sS https://getcomposer.org/installer | php
-php composer.phar
-cp /opt/bin/composer.phar /opt/bin/composer
+ curl -sS https://getcomposer.org/installer | php -- --install-dir=/opt/bin --filename=composer
 
 
 # 进入phpems目录:
